@@ -10,7 +10,7 @@
 		
 </head>
 <body ng-controller='ng-cases' ng-init="init_case();">
-    <!-- SEEeeee ME? -->
+    <!-- SEE ME? AVIV -->
 	<!--<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
 		<ul class="navbar-nav col-sm-12">
 			<li class="col-sm-4">
