@@ -44,7 +44,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
 	$scope.init_case = function (item) {
 		//$("#nav").show();
-		$("#home").hide();
+		$("#home").show();
+        $("#search_comp").hide();
 		document.getElementById("loggin_user").innerHTML="Hello Avi";
 		console.log("hello");
 	} //the funtion
