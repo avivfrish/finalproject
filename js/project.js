@@ -110,9 +110,16 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 	
     $scope.azure = function()
     {
-        $http.get("php/azure.php")
-            .then(function (response) {console.log( response);});
+        $http({
+            method: 'POST',
+            url: 'php/azure.php',
+            params: {
 
+            }
+        }).then(function (data) {
+            console.log(data);
+
+        });
 
     }
 
