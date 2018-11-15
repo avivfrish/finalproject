@@ -18,9 +18,13 @@ $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 $sql= /** @lang text */
     "select name from companies";
-$stmt= sqlsrv_query( $conn, $sql);
-while( $row = sqlsrv_fetch_array( $stmt, SQLSRV_FETCH_ASSOC) ) {
-     echo $row;
-   }
+$getResults= sqlsrv_query($conn, $sql);
+echo ("Reading data from table" . PHP_EOL);
+if ($getResults == FALSE)
+    echo (sqlsrv_errors());
+while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
+    echo ($row. PHP_EOL);
+}
+sqlsrv_free_stmt($getResults);
 
 ?>
