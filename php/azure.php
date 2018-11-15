@@ -22,9 +22,12 @@ $getResults= sqlsrv_query($conn, $sql);
 echo ("Reading data from table" . PHP_EOL);
 if ($getResults == FALSE)
     echo (sqlsrv_errors());
+$arr=array();
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
-    echo ($row. PHP_EOL);
+   $arr['name']=$row['name'];
 }
+print json_encode($arr);
 sqlsrv_free_stmt($getResults);
 
+?>
 ?>
