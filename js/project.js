@@ -117,7 +117,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
             }
         }).then(function (data) {
-            console.log(data);
+            console.log("njnjnj"+ data);
 
         });
 
