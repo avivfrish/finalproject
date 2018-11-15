@@ -123,28 +123,6 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
     }
 
-    $scope.azure1 = function()
-    {
-        console.log("get_companies");
-        var request = $http({
-            method: "POST",
-            url:"php/azure.php",
-            data: $.param({
-
-            }),
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-        }); //request
-        request.success(function (data) {
-            if (data != "0"){
-
-                console.log(data);
-            }
-            else {
-                console.log('get companies failed');
-            }
-        }); //success
-
-    }
 
 
 	$scope.show_splunk = function () {

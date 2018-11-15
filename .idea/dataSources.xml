@@ -4,6 +4,7 @@
     <data-source source="LOCAL" name="avifinalproject.database.windows.net" uuid="9d49350b-80d7-43b1-af40-f031d0d1ed39">
       <driver-ref>azure.ms</driver-ref>
       <synchronize>true</synchronize>
+      <rewrite-bounds>false</rewrite-bounds>
       <jdbc-driver>com.microsoft.sqlserver.jdbc.SQLServerDriver</jdbc-driver>
       <jdbc-url>jdbc:sqlserver://avifinalproject.database.windows.net:1433;database=finalproject</jdbc-url>
       <driver-properties>

@@ -1,8 +1,6 @@
-// PHP Data Objects(PDO) Sample Code:
 <?php
 
 
-// SQL Server Extension Sample Code:
 $connectionInfo = array("UID" => "finalproject@avifinalproject", "pwd" => "1qaZ2wsX", "Database" => "finalProject", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0);
 $serverName = "tcp:avifinalproject.database.windows.net,1433";
 $conn = sqlsrv_connect($serverName, $connectionInfo);
@@ -12,7 +10,6 @@ $conn = sqlsrv_connect($serverName, $connectionInfo);
 $sql= /** @lang text */
     "select name from companies";
 $getResults= sqlsrv_query($conn, $sql);
-//echo ("Reading data from table" . PHP_EOL);
 if ($getResults == FALSE)
     return (sqlsrv_errors());
 $array = array();
@@ -25,5 +22,4 @@ sqlsrv_free_stmt($getResults);
 echo json_encode($array);
 
 
-?>
-?>
+
