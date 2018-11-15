@@ -110,7 +110,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 	
     $scope.azure = function()
     {
-        $http.get("customers_mysql.php")
+        $http.get("php/azure.php")
             .then(function (response) {console.log( response);});
 
 
