@@ -1,0 +1,47 @@
+
+<div id="search_compByName" style="margin-top: 70px">
+  <div class="tab-pane active" id="SearchByName">
+    <h1>Search a Company by Name</h1>
+    <p>Fill in the Search data.</p>
+
+        <div class="container">
+          <div class="row">
+            <div class="col-xs-6 col-xs-offset-2">
+              <div class="input-group">
+                <div class="input-group-btn search-panel">
+                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    <span id="search_concept">Filter by</span> <span class="caret"></span>
+                  </button>
+                  <ul class="dropdown-menu" role="menu">
+                    <li><a href="#contains">Contains</a></li>
+                    <li><a href="#is_equal">It's equal</a></li>
+                  </ul>
+                </div>
+                <input type="hidden" name="search_param" value="all" id="search_param">
+                <input type="text" class="form-control" name="x" placeholder="Search company...">
+                <span class="input-group-btn"></span>
+
+                <input type="hidden" name="search_param" value="all" id="search_param">
+                <input type="text" class="form-control" name="x" placeholder="Fill CIK">
+                <span class="input-group-btn"></span>
+
+                <input type="hidden" name="search_param" value="all" id="search_param">
+                <input type="text" class="form-control" name="x" placeholder="Fill RSSD ID">
+                <span class="input-group-btn"></span>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <br>
+
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+
+      </div>
+
+    </div>
+
+
+  </div>
+</div>

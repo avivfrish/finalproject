@@ -52,13 +52,22 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 	
 
 
-	$scope.show_search = function () {
+	$scope.show_search = function (searchBy) {
 		//show_cases_div - show cases div
 		
 		console.log("show search div");
 		$("#home").hide();
-		$("#search_comp").show();
-		
+        $("#search_compByName").hide();
+        $("#search_compByCity").hide();
+        if (searchBy == 'name'){
+            console.log("show search name");
+            $("#search_compByName").show();
+        }
+        else {
+            console.log("show search city");
+            $("#search_compByCity").show();
+        }
+
 		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
 
 		//$("#open_caseOrIntell").text("Add Case");

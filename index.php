@@ -40,7 +40,8 @@
 		include "html/home.html";
 		include "html/nav.html";
 		include "html/industry.html";
-		include "html/search.html";
+		include "html/searchByName.html";
+        include "html/searchByCity.html";
 	?>		
 </body>
 </html>

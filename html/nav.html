@@ -24,11 +24,14 @@
 						</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#" ng-click="show_search()">
-							<span class="glyphicon glyphicon glyphicon-option-vertical" aria-hidden="true">
-							</span>
-							Search
-						</a>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle"  id="navbarDropdownMenuLink" data-toggle="dropdown" href="#"  aria-haspopup="true"
+                               aria-expanded="false">Search</a>
+                            <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+                                <a class="dropdown-item" href="#" ng-click="show_search('name');">Search By Name <i class="fas fa-address-book"></i></a>
+                                <a class="dropdown-item" href="#" ng-click="show_search('city');">Search By City <i class="fas fa-map-marker-alt"></i></a>
+                            </div>
+                        </li>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="#" ng-click="">
