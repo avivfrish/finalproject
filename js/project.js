@@ -74,6 +74,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 		
 		$("#home").show();
 		$("#search_comp").hide();
+		consol.log("Aviv");
 		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
 
 		//$("#open_caseOrIntell").text("Add Case");
