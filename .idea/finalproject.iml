@@ -4,5 +4,9 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+<<<<<<< HEAD
+=======
+    <orderEntry type="library" name="@types/angular" level="application" />
+>>>>>>> c042594fc733caf379ec54016d973556ab33e6ae
   </component>
 </module>
