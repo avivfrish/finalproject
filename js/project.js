@@ -144,7 +144,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 	$scope.get_companies = function ()
 	{
 		console.log("get_companies");
-		var request = $http({
+		console.log("Coral");
+		var rgequest = $http({
 			method: "POST",
 			url:"php/caspio.php",
 			data: $.param({
