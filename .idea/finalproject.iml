@@ -4,9 +4,9 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-<<<<<<< HEAD
+<<<<<<<<< Temporary merge branch 1
     <orderEntry type="library" name="@types/angular" level="application" />
-=======
->>>>>>> 9890c3d55bba4814dda959bcb0c2327e6f2384a1
+=========
+>>>>>>>>> Temporary merge branch 2
   </component>
 </module>
