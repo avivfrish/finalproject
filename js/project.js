@@ -120,6 +120,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             }
         }).then(function (data) {
             console.log(data.data);
+            console.log("vfv");
 
         });
 
