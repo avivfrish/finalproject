@@ -10,9 +10,8 @@
 
     <!--<script src="js/bootstrap.min.js"></script>-->
     <script src="js/project.js" ></script>
-		
 </head>
-<body ng-controller='ng-cases' ng-init="init_case();">
+<body style="text-align: center" ng-controller='ng-cases' ng-init="init_case();">
     <!-- SEE ME? AVIV -->
 	<!--<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
 		<ul class="navbar-nav col-sm-12">
