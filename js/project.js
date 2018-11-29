@@ -46,6 +46,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 		//$("#nav").show();
 		$("#home").show();
         $("#search_comp").hide();
+        $scope.companies=[];
 		document.getElementById("loggin_user").innerHTML="Hello Avi";
 		console.log("hello");
 	} //the funtion
@@ -151,7 +152,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
         var rgequest = $http({
 			method: "POST",
-			url:"php/caspio.php",
+			url:"php/get_companies_info.php",
 			data: $.param({
 				
 			}),

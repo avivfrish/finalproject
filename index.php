@@ -10,7 +10,8 @@
 
     <!--<script src="js/bootstrap.min.js"></script>-->
 	<script src="js/project.js" ></script>
-		
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+
 </head>
 <body ng-controller='ng-cases' ng-init="init_case();">
     <!-- SEE ME? AVIV -->
