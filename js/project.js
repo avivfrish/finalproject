@@ -1,4 +1,4 @@
-let app = angular.module('template', []);
+let app = angular.module('template', ['chart.js']);
 
 app.directive('fileModel', ['$parse', function ($parse) {
 	return {
@@ -175,23 +175,28 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                 console.log(data);
 				$scope.companies=(data.data);
 
-                let chart = new CanvasJS.Chart("chartContainer", {
-                    theme: "light2",
-                    animationEnabled: true,
-                    exportEnabled: true,
-                    title:{
-                        text: "Monthly Expense"
+                var ctx = document.getElementById("myPieChart").getContext("2d");
+
+                var myPieChart = new Chart(ctx,{
+                    type: 'pie',
+                    data : {
+                        datasets: [{
+                            data: [10, 20, 30],
+                            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"]
+                        }],
+
+                        // These labels appear in the legend and in the tooltips when hovering different arcs
+                        labels: [
+                            'Red',
+                            'Yellow',
+                            'Blue'
+                        ],
+
                     },
-                    data: [{
-                        type: "pie",
-                        showInLegend: true,
-                        toolTipContent: "<b>{name}</b>: ${y} (#percent%)",
-                        indexLabel: "{name} - #percent%",
-                        dataPoints: $scope.companies
-                    }]
+                    options: {cutoutPercentage:0}
                 });
 
-                chart.render();
+                document.getElementById("myPieChart").innerHTML=myPieChart;
 
 				console.log($scope.companies);
 			}

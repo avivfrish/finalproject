@@ -5,15 +5,18 @@
 	<!--<link rel="stylesheet" href="css/project.css">-->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="js/angular.min.js"></script>
+    <!--<script src="js/angular.js"></script>-->
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 
     <!--<script src="js/bootstrap.min.js"></script>-->
-	<script src="js/project.js" ></script>
+
     <script src="js/canvasjs.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.js"></script>
+    <script src="js/Chart.bundle.min.js"></script>
 
-
+    <script src="js/canvasjs.min.js"></script>
+    <script src="js/angular-chart.js"></script>
+    <script src="js/project.js" ></script>
 </head>
 <body ng-controller='ng-cases' ng-init="init_case();">
     <!-- SEE ME? AVIV -->
