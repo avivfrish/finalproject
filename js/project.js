@@ -1,4 +1,4 @@
-var app = angular.module('template', []);
+let app = angular.module('template', []);
 
 app.directive('fileModel', ['$parse', function ($parse) {
 	return {
@@ -59,7 +59,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 		console.log("show search div");
 		$("#home").hide();
 		$("#search_comp").show();
-		
+        $("#stats").hide();
 		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
 
 		//$("#open_caseOrIntell").text("Add Case");
@@ -75,6 +75,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 		
 		$("#home").show();
 		$("#search_comp").hide();
+        $("#stats").hide();
 		consol.log("Aviv");
 		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
 
@@ -83,9 +84,22 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 		//$("#open_caseOrIntell").href("#add_case_modal")
 		//$("#topRow").empty();
 		//$("#topRow").prepend("<embed src='http://SERVERNAME:8000/en-US/app/cymng/TopRowTimeline?earliest=0&latest=' seamless frameborder='no' scrolling='no' width='470px' height='103px' style='margin-top:10px' target='_top'></embed>"); 
-	}
+	};
+
+    $scope.show_stats = function () {
+
+        $("#home").hide();
+        $("#search_comp").hide();
+        $("#stats").show();
 
 
+
+
+
+
+
+
+    };
 	$scope.show_group = function (item) {
 		console.log("obi");
 		$("#groups").css("display","block");
@@ -109,7 +123,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 		}); //success
 		
 
-	} //the funtion
+	}; //the funtion
 	
     $scope.azure = function()
     {
@@ -125,7 +139,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
         });
 
-    }
+    };
 
 
 
@@ -133,7 +147,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
 		console.log("show_splunk");
 		console.log(document.getElementById("splunk").style.display);
-		if(document.getElementById("splunk").style.display=='none')
+		if(document.getElementById("splunk").style.display==="none")
 		{
 
 			document.getElementById("splunk").style.display="block";
@@ -150,19 +164,37 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 		console.log("Coral");
         console.log("Coral2");
 
-        var rgequest = $http({
-			method: "POST",
-			url:"php/get_companies_info.php",
-			data: $.param({
-				
-			}),
-			headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-		}); //request
-		request.success(function (data) {
-			if (data != "0"){
-				
-				$scope.companies=(data);
-				console.log(data);
+        $http({
+            method: 'POST',
+            url: 'php/azure.php',
+            params: {
+
+            }
+        }).then(function (data) {
+			if (data !== "0"){
+                console.log(data.data);
+				$scope.companies=(data.data);
+
+
+                let chart = new CanvasJS.Chart("chartContainer", {
+                    theme: "light2",
+                    animationEnabled: true,
+                    exportEnabled: true,
+                    title:{
+                        text: "Monthly Expense"
+                    },
+                    data: [{
+                        type: "pie",
+                        showInLegend: true,
+                        toolTipContent: "<b>{name}</b>: ${y} (#percent%)",
+                        indexLabel: "{name} - #percent%",
+                        dataPoints: $scope.companies
+                    }]
+                });
+
+                chart.render();
+
+				console.log($scope.companies);
 			}
 			else {
 				console.log('get companies failed');

@@ -13,10 +13,14 @@ $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
     return (sqlsrv_errors());
 $array = array();
+$temp=[450,120,300,800,150,150];
+$i=0;
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     $array[] = array(
-            'name'=>$row['name']
+            'y'=>$temp[$i],
+            'label'=>$row['name']
     );
+    $i=$i+1;
 }
 sqlsrv_free_stmt($getResults);
 echo json_encode($array);
