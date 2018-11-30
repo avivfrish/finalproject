@@ -166,15 +166,14 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
         $http({
             method: 'POST',
-            url: 'php/azure.php',
+            url: 'php/get_companies_info.php',
             params: {
 
             }
         }).then(function (data) {
 			if (data !== "0"){
-                console.log(data.data);
+                console.log(data);
 				$scope.companies=(data.data);
-
 
                 let chart = new CanvasJS.Chart("chartContainer", {
                     theme: "light2",

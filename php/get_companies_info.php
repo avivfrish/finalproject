@@ -18,7 +18,7 @@ $i=0;
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     $array[] = array(
             'y'=>$temp[$i],
-            'label'=>$row['name']
+            'name'=>$row['name']
     );
     $i=$i+1;
 }
