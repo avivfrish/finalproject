@@ -71,3 +71,7 @@
 body{
   text-align: center;
 }
+
+datalist {
+  display: none;
+}
