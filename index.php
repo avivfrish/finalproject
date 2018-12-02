@@ -10,6 +10,7 @@
 
     <!--<script src="js/bootstrap.min.js"></script>-->
     <script src="js/project.js" ></script>
+    <link rel="stylesheet" href="css/project.css">
 </head>
 <body style="text-align: center" ng-controller='ng-cases' ng-init="init_case();">
     <!-- SEE ME? AVIV -->
