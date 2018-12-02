@@ -216,14 +216,14 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         //console.log($scope.selectedCountryValue);
     }
 
-    $scope.changeState = function ()
+    $scope.getStatesByCountry = function (callback)
     {
         console.log("GET states")
         $http({
             method: 'POST',
             url: 'php/getStatesByCountry.php',
             params: {
-				selectedCountry : $scope.selectedCountryValue
+                selectedCountry : $scope.selectedCountryValue
             }
         }).then(function (data) {
             console.log("GET states 2");
@@ -233,34 +233,23 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                 statesByCountry.push(data.data[item]['state']);
             }
             $scope.arrayOfStates = statesByCountry;
+            console.log("LEN", $scope.arrayOfStates.length)
+            callback($scope.arrayOfStates.length);
         });
+    }
 
-        if ($scope.arrayOfStates.length > 0){
-            document.getElementById("stateOptions").style.display="block";
-		}
-		else {
-            document.getElementById("stateOptions").style.display="none";
-		}
-
-        /*$scope.selectedStateValue = "";
-        if ( $scope.selectedCountryValue === "ISRAEL" ){
-            console.log("Change State - ISRAEL");
-            $scope.arrayOfStates = ['Tel-Aviv', 'Haifa'];
-            $("#stateOptions").show()
-            document.getElementById("stateOptions").style.display="block";
-        }
-        else if ($scope.selectedCountryValue === "UNITED_STATES"){
-            console.log("Change State - UNITED STATES");
-            $scope.arrayOfStates = ['Florida', 'New-York'];
-            $("#stateOptions").show()
-            document.getElementById("stateOptions").style.display="block";
-        }
-        else {
-            $scope.arrayOfStates = [];
-            console.log('array is empty');
-            console.log($scope.arrayOfStates);
-            document.getElementById("stateOptions").style.display="none";
-        }*/
+    $scope.changeState = function ()
+    {
+        $scope.getStatesByCountry(function(len) {
+            if (len > 0){
+                console.log("SHOW STATE")
+                document.getElementById("stateOptions").style.display="block";
+            }
+            else {
+                console.log("HIDE STATE")
+                document.getElementById("stateOptions").style.display="none";
+            }
+        });
     }
 
 
