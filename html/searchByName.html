@@ -17,16 +17,16 @@
                     <li><a href="#is_equal">It's equal</a></li>
                   </ul>
                 </div>
-                <input type="hidden" name="search_param" value="all" id="search_param">
-                <input type="text" class="form-control" name="x" placeholder="Search company...">
+                <input type="hidden" name="nameSearched" value="nameSearched">
+                <input type="text" class="form-control" name="x" id="nameSearched" placeholder="Search company...">
                 <span class="input-group-btn"></span>
 
-                <input type="hidden" name="search_param" value="all" id="search_param">
-                <input type="text" class="form-control" name="x" placeholder="Fill CIK">
+                <input type="hidden" name="cikSearched" value="cikSearched">
+                <input type="text" class="form-control" name="x" id="cikSearched" placeholder="Fill CIK">
                 <span class="input-group-btn"></span>
 
-                <input type="hidden" name="search_param" value="all" id="search_param">
-                <input type="text" class="form-control" name="x" placeholder="Fill RSSD ID">
+                <input type="hidden" name="idSearched" value="idSearched">
+                <input type="text" class="form-control" name="x" id="idSearched" placeholder="Fill RSSD ID">
                 <span class="input-group-btn"></span>
 
               </div>
@@ -36,21 +36,27 @@
 
         <br>
 
-        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        <br>
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit" ng-click="searchByName()">Search</button>
+
+        <br><br>
 
       </div>
       <div id="showResults">
 
         <div class="card">
             <div class="card-header">
-                <h4 class="card-title">A l l y</h4>
+                <h4 class="card-title"><div id="nameOfCountryField"></div></h4>
                 <p class="card-text">financial company</p>
             </div>
           <div class="card-body">
             <ul class="ulOfCard">
                 <li class="liOfCard"><div class="titleOfLi">About us</div> +1-111-111-11-11</li>
-                <li class="liOfCard"><div class="titleOfLi">About us</div>+1-111-111-11-11</li>
+                <li class="liOfCard"><div class="titleOfLi">Address</div>
+                    <p>
+                        <div id="countryField"></div>
+                        <div id="cityField"></div>
+                    </p>
+                </li>
                 <li class="liOfCard"><div class="titleOfLi">About us</div>+1-111-111-11-11</li>
             </ul>
           </div>

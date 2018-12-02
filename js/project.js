@@ -49,7 +49,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#search_compByCity").hide();
         document.getElementById("loggin_user").innerHTML="Hello Avi";
         $scope.selectedCountryValue="";
-        $scope.selectedStateVsalue="";
+        $scope.selectedStateValue="";
         $scope.arrayOfCountries = [];
         //$scope.arrayOfCountries22 = ["ISRAEL","UNITED", "USA", "JAPAN"];
         //autocomplete(document.getElementById("myInput"), $scope.arrayOfCountries22);
@@ -70,6 +70,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         if (searchBy == 'name'){
             console.log("show search name");
             $("#search_compByName").show();
+            $("#showResults").hide();
         }
         else {
             console.log("show search city");
@@ -207,13 +208,17 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
     $scope.getIframeSrc = function ()
     {
+        document.getElementById("googleMap").innerHTML = '<div class="loader"></div>';
+        console.log("finishLOAD")
         if ( $scope.selectedStateValue ){
-            document.getElementById("googleMap").innerHTML = "<iframe src='https://www.google.com/maps?&q=" + $scope.selectedStateValue + ',' + $scope.selectedCountryValue + "&output=embed' width='100%' height='320' frameborder='0' style='border:0' allowfullscreen></iframe>";
+            const toFillIn = "<iframe src='https://www.google.com/maps?&q=" + $scope.selectedStateValue + ',' + $scope.selectedCountryValue + "&output=embed' width='100%' height='320' frameborder='0' style='border:0' allowfullscreen></iframe>";
+            document.getElementById("googleMap").innerHTML = toFillIn;
         }
         else {
-            document.getElementById("googleMap").innerHTML = "<iframe src='https://www.google.com/maps?&q=" + $scope.selectedCountryValue + "&output=embed' width='100%' height='320' frameborder='0' style='border:0' allowfullscreen></iframe>";
+            const toFillIn = "<iframe src='https://www.google.com/maps?&q=" + $scope.selectedCountryValue + "&output=embed' width='100%' height='320' frameborder='0' style='border:0' allowfullscreen></iframe>";
+            document.getElementById("googleMap").innerHTML = toFillIn;
         }
-        //console.log($scope.selectedCountryValue);
+        console.log($scope.selectedCountryValue);
     }
 
     $scope.getStatesByCountry = function (callback)
@@ -249,6 +254,41 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                 console.log("HIDE STATE")
                 document.getElementById("stateOptions").style.display="none";
             }
+        });
+    }
+
+    $scope.searchByName = function ()
+    {
+        console.log("SEARCH BY NAME !!!")
+        const name = document.getElementById("nameSearched").value;
+        const cik = document.getElementById("cikSearched").value;
+        const id = document.getElementById("idSearched").value;
+        $http({
+            method: 'POST',
+            url: 'php/getAddress.php',
+            params: {
+                name : name,
+                cik : cik,
+                id : id
+            }
+        }).then(function (data) {
+            if(data.data.length > 0){
+                console.log("GET Address");
+                console.log(data.data);
+                const name = data.data[0]['name'];
+                const country = data.data[0]['country'];
+                console.log("COUNTRY", country)
+                const state = data.data[0]['state']
+                console.log("state", state)
+                document.getElementById("nameOfCountryField").innerHTML = name;
+                document.getElementById("countryField").innerHTML = "Country: " + country;
+                document.getElementById("cityField").innerHTML = "City: " + state;
+                $("#showResults").show();
+            }
+            else {
+                console.log("NO RESULTS");
+            }
+
         });
     }
 
