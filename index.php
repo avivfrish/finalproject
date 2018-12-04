@@ -41,6 +41,9 @@
 		include "html/nav.html";
 		include "html/industry.html";
 		include "html/search.html";
+		include "html/updateComp.html";
+        include "html/insertNewComp.html";
+        include "html/insertFile.html";
 	?>		
 </body>
 </html>

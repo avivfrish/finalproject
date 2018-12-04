@@ -42,6 +42,30 @@ app.directive('fileModel', ['$parse', function ($parse) {
 
 app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
+	$scope.show_update = function (update) {
+		if (update == 'newComp') {
+			$("#new_comp").show();
+            $("#home").hide();
+            $("#search_comp").hide();
+            $("#new_file").hide();
+            $("#update_comp").hide();
+		}
+		else if (update == 'updateComp') {
+            $("#update_comp").show();
+            $("#home").hide();
+            $("#search_comp").hide();
+            $("#new_file").hide();
+            $("#new_comp").hide();
+		}
+		else {
+            $("#new_file").show();
+            $("#home").hide();
+            $("#search_comp").hide();
+            $("#update_comp").hide();
+            $("#new_comp").hide();
+		}
+	}
+
 	$scope.init_case = function (item) {
 		//$("#nav").show();
 		$("#home").show();
