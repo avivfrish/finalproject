@@ -44,9 +44,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
 	$scope.init_case = function (item) {
 		//$("#nav").show();
+        $scope.hidePages();
 		$("#home").show();
-        $("#search_compByName").hide();
-        $("#search_compByCity").hide();
         document.getElementById("loggin_user").innerHTML="Hello Avi";
         $scope.selectedCountryValue="";
         $scope.selectedStateValue="";
@@ -58,19 +57,19 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 		console.log("hello");
 	} //the function
 	
-
-
-	$scope.show_search = function (searchBy) {
-		//show_cases_div - show cases div
-		
-		console.log("show search div");
-		$("#home").hide();
+    $scope.hidePages = function(){
+        $("#home").hide();
         $("#search_compByName").hide();
         $("#search_compByCity").hide();
+        $("#searchResults").hide();
+    }
+
+	$scope.show_search = function (searchBy) {
+		console.log("show search div");
+        $scope.hidePages();
         if (searchBy == 'name'){
             console.log("show search name");
             $("#search_compByName").show();
-            $("#showResults").hide();
         }
         else {
             console.log("show search city");
@@ -90,11 +89,9 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 		//show_cases_div - show cases div
 		
 		////console.log("show_cases_div - show cases div");
-		
+        $scope.hidePages();
 		$("#home").show();
-		$("#search_compByName").hide();
-        $("#search_compByCity").hide();
-        consol.log("Aviv");
+        console.log("Aviv");
 		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
 
 		//$("#open_caseOrIntell").text("Add Case");
@@ -283,9 +280,10 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                 document.getElementById("nameOfCountryField").innerHTML = name;
                 document.getElementById("countryField").innerHTML = "Country: " + country;
                 document.getElementById("cityField").innerHTML = "City: " + state;
-                $("#showResults").show();
+                $("#searchResults").show();
             }
             else {
+                document.getElementById("searchResults").innerHTML = "No results found !";
                 console.log("NO RESULTS");
             }
 

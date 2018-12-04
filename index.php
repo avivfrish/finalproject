@@ -42,6 +42,7 @@
 		include "html/industry.html";
 		include "html/searchByName.html";
         include "html/searchByCity.html";
-	?>		
+        include "html/searchResults.html";
+    ?>
 </body>
 </html>
