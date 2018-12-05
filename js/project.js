@@ -183,6 +183,11 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 		}); //success
 	}
 
+	$scope.filterBy = function(filter){
+	    console.log("FILTER", filter);
+        document.getElementById("dropdownMenuLink").innerHTML = "Filter By: " + filter;
+    }
+
     $scope.get_countries = function()
     {
         $http({

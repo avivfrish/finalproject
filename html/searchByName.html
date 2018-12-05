@@ -8,15 +8,16 @@
           <div class="row">
             <div class="col-xs-6 col-xs-offset-2">
               <div class="input-group">
-                <div class="input-group-btn search-panel">
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <span id="search_concept">Filter by</span> <span class="caret"></span>
-                  </button>
-                  <ul class="dropdown-menu" role="menu">
-                    <li><a href="#contains">Contains</a></li>
-                    <li><a href="#is_equal">It's equal</a></li>
-                  </ul>
-                </div>
+                  <div class="dropdown show">
+                      <a class="btn btn-secondary dropdown-toggle" style="width: fit-content" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                          Filter By:
+                      </a>
+                      <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                          <a class="dropdown-item" href="#" ng-click="filterBy('None')">None</a>
+                          <a class="dropdown-item" href="#" ng-click="filterBy('Contains')">Contains</a>
+                          <a class="dropdown-item" href="#" ng-click="filterBy('Equals')">Equals</a>
+                      </div>
+                  </div>
                 <input type="hidden" name="nameSearched" value="nameSearched">
                 <input type="text" class="form-control" name="x" id="nameSearched" placeholder="Search company...">
                 <span class="input-group-btn"></span>
