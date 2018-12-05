@@ -259,23 +259,32 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         });
     }
 
-    $scope.searchForResults = function ()
+    $scope.searchForResults = function (searchBy)
     {
-        console.log("SEARCH !!!")
         $("#foundResults").hide();
         $("#noResults").hide();
         $("#searchResults").show();
         $("#loadingResults").show();
-        const name = document.getElementById("nameSearched").value;
-        const cik = document.getElementById("cikSearched").value;
-        const id = document.getElementById("idSearched").value;
+
+        let name, cik, id;
+        if (searchBy == 'Name'){
+            console.log("Search results for Name");
+            name = document.getElementById("nameSearched").value;
+            cik = document.getElementById("cikSearched").value;
+            id = document.getElementById("idSearched").value;
+        }
+
         $http({
             method: 'POST',
             url: 'php/getAddress.php',
             params: {
+                searchBy : searchBy,
                 name : name,
                 cik : cik,
-                id : id
+                id : id,
+                country : $scope.selectedCountryValue,
+                state : $scope.selectedStateValue,
+                //street : street
             }
         }).then(function (data) {
             if(data.data.length > 0){

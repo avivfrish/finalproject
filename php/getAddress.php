@@ -10,30 +10,53 @@ $connectionInfo = array("UID" => "finalproject@avifinalproject", "pwd" => "1qaZ2
 $serverName = "tcp:avifinalproject.database.windows.net,1433";
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
-$name = $_GET["name"];
-$cik = $_GET["cik"];
-$id = $_GET["id"];
-
+$searchBy = $_GET["searchBy"];
 $sql= /** @lang text */
     "select name, country, state from companies where ";
 
-if ($name){
-    $sql = $sql."name = '".$name."' ";
-}
+if($searchBy == 'Name'){
+    $name = $_GET["name"];
+    $cik = $_GET["cik"];
+    $id = $_GET["id"];
 
-if ($cik){
-    if($name){
-        $sql = $sql."AND ";
+    if ($name){
+        $sql = $sql."name = '".$name."' ";
     }
-    $sql = $sql."cik = '".$cik."' ";
-}
-
-if ($id){
-    if($name or $cik){
-        $sql = $sql."AND ";
+    if ($cik){
+        if($name){
+            $sql = $sql."AND ";
+        }
+        $sql = $sql."cik = '".$cik."' ";
     }
-    $sql = $sql."ID = ".$id;
+    if ($id){
+        if($name or $cik){
+            $sql = $sql."AND ";
+        }
+        $sql = $sql."ID = ".$id;
+    }
+}
+else{
+    $country = $_GET["country"];
+    $state = $_GET["state"];
+    $street = $_GET["street"];
 
+    $sql= /** @lang text */
+        "select name, country, state from companies where ";
+    if ($country){
+        $sql = $sql."country = '".$country."' ";
+    }
+    if ($state){
+        if($country){
+            $sql = $sql."AND ";
+        }
+        $sql = $sql."state = '".$state."' ";
+    }
+    if ($street){
+        if($country or $state){
+            $sql = $sql."AND ";
+        }
+        $sql = $sql."street = ".$street;
+    }
 }
 
 $getResults= sqlsrv_query($conn, $sql);
