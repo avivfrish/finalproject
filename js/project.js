@@ -254,9 +254,13 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         });
     }
 
-    $scope.searchByName = function ()
+    $scope.searchForResults = function ()
     {
-        console.log("SEARCH BY NAME !!!")
+        console.log("SEARCH !!!")
+        $("#foundResults").hide();
+        $("#noResults").hide();
+        $("#searchResults").show();
+        $("#loadingResults").show();
         const name = document.getElementById("nameSearched").value;
         const cik = document.getElementById("cikSearched").value;
         const id = document.getElementById("idSearched").value;
@@ -280,10 +284,12 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                 document.getElementById("nameOfCountryField").innerHTML = name;
                 document.getElementById("countryField").innerHTML = "Country: " + country;
                 document.getElementById("cityField").innerHTML = "City: " + state;
-                $("#searchResults").show();
+                $("#loadingResults").hide();
+                $("#foundResults").show();
             }
             else {
-                document.getElementById("searchResults").innerHTML = "No results found !";
+                $("#loadingResults").hide();
+                $("#noResults").show();
                 console.log("NO RESULTS");
             }
 
