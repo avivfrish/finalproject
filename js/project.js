@@ -54,7 +54,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         //autocomplete(document.getElementById("myInput"), $scope.arrayOfCountries22);
         $scope.get_countries()
         $scope.arrayOfStates = [];
-		console.log("hello");
+        $scope.resultsOfSearch = [];
+        console.log("hello");
 	} //the function
 	
     $scope.hidePages = function(){
@@ -290,14 +291,16 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             if(data.data.length > 0){
                 console.log("GET Address");
                 console.log(data.data);
-                const name = data.data[0]['name'];
+                $scope.resultsOfSearch = data.data;
+                console.log($scope.resultsOfSearch)
+                /*const name = data.data[0]['name'];
                 const country = data.data[0]['country'];
                 console.log("COUNTRY", country)
                 const state = data.data[0]['state']
                 console.log("state", state)
                 document.getElementById("nameOfCountryField").innerHTML = name;
                 document.getElementById("countryField").innerHTML = "Country: " + country;
-                document.getElementById("cityField").innerHTML = "City: " + state;
+                document.getElementById("cityField").innerHTML = "City: " + state;*/
                 $("#loadingResults").hide();
                 $("#foundResults").show();
             }

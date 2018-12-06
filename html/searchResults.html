@@ -1,26 +1,33 @@
 <div id="searchResults">
 
-    <div id="foundResults">
-        <div class="card">
-            <div class="card-header">
-                <h4 class="card-title"><div id="nameOfCountryField"></div></h4>
-                <p class="card-text">financial company</p>
-            </div>
-            <div class="card-body">
-                <ul class="ulOfCard">
-                    <li class="liOfCard"><div class="titleOfLi">About us</div> +1-111-111-11-11</li>
-                    <li class="liOfCard"><div class="titleOfLi">Address</div>
-                        <div id="countryField"></div>
-                        <div id="cityField"></div>
-                    </li>
-                    <li class="liOfCard"><div class="titleOfLi">About us</div>+1-111-111-11-11</li>
-                </ul>
-            </div>
+    <div id="foundResults" class="container">
+        <div class="row">
+            <div ng-repeat="result in resultsOfSearch" class="card">
+                <div class="card-header">
+                    <h4 class="card-title">{{result.name}}<!--<div id="nameOfCountryField"></div>--></h4>
+                    <p class="card-text">financial company</p>
+                </div>
+                <div class="card-body">
+                    <ul class="ulOfCard">
+                        <li class="liOfCard"><div class="titleOfLi">About us</div> +1-111-111-11-11</li>
+                        <li class="liOfCard"><div class="titleOfLi">Address</div>
+                            <p>
+                                Country: {{result.country}}<br>
+                                State: {{result.state}}
+                            </p>
+                            <!--<div id="countryField"></div>
+                            <div id="cityField"></div>-->
+                        </li>
+                        <li class="liOfCard"><div class="titleOfLi">About us</div>+1-111-111-11-11</li>
+                    </ul>
+                </div>
 
-            <div class="card-footer">
-
+                <div class="card-footer">
+                </div>
             </div>
         </div>
+
+
     </div>
 
     <div id="noResults">
