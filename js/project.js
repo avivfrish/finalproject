@@ -149,6 +149,24 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
     }
 
+    $scope.insertNewComp = function()
+    {
+        $http({
+            method: 'POST',
+            url: 'php/insertNewComp.php',
+            params: {
+                companyID: document.getElementById("compID").value,
+                companyName: document.getElementById("compName").value,
+                street: document.getElementById("compStreet").value,
+                country: document.getElementById("compCountry").value,
+                state: document.getElementById("compState").value
+            }
+        }).then(function (data) {
+            console.log(data.data);
+
+        });
+
+    }
 
 
 	$scope.show_splunk = function () {
