@@ -1,0 +1,15 @@
+<div id="new_file" style="margin-top: 70px">
+    <h1 style="text-align: center; font-family: Arial Black, Gadget, sans-serif; font-size:4vw">Insert a New File</h1>
+    <center>
+        <font face="Arial Black">
+            Please select the file you wish to add
+        </font>
+        <font face="Arial">
+            <form action="<?php echo $_SERVER['PHP_SELF'];?>"
+                  method="POST" enctype="multipart/from-data">
+                <input name="csv" type="file" id="csv"/>
+                <input type="submit" name="submit" value="submit"/>
+            </form>
+        </font>
+    </center>
+</div>
