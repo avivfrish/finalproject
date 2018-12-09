@@ -7,14 +7,13 @@ $sql =/** @lang text */
     "INSERT INTO companies(ID,name,street,country,state) Values('".$_GET['companyID']."','".$_GET['companyName']."','".$_GET['street']."','".$_GET['country']."','".$_GET['state']."')";
     $getResults= sqlsrv_query($conn, $sql);
 
-/*if ($getResults == FALSE) {
-    echo ("no1");
-
+if ($getResults == FALSE) {
+    echo ("false");
     //return (sqlsrv_errors());
 }
 else {
-    echo ("yes");
-}*/
+    echo ("true");
+}
 
 //$array = array();
 //while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {

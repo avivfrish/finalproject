@@ -15,15 +15,26 @@
                 </form>
             </table>
         </font>
-        <button type="submit" name="newCompanyButton" value="send" id="newCompButton" ng-click="insertNewComp()">Add New Company</button>
+        <button type="submit" value="send" ng-click="insertNewComp()">Add New Company</button>
+        <button type="reset" value="Reset form" ng-click="clear()">Clear</button>
     </center>
 </div>
 
-<div id="couldnt_add_new_comp" style="margin-top: 200px">
-    <h1 style="text-align: center; font-family: Arial Black, Gadget, sans-serif; font-size:4vw">Couldn't add company!</h1>
+<!--<div id="couldnt_add_new_comp" style="margin-top: 200px">
+    <h1 style="color: red; text-align: center; font-family: Arial black, Gadget, sans-serif; font-size:2vw">Couldn't add company!</h1>
 </div>
 
 <div id="added_comp_successfully" style="margin-top: 200px">
-    <h1 style="text-align: center; font-family: Arial Black, Gadget, sans-serif; font-size:4vw">Company added successfully!</h1>
+    <h1 style="color: green; text-align: center; font-family: Arial black, Gadget, sans-serif; font-size:2vw">Company added successfully!</h1>
+</div>-->
+
+<div class="alert alert-success alert-dismissible" id="added_comp_successfully">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Success!</strong> Added company successfully.
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="couldnt_add_new_comp">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't add company.
 </div>
 

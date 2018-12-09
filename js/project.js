@@ -94,6 +94,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#update_comp").hide();
         $("#delete_comp").hide();
         $("#new_comp").hide();
+        $("#couldnt_add_new_comp").hide();
+        $("#added_comp_successfully").hide();
 		document.getElementById("loggin_user").innerHTML="Hello Avi";
 		console.log("hello");
 	} //the funtion
@@ -110,6 +112,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#update_comp").hide();
         $("#delete_comp").hide();
         $("#new_comp").hide();
+        $("#couldnt_add_new_comp").hide();
+        $("#added_comp_successfully").hide();
 		
 		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
 
@@ -130,6 +134,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#update_comp").hide();
         $("#delete_comp").hide();
         $("#new_comp").hide();
+        $("#couldnt_add_new_comp").hide();
+        $("#added_comp_successfully").hide();
 		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
 
 		//$("#open_caseOrIntell").text("Add Case");
@@ -194,18 +200,39 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             }
         }).then(function (data) {
             console.log(data.data);
-            if (data.data == true) {
+            if (data.data == 'true') {
                 console.log("yes");
                 $("#added_comp_successfully").show();
                 $("#couldnt_add_new_comp").hide();
             }
-            else if (data.data == false) {
+            else if (data.data == 'false') {
                 console.log("no");
                 $("#couldnt_add_new_comp").show();
                 $("#added_comp_successfully").hide();
             }
 
         });
+
+    }
+
+    $scope.clear = function()
+    {
+    	//document.getElementById("new_comp").reset();
+        document.getElementById('compID').value = '',
+        document.getElementById('compName').value = '',
+        document.getElementById('compStreet').value = '',
+        document.getElementById('compCountry').value = '',
+        document.getElementById('compState').value = ''
+        /*$http({
+            method: 'POST',
+            url: 'php/azure.php',
+            params: {
+
+            }
+        }).then(function (data) {
+            console.log(data.data);
+
+        });*/
 
     }
 
