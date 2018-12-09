@@ -42,34 +42,58 @@ app.directive('fileModel', ['$parse', function ($parse) {
 
 app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
-	$scope.show_update = function (update) {
-		if (update == 'newComp') {
-			$("#new_comp").show();
-            $("#home").hide();
-            $("#search_comp").hide();
-            $("#new_file").hide();
-            $("#update_comp").hide();
-		}
-		else if (update == 'updateComp') {
-            $("#update_comp").show();
-            $("#home").hide();
-            $("#search_comp").hide();
-            $("#new_file").hide();
-            $("#new_comp").hide();
-		}
-		else {
-            $("#new_file").show();
-            $("#home").hide();
-            $("#search_comp").hide();
-            $("#update_comp").hide();
-            $("#new_comp").hide();
-		}
+	$scope.show_insert_new_comp = function () {
+        $("#new_comp").show();
+        $("#home").hide();
+        $("#search_comp").hide();
+        $("#new_file").hide();
+        $("#update_comp").hide();
+        $("#delete_comp").hide();
+        $("#couldnt_add_new_comp").hide();
+        $("#added_comp_successfully").hide();
 	}
+
+    $scope.show_update_comp = function () {
+        $("#update_comp").show();
+        $("#home").hide();
+        $("#search_comp").hide();
+        $("#new_file").hide();
+        $("#new_comp").hide();
+        $("#delete_comp").hide();
+        $("#couldnt_add_new_comp").hide();
+        $("#added_comp_successfully").hide();
+    }
+
+    $scope.show_delete_comp = function () {
+        $("#delete_comp").show();
+        $("#home").hide();
+        $("#search_comp").hide();
+        $("#new_file").hide();
+        $("#update_comp").hide();
+        $("#new_comp").hide();
+        $("#couldnt_add_new_comp").hide();
+        $("#added_comp_successfully").hide();
+    }
+
+    $scope.show_insert_new_file = function () {
+        $("#new_file").show();
+        $("#home").hide();
+        $("#search_comp").hide();
+        $("#delete_comp").hide();
+        $("#update_comp").hide();
+        $("#new_comp").hide();
+        $("#couldnt_add_new_comp").hide();
+        $("#added_comp_successfully").hide();
+    }
 
 	$scope.init_case = function (item) {
 		//$("#nav").show();
 		$("#home").show();
         $("#search_comp").hide();
+        $("#new_file").hide();
+        $("#update_comp").hide();
+        $("#delete_comp").hide();
+        $("#new_comp").hide();
 		document.getElementById("loggin_user").innerHTML="Hello Avi";
 		console.log("hello");
 	} //the funtion
@@ -82,6 +106,10 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 		console.log("show search div");
 		$("#home").hide();
 		$("#search_comp").show();
+        $("#new_file").hide();
+        $("#update_comp").hide();
+        $("#delete_comp").hide();
+        $("#new_comp").hide();
 		
 		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
 
@@ -98,7 +126,10 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 		
 		$("#home").show();
 		$("#search_comp").hide();
-		consol.log("Aviv");
+        $("#new_file").hide();
+        $("#update_comp").hide();
+        $("#delete_comp").hide();
+        $("#new_comp").hide();
 		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
 
 		//$("#open_caseOrIntell").text("Add Case");
@@ -163,11 +194,39 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             }
         }).then(function (data) {
             console.log(data.data);
+            if (data.data == true) {
+                console.log("yes");
+                $("#added_comp_successfully").show();
+                $("#couldnt_add_new_comp").hide();
+            }
+            else if (data.data == false) {
+                console.log("no");
+                $("#couldnt_add_new_comp").show();
+                $("#added_comp_successfully").hide();
+            }
 
         });
 
     }
 
+   /* $scope.deleteComp = function()
+    {
+        $http({
+            method: 'POST',
+            url: 'php/insertNewComp.php',
+            params: {
+                companyID: document.getElementById("compID").value,
+                companyName: document.getElementById("compName").value,
+                street: document.getElementById("compStreet").value,
+                country: document.getElementById("compCountry").value,
+                state: document.getElementById("compState").value
+            }
+        }).then(function (data) {
+            console.log(data.data);
+
+        });
+
+    }*/
 
 	$scope.show_splunk = function () {
 

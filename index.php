@@ -43,7 +43,8 @@
 		include "html/search.html";
 		include "html/updateComp.html";
         include "html/insertNewComp.html";
-        include "html/insertFile.html";
+        include "html/deleteComp.html";
+        include "html/insertNewFile.html";
 	?>		
 </body>
 </html>
