@@ -77,9 +77,9 @@ datalist {
 }
 
 .card {
-    width: 400px;
-    height: 250px;
-    margin: 0 auto;
+    width: 480px;
+    height: 300px;
+    margin: 10px 10px;
     float: none;
     border: 2px solid #3BA3BA;
     border-radius: 10px;
@@ -127,6 +127,12 @@ datalist {
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+.foundResults .row {
+    /*margin: 0 auto;*/
+    padding: 50px 50px;
+    align-items:center;
 }
 
 

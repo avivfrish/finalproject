@@ -14,14 +14,14 @@ $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 
 $sql= /** @lang text */
-    "select distinct country from companies";
+    "select distinct COUNTRY from companiesNIC Where COUNTRY!='None'";
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
     return (sqlsrv_errors());
 $array = array();
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     $array[] = array(
-        'country'=>$row['country']
+        'country'=>$row['COUNTRY']
     );
 }
 sqlsrv_free_stmt($getResults);

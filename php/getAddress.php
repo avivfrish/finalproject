@@ -12,7 +12,7 @@ $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 $searchBy = $_GET["searchBy"];
 $sql= /** @lang text */
-    "select name, country, state from companies where ";
+    "select NAME, COUNTRY from companiesNIC where ";
 
 if($searchBy == 'Name'){
     $name = $_GET["name"];
@@ -20,19 +20,19 @@ if($searchBy == 'Name'){
     $id = $_GET["id"];
 
     if ($name){
-        $sql = $sql."name = '".$name."' ";
+        $sql = $sql."NAME = '".$name."' ";
     }
     if ($cik){
         if($name){
             $sql = $sql."AND ";
         }
-        $sql = $sql."cik = '".$cik."' ";
+        $sql = $sql."SEC_CIK = '".$cik."' ";
     }
     if ($id){
         if($name or $cik){
             $sql = $sql."AND ";
         }
-        $sql = $sql."ID = ".$id;
+        $sql = $sql."RSSD_ID = ".$id;
     }
 }
 else{
@@ -41,21 +41,21 @@ else{
     $street = $_GET["street"];
 
     $sql= /** @lang text */
-        "select name, country, state from companies where ";
+        "select NAME, COUNTRY from companiesNIC where ";
     if ($country){
-        $sql = $sql."country = '".$country."' ";
+        $sql = $sql."COUNTRY = '".$country."' ";
     }
     if ($state){
         if($country){
             $sql = $sql."AND ";
         }
-        $sql = $sql."state = '".$state."' ";
+        $sql = $sql."StateLong = '".$state."' ";
     }
     if ($street){
         if($country or $state){
             $sql = $sql."AND ";
         }
-        $sql = $sql."street = ".$street;
+        $sql = $sql."STREET = ".$street;
     }
 }
 
@@ -65,9 +65,9 @@ if ($getResults == FALSE)
 $array = array();
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     $array[] = array(
-        'name'=>$row['name'],
-        'country'=>$row['country'],
-        'state'=>$row['state']
+        'name'=>$row['NAME'],
+        'country'=>$row['COUNTRY'],
+        'state'=>"l"//$row['StateLong']
     );
 }
 sqlsrv_free_stmt($getResults);

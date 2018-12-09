@@ -1,7 +1,7 @@
 <div id="searchResults">
 
     <div id="foundResults" class="container">
-        <div class="row">
+        <div class="row" style="margin: 0 auto; align-items: center">
             <div ng-repeat="result in resultsOfSearch" class="card">
                 <div class="card-header">
                     <h4 class="card-title">{{result.name}}<!--<div id="nameOfCountryField"></div>--></h4>
@@ -23,6 +23,8 @@
                 </div>
 
                 <div class="card-footer">
+                    <button type="button" class="btn btn-link">Show My Competitors</button>
+                    <button type="button" class="btn btn-link">Show My Subsidiaries</button>
                 </div>
             </div>
         </div>
