@@ -43,6 +43,7 @@
 		include "html/searchByName.html";
         include "html/searchByCity.html";
         include "html/searchResults.html";
+        include "html/searchModals.html";
     ?>
 </body>
 </html>

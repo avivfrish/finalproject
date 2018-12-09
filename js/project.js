@@ -47,13 +47,19 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $scope.hidePages();
 		$("#home").show();
         document.getElementById("loggin_user").innerHTML="Hello Avi";
+
         $scope.selectedCountryValue="";
         $scope.selectedStateValue="";
+        $scope.selectedCityValue="";
+        $scope.selectedStreetValue="";
+
         $scope.arrayOfCountries = [];
-        //$scope.arrayOfCountries22 = ["ISRAEL","UNITED", "USA", "JAPAN"];
         //autocomplete(document.getElementById("myInput"), $scope.arrayOfCountries22);
-        $scope.get_countries()
+        $scope.get_countries();
         $scope.arrayOfStates = [];
+        $scope.arrayOfCities = [];
+        $scope.arrayOfStreets = [];
+
         $scope.resultsOfSearch = [];
         console.log("hello");
 	} //the function
@@ -76,6 +82,9 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             console.log("show search city");
             $("#search_compByCity").show();
             $("#stateOptions").hide();
+            $("#cityOptions").hide();
+            $("#streetOptions").hide();
+            $("#loadingMap").hide();
         }
 
 		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
@@ -211,8 +220,11 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
     $scope.getIframeSrc = function ()
     {
-        document.getElementById("googleMap").innerHTML = '<div class="loader"></div>';
-        console.log("finishLOAD")
+        $("#googleMap").hide();
+        $("#loadingMap").show();
+        console.log("LOAD")
+        //document.getElementById("googleMap").innerHTML = '<div class="loader"></div>';
+        //console.log("finishLOAD")
         if ( $scope.selectedStateValue ){
             const toFillIn = "<iframe src='https://www.google.com/maps?&q=" + $scope.selectedStateValue + ',' + $scope.selectedCountryValue + "&output=embed' width='100%' height='320' frameborder='0' style='border:0' allowfullscreen></iframe>";
             document.getElementById("googleMap").innerHTML = toFillIn;
@@ -221,7 +233,46 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             const toFillIn = "<iframe src='https://www.google.com/maps?&q=" + $scope.selectedCountryValue + "&output=embed' width='100%' height='320' frameborder='0' style='border:0' allowfullscreen></iframe>";
             document.getElementById("googleMap").innerHTML = toFillIn;
         }
+        $("#loadingMap").hide();
+        $("#googleMap").show();
+        console.log("FINISH LOAD")
         console.log($scope.selectedCountryValue);
+    }
+
+    $scope.getCities = function (callback)
+    {
+        console.log("GET states")
+        $http({
+            method: 'POST',
+            url: 'php/getCity.php',
+            params: {
+                selectedCountry : $scope.selectedCountryValue,
+                selectedState : $scope.selectedStateValue
+            }
+        }).then(function (data) {
+            console.log(data.data);
+            let cities = [];
+            for (const item in data.data){
+                cities.push(data.data[item]['city']);
+            }
+            $scope.arrayOfCities = cities;
+            console.log("LEN", $scope.arrayOfCities.length)
+            callback($scope.arrayOfCities.length);
+        });
+    }
+
+    $scope.changeCity = function ()
+    {
+        $scope.getCities(function(len) {
+            if (len > 0){
+                console.log("SHOW CITY")
+                document.getElementById("cityOptions").style.display="block";
+            }
+            else {
+                console.log("HIDE CITY")
+                document.getElementById("cityOptions").style.display="none";
+            }
+        });
     }
 
     $scope.getStatesByCountry = function (callback)

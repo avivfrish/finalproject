@@ -1,0 +1,58 @@
+
+<div id="search_compByCity" style="margin-top: 70px">
+    <div class="container">
+        <h1>Search a Company by City</h1>
+        <p>Fill in the Search data.</p>
+        <div class="row">
+            <div class="col-sm-4">
+                <label>Select Country:</label>
+                <input list="selectedCountry" ng-change="changeState(); changeCity(); getIframeSrc()" ng-model="selectedCountryValue">
+                <datalist id="selectedCountry">
+                    <option ng-repeat="country in arrayOfCountries" value="{{country}}">{{country}}</option>
+                </datalist>
+                <br>
+
+                <div id = "stateOptions" style="display: none">
+                    <label>Select State:</label>
+                    <input list="selectedState" ng-change="changeCity(); getIframeSrc()" ng-model="selectedStateValue">
+                    <datalist id="selectedState">
+                        <option ng-repeat="state in arrayOfStates" value="{{state}}">{{state}}</option>
+                    </datalist>
+                    <br>
+                </div>
+
+                <div id = "cityOptions" style="display: none">
+                    <label>Select City:</label>
+                    <input list="selectedCity" ng-change="getIframeSrc()" ng-model="selectedCityValue">
+                    <datalist id="selectedCity">
+                        <option ng-repeat="city in arrayOfCities" value="{{city}}">{{city}}</option>
+                    </datalist>
+                    <br>
+                </div>
+
+                <div id = "streetOptions" style="display: none">
+                    <label>Select Street:</label>
+                    <input list="selectedStreet" ng-change="getIframeSrc()" ng-model="selectedStreetValue">
+                    <datalist id="selectedStreet">
+                        <option ng-repeat="street in arrayOfStreets" value="{{street}}">{{street}}</option>
+                    </datalist>
+                    <br>
+                </div>
+
+            </div>
+
+            <div class="col-sm-8" id="googleMap">
+                <iframe src="https://www.google.com/maps?&q=Israel&output=embed" width="100%" height="320" frameborder="0" style="border:0" allowfullscreen></iframe>
+            </div>
+
+            <div id="loadingMap">
+                <h4>Loading..</h4>
+                <div class="loader"></div>
+            </div>
+
+        </div>
+    </div>
+    <br>
+    <button type="button" class="btn btn-default" ng-click="searchForResults('City')">Search  <i class="fas fa-search"></i></button>
+    <br><br>
+</div>

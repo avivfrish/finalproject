@@ -129,12 +129,6 @@ datalist {
     100% { transform: rotate(360deg); }
 }
 
-.foundResults .row {
-    /*margin: 0 auto;*/
-    padding: 50px 50px;
-    align-items:center;
-}
-
 
 
 
