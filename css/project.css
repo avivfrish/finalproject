@@ -77,10 +77,9 @@ datalist {
 }
 
 .card {
-    /*width: 480px;
-    height: 300px;*/
-    display: flex;
+    width: 480px;
     height: 300px;
+    /*display: flex;*/
     margin: 10px 10px;
     float: none;
     border: 2px solid #3BA3BA;

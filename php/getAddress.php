@@ -18,21 +18,29 @@ if($searchBy == 'Name'){
     $name = $_GET["name"];
     $cik = $_GET["cik"];
     $id = $_GET["id"];
+    $filterBy = $_GET["filterBy"];
+
+    $operator = '=';
+    $char = '';
+    if ($filterBy == 'Contains'){
+        $operator = 'LIKE';
+        $char = '%';
+    }
 
     if ($name){
-        $sql = $sql."NAME = '".$name."' ";
+        $sql = $sql."NAME ".$operator." '".$char.$name.$char."' ";
     }
     if ($cik){
         if($name){
             $sql = $sql."AND ";
         }
-        $sql = $sql."SEC_CIK = '".$cik."' ";
+        $sql = $sql."SEC_CIK ".$operator." '".$char.$cik.$char."' ";
     }
     if ($id){
         if($name or $cik){
             $sql = $sql."AND ";
         }
-        $sql = $sql."RSSD_ID = ".$id;
+        $sql = $sql."RSSD_ID ".$operator." '".$char.$id.$char."' ";
     }
 }
 else{

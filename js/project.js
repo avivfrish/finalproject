@@ -77,6 +77,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             $("#search_compByName").show();
         }
         else {
+            $scope.filterBySearchByName = 'None';
             console.log("show search city");
             $("#search_compByCity").show();
             $("#stateOptions").hide();
@@ -193,6 +194,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
 	$scope.filterBy = function(filter){
 	    console.log("FILTER", filter);
+	    $scope.filterBySearchByName = filter;
         document.getElementById("dropdownMenuLink").innerHTML = "Filter By: " + filter;
     }
 
@@ -221,20 +223,44 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#googleMap").hide();
         $("#loadingMap").show();
         console.log("LOAD")
-        //document.getElementById("googleMap").innerHTML = '<div class="loader"></div>';
-        //console.log("finishLOAD")
-        if ( $scope.selectedStateValue ){
+        let newIframe = "<iframe src='https://www.google.com/maps?&q=";
+        if( $scope.selectedStreetValue ){
+            newIframe = newIframe + $scope.selectedStreetValue;
+        }
+        if( $scope.selectedCityValue ){
+            if ($scope.selectedStreetValue){
+                newIframe = newIframe + ',';
+            }
+            newIframe = newIframe + $scope.selectedCityValue;
+        }
+        if( $scope.selectedStateValue ){
+            if ($scope.selectedStreetValue || $scope.selectedCityValue){
+                newIframe = newIframe + ',';
+            }
+            newIframe = newIframe + $scope.selectedStateValue;
+        }
+        if( $scope.selectedCountryValue ){
+            if ($scope.selectedStreetValue || $scope.selectedCityValue || $scope.selectedStateValue){
+                newIframe = newIframe + ',';
+            }
+            newIframe = newIframe + $scope.selectedCountryValue;
+        }
+
+        newIframe = newIframe + "&output=embed' width='100%' height='320' frameborder='0' style='border:0' allowfullscreen></iframe>";
+        document.getElementById("googleMap").innerHTML = newIframe;
+
+
+        /*if ( $scope.selectedStateValue ){
             const toFillIn = "<iframe src='https://www.google.com/maps?&q=" + $scope.selectedStateValue + ',' + $scope.selectedCountryValue + "&output=embed' width='100%' height='320' frameborder='0' style='border:0' allowfullscreen></iframe>";
             document.getElementById("googleMap").innerHTML = toFillIn;
         }
         else {
             const toFillIn = "<iframe src='https://www.google.com/maps?&q=" + $scope.selectedCountryValue + "&output=embed' width='100%' height='320' frameborder='0' style='border:0' allowfullscreen></iframe>";
             document.getElementById("googleMap").innerHTML = toFillIn;
-        }
+        }*/
         $("#loadingMap").hide();
-        $("#googleMap").show();
         console.log("FINISH LOAD")
-        console.log($scope.selectedCountryValue);
+        $("#googleMap").show();
     }
 
     $scope.getStatesByCountry = function (callback)
@@ -343,7 +369,6 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         });
     }
 
-
     $scope.updateDataCountryChange = function (){
         $scope.selectedStateValue="";
         $scope.selectedCityValue="";
@@ -387,6 +412,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             url: 'php/getAddress.php',
             params: {
                 searchBy : searchBy,
+                filterBy : $scope.filterBySearchByName,
                 name : name,
                 cik : cik,
                 id : id,
