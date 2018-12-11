@@ -76,7 +76,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 		$("#home").show();
 		$("#search_comp").hide();
         $("#stats").hide();
-		consol.log("Aviv");
+
 		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
 
 		//$("#open_caseOrIntell").text("Add Case");
@@ -175,25 +175,47 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                 console.log(data);
 				$scope.companies=(data.data);
 
+
+                let letters = '0123456789ABCDEF';
+                let color = '#';
+                let colors=[];
+                let data_comp=[];
+                let label=[];
+                for (let j=0;j<$scope.companies.length;j++)
+                {
+                    color = '#';
+                    for (let i = 0; i < 6; i++ ) {
+                        color += letters[Math.floor(Math.random() * 16)];
+                    }
+                    colors.push(color);
+                    data_comp.push($scope.companies[j]['y']);
+                    label.push($scope.companies[j]['name']);
+                }
+
+                console.log(colors);
+
+
+
                 var ctx = document.getElementById("myPieChart").getContext("2d");
+
+
+
+
 
                 var myPieChart = new Chart(ctx,{
                     type: 'pie',
                     data : {
                         datasets: [{
-                            data: [10, 20, 30],
-                            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f"]
+                            data: data_comp,
+                            backgroundColor: colors
                         }],
 
                         // These labels appear in the legend and in the tooltips when hovering different arcs
-                        labels: [
-                            'Red',
-                            'Yellow',
-                            'Blue'
-                        ],
+                        labels: label,
 
                     },
-                    options: {cutoutPercentage:0}
+                    options: {cutoutPercentage:0,legend:{display:true}},
+
                 });
 
                 document.getElementById("myPieChart").innerHTML=myPieChart;
