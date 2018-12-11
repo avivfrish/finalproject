@@ -38,10 +38,9 @@ if($searchBy == 'Name'){
 else{
     $country = $_GET["country"];
     $state = $_GET["state"];
+    $city = $_GET["city"];
     $street = $_GET["street"];
 
-    $sql= /** @lang text */
-        "select NAME, COUNTRY from companiesNIC where ";
     if ($country){
         $sql = $sql."COUNTRY = '".$country."' ";
     }
@@ -51,11 +50,17 @@ else{
         }
         $sql = $sql."StateLong = '".$state."' ";
     }
-    if ($street){
+    if ($city){
         if($country or $state){
             $sql = $sql."AND ";
         }
-        $sql = $sql."STREET = ".$street;
+        $sql = $sql."CITY = '".$city."' ";
+    }
+    if ($street){
+        if($city or $country or $state){
+            $sql = $sql."AND ";
+        }
+        $sql = $sql."STREET = '".$street."' ";
     }
 }
 

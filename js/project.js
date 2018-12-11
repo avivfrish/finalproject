@@ -36,8 +36,6 @@ app.directive('fileModel', ['$parse', function ($parse) {
 				});
 			}
 		}]);
-
-
 //		 myApp.controller('myCtrl', ['$scope', 'fileUpload', function($scope, fileUpload){
 
 app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
@@ -95,6 +93,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 		//$("#topRow").empty();
 		//$("#topRow").prepend("<embed src='http://SERVERNAME:8000/en-US/app/cymng/TopRowTimeline?earliest=0&latest=' seamless frameborder='no' scrolling='no' width='470px' height='103px' style='margin-top:10px' target='_top'></embed>"); 
 	}
+
 	$scope.show_home = function () {
 		//show_cases_div - show cases div
 		
@@ -110,7 +109,6 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 		//$("#topRow").empty();
 		//$("#topRow").prepend("<embed src='http://SERVERNAME:8000/en-US/app/cymng/TopRowTimeline?earliest=0&latest=' seamless frameborder='no' scrolling='no' width='470px' height='103px' style='margin-top:10px' target='_top'></embed>"); 
 	}
-
 
 	$scope.show_group = function (item) {
 		console.log("obi");
@@ -239,42 +237,6 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         console.log($scope.selectedCountryValue);
     }
 
-    $scope.getCities = function (callback)
-    {
-        console.log("GET states")
-        $http({
-            method: 'POST',
-            url: 'php/getCity.php',
-            params: {
-                selectedCountry : $scope.selectedCountryValue,
-                selectedState : $scope.selectedStateValue
-            }
-        }).then(function (data) {
-            console.log(data.data);
-            let cities = [];
-            for (const item in data.data){
-                cities.push(data.data[item]['city']);
-            }
-            $scope.arrayOfCities = cities;
-            console.log("LEN", $scope.arrayOfCities.length)
-            callback($scope.arrayOfCities.length);
-        });
-    }
-
-    $scope.changeCity = function ()
-    {
-        $scope.getCities(function(len) {
-            if (len > 0){
-                console.log("SHOW CITY")
-                document.getElementById("cityOptions").style.display="block";
-            }
-            else {
-                console.log("HIDE CITY")
-                document.getElementById("cityOptions").style.display="none";
-            }
-        });
-    }
-
     $scope.getStatesByCountry = function (callback)
     {
         console.log("GET states")
@@ -297,8 +259,100 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         });
     }
 
-    $scope.changeState = function ()
+    $scope.getCities = function (callback)
     {
+        console.log("GET cities")
+        $http({
+            method: 'POST',
+            url: 'php/getCity.php',
+            params: {
+                selectedCountry : $scope.selectedCountryValue,
+                selectedState : $scope.selectedStateValue
+            }
+        }).then(function (data) {
+            console.log(data.data);
+            let cities = [];
+            for (const item in data.data){
+                cities.push(data.data[item]['city']);
+            }
+            $scope.arrayOfCities = cities;
+            console.log("LEN", $scope.arrayOfCities.length);
+            callback($scope.arrayOfCities.length);
+        });
+    }
+
+    $scope.changeCity = function (fromState)
+    {
+        $scope.selectedCityValue="";
+        $scope.arrayOfCities = [];
+
+        if(fromState === 'True' && $scope.selectedStateValue === ''){
+            document.getElementById("cityOptions").style.display="none";
+        }
+        else {
+            $scope.getCities(function(len) {
+                if (len > 0){
+                    console.log("SHOW CITY")
+                    document.getElementById("cityOptions").style.display="block";
+                }
+                else {
+                    console.log("HIDE CITY")
+                    document.getElementById("cityOptions").style.display="none";
+                }
+            });
+        }
+    }
+
+    $scope.getStreetByData = function (callback)
+    {
+        console.log("GET streets")
+        $http({
+            method: 'POST',
+            url: 'php/getStreetByData.php',
+            params: {
+                selectedCountry : $scope.selectedCountryValue,
+                selectedState : $scope.selectedStateValue,
+                selectedCity : $scope.selectedCityValue
+            }
+        }).then(function (data) {
+            console.log(data.data);
+            let streets = [];
+            for (const item in data.data){
+                streets.push(data.data[item]['street']);
+            }
+            $scope.arrayOfStreets = streets;
+            console.log("LEN", $scope.arrayOfStreets.length);
+            callback($scope.arrayOfStreets.length);
+        });
+    }
+
+    $scope.changeStreet = function ()
+    {
+        $scope.selectedStreetValue="";
+        $scope.arrayOfStreets = [];
+
+        $scope.getStreetByData(function(len) {
+            if (len > 0){
+                console.log("SHOW STREET")
+                document.getElementById("streetOptions").style.display="block";
+            }
+            else {
+                console.log("HIDE STREET")
+                document.getElementById("streetOptions").style.display="none";
+            }
+        });
+    }
+
+
+    $scope.updateDataCountryChange = function (){
+        $scope.selectedStateValue="";
+        $scope.selectedCityValue="";
+        $scope.selectedStreetValue="";
+
+        $scope.arrayOfStates = [];
+        $scope.arrayOfCities = [];
+        $scope.arrayOfStreets = [];
+
         $scope.getStatesByCountry(function(len) {
             if (len > 0){
                 console.log("SHOW STATE")
@@ -307,6 +361,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             else {
                 console.log("HIDE STATE")
                 document.getElementById("stateOptions").style.display="none";
+                console.log("STATES IS EMPTY");
+                $scope.changeCity('False');
             }
         });
     }
@@ -336,7 +392,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                 id : id,
                 country : $scope.selectedCountryValue,
                 state : $scope.selectedStateValue,
-                //street : street
+                city : $scope.selectedCityValue,
+                street : $scope.selectedStreetValue
             }
         }).then(function (data) {
             if(data.data.length > 0){
@@ -344,14 +401,6 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                 console.log(data.data);
                 $scope.resultsOfSearch = data.data;
                 console.log($scope.resultsOfSearch)
-                /*const name = data.data[0]['name'];
-                const country = data.data[0]['country'];
-                console.log("COUNTRY", country)
-                const state = data.data[0]['state']
-                console.log("state", state)
-                document.getElementById("nameOfCountryField").innerHTML = name;
-                document.getElementById("countryField").innerHTML = "Country: " + country;
-                document.getElementById("cityField").innerHTML = "City: " + state;*/
                 $("#loadingResults").hide();
                 $("#foundResults").show();
             }
@@ -363,7 +412,6 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
         });
     }
-
 
     function autocomplete(inp, arr) {
         /*the autocomplete function takes two arguments,
@@ -461,8 +509,6 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             closeAllLists(e.target);
         });
     }
-
-
 
 });	 //app.controller
 
