@@ -6,7 +6,7 @@
         </font>
         <font face="Arial">
            <label>Select company ID</label>
-            <input list="selectedID" ng-model="selectedIdValue">
+            <input list="selectedID" ng-change="changeID()" ng-model="selectedIdValue">
             <datalist id="selectedID">
                 <option ng-repeat="ID in arrayOfCompIDs" value="{{ID}}">{{ID}}</option>
             </datalist>
