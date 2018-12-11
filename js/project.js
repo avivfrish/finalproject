@@ -282,6 +282,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 	}
 
 	$scope.filterBy = function(filter){
+	    console.log("TEST");
 	    console.log("FILTER", filter);
 	    $scope.filterBySearchByName = filter;
         document.getElementById("dropdownMenuLink").innerHTML = "Filter By: " + filter;
