@@ -60,6 +60,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 		$("#home").hide();
 		$("#search_comp").show();
         $("#stats").hide();
+		$("#3ds").hide();
 		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
 
 		//$("#open_caseOrIntell").text("Add Case");
@@ -76,7 +77,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 		$("#home").show();
 		$("#search_comp").hide();
         $("#stats").hide();
-
+		$("#3ds").hide();
 		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
 
 		//$("#open_caseOrIntell").text("Add Case");
@@ -91,15 +92,19 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#home").hide();
         $("#search_comp").hide();
         $("#stats").show();
-
-
-
-
-
-
-
+		$("#3ds").hide();
 
     };
+	$scope.show_graph = function () {
+
+		$("#home").hide();
+		$("#search_comp").hide();
+		$("#stats").hide();
+		$("#3ds").show();
+		$scope.graph();
+
+
+	};
 	$scope.show_group = function (item) {
 		console.log("obi");
 		$("#groups").css("display","block");
@@ -156,7 +161,26 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 		{
 			document.getElementById("splunk").style.display="none";
 		}
-	}
+	};
+
+	$scope.graph = function(){
+		const gData = {nodes: [{id: 64, group: 1}, {id: 192, group: 1}, {id: 2, group: 2}, {id: 419, group: 1}, {id: 260, group: 1}, {id: 165, group: 1}, {id: 39, group: 1}, {id: 200, group: 1}, {id: 103, group: 1}, {id: 265, group: 1}, {id: 11, group: 1}, {id: 432, group: 1}, {id: 336, group: 1}, {id: 308, group: 1}, {id: 21, group: 1}, {id: 278, group: 1}, {id: 407, group: 1}, {id: 412, group: 1}, {id: 125, group: 1}, {id: 31, group:1}],
+			links: [{source: 64, target: 2}, {source: 192, target: 39}, {source: 192, target: 2}, {source: 2, target: 31}, {source: 2, target: 165}, {source: 2, target: 260}, {source: 2, target: 39}, {source: 2, target: 125}, {source: 2, target: 200}, {source: 2, target: 419}, {source: 2, target: 308}, {source: 2, target: 432}, {source: 2, target: 407}, {source: 2, target: 11}, {source: 2, target: 21}, {source: 2, target: 412}, {source: 2, target: 103}, {source: 2, target: 265}, {source: 2, target: 336}, {source: 2, target: 278}, {source: 260, target: 165}, {source: 260, target: 31}, {source: 260, target: 11}, {source: 260, target: 103}, {source: 260, target: 278}, {source: 200, target: 125}, {source: 103, target: 278}, {source: 265, target: 407}, {source: 265, target: 11}, {source: 265, target: 278}, {source: 11, target: 407}, {source: 11, target: 278}, {source: 308, target: 412}, {source: 21, target: 407}, {source: 21, target: 278}, {source: 278, target: 407}, {source: 125, target: 31}]}
+
+		const Graph = ForceGraph3D()
+		(document.getElementById('3d-graph'))
+			//.jsonUrl('js/graph1.json')
+			.nodeAutoColorBy('group')
+			//.linkAutoColorBy(d => gData.nodes[d.source].group)
+			.linkOpacity(0.5)
+			.nodeLabel('id')
+			.graphData(gData);
+
+
+
+	}; //the function
+
+
 
 	$scope.get_companies = function ()
 	{
