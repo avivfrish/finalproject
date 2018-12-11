@@ -205,7 +205,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 			.nodeLabel('id')
 			.graphData(gData);
 
-
+		console.log("graph");
 
 	}; //the function
 
