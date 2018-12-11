@@ -9,7 +9,7 @@ $sql =/** @lang text */
 
 if ($getResults == FALSE) {
     echo ("false");
-    //return (sqlsrv_errors());
+    //echo (sqlsrv_errors());
 }
 else {
     echo ("true");

@@ -51,6 +51,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#delete_comp").hide();
         $("#couldnt_add_new_comp").hide();
         $("#added_comp_successfully").hide();
+        $("#deleted_comp_successfully").hide();
+        $("#couldnt_delete_comp").hide();
 	}
 
     $scope.show_update_comp = function () {
@@ -62,6 +64,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#delete_comp").hide();
         $("#couldnt_add_new_comp").hide();
         $("#added_comp_successfully").hide();
+        $("#deleted_comp_successfully").hide();
+        $("#couldnt_delete_comp").hide();
     }
 
     $scope.show_delete_comp = function () {
@@ -73,6 +77,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#new_comp").hide();
         $("#couldnt_add_new_comp").hide();
         $("#added_comp_successfully").hide();
+        $("#deleted_comp_successfully").hide();
+        $("#couldnt_delete_comp").hide();
     }
 
     $scope.show_insert_new_file = function () {
@@ -84,6 +90,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#new_comp").hide();
         $("#couldnt_add_new_comp").hide();
         $("#added_comp_successfully").hide();
+        $("#deleted_comp_successfully").hide();
+        $("#couldnt_delete_comp").hide();
     }
 
 	$scope.init_case = function (item) {
@@ -96,7 +104,14 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#new_comp").hide();
         $("#couldnt_add_new_comp").hide();
         $("#added_comp_successfully").hide();
+        $("#deleted_comp_successfully").hide();
+        $("#couldnt_delete_comp").hide();
 		document.getElementById("loggin_user").innerHTML="Hello Avi";
+		$scope.arrayOfCompIDs = [];
+		$scope.selectedIdValue = '';
+		//$scope.selectedID = '';
+		$scope.getCompIDs();
+		//console.log($scope.arrayOfCompIDs);
 		console.log("hello");
 	} //the funtion
 	
@@ -114,6 +129,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#new_comp").hide();
         $("#couldnt_add_new_comp").hide();
         $("#added_comp_successfully").hide();
+        $("#deleted_comp_successfully").hide();
+        $("#couldnt_delete_comp").hide();
 		
 		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
 
@@ -136,6 +153,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#new_comp").hide();
         $("#couldnt_add_new_comp").hide();
         $("#added_comp_successfully").hide();
+        $("#deleted_comp_successfully").hide();
+        $("#couldnt_delete_comp").hide();
 		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
 
 		//$("#open_caseOrIntell").text("Add Case");
@@ -201,12 +220,10 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         }).then(function (data) {
             console.log(data.data);
             if (data.data == 'true') {
-                console.log("yes");
                 $("#added_comp_successfully").show();
                 $("#couldnt_add_new_comp").hide();
             }
             else if (data.data == 'false') {
-                console.log("no");
                 $("#couldnt_add_new_comp").show();
                 $("#added_comp_successfully").hide();
             }
@@ -217,7 +234,6 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
     $scope.clear = function()
     {
-    	//document.getElementById("new_comp").reset();
         document.getElementById('compID').value = '',
         document.getElementById('compName').value = '',
         document.getElementById('compStreet').value = '',
@@ -233,6 +249,51 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             console.log(data.data);
 
         });*/
+
+    }
+
+    $scope.getCompIDs = function()
+    {
+        $http({
+            method: 'POST',
+            url: 'php/getCompIDs.php',
+            params: {
+
+            }
+        }).then(function (data) {
+            console.log(data.data);
+            let compIDs = [];
+			for (const item in data.data) {
+				compIDs.push(data.data[item]['ID'])
+			}
+			$scope.arrayOfCompIDs = compIDs;
+        });
+
+    }
+
+    $scope.deleteComp = function()
+    {
+    	console.log($scope.selectedIdValue);
+        $http({
+            method: 'POST',
+            url: 'php/deleteComp.php',
+            params: {
+                selectedID : $scope.selectedIdValue
+            }
+        }).then(function (data) {
+            console.log(data.data);
+            if (data.data == 'true') {
+            	console.log("yes");
+                $("#deleted_comp_successfully").show();
+                $("#couldnt_delete_comp").hide();
+            }
+            else if (data.data == 'false') {
+            	console.log("no");
+                $("#couldnt_delete_comp").show();
+                $("#deleted_comp_successfully").hide();
+            }
+
+        });
 
     }
 

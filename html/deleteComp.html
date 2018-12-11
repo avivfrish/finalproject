@@ -2,15 +2,25 @@
     <h1 style="text-align: center; font-family: Arial Black, Gadget, sans-serif; font-size:4vw">Delete company</h1>
     <center>
         <font face="Arial Black">
-            Please insert the ID of the company you wish to delete
+            Please insert the ID of the company you wish to delete<br>
         </font>
         <font face="Arial">
-            <table border="0">
-                <form method="Post">
-                    <tr><td>Company ID: </td><td><input type="text" name="delCompanyID" id="delCompID"></td></tr>
-                </form>
-            </table>
+           <label>Select company ID</label>
+            <input list="selectedID" ng-model="selectedIdValue">
+            <datalist id="selectedID">
+                <option ng-repeat="ID in arrayOfCompIDs" value="{{ID}}">{{ID}}</option>
+            </datalist>
         </font>
-        <button type="submit" name="deleteCompanyButton" value="Send" id="deleteCompButton">Delete</button>
+        <button type="submit" value="Send" ng-click="deleteComp()">Delete</button>
     </center>
+</div>
+
+<div class="alert alert-success alert-dismissible" id="deleted_comp_successfully">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Success!</strong> Deleted company successfully.
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="couldnt_delete_comp">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't delete company.
 </div>
