@@ -299,8 +299,9 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
     $scope.changeID = function()
     {
+        $scope.getCompIDs();
         document.getElementById('selectedID').value = '';
-
+        
         /*$http({
             method: 'POST',
             url: 'php/azure.php',
