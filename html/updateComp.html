@@ -7,18 +7,32 @@
         <font face="Arial">
             <table border="0">
                 <form method="Post">
-                    <tr><td>Company Name: </td><td><select name="compName">
-                        <option>Ally Financial Inc</option>
-                        <option>AMERICAN EXPRESS CO</option>
+                    <tr><td><label>Select company ID: </label></td><td>
+                        <input list="selectedID" ng-change="changeID()" ng-model="selectedIdValue">
+                        <datalist id="selectedID">
+                            <option ng-repeat="ID in arrayOfCompIDs" value="{{ID}}">{{ID}}</option>
+                        </datalist>
+                    <tr><td>Details to Update: </td><td><select name="compDetails" id="compDetails" ng-model="selectedCompDetails">
+                        <option>name</option>
+                        <option>street</option>
+                        <option>country</option>
+                        <option>state</option>
                     </select></td></tr>
-                    <tr><td>Details to Update: </td><td><select name="compDetails">
-                        <option>Address</option>
-                        <option>RSSD_ID</option>
-                    </select></td></tr>
-                    <tr><td>New Information: </td><td><input type="text" name="newInfo"></td></tr>
+                    <tr><td>New Information: </td><td><input type="text" name="newInfo" id="newInfo" ng-model="selectedNewInfo"></td></tr>
                 </form>
             </table>
         </font>
-        <button type="submit" value="Send">Update</button>
+        <button type="submit" value="Send" ng-click="updateComp()">Update</button>
+        <button type="reset" value="Reset form" ng-click="clearUpdate()">Clear</button>
     </center>
+</div>
+
+<div class="alert alert-success alert-dismissible" id="updated_comp_successfully">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Success!</strong> Company updated successfully.
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="couldnt_update_comp">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't update company.
 </div>

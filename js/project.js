@@ -53,6 +53,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#added_comp_successfully").hide();
         $("#deleted_comp_successfully").hide();
         $("#couldnt_delete_comp").hide();
+        $("#updated_comp_successfully").hide();
+        $("#couldnt_update_comp").hide();
 	}
 
     $scope.show_update_comp = function () {
@@ -66,6 +68,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#added_comp_successfully").hide();
         $("#deleted_comp_successfully").hide();
         $("#couldnt_delete_comp").hide();
+        $("#updated_comp_successfully").hide();
+        $("#couldnt_update_comp").hide();
     }
 
     $scope.show_delete_comp = function () {
@@ -79,6 +83,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#added_comp_successfully").hide();
         $("#deleted_comp_successfully").hide();
         $("#couldnt_delete_comp").hide();
+        $("#updated_comp_successfully").hide();
+        $("#couldnt_update_comp").hide();
     }
 
     $scope.show_insert_new_file = function () {
@@ -92,6 +98,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#added_comp_successfully").hide();
         $("#deleted_comp_successfully").hide();
         $("#couldnt_delete_comp").hide();
+        $("#updated_comp_successfully").hide();
+        $("#couldnt_update_comp").hide();
     }
 
 	$scope.init_case = function (item) {
@@ -106,12 +114,14 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#added_comp_successfully").hide();
         $("#deleted_comp_successfully").hide();
         $("#couldnt_delete_comp").hide();
+        $("#updated_comp_successfully").hide();
+        $("#couldnt_update_comp").hide();
 		document.getElementById("loggin_user").innerHTML="Hello Avi";
 		$scope.arrayOfCompIDs = [];
 		$scope.selectedIdValue = '';
-		//$scope.selectedID = '';
+        $scope.selectedCompDetails = '';
+        $scope.selectedNewInfo = '';
 		$scope.getCompIDs();
-		//console.log($scope.arrayOfCompIDs);
 		console.log("hello");
 	} //the funtion
 	
@@ -131,6 +141,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#added_comp_successfully").hide();
         $("#deleted_comp_successfully").hide();
         $("#couldnt_delete_comp").hide();
+        $("#updated_comp_successfully").hide();
+        $("#couldnt_update_comp").hide();
 		
 		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
 
@@ -155,6 +167,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#added_comp_successfully").hide();
         $("#deleted_comp_successfully").hide();
         $("#couldnt_delete_comp").hide();
+        $("#updated_comp_successfully").hide();
+        $("#couldnt_update_comp").hide();
 		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
 
 		//$("#open_caseOrIntell").text("Add Case");
@@ -232,13 +246,29 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
     }
 
-    $scope.clear = function()
+    $scope.clearInsert = function()
     {
         document.getElementById('compID').value = '',
         document.getElementById('compName').value = '',
         document.getElementById('compStreet').value = '',
         document.getElementById('compCountry').value = '',
         document.getElementById('compState').value = ''
+        /*$http({
+            method: 'POST',
+            url: 'php/azure.php',
+            params: {
+
+            }
+        }).then(function (data) {
+            console.log(data.data);
+
+        });*/
+
+    }
+
+    $scope.clearUpdate = function()
+    {
+            document.getElementById('newInfo').value = ''
         /*$http({
             method: 'POST',
             url: 'php/azure.php',
@@ -273,35 +303,43 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
     $scope.deleteComp = function()
     {
-    	console.log($scope.selectedIdValue);
+        /*if ($scope.selectedIdValue in $scope.arrayOfCompIDs) {
+            console.log($scope.selectedIdValue);
+            console.log("id exists");
+            console.log($scope.arrayOfCompIDs);
+        }
+        else {
+            console.log($scope.selectedIdValue)
+            console.log("id doesn't exist");
+            console.log($scope.arrayOfCompIDs);
+        }*/
         $http({
             method: 'POST',
             url: 'php/deleteComp.php',
             params: {
                 selectedID : $scope.selectedIdValue
-            }
+               }
+
         }).then(function (data) {
             console.log(data.data);
             if (data.data == 'true') {
-            	console.log("yes");
                 $("#deleted_comp_successfully").show();
                 $("#couldnt_delete_comp").hide();
             }
             else if (data.data == 'false') {
-            	console.log("no");
                 $("#couldnt_delete_comp").show();
                 $("#deleted_comp_successfully").hide();
             }
-
         });
 
     }
+
 
     $scope.changeID = function()
     {
         $scope.getCompIDs();
         document.getElementById('selectedID').value = '';
-        
+
         /*$http({
             method: 'POST',
             url: 'php/azure.php',
@@ -315,24 +353,31 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
     }
 
-   /* $scope.deleteComp = function()
+    $scope.updateComp = function()
     {
         $http({
             method: 'POST',
-            url: 'php/insertNewComp.php',
+            url: 'php/updateComp.php',
             params: {
-                companyID: document.getElementById("compID").value,
-                companyName: document.getElementById("compName").value,
-                street: document.getElementById("compStreet").value,
-                country: document.getElementById("compCountry").value,
-                state: document.getElementById("compState").value
+                selectedID : $scope.selectedIdValue,
+                compDetails : $scope.selectedCompDetails,
+                newInfo : $scope.selectedNewInfo
             }
         }).then(function (data) {
             console.log(data.data);
-
+            if (data.data == 'true') {
+                console.log("yes");
+                $("#updated_comp_successfully").show();
+                $("#couldnt_update_comp").hide();
+            }
+            else if (data.data == 'false') {
+                console.log("no");
+                $("#couldnt_update_comp").show();
+                $("#updated_comp_successfully").hide();
+            }
         });
 
-    }*/
+    }
 
 	$scope.show_splunk = function () {
 
