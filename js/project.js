@@ -42,7 +42,7 @@ app.directive('fileModel', ['$parse', function ($parse) {
 
 app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
-	$scope.init_case = function (item) {
+	$scope.init_case = function () {
 		//$("#nav").show();
         $scope.hidePages();
 		$("#home").show();
@@ -63,7 +63,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $scope.resultsOfSearch = [];
         console.log("hello");
         $scope.companies=[];
-	} //the function
+	}; //the function
 
     $scope.hidePages = function(){
         $("#home").hide();
@@ -72,7 +72,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#searchResults").hide();
         $("#3ds").hide();
         $("#stats").hide();
-    }
+    };
 
 	$scope.show_search = function (searchBy) {
 		console.log("show search div");
@@ -98,15 +98,14 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 		//$("#open_caseOrIntell").href("#add_case_modal")
 		//$("#topRow").empty();
 		//$("#topRow").prepend("<embed src='http://SERVERNAME:8000/en-US/app/cymng/TopRowTimeline?earliest=0&latest=' seamless frameborder='no' scrolling='no' width='470px' height='103px' style='margin-top:10px' target='_top'></embed>"); 
-	}
+	};
 	$scope.show_home = function () {
 		//show_cases_div - show cases div
 		
 		////console.log("show_cases_div - show cases div");
         $scope.hidePages();
 		$("#home").show();
-		$("#search_comp").hide();
-		consol.log("Aviv");
+
 		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
 
 		//$("#open_caseOrIntell").text("Add Case");
@@ -117,18 +116,14 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 	};
 
     $scope.show_stats = function () {
+        $scope.hidePages();
 
-        $("#home").hide();
-        $("#search_comp").hide();
         $("#stats").show();
-		$("#3ds").hide();
+
 
     };
 	$scope.show_graph = function () {
-
-		$("#home").hide();
-		$("#search_comp").hide();
-		$("#stats").hide();
+        $scope.hidePages();
 		$("#3ds").show();
 		$scope.graph();
 
@@ -194,7 +189,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
 	$scope.graph = function(){
 		const gData = {nodes: [{id: 64, group: 1}, {id: 192, group: 1}, {id: 2, group: 2}, {id: 419, group: 1}, {id: 260, group: 1}, {id: 165, group: 1}, {id: 39, group: 1}, {id: 200, group: 1}, {id: 103, group: 1}, {id: 265, group: 1}, {id: 11, group: 1}, {id: 432, group: 1}, {id: 336, group: 1}, {id: 308, group: 1}, {id: 21, group: 1}, {id: 278, group: 1}, {id: 407, group: 1}, {id: 412, group: 1}, {id: 125, group: 1}, {id: 31, group:1}],
-			links: [{source: 64, target: 2}, {source: 192, target: 39}, {source: 192, target: 2}, {source: 2, target: 31}, {source: 2, target: 165}, {source: 2, target: 260}, {source: 2, target: 39}, {source: 2, target: 125}, {source: 2, target: 200}, {source: 2, target: 419}, {source: 2, target: 308}, {source: 2, target: 432}, {source: 2, target: 407}, {source: 2, target: 11}, {source: 2, target: 21}, {source: 2, target: 412}, {source: 2, target: 103}, {source: 2, target: 265}, {source: 2, target: 336}, {source: 2, target: 278}, {source: 260, target: 165}, {source: 260, target: 31}, {source: 260, target: 11}, {source: 260, target: 103}, {source: 260, target: 278}, {source: 200, target: 125}, {source: 103, target: 278}, {source: 265, target: 407}, {source: 265, target: 11}, {source: 265, target: 278}, {source: 11, target: 407}, {source: 11, target: 278}, {source: 308, target: 412}, {source: 21, target: 407}, {source: 21, target: 278}, {source: 278, target: 407}, {source: 125, target: 31}]}
+			links: [{source: 64, target: 2}, {source: 192, target: 39}, {source: 192, target: 2}, {source: 2, target: 31}, {source: 2, target: 165}, {source: 2, target: 260}, {source: 2, target: 39}, {source: 2, target: 125}, {source: 2, target: 200}, {source: 2, target: 419}, {source: 2, target: 308}, {source: 2, target: 432}, {source: 2, target: 407}, {source: 2, target: 11}, {source: 2, target: 21}, {source: 2, target: 412}, {source: 2, target: 103}, {source: 2, target: 265}, {source: 2, target: 336}, {source: 2, target: 278}, {source: 260, target: 165}, {source: 260, target: 31}, {source: 260, target: 11}, {source: 260, target: 103}, {source: 260, target: 278}, {source: 200, target: 125}, {source: 103, target: 278}, {source: 265, target: 407}, {source: 265, target: 11}, {source: 265, target: 278}, {source: 11, target: 407}, {source: 11, target: 278}, {source: 308, target: 412}, {source: 21, target: 407}, {source: 21, target: 278}, {source: 278, target: 407}, {source: 125, target: 31}]};
 
 		const Graph = ForceGraph3D()
 		(document.getElementById('3d-graph'))
@@ -279,13 +274,13 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 				console.log('get companies failed');
 			}
 		}); //success
-	}
+	};
 
 	$scope.filterBy = function(filter){
 	    console.log("FILTER", filter);
 	    $scope.filterBySearchByName = filter;
         document.getElementById("dropdownMenuLink").innerHTML = "Filter By: " + filter;
-    }
+    };
 
     $scope.get_countries = function()
     {
@@ -296,7 +291,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
             }
         }).then(function (data) {
-        	console.log("GET COUNTRIES")
+        	console.log("GET COUNTRIES");
             console.log(data.data);
         	let countries = [];
         	for (const item in data.data){
@@ -305,13 +300,13 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             $scope.arrayOfCountries = countries;
         });
 
-    }
+    };
 
     $scope.getIframeSrc = function ()
     {
         $("#googleMap").hide();
         $("#loadingMap").show();
-        console.log("LOAD")
+        console.log("LOAD");
         let newIframe = "<iframe src='https://www.google.com/maps?&q=";
         if( $scope.selectedStreetValue ){
             newIframe = newIframe + $scope.selectedStreetValue;
@@ -348,13 +343,13 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             document.getElementById("googleMap").innerHTML = toFillIn;
         }*/
         $("#loadingMap").hide();
-        console.log("FINISH LOAD")
+        console.log("FINISH LOAD");
         $("#googleMap").show();
-    }
+    };
 
     $scope.getStatesByCountry = function (callback)
     {
-        console.log("GET states")
+        console.log("GET states");
         $http({
             method: 'POST',
             url: 'php/getStatesByCountry.php',
@@ -369,14 +364,14 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                 statesByCountry.push(data.data[item]['state']);
             }
             $scope.arrayOfStates = statesByCountry;
-            console.log("LEN", $scope.arrayOfStates.length)
+            console.log("LEN", $scope.arrayOfStates.length);
             callback($scope.arrayOfStates.length);
         });
-    }
+    };
 
     $scope.getCities = function (callback)
     {
-        console.log("GET cities")
+        console.log("GET cities");
         $http({
             method: 'POST',
             url: 'php/getCity.php',
@@ -394,7 +389,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             console.log("LEN", $scope.arrayOfCities.length);
             callback($scope.arrayOfCities.length);
         });
-    }
+    };
 
     $scope.changeCity = function (fromState)
     {
@@ -407,20 +402,20 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         else {
             $scope.getCities(function(len) {
                 if (len > 0){
-                    console.log("SHOW CITY")
+                    console.log("SHOW CITY");
                     document.getElementById("cityOptions").style.display="block";
                 }
                 else {
-                    console.log("HIDE CITY")
+                    console.log("HIDE CITY");
                     document.getElementById("cityOptions").style.display="none";
                 }
             });
         }
-    }
+    };
 
     $scope.getStreetByData = function (callback)
     {
-        console.log("GET streets")
+        console.log("GET streets");
         $http({
             method: 'POST',
             url: 'php/getStreetByData.php',
@@ -439,7 +434,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             console.log("LEN", $scope.arrayOfStreets.length);
             callback($scope.arrayOfStreets.length);
         });
-    }
+    };
 
     $scope.changeStreet = function ()
     {
@@ -448,15 +443,15 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
         $scope.getStreetByData(function(len) {
             if (len > 0){
-                console.log("SHOW STREET")
+                console.log("SHOW STREET");
                 document.getElementById("streetOptions").style.display="block";
             }
             else {
-                console.log("HIDE STREET")
+                console.log("HIDE STREET");
                 document.getElementById("streetOptions").style.display="none";
             }
         });
-    }
+    };
 
     $scope.updateDataCountryChange = function (){
         $scope.selectedStateValue="";
@@ -469,17 +464,17 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
         $scope.getStatesByCountry(function(len) {
             if (len > 0){
-                console.log("SHOW STATE")
+                console.log("SHOW STATE");
                 document.getElementById("stateOptions").style.display="block";
             }
             else {
-                console.log("HIDE STATE")
+                console.log("HIDE STATE");
                 document.getElementById("stateOptions").style.display="none";
                 console.log("STATES IS EMPTY");
                 $scope.changeCity('False');
             }
         });
-    }
+    };
 
     $scope.searchForResults = function (searchBy)
     {
@@ -515,7 +510,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                 console.log("GET Address");
                 console.log(data.data);
                 $scope.resultsOfSearch = data.data;
-                console.log($scope.resultsOfSearch)
+                console.log($scope.resultsOfSearch);
                 $("#loadingResults").hide();
                 $("#foundResults").show();
             }
@@ -526,7 +521,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             }
 
         });
-    }
+    };
 
     function autocomplete(inp, arr) {
         /*the autocomplete function takes two arguments,

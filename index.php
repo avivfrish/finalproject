@@ -14,13 +14,14 @@
     <script src="js/canvasjs.min.js"></script>
     <script src="js/Chart.bundle.min.js"></script>
 
-    <script src="js/canvasjs.min.js"></script>
+    <!--<script src="js/canvasjs.min.js"></script>-->
     <script src="js/angular-chart.js"></script>
     <script src="js/project.js" ></script>
     <script src="js/3d-force/src/3d-force-graph.min.js"></script>
 
 
     <link rel="stylesheet" href="css/project.css">
+    <title>FEI</title>
 </head>
 <body style="text-align: center" ng-controller='ng-cases' ng-init="init_case();">
     <!-- SEE ME? AVIV -->
