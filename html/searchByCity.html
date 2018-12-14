@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-sm-4">
                 <label>Select Country:</label>
-                <input list="selectedCountry" ng-change="updateDataCountryChange(); getIframeSrc()" ng-model="selectedCountryValue">
+                <input type="text" list="selectedCountry" data-constrain required ng-change="updateDataCountryChange(); getIframeSrc()" ng-model="selectedCountryValue">
                 <datalist id="selectedCountry">
                     <option ng-repeat="country in arrayOfCountries" value="{{country}}">{{country}}</option>
                 </datalist>
@@ -14,7 +14,7 @@
                 <div id = "stateOptions" style="display: none">
                     <br>
                     <label>Select State:</label>
-                    <input list="selectedState" ng-change="changeCity('True'); getIframeSrc()" ng-model="selectedStateValue">
+                    <input type="text" list="selectedState" data-constrain required ng-change="changeCity('True'); getIframeSrc()" ng-model="selectedStateValue">
                     <datalist id="selectedState">
                         <option ng-repeat="state in arrayOfStates" value="{{state}}">{{state}}</option>
                     </datalist>
@@ -23,7 +23,7 @@
                 <div id = "cityOptions" style="display: none">
                     <br>
                     <label>Select City:</label>
-                    <input list="selectedCity" ng-change="changeStreet(); getIframeSrc()" ng-model="selectedCityValue">
+                    <input type="text" list="selectedCity" data-constrain required ng-change="changeStreet(); getIframeSrc()" ng-model="selectedCityValue">
                     <datalist id="selectedCity">
                         <option ng-repeat="city in arrayOfCities" value="{{city}}">{{city}}</option>
                     </datalist>
@@ -33,7 +33,7 @@
                 <div id = "streetOptions" style="display: none">
                     <br>
                     <label>Select Street:</label>
-                    <input list="selectedStreet" ng-change="getIframeSrc()" ng-model="selectedStreetValue">
+                    <input type="text" list="selectedStreet" data-constrain ng-change="getIframeSrc()" ng-model="selectedStreetValue">
                     <datalist id="selectedStreet">
                         <option ng-repeat="street in arrayOfStreets" value="{{street}}">{{street}}</option>
                     </datalist>

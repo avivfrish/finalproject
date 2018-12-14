@@ -19,7 +19,8 @@
     <script src="js/project.js" ></script>
     <script src="js/3d-force/src/3d-force-graph.min.js"></script>
 
-
+    <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
+    <script src="node_modules/force-list-option/dist/force-list-option.js"></script>
     <link rel="stylesheet" href="css/project.css">
 </head>
 <body style="text-align: center" ng-controller='ng-cases' ng-init="init_case();">
