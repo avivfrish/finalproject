@@ -10,7 +10,7 @@ $selectedNewInfo = $_GET["newInfo"];
 
 $sql= /** @lang text */
     "update companies set $selectedCompDetails = "."'".$selectedNewInfo."' where id = "."'".$selectedIdValue."'";
-    //echo ($sql);
+
     $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE) {
     echo ("false");

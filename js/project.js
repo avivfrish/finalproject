@@ -55,6 +55,9 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#couldnt_delete_comp").hide();
         $("#updated_comp_successfully").hide();
         $("#couldnt_update_comp").hide();
+        $("#id_already_exists_insert").hide();
+        $("#id_doesnt_exists_delete").hide();
+        $("#id_doesnt_exists_update").hide();
 	}
 
     $scope.show_update_comp = function () {
@@ -70,6 +73,9 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#couldnt_delete_comp").hide();
         $("#updated_comp_successfully").hide();
         $("#couldnt_update_comp").hide();
+        $("#id_already_exists_insert").hide();
+        $("#id_doesnt_exists_delete").hide();
+        $("#id_doesnt_exists_update").hide();
     }
 
     $scope.show_delete_comp = function () {
@@ -85,6 +91,9 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#couldnt_delete_comp").hide();
         $("#updated_comp_successfully").hide();
         $("#couldnt_update_comp").hide();
+        $("#id_already_exists_insert").hide();
+        $("#id_doesnt_exists_delete").hide();
+        $("#id_doesnt_exists_update").hide();
     }
 
     $scope.show_insert_new_file = function () {
@@ -100,6 +109,9 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#couldnt_delete_comp").hide();
         $("#updated_comp_successfully").hide();
         $("#couldnt_update_comp").hide();
+        $("#id_already_exists_insert").hide();
+        $("#id_doesnt_exists_delete").hide();
+        $("#id_doesnt_exists_update").hide();
     }
 
 	$scope.init_case = function (item) {
@@ -116,6 +128,9 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#couldnt_delete_comp").hide();
         $("#updated_comp_successfully").hide();
         $("#couldnt_update_comp").hide();
+        $("#id_already_exists_insert").hide();
+        $("#id_doesnt_exists_delete").hide();
+        $("#id_doesnt_exists_update").hide();
 		document.getElementById("loggin_user").innerHTML="Hello Avi";
 		$scope.arrayOfCompIDs = [];
 		$scope.selectedIdValue = '';
@@ -143,6 +158,9 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#couldnt_delete_comp").hide();
         $("#updated_comp_successfully").hide();
         $("#couldnt_update_comp").hide();
+        $("#id_already_exists_insert").hide();
+        $("#id_doesnt_exists_delete").hide();
+        $("#id_doesnt_exists_update").hide();
 		
 		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
 
@@ -169,6 +187,9 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#couldnt_delete_comp").hide();
         $("#updated_comp_successfully").hide();
         $("#couldnt_update_comp").hide();
+        $("#id_already_exists_insert").hide();
+        $("#id_doesnt_exists_delete").hide();
+        $("#id_doesnt_exists_update").hide();
 		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
 
 		//$("#open_caseOrIntell").text("Add Case");
@@ -221,28 +242,56 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
     $scope.insertNewComp = function()
     {
-        $http({
-            method: 'POST',
-            url: 'php/insertNewComp.php',
-            params: {
-                companyID: document.getElementById("compID").value,
-                companyName: document.getElementById("compName").value,
-                street: document.getElementById("compStreet").value,
-                country: document.getElementById("compCountry").value,
-                state: document.getElementById("compState").value
-            }
-        }).then(function (data) {
-            console.log(data.data);
-            if (data.data == 'true') {
-                $("#added_comp_successfully").show();
-                $("#couldnt_add_new_comp").hide();
-            }
-            else if (data.data == 'false') {
-                $("#couldnt_add_new_comp").show();
-                $("#added_comp_successfully").hide();
-            }
-
-        });
+        //$scope.getCompIDs();
+        if (document.getElementById("compID").value in $scope.arrayOfCompIDs || $scope.arrayOfCompIDs[$scope.arrayOfCompIDs.length-1] == document.getElementById("compID").value) {
+            $("#id_already_exists_insert").show();
+            $("#couldnt_add_new_comp").hide();
+            $("#added_comp_successfully").hide();
+            $("#deleted_comp_successfully").hide();
+            $("#couldnt_delete_comp").hide();
+            $("#updated_comp_successfully").hide();
+            $("#couldnt_update_comp").hide();
+            $("#id_doesnt_exists_delete").hide();
+            $("#id_doesnt_exists_update").hide();
+        }
+        else {
+            $http({
+                method: 'POST',
+                url: 'php/insertNewComp.php',
+                params: {
+                    companyID: document.getElementById("compID").value,
+                    companyName: document.getElementById("compName").value,
+                    street: document.getElementById("compStreet").value,
+                    country: document.getElementById("compCountry").value,
+                    state: document.getElementById("compState").value
+                }
+            }).then(function (data) {
+                console.log(data.data);
+                if (data.data == 'true') {
+                    $("#added_comp_successfully").show();
+                    $("#couldnt_add_new_comp").hide();
+                    $("#deleted_comp_successfully").hide();
+                    $("#couldnt_delete_comp").hide();
+                    $("#updated_comp_successfully").hide();
+                    $("#couldnt_update_comp").hide();
+                    $("#id_already_exists_insert").hide();
+                    $("#id_doesnt_exists_delete").hide();
+                    $("#id_doesnt_exists_update").hide();
+                }
+                else if (data.data == 'false') {
+                    $("#couldnt_add_new_comp").show();
+                    $("#added_comp_successfully").hide();
+                    $("#deleted_comp_successfully").hide();
+                    $("#couldnt_delete_comp").hide();
+                    $("#updated_comp_successfully").hide();
+                    $("#couldnt_update_comp").hide();
+                    $("#id_already_exists_insert").hide();
+                    $("#id_doesnt_exists_delete").hide();
+                    $("#id_doesnt_exists_update").hide();
+                }
+                //$scope.getCompIDs();
+            });
+        }
 
     }
 
@@ -253,33 +302,11 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         document.getElementById('compStreet').value = '',
         document.getElementById('compCountry').value = '',
         document.getElementById('compState').value = ''
-        /*$http({
-            method: 'POST',
-            url: 'php/azure.php',
-            params: {
-
-            }
-        }).then(function (data) {
-            console.log(data.data);
-
-        });*/
-
     }
 
     $scope.clearUpdate = function()
     {
             document.getElementById('newInfo').value = ''
-        /*$http({
-            method: 'POST',
-            url: 'php/azure.php',
-            params: {
-
-            }
-        }).then(function (data) {
-            console.log(data.data);
-
-        });*/
-
     }
 
     $scope.getCompIDs = function()
@@ -303,35 +330,54 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
     $scope.deleteComp = function()
     {
-        /*if ($scope.selectedIdValue in $scope.arrayOfCompIDs) {
-            console.log($scope.selectedIdValue);
-            console.log("id exists");
-            console.log($scope.arrayOfCompIDs);
+        //$scope.changeID();
+        if ($scope.selectedIdValue in $scope.arrayOfCompIDs || $scope.arrayOfCompIDs[$scope.arrayOfCompIDs.length-1] == $scope.selectedIdValue) {
+            $http({
+                method: 'POST',
+                url: 'php/deleteComp.php',
+                params: {
+                    selectedID : $scope.selectedIdValue
+                }
+
+            }).then(function (data) {
+                console.log(data.data);
+                if (data.data == 'true') {
+                    $("#deleted_comp_successfully").show();
+                    $("#couldnt_add_new_comp").hide();
+                    $("#added_comp_successfully").hide();
+                    $("#couldnt_delete_comp").hide();
+                    $("#updated_comp_successfully").hide();
+                    $("#couldnt_update_comp").hide();
+                    $("#id_already_exists_insert").hide();
+                    $("#id_doesnt_exists_delete").hide();
+                    $("#id_doesnt_exists_update").hide();
+                }
+                else if (data.data == 'false') {
+                    $("#couldnt_delete_comp").show();
+                    $("#couldnt_add_new_comp").hide();
+                    $("#added_comp_successfully").hide();
+                    $("#deleted_comp_successfully").hide();
+                    $("#updated_comp_successfully").hide();
+                    $("#couldnt_update_comp").hide();
+                    $("#id_already_exists_insert").hide();
+                    $("#id_doesnt_exists_delete").hide();
+                    $("#id_doesnt_exists_update").hide();
+                }
+            });
         }
         else {
-            console.log($scope.selectedIdValue)
-            console.log("id doesn't exist");
-            console.log($scope.arrayOfCompIDs);
-        }*/
-        $http({
-            method: 'POST',
-            url: 'php/deleteComp.php',
-            params: {
-                selectedID : $scope.selectedIdValue
-               }
+            $("#id_doesnt_exists_delete").show();
+            $("#couldnt_add_new_comp").hide();
+            $("#added_comp_successfully").hide();
+            $("#deleted_comp_successfully").hide();
+            $("#couldnt_delete_comp").hide();
+            $("#updated_comp_successfully").hide();
+            $("#couldnt_update_comp").hide();
+            $("#id_already_exists_insert").hide();
+            $("#id_doesnt_exists_update").hide();
+        }
 
-        }).then(function (data) {
-            console.log(data.data);
-            if (data.data == 'true') {
-                $("#deleted_comp_successfully").show();
-                $("#couldnt_delete_comp").hide();
-            }
-            else if (data.data == 'false') {
-                $("#couldnt_delete_comp").show();
-                $("#deleted_comp_successfully").hide();
-            }
-        });
-
+        //$scope.getCompIDs();
     }
 
 
@@ -339,44 +385,60 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
     {
         $scope.getCompIDs();
         document.getElementById('selectedID').value = '';
-
-        /*$http({
-            method: 'POST',
-            url: 'php/azure.php',
-            params: {
-
-            }
-        }).then(function (data) {
-            console.log(data.data);
-
-        });*/
-
     }
 
     $scope.updateComp = function()
     {
-        $http({
-            method: 'POST',
-            url: 'php/updateComp.php',
-            params: {
-                selectedID : $scope.selectedIdValue,
-                compDetails : $scope.selectedCompDetails,
-                newInfo : $scope.selectedNewInfo
-            }
-        }).then(function (data) {
-            console.log(data.data);
-            if (data.data == 'true') {
-                console.log("yes");
-                $("#updated_comp_successfully").show();
-                $("#couldnt_update_comp").hide();
-            }
-            else if (data.data == 'false') {
-                console.log("no");
-                $("#couldnt_update_comp").show();
-                $("#updated_comp_successfully").hide();
-            }
-        });
-
+        //$scope.changeID();
+        if ($scope.selectedIdValue in $scope.arrayOfCompIDs || $scope.arrayOfCompIDs[$scope.arrayOfCompIDs.length-1] == $scope.selectedIdValue) {
+            $http({
+                method: 'POST',
+                url: 'php/updateComp.php',
+                params: {
+                    selectedID : $scope.selectedIdValue,
+                    compDetails : $scope.selectedCompDetails,
+                    newInfo : $scope.selectedNewInfo
+                }
+            }).then(function (data) {
+                console.log(data.data);
+                if (data.data == 'true') {
+                    console.log("yes");
+                    $("#updated_comp_successfully").show();
+                    $("#couldnt_add_new_comp").hide();
+                    $("#added_comp_successfully").hide();
+                    $("#deleted_comp_successfully").hide();
+                    $("#couldnt_delete_comp").hide();
+                    $("#couldnt_update_comp").hide();
+                    $("#id_already_exists_insert").hide();
+                    $("#id_doesnt_exists_delete").hide();
+                    $("#id_doesnt_exists_update").hide();
+                }
+                else if (data.data == 'false') {
+                    console.log("no");
+                    $("#couldnt_update_comp").show();
+                    $("#couldnt_add_new_comp").hide();
+                    $("#added_comp_successfully").hide();
+                    $("#deleted_comp_successfully").hide();
+                    $("#couldnt_delete_comp").hide();
+                    $("#updated_comp_successfully").hide();
+                    $("#id_already_exists_insert").hide();
+                    $("#id_doesnt_exists_delete").hide();
+                    $("#id_doesnt_exists_update").hide();
+                }
+            });
+        }
+        else {
+            $("#id_doesnt_exists_update").show();
+            $("#couldnt_add_new_comp").hide();
+            $("#added_comp_successfully").hide();
+            $("#deleted_comp_successfully").hide();
+            $("#couldnt_delete_comp").hide();
+            $("#updated_comp_successfully").hide();
+            $("#couldnt_update_comp").hide();
+            $("#id_already_exists_insert").hide();
+            $("#id_doesnt_exists_delete").hide();
+        }
+        //$scope.getCompIDs();
     }
 
 	$scope.show_splunk = function () {

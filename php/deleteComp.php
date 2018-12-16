@@ -6,7 +6,7 @@ $conn = sqlsrv_connect($serverName, $connectionInfo);
 $selectedIdValue = $_GET["selectedID"];
 $sql= /** @lang text */
     "delete from companies where id = "."'".$selectedIdValue."'";
-echo ($sql);
+//echo ($sql);
     $getResults= sqlsrv_query($conn, $sql);
 
 if ($getResults == FALSE) {
