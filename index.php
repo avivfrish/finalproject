@@ -1,4 +1,5 @@
 <html lang="en" ng-app="template" >
+<title>FEI</title>
 <head>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -21,7 +22,7 @@
 
 
     <link rel="stylesheet" href="css/project.css">
-    <title>FEI</title>
+
 </head>
 <body style="text-align: center" ng-controller='ng-cases' ng-init="init_case();">
     <!-- SEE ME? AVIV -->

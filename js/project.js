@@ -198,13 +198,20 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 			//.linkAutoColorBy(d => gData.nodes[d.source].group)
 			.linkOpacity(0.5)
 			.nodeLabel('id')
-			.graphData(gData);
+            .onNodeClick(node =>  $scope.graph_on_click(node))
+			.graphData(gData)
+            .height(500)
+            .width(500);
 
 		console.log("graph");
 
 	}; //the function
 
-
+    $scope.graph_on_click = function (node)
+    {
+        $("#comp_info").css("display","block");
+        document.getElementById("graph_comp_name").innerText=node['id'];
+    };
 
 	$scope.get_companies = function ()
 	{
