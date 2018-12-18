@@ -2,14 +2,18 @@
     <h1 style="text-align: center; font-family: Arial Black, Gadget, sans-serif; font-size:4vw">Insert a New File</h1>
     <center>
         <font face="Arial Black">
-            Please select the file you wish to add
+            Please select the file you wish to add<br>
         </font>
         <font face="Arial">
+            <table border="0">
             <form action="<?php echo $_SERVER['PHP_SELF'];?>"
                   method="POST" enctype="multipart/from-data">
-                <input name="csv" type="file" id="csv"/>
-                <input type="submit" name="submit" value="submit"/>
+                <tr><td><input name="csv" type="file" id="csv"/>
+                <input type="submit" name="submit" value="submit"/></tr></td><br>
+                <tr><td><input type="radio" name="withReplace" value="withReplace" checked="checked"> Replace data for existing companies</tr></td>
+                <tr><td><input type="radio" name="withoutReplace" value="withoutReplace"> Don't replace data for existing companies</tr></td>
             </form>
+            </table>
         </font>
     </center>
 </div>
