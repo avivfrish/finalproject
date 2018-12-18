@@ -7,7 +7,7 @@
                 <table class="table">
                     <tr ng-repeat="result in resultsOfSearch">
                         <td>
-                            <div class="card" ng-click="showMoreAboutResult(result.name)" >
+                            <div class="card" ng-click="showMoreAboutResult(result.name); createNewStockGraph(result.name)" >
                                 <div class="card-header">
                                     <h4 class="card-title">{{result.name}}</h4>
                                     <p class="card-text">financial company</p>
@@ -42,6 +42,9 @@
                         <li class="nav-item">
                             <a class="nav-link" href="#Subsidiaries" role="tab" data-toggle="tab">Subsidiaries</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#Stock" role="tab" data-toggle="tab">Stock</a>
+                        </li>
                     </ul>
 
                     <div class="tab-content">
@@ -51,8 +54,14 @@
                         <div role="tabpanel" class="tab-pane fade" id="Competitors">
                             Competitors
                         </div>
-                        <div role="tabpanel" class="tab-pane fade" id="Subsidiaries">
-                            Subsidiaries
+                        <div role="tabpanel" class="tab-pane fade" id="Stock">
+                            <div class="tradingview-widget-container">
+                                <div id="tradingview_a5966"></div>
+                                <div class="tradingview-widget-copyright">
+                                    <div id="fillHrefForStock">
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
