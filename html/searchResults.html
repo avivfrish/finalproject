@@ -1,10 +1,72 @@
+
 <div id="searchResults">
 
     <div id="foundResults" class="container">
+        <div class="row" data-spy="scroll" data-target=".leftSideResults" data-offset="50">
+            <div class="leftSideResults border rounded col-sm-4">
+                <table class="table">
+                    <tr ng-repeat="result in resultsOfSearch">
+                        <td>
+                            <div class="card" ng-click="showMoreAboutResult(result.name)" >
+                                <div class="card-header">
+                                    <h4 class="card-title">{{result.name}}</h4>
+                                    <p class="card-text">financial company</p>
+                                </div>
+                                <div class="card-body">
+                                    <p>
+                                        Country: {{result.country}}<br>
+                                        State: {{result.state}}
+                                    </p>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+
+
+            <div class="rightSideResults border rounded col-sm-8">
+                <div id="askToSelectResult">
+                    Select Search Result to show more..
+                </div>
+                <div id="selectedResult">
+
+                    <ul class="nav nav-tabs border rounded" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#GeneralInfo" role="tab" data-toggle="tab">General Information</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#Competitors" role="tab" data-toggle="tab">Competitors</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#Subsidiaries" role="tab" data-toggle="tab">Subsidiaries</a>
+                        </li>
+                    </ul>
+
+                    <div class="tab-content">
+                        <div role="tabpanel" class="tab-pane fade in active" id="GeneralInfo">
+                            GeneralInfo
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="Competitors">
+                            Competitors
+                        </div>
+                        <div role="tabpanel" class="tab-pane fade" id="Subsidiaries">
+                            Subsidiaries
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--<div id="foundResults" class="container">
         <div class="row justify-content-center">
             <div ng-repeat="result in resultsOfSearch" class="card">
                 <div class="card-header">
-                    <h4 class="card-title">{{result.name}}<!--<div id="nameOfCountryField"></div>--></h4>
+                    <h4 class="card-title">{{result.name}}
                     <p class="card-text">financial company</p>
                 </div>
                 <div class="card-body">
@@ -15,8 +77,6 @@
                                 Country: {{result.country}}<br>
                                 State: {{result.state}}
                             </p>
-                            <!--<div id="countryField"></div>
-                            <div id="cityField"></div>-->
                         </li>
                         <li class="liOfCard"><div class="titleOfLi">About us</div>+1-111-111-11-11</li>
                     </ul>
@@ -29,8 +89,7 @@
             </div>
         </div>
 
-
-    </div>
+    </div>-->
 
     <div id="noResults">
         <h4>No results found !</h4>

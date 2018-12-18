@@ -76,17 +76,51 @@ datalist {
   display: none;
 }
 
+.leftSideResults {
+    height: 500px;
+    overflow-y: scroll;
+}
+
+.rightSideResults {
+    background-color: #e5e5e5;
+    height: 500px;
+    border-radius: 5px;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.nav-tabs{
+    background-color: #3ba3ba85;
+    width: inherit;
+}
+
+.nav-tabs .nav-link{
+    color: #ffffff;
+    border-color: #e5e5e5;
+}
 .card {
-    width: 480px;
-    height: 300px;
-    /*display: flex;*/
-    margin: 10px 10px;
+    display: flex;
+    /*width: 480px;
+    height: 300px;*/
     float: none;
     border: 2px solid #3BA3BA;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     text-align: center;
 }
+
+
+/*.card {
+    width: 480px;
+    height: 300px;*/
+    /*display: flex;*/
+    /*margin: 10px 10px;
+    float: none;
+    border: 2px solid #3BA3BA;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+}*/
 
 .ulOfCard {
     margin: 0 auto;
