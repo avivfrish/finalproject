@@ -224,6 +224,23 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#comp_info").css("display","block");
         document.getElementById("graph_comp_name").innerText=node['id'];
     };
+    $scope.get_python = function () {
+        console.log("try python");
+        $http({
+            method: 'POST',
+            url: 'php/get_python.php',
+            params: {
+
+            }
+        }).then(function (data) {
+
+            console.log(data);
+
+        });
+
+
+    };
+
 
 	$scope.get_companies = function ()
 	{
