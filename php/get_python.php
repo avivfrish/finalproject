@@ -6,7 +6,7 @@
  * Time: 22:37
  */
 
-$command="D:\home\site\wwwroot\aviv\scripts\cluster.exe \"BANK OF AMERICA CORPORATION\"";
+$command="D:\home\site\wwwroot\aviv\scripts\cluster.exe \"KATY BRANCH\"";
 //echo $command;
 $out= shell_exec ( $command);
 
