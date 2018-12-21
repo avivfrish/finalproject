@@ -83,7 +83,6 @@ input[list] {
     border-style: ridge;
 }
 
-
 .leftSideResults {
     height: 500px;
     overflow-y: scroll;
@@ -157,6 +156,10 @@ input[list] {
     color: #062c33;
     line-height: 30px;
     text-align: center;
+}
+
+.badge-info {
+    font-size: medium;
 }
 
 .carousel-inner{
