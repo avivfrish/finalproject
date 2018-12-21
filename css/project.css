@@ -149,6 +149,27 @@ datalist {
     text-align: center;
 }
 
+.carousel-inner{
+    background: #ffff;
+    height: 400px;
+    border-radius: 10px;
+}
+
+
+.carousel-indicators li {
+    background-color: #3D3C3D;
+}
+
+.carousel-indicators li.active {
+    background-color: #3BA3BA;
+}
+
+.fa-chevron-left:before, .fa-chevron-right:before{
+    color: #3BA3BA;
+    font-size: xx-large;
+}
+
+
 .loader {
     margin: 0 auto;
     border: 16px solid #f3f3f3; /* Light grey */
