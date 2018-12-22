@@ -70,6 +70,7 @@
 
 body{
   text-align: center;
+    font-family: Open Sans,sans-serif;
 }
 
 datalist {
@@ -105,6 +106,7 @@ input[list] {
     color: #ffffff;
     border-color: #e5e5e5;
 }
+
 
 
 .card {
@@ -160,6 +162,19 @@ input[list] {
 
 .badge-info {
     font-size: medium;
+}
+
+.tableOfGeneralInfo {
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: #3ba3ba3d;
+    border-radius: 15px;
+}
+
+.labelOfInfo{
+    display: inline-block;
+    padding: 10px 0;
+    width: 50%;
 }
 
 .carousel-inner{
