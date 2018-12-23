@@ -72,6 +72,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#searchResults").hide();
         $("#3ds").hide();
         $("#stats").hide();
+        $("#loginForm").hide();
     };
 
 	$scope.show_search = function (searchBy) {
@@ -129,6 +130,15 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
 
 	};
+
+    $scope.nav_bar_log_out = function () {
+        $scope.hidePages();
+        $("#nav").hide();
+        $("#loginForm").show();
+    };
+
+
+
 	$scope.show_group = function (item) {
 		console.log("obi");
 		$("#groups").css("display","block");

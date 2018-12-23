@@ -21,7 +21,6 @@
     <script src="js/3d-force/src/3d-force-graph.min.js"></script>
 
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-    <script src="node_modules/force-list-option/dist/force-list-option.js"></script>
     <link rel="stylesheet" href="css/project.css">
 
 </head>
@@ -58,6 +57,8 @@
         include "html/searchByCity.html";
         include "html/searchResults.html";
         include "html/searchModals.html";
-    include "html/graph.html";?>
+        include "html/graph.html";
+        include "html/login.html";
+    ?>
 </body>
 </html>
