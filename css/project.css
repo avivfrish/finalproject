@@ -70,23 +70,68 @@
 
 body{
   text-align: center;
+    font-family: Open Sans,sans-serif;
 }
 
 datalist {
   display: none;
 }
 
+input[list] {
+    border-radius: 5px;
+    background: #ffffff;
+    width: 200px;
+    border-style: ridge;
+}
+
+.leftSideResults {
+    height: 500px;
+    overflow-y: scroll;
+}
+
+.rightSideResults {
+    background-color: #e5e5e5;
+    height: 500px;
+    border-radius: 5px;
+    padding-right: 0px;
+    padding-left: 0px;
+}
+
+.nav-tabs{
+    background-color: #3ba3ba85;
+    width: inherit;
+}
+
+.nav-tabs .nav-link{
+    color: #ffffff;
+    border-color: #e5e5e5;
+}
+
+
+
 .card {
-    width: 480px;
-    height: 300px;
-    /*display: flex;*/
-    margin: 10px 10px;
+    display: flex;
+    /*width: 480px;
+    height: 300px;*/
     float: none;
     border: 2px solid #3BA3BA;
     border-radius: 10px;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     text-align: center;
 }
+
+
+/*.card {
+    width: 480px;
+    height: 300px;*/
+    /*display: flex;*/
+    /*margin: 10px 10px;
+    float: none;
+    border: 2px solid #3BA3BA;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    text-align: center;
+}*/
 
 .ulOfCard {
     margin: 0 auto;
@@ -114,6 +159,44 @@ datalist {
     line-height: 30px;
     text-align: center;
 }
+
+.badge-info {
+    font-size: medium;
+}
+
+.tableOfGeneralInfo {
+    width: 100%;
+    margin-bottom: 1rem;
+    background-color: #3ba3ba3d;
+    border-radius: 15px;
+}
+
+.labelOfInfo{
+    display: inline-block;
+    padding: 10px 0;
+    width: 50%;
+}
+
+.carousel-inner{
+    background: #ffff;
+    height: 400px;
+    border-radius: 10px;
+}
+
+
+.carousel-indicators li {
+    background-color: #3D3C3D;
+}
+
+.carousel-indicators li.active {
+    background-color: #3BA3BA;
+}
+
+.fa-chevron-left:before, .fa-chevron-right:before{
+    color: #3BA3BA;
+    font-size: xx-large;
+}
+
 
 .loader {
     margin: 0 auto;
