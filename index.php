@@ -23,31 +23,10 @@
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
 
     <link rel="stylesheet" href="css/project.css">
+    <link href="https://fonts.googleapis.com/css?family=Maven+Pro" rel="stylesheet">
 
 </head>
-<body style="text-align: center" ng-controller='ng-cases' ng-init="init_case();">
-    <!-- SEE ME? AVIV -->
-	<!--<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top">
-		<ul class="navbar-nav col-sm-12">
-			<li class="col-sm-4">
-				<a href="index.html">Home</a>
-			</li>
-			<li class="col-sm-2">
-				<a href="about-us.html">about us</a>
-			</li>
-			<li class="col-sm-2">
-				<span ng-click="get_companies()">industry</span>
-			</li>
-			<li class="col-sm-2">
-				<a href="service.html">services</a>
-			</li>
-			<li class="col-sm-2">
-				<a href="contact-us.html">Contact us</a>
-			</li>
-		</ul>
-
-	</nav>-->
-
+<body id="allBody" style="text-align: center" ng-controller='ng-cases' ng-init="init_case();">
     
 	<?php
 
@@ -58,6 +37,8 @@
         include "html/searchByCity.html";
         include "html/searchResults.html";
         include "html/searchModals.html";
-    include "html/graph.html";?>
+        include "html/graph.html";
+        include "html/login.html";
+    ?>
 </body>
 </html>
