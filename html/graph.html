@@ -1,7 +1,41 @@
-<div id="3ds" >
-    <div class="container-fluid" style="margin-left:0;margin-right: 0;margin-top: 80px">
+<div id="3ds" style="margin-top: 80px">
+    <input type="button" ng-click="get_python()"  data-toggle="modal" data-target="#graph_modal">
+
+
+
+    <div class="modal fade" id="graph_modal" tabindex="-1" role="dialog" aria-labelledby="Graph Modal" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="graph_comp_name">Modal title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row col-sm-12">
+                        <div id="3d-graph" class="col-sm-5" ></div>
+
+                        <div class="col-sm-6">
+                            A corporation may be referred to as an "affiliate" of another when it is related to it but not
+                            strictly controlled by it, as with a subsidiary relationship, or when it is desired to avoid the
+                            appearance of control. This is sometimes seen with companies that need to avoid restrictive
+                            laws (or negative public opinion) on foreign ownership.
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!--<div class="container-fluid" style="margin-left:0;margin-right: 0;margin-top: 80px">
         <div class="row col-sm-12">
-            <div id="3d-graph" class="col-sm-7" ></div>
+
 
 
             <div id="comp_info" class="col-sm-5" style="display: none;">
@@ -13,10 +47,13 @@
 
 
             </div>
-        </div>
-    </div>
 
-    <input type="button" ng-click="get_python()">
+
+
+        </div>
+    </div>-->
+
+
 
 
 

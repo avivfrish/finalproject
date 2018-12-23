@@ -49,6 +49,7 @@
 
     
 	<?php
+
 		include "html/home.html";
 		include "html/nav.html";
 		include "html/industry.html";

@@ -234,9 +234,9 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             }
         }).then(function (data) {
 
-            //console.log(data.data);
+            console.log(data.data);
 
-            var graph_data=data.data;
+            /*var graph_data=data.data;
             graph_data=graph_data.replace("\'nodes\'","\"nodes\"");
             graph_data=graph_data.replace(/'directed': False, 'multigraph': False, 'graph': {},/g,"");
             graph_data=graph_data.replace(/'id'/g,"\"id\"");
@@ -246,11 +246,11 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             graph_data=graph_data.replace(/'target'/g,"\"target\"");
             graph_data=graph_data.replace(/'/g,"\"");
             //console.log("\n"+graph_data);
-            const graph_data_json=JSON.parse(graph_data);
+            const graph_data_json=JSON.parse(graph_data);*/
             const Graph = ForceGraph3D()
             (document.getElementById('3d-graph'))
                 //.jsonUrl(data.data)
-                .graphData(graph_data_json)
+                .graphData(data.data)
                 .nodeAutoColorBy('group')
                 //.linkAutoColorBy(d => gData.nodes[d.source].group)
                 .linkOpacity(0.5)
