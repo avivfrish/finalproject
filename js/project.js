@@ -63,6 +63,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $scope.resultsOfSearch = [];
         console.log("hello");
         $scope.companies=[];
+        $scope.selectedCompany="";
 	}; //the function
 
     $scope.hidePages = function(){
@@ -235,7 +236,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             method: 'POST',
             url: 'php/get_python.php',
             params: {
-
+                company:  $scope.selectedCompany
             }
         }).then(function (data) {
 
@@ -269,7 +270,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                 .width(600)
                 .showNavInfo(0)
 
-                .nodeLabel(d => `<span style="color: purple">${d.id}</span>`);
+                .nodeLabel(d => `<span style="color: #403d3e">${d.id}</span>`);
 
 
         });
@@ -605,6 +606,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
     $scope.showMoreAboutResult = function (name) {
         $("#askToSelectResult").hide();
         $("#selectedResult").show();
+        $scope.selectedCompany=name;
+        console.log( $scope.selectedCompany);
         //document.getElementById("selectedResult").innerText = name;
 
     }
