@@ -7,16 +7,16 @@
         <font face="Arial">
             <table border="0">
                 <form method="Post">
-                    <tr><td>Company ID: </td><td><input type="text" name="companyID" id="compID"></td></tr>
-                    <tr><td>Company Name: </td><td><input type="text" name="companyName" id="compName"></td></tr>
-                    <tr><td>Street: </td><td><input type="text" name="street" id="compStreet"></td></tr>
-                    <tr><td>Country: </td><td><input type="text" name="country" id="compCountry"></td></tr>
-                    <tr><td>State: </td><td><input type="text" name="state" id="compState"></td></tr>
+                    <tr><td>Company ID: </td><td><input class="form-control" type="text" name="companyID" id="compID"></td></tr>
+                    <tr><td>Company Name: </td><td><input class="form-control" type="text" name="companyName" id="compName"></td></tr>
+                    <tr><td>Street: </td><td><input class="form-control" type="text" name="street" id="compStreet"></td></tr>
+                    <tr><td>Country: </td><td><input class="form-control" type="text" name="country" id="compCountry"></td></tr>
+                    <tr><td>State: </td><td><input class="form-control" type="text" name="state" id="compState"></td></tr>
                 </form>
             </table>
         </font>
-        <button type="submit" value="send" ng-click="insertNewComp()">Add New Company</button>
-        <button type="reset" value="Reset form" ng-click="clearInsert()">Clear</button>
+        <button type="submit" value="send" class="btn btn-outline-dark" ng-click="insertNewComp()">Add New Company</button>
+        <button type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearInsert()">Clear</button>
     </center>
 </div>
 

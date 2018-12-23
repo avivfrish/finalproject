@@ -2,28 +2,28 @@
     <h1 style="text-align: center; font-family: Arial Black, Gadget, sans-serif; font-size:4vw">Update an Existing Company</h1>
     <center>
         <font face="Arial Black">
-            Please select the company's name and details you wish to update and insert the new information
+            Please select the ID of the company you wish to update it's details and insert the new information
         </font>
         <font face="Arial">
             <table border="0">
                 <form method="Post">
                     <tr><td><label>Select company ID: </label></td><td>
-                        <input list="selectedID" ng-change="changeID()" ng-model="selectedIdValue">
+                        <input list="selectedID" class="form-control" ng-change="changeID()" ng-model="selectedIdValue">
                         <datalist id="selectedID">
                             <option ng-repeat="ID in arrayOfCompIDs" value="{{ID}}">{{ID}}</option>
                         </datalist>
-                    <tr><td>Details to Update: </td><td><select name="compDetails" id="compDetails" ng-model="selectedCompDetails">
+                    <tr><td>Details to Update: </td><td><select class="custom-select mr-sm-2" name="compDetails" id="compDetails" ng-model="selectedCompDetails">
                         <option>name</option>
                         <option>street</option>
                         <option>country</option>
                         <option>state</option>
                     </select></td></tr>
-                    <tr><td>New Information: </td><td><input type="text" name="newInfo" id="newInfo" ng-model="selectedNewInfo"></td></tr>
+                    <tr><td>New Information: </td><td><input type="text" name="newInfo" id="newInfo" class="form-control" ng-model="selectedNewInfo"></td></tr>
                 </form>
             </table>
         </font>
-        <button type="submit" value="Send" ng-click="updateComp()">Update</button>
-        <button type="reset" value="Reset form" ng-click="clearUpdate()">Clear</button>
+        <button type="submit" value="Send" class="btn btn-outline-dark" ng-click="updateComp()">Update</button>
+        <button type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearUpdate()">Clear</button>
     </center>
 </div>
 

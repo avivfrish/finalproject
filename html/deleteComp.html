@@ -5,13 +5,15 @@
             Please insert the ID of the company you wish to delete<br>
         </font>
         <font face="Arial">
-           <label>Select company ID</label>
-            <input list="selectedID" ng-change="changeID()" ng-model="selectedIdValue">
-            <datalist id="selectedID">
-                <option ng-repeat="ID in arrayOfCompIDs" value="{{ID}}">{{ID}}</option>
-            </datalist>
+            <table border="0">
+                <tr><td><label>Select company ID: </label></td><td>
+                <input list="selectedID" class="form-control" ng-change="changeID()" ng-model="selectedIdValue">
+                <datalist id="selectedID">
+                    <option ng-repeat="ID in arrayOfCompIDs" value="{{ID}}">{{ID}}</option>
+                </datalist></td><td>
+                <button type="submit" value="Send" class="btn btn-outline-dark" ng-click="deleteComp()">Delete</button></td></tr>
+            </table>
         </font>
-        <button type="submit" value="Send" ng-click="deleteComp()">Delete</button>
     </center>
 </div>
 

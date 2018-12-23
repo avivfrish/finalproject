@@ -133,14 +133,14 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#id_doesnt_exists_update").hide();
 		document.getElementById("loggin_user").innerHTML="Hello Avi";
 		$scope.arrayOfCompIDs = [];
+        $scope.testArray = [];
 		$scope.selectedIdValue = '';
         $scope.selectedCompDetails = '';
         $scope.selectedNewInfo = '';
+        $scope.selectedUploadedFile = '';
 		$scope.getCompIDs();
 		console.log("hello");
 	} //the funtion
-	
-
 
 	$scope.show_search = function () {
 		//show_cases_div - show cases div
@@ -170,6 +170,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 		//$("#topRow").empty();
 		//$("#topRow").prepend("<embed src='http://SERVERNAME:8000/en-US/app/cymng/TopRowTimeline?earliest=0&latest=' seamless frameborder='no' scrolling='no' width='470px' height='103px' style='margin-top:10px' target='_top'></embed>"); 
 	}
+
 	$scope.show_home = function () {
 		//show_cases_div - show cases div
 		
@@ -198,7 +199,6 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 		//$("#topRow").empty();
 		//$("#topRow").prepend("<embed src='http://SERVERNAME:8000/en-US/app/cymng/TopRowTimeline?earliest=0&latest=' seamless frameborder='no' scrolling='no' width='470px' height='103px' style='margin-top:10px' target='_top'></embed>"); 
 	}
-
 
 	$scope.show_group = function (item) {
 		console.log("obi");
@@ -380,7 +380,6 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         //$scope.getCompIDs();
     }
 
-
     $scope.changeID = function()
     {
         $scope.getCompIDs();
@@ -439,6 +438,28 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             $("#id_doesnt_exists_delete").hide();
         }
         //$scope.getCompIDs();
+    }
+
+    $scope.uploadFile = function()
+    {
+        console.log("hi");
+        $http({
+            method: 'POST',
+            url: 'php/uploadFile.php',
+            params: {
+                selectedFile: document.getElementById("uploadedFile").value
+            }
+        }).then(function (data) {
+            console.log(data.data);
+            console.log("bye");
+            let test = [];
+            for (const item in data.data) {
+                test.push(data.data[item]['name'])
+            }
+            $scope.testArray = test;
+            //console.log($scope.testArray);
+        });
+
     }
 
 	$scope.show_splunk = function () {
