@@ -58,6 +58,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#id_already_exists_insert").hide();
         $("#id_doesnt_exists_delete").hide();
         $("#id_doesnt_exists_update").hide();
+        $("#no_id_typed").hide();
 	}
 
     $scope.show_update_comp = function () {
@@ -76,6 +77,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#id_already_exists_insert").hide();
         $("#id_doesnt_exists_delete").hide();
         $("#id_doesnt_exists_update").hide();
+        $("#no_id_typed").hide();
     }
 
     $scope.show_delete_comp = function () {
@@ -94,6 +96,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#id_already_exists_insert").hide();
         $("#id_doesnt_exists_delete").hide();
         $("#id_doesnt_exists_update").hide();
+        $("#no_id_typed").hide();
     }
 
     $scope.show_insert_new_file = function () {
@@ -112,6 +115,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#id_already_exists_insert").hide();
         $("#id_doesnt_exists_delete").hide();
         $("#id_doesnt_exists_update").hide();
+        $("#no_id_typed").hide();
     }
 
 	$scope.init_case = function (item) {
@@ -131,6 +135,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#id_already_exists_insert").hide();
         $("#id_doesnt_exists_delete").hide();
         $("#id_doesnt_exists_update").hide();
+        $("#no_id_typed").hide();
 		document.getElementById("loggin_user").innerHTML="Hello Avi";
 		$scope.arrayOfCompIDs = [];
         $scope.testArray = [];
@@ -161,6 +166,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#id_already_exists_insert").hide();
         $("#id_doesnt_exists_delete").hide();
         $("#id_doesnt_exists_update").hide();
+        $("#no_id_typed").hide();
 		
 		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
 
@@ -191,6 +197,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#id_already_exists_insert").hide();
         $("#id_doesnt_exists_delete").hide();
         $("#id_doesnt_exists_update").hide();
+        $("#no_id_typed").hide();
 		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
 
 		//$("#open_caseOrIntell").text("Add Case");
@@ -242,9 +249,22 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
     $scope.insertNewComp = function()
     {
-        //$scope.getCompIDs();
+        $scope.clearAlerts();
         if (document.getElementById("compID").value in $scope.arrayOfCompIDs || $scope.arrayOfCompIDs[$scope.arrayOfCompIDs.length-1] == document.getElementById("compID").value) {
             $("#id_already_exists_insert").show();
+            $("#couldnt_add_new_comp").hide();
+            $("#added_comp_successfully").hide();
+            $("#deleted_comp_successfully").hide();
+            $("#couldnt_delete_comp").hide();
+            $("#updated_comp_successfully").hide();
+            $("#couldnt_update_comp").hide();
+            $("#id_doesnt_exists_delete").hide();
+            $("#id_doesnt_exists_update").hide();
+            $("#no_id_typed").hide();
+        }
+        else if (document.getElementById("compID").value == null || document.getElementById("compID").value == 0){
+            $("#no_id_typed").show();
+            $("#id_already_exists_insert").hide();
             $("#couldnt_add_new_comp").hide();
             $("#added_comp_successfully").hide();
             $("#deleted_comp_successfully").hide();
@@ -277,6 +297,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                     $("#id_already_exists_insert").hide();
                     $("#id_doesnt_exists_delete").hide();
                     $("#id_doesnt_exists_update").hide();
+                    $("#no_id_typed").hide();
                 }
                 else if (data.data == 'false') {
                     $("#couldnt_add_new_comp").show();
@@ -288,6 +309,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                     $("#id_already_exists_insert").hide();
                     $("#id_doesnt_exists_delete").hide();
                     $("#id_doesnt_exists_update").hide();
+                    $("#no_id_typed").hide();
                 }
                 //$scope.getCompIDs();
             });
@@ -302,11 +324,31 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         document.getElementById('compStreet').value = '',
         document.getElementById('compCountry').value = '',
         document.getElementById('compState').value = ''
+        $("#id_already_exists_insert").hide();
+        $("#couldnt_add_new_comp").hide();
+        $("#added_comp_successfully").hide();
+        $("#deleted_comp_successfully").hide();
+        $("#couldnt_delete_comp").hide();
+        $("#updated_comp_successfully").hide();
+        $("#couldnt_update_comp").hide();
+        $("#id_doesnt_exists_delete").hide();
+        $("#id_doesnt_exists_update").hide();
+        $("#no_id_typed").hide();
     }
 
     $scope.clearUpdate = function()
     {
-            document.getElementById('newInfo').value = ''
+        document.getElementById('newInfo').value = ''
+        $("#id_already_exists_insert").hide();
+        $("#couldnt_add_new_comp").hide();
+        $("#added_comp_successfully").hide();
+        $("#deleted_comp_successfully").hide();
+        $("#couldnt_delete_comp").hide();
+        $("#updated_comp_successfully").hide();
+        $("#couldnt_update_comp").hide();
+        $("#id_doesnt_exists_delete").hide();
+        $("#id_doesnt_exists_update").hide();
+        $("#no_id_typed").hide();
     }
 
     $scope.getCompIDs = function()
@@ -351,6 +393,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                     $("#id_already_exists_insert").hide();
                     $("#id_doesnt_exists_delete").hide();
                     $("#id_doesnt_exists_update").hide();
+                    $("#no_id_typed").hide();
                 }
                 else if (data.data == 'false') {
                     $("#couldnt_delete_comp").show();
@@ -362,6 +405,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                     $("#id_already_exists_insert").hide();
                     $("#id_doesnt_exists_delete").hide();
                     $("#id_doesnt_exists_update").hide();
+                    $("#no_id_typed").hide();
                 }
             });
         }
@@ -375,6 +419,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             $("#couldnt_update_comp").hide();
             $("#id_already_exists_insert").hide();
             $("#id_doesnt_exists_update").hide();
+            $("#no_id_typed").hide();
         }
 
         //$scope.getCompIDs();
@@ -384,6 +429,30 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
     {
         $scope.getCompIDs();
         document.getElementById('selectedID').value = '';
+        $("#id_already_exists_insert").hide();
+        $("#couldnt_add_new_comp").hide();
+        $("#added_comp_successfully").hide();
+        $("#deleted_comp_successfully").hide();
+        $("#couldnt_delete_comp").hide();
+        $("#updated_comp_successfully").hide();
+        $("#couldnt_update_comp").hide();
+        $("#id_doesnt_exists_delete").hide();
+        $("#id_doesnt_exists_update").hide();
+        $("#no_id_typed").hide();
+    }
+
+    $scope.clearAlerts = function()
+    {
+        $("#id_already_exists_insert").hide();
+        $("#couldnt_add_new_comp").hide();
+        $("#added_comp_successfully").hide();
+        $("#deleted_comp_successfully").hide();
+        $("#couldnt_delete_comp").hide();
+        $("#updated_comp_successfully").hide();
+        $("#couldnt_update_comp").hide();
+        $("#id_doesnt_exists_delete").hide();
+        $("#id_doesnt_exists_update").hide();
+        $("#no_id_typed").hide();
     }
 
     $scope.updateComp = function()
@@ -411,6 +480,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                     $("#id_already_exists_insert").hide();
                     $("#id_doesnt_exists_delete").hide();
                     $("#id_doesnt_exists_update").hide();
+                    $("#no_id_typed").hide();
                 }
                 else if (data.data == 'false') {
                     console.log("no");
@@ -423,6 +493,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                     $("#id_already_exists_insert").hide();
                     $("#id_doesnt_exists_delete").hide();
                     $("#id_doesnt_exists_update").hide();
+                    $("#no_id_typed").hide();
                 }
             });
         }
@@ -436,6 +507,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             $("#couldnt_update_comp").hide();
             $("#id_already_exists_insert").hide();
             $("#id_doesnt_exists_delete").hide();
+            $("#no_id_typed").hide();
         }
         //$scope.getCompIDs();
     }

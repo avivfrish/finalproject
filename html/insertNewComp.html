@@ -7,7 +7,7 @@
         <font face="Arial">
             <table border="0">
                 <form method="Post">
-                    <tr><td>Company ID: </td><td><input class="form-control" type="text" name="companyID" id="compID"></td></tr>
+                    <tr><td>Company ID: </td><td><input class="form-control" type="text" name="companyID" id="compID" required></td></tr>
                     <tr><td>Company Name: </td><td><input class="form-control" type="text" name="companyName" id="compName"></td></tr>
                     <tr><td>Street: </td><td><input class="form-control" type="text" name="street" id="compStreet"></td></tr>
                     <tr><td>Country: </td><td><input class="form-control" type="text" name="country" id="compCountry"></td></tr>
@@ -33,5 +33,10 @@
 <div class="alert alert-danger alert-dismissible" id="id_already_exists_insert">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
     <strong>Oops!</strong> Couldn't add company, ID already exists!
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="no_id_typed">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't add company, please insert an ID!
 </div>
 

@@ -11,7 +11,7 @@
                 <datalist id="selectedID">
                     <option ng-repeat="ID in arrayOfCompIDs" value="{{ID}}">{{ID}}</option>
                 </datalist></td><td>
-                <button type="submit" value="Send" class="btn btn-outline-dark" ng-click="deleteComp()">Delete</button></td></tr>
+                <button type="submit" value="Send" class="btn btn-outline-dark" ng-click="deleteComp() ; clearAlerts()">Delete</button></td></tr>
             </table>
         </font>
     </center>
