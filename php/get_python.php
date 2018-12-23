@@ -7,13 +7,16 @@
  */
 
 
+$company=stripcslashes($_GET["company"]);
+
+
 $connectionInfo = array("UID" => "finalproject@avifinalproject", "pwd" => "1qaZ2wsX", "Database" => "finalProject", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0);
 $serverName = "tcp:avifinalproject.database.windows.net,1433";
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 
 
-$sql="select * from connections where records='KATY BRANCH' or word='KATY BRANCH'";
+$sql="select * from connections where records='".$company."' or word='".$company."'";
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
     return (sqlsrv_errors());

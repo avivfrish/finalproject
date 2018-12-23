@@ -63,6 +63,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $scope.resultsOfSearch = [];
         console.log("hello");
         $scope.companies=[];
+        $scope.selectedCompany="";
 	}; //the function
 
     $scope.hidePages = function(){
@@ -221,13 +222,18 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
 	}; //the function
 
-    $scope.graph_node_color =function(link)
+    $scope.graph_link_color =function(link)
     {
         if (link['label']=='Affiliate')
         {
             return 'green';
         }
         return "red";
+    };
+    $scope.graph_node_color =function(node)
+    {
+
+        return "#3ba4bc";
     };
     $scope.graph_on_click = function (node)
     {
@@ -240,7 +246,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             method: 'POST',
             url: 'php/get_python.php',
             params: {
-
+                company:  $scope.selectedCompany
             }
         }).then(function (data) {
 
@@ -261,15 +267,22 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             (document.getElementById('3d-graph'))
                 //.jsonUrl(data.data)
                 .graphData(data.data)
+                .backgroundColor('#e5e5e5')
                 .nodeAutoColorBy('group')
                 //.linkAutoColorBy(d => gData.nodes[d.source].group)
                 .linkOpacity(0.5)
-                .nodeLabel('id')
+                //.nodeLabel('id')
                 .onNodeClick(node =>  $scope.graph_on_click(node))
+                .nodeColor(node=> $scope.graph_node_color(node))
 
-                .linkColor(link => $scope.graph_node_color(link))
+                .linkColor(link => $scope.graph_link_color(link))
                 .height(300)
-                .width(300);
+                .width(600)
+                .showNavInfo(0)
+
+                .nodeLabel(d => `<span style="color: #403d3e">${d.id}</span>`);
+
+
         });
 
 
@@ -596,13 +609,15 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                 $("#noResults").show();
                 console.log("NO RESULTS");
             }
-            resultsElement.scrollIntoView({ behavior: 'smooth'});
+            resultsElement.scrollIntoView({ behavior: 'smooth', block:'nearest'});
         });
     };
 
     $scope.showMoreAboutResult = function (name) {
         $("#askToSelectResult").hide();
         $("#selectedResult").show();
+        $scope.selectedCompany=name;
+        console.log( $scope.selectedCompany);
         //document.getElementById("selectedResult").innerText = name;
 
     }

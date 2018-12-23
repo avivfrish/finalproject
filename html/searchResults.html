@@ -1,13 +1,13 @@
 
-<div id="searchResults">
+<div id="searchResults" style="margin-bottom: 50px;">
 
-    <div id="foundResults" class="container">
+    <div id="foundResults" class="container" >
         <div class="row" data-spy="scroll" data-target=".leftSideResults" data-offset="50">
             <div class="leftSideResults border rounded col-sm-4">
                 <table class="table">
                     <tr ng-repeat="result in resultsOfSearch">
                         <td>
-                            <div class="card" ng-click="showMoreAboutResult(result.name); createNewStockGraph(result.name)" >
+                            <div class="card" ng-click="showMoreAboutResult(result.name); createNewStockGraph(result.name);" >
                                 <div class="card-header">
                                     <h4 class="card-title">{{result.name}}</h4>
                                     <p class="card-text">financial company</p>
@@ -37,10 +37,7 @@
                             <a class="nav-link active" href="#GeneralInfo" role="tab" data-toggle="tab">General Information</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#Competitors" role="tab" data-toggle="tab">Competitors</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#Subsidiaries" role="tab" data-toggle="tab">Subsidiaries</a>
+                            <a class="nav-link" href="#Competitors" role="tab" data-toggle="tab" ng-click="get_python()">Competitors</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#Stock" role="tab" data-toggle="tab">Stock</a>
@@ -51,7 +48,7 @@
                     </ul>
 
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane fade in active" id="GeneralInfo">
+                        <div role="tabpanel" class="tab-pane container active" id="GeneralInfo">
                             <div class="container-fluid titleOfGeneralResult">
                                 <div class="row">
                                     <div class="col-sm-8">
@@ -112,11 +109,16 @@
 
                         </div>
 
-                        <div role="tabpanel" class="tab-pane fade" id="Competitors">
-                            Competitors
+                        <div role="tabpanel" class="tab-pane container fade col-sm-12" id="Competitors">
+
+                            <div id="3d-graph" width="600px" ></div>
+                            <div  id="graph_comp_name">
+                                Connection Details
+                            </div>
+
                         </div>
 
-                        <div role="tabpanel" class="tab-pane fade" id="Stock">
+                        <div role="tabpanel" class="tab-pane container fade" id="Stock">
                             <div class="tradingview-widget-container">
                                 <div id="tradingview_a5966"></div>
                                 <div class="tradingview-widget-copyright">
@@ -126,7 +128,7 @@
                             </div>
                         </div>
 
-                        <div role="tabpanel" class="tab-pane fade" id="Articles">
+                        <div role="tabpanel" class="tab-pane container fade" id="Articles">
 
                             <h2>Articles About Us</h2>
                             <div id="articlesCarousel" class="carousel slide container-fluid" data-ride="carousel">
