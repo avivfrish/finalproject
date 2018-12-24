@@ -16,6 +16,7 @@ app.directive('fileModel', ['$parse', function ($parse) {
 	};
 }]);
 
+
 		// We can write our own fileUpload service to reuse it in the controller
 		app.service('fileUpload', ['$http', function ($http) {
 			this.uploadFileToUrl = function(file, uploadUrl, name){
@@ -64,7 +65,28 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         console.log("hello");
         $scope.companies=[];
         $scope.selectedCompany="";
+
+        $scope.get_user_session();
 	}; //the function
+
+    $scope.get_user_session = function(){
+        $http({
+            method: 'POST',
+            url: 'php/get_user_session.php',
+            params: {
+
+            }
+        }).then(function (data) {
+            console.log(data.data);
+            let ind=(data.data).indexOf("@");
+            let user=(data.data).substr(0,ind);
+            document.getElementById("loggin_user").innerHTML="Hello " + user;
+
+
+        });
+
+    };
+
 
     $scope.hidePages = function(){
         $("#home").hide();
@@ -133,9 +155,14 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 	};
 
     $scope.nav_bar_log_out = function () {
-        $scope.hidePages();
-        $("#nav").hide();
-        $("#loginForm").show();
+        var request = $http({
+            method: "POST",
+            url:"php/logout.php",
+            data: $.param({
+
+            }),
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+        }); //request
     };
 
 

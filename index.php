@@ -1,3 +1,18 @@
+<?php
+session_start();
+$now = time();
+if(!isset($_SESSION['user']))
+{
+    session_destroy();
+    header('Location: /aviv/login');
+}
+/*if ($now > $_SESSION['time']) {
+    session_destroy();
+    header('Location: /login');
+}*/
+?>
+
+
 <html lang="en" ng-app="template" >
 <title>FEI</title>
 <head>
