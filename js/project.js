@@ -59,6 +59,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#id_doesnt_exists_delete").hide();
         $("#id_doesnt_exists_update").hide();
         $("#no_id_typed").hide();
+        $("#added_file_successfully").hide();
+        $("#couldnt_add_new_file").hide();
 	}
 
     $scope.show_update_comp = function () {
@@ -78,6 +80,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#id_doesnt_exists_delete").hide();
         $("#id_doesnt_exists_update").hide();
         $("#no_id_typed").hide();
+        $("#added_file_successfully").hide();
+        $("#couldnt_add_new_file").hide();
     }
 
     $scope.show_delete_comp = function () {
@@ -97,6 +101,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#id_doesnt_exists_delete").hide();
         $("#id_doesnt_exists_update").hide();
         $("#no_id_typed").hide();
+        $("#added_file_successfully").hide();
+        $("#couldnt_add_new_file").hide();
     }
 
     $scope.show_insert_new_file = function () {
@@ -116,6 +122,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#id_doesnt_exists_delete").hide();
         $("#id_doesnt_exists_update").hide();
         $("#no_id_typed").hide();
+        $("#added_file_successfully").hide();
+        $("#couldnt_add_new_file").hide();
     }
 
 	$scope.init_case = function (item) {
@@ -136,6 +144,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#id_doesnt_exists_delete").hide();
         $("#id_doesnt_exists_update").hide();
         $("#no_id_typed").hide();
+        $("#added_file_successfully").hide();
+        $("#couldnt_add_new_file").hide();
 		document.getElementById("loggin_user").innerHTML="Hello Avi";
 		$scope.arrayOfCompIDs = [];
         $scope.testArray = [];
@@ -167,6 +177,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#id_doesnt_exists_delete").hide();
         $("#id_doesnt_exists_update").hide();
         $("#no_id_typed").hide();
+        $("#added_file_successfully").hide();
+        $("#couldnt_add_new_file").hide();
 		
 		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
 
@@ -198,6 +210,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#id_doesnt_exists_delete").hide();
         $("#id_doesnt_exists_update").hide();
         $("#no_id_typed").hide();
+        $("#added_file_successfully").hide();
+        $("#couldnt_add_new_file").hide();
 		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
 
 		//$("#open_caseOrIntell").text("Add Case");
@@ -263,6 +277,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             $("#id_doesnt_exists_delete").hide();
             $("#id_doesnt_exists_update").hide();
             $("#no_id_typed").hide();
+            $("#added_file_successfully").hide();
+            $("#couldnt_add_new_file").hide();
         }
         else if (document.getElementById("compID").value == null || document.getElementById("compID").value == 0){
             $("#no_id_typed").show();
@@ -275,6 +291,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             $("#couldnt_update_comp").hide();
             $("#id_doesnt_exists_delete").hide();
             $("#id_doesnt_exists_update").hide();
+            $("#added_file_successfully").hide();
+            $("#couldnt_add_new_file").hide();
         }
         else {
             $http({
@@ -300,6 +318,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                     $("#id_doesnt_exists_delete").hide();
                     $("#id_doesnt_exists_update").hide();
                     $("#no_id_typed").hide();
+                    $("#added_file_successfully").hide();
+                    $("#couldnt_add_new_file").hide();
                 }
                 else if (data.data == 'false') {
                     $("#couldnt_add_new_comp").show();
@@ -312,6 +332,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                     $("#id_doesnt_exists_delete").hide();
                     $("#id_doesnt_exists_update").hide();
                     $("#no_id_typed").hide();
+                    $("#added_file_successfully").hide();
+                    $("#couldnt_add_new_file").hide();
                 }
                 $scope.getCompIDs();
             });
@@ -398,6 +420,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                     $("#id_doesnt_exists_delete").hide();
                     $("#id_doesnt_exists_update").hide();
                     $("#no_id_typed").hide();
+                    $("#added_file_successfully").hide();
+                    $("#couldnt_add_new_file").hide();
                 }
                 else if (data.data == 'false') {
                     $("#couldnt_delete_comp").show();
@@ -410,6 +434,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                     $("#id_doesnt_exists_delete").hide();
                     $("#id_doesnt_exists_update").hide();
                     $("#no_id_typed").hide();
+                    $("#added_file_successfully").hide();
+                    $("#couldnt_add_new_file").hide();
                 }
                 $scope.getCompIDs();
             });
@@ -425,6 +451,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             $("#id_already_exists_insert").hide();
             $("#id_doesnt_exists_update").hide();
             $("#no_id_typed").hide();
+            $("#added_file_successfully").hide();
+            $("#couldnt_add_new_file").hide();
         }
 
         $scope.getCompIDs();
@@ -486,6 +514,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                     $("#id_doesnt_exists_delete").hide();
                     $("#id_doesnt_exists_update").hide();
                     $("#no_id_typed").hide();
+                    $("#added_file_successfully").hide();
+                    $("#couldnt_add_new_file").hide();
                 }
                 else if (data.data == 'false') {
                     console.log("no");
@@ -499,6 +529,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                     $("#id_doesnt_exists_delete").hide();
                     $("#id_doesnt_exists_update").hide();
                     $("#no_id_typed").hide();
+                    $("#added_file_successfully").hide();
+                    $("#couldnt_add_new_file").hide();
                 }
                 $scope.getCompIDs();
             });
@@ -514,12 +546,15 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             $("#id_already_exists_insert").hide();
             $("#id_doesnt_exists_delete").hide();
             $("#no_id_typed").hide();
+            $("#added_file_successfully").hide();
+            $("#couldnt_add_new_file").hide();
         }
         $scope.getCompIDs();
     }
 
     $scope.uploadFile = function()
     {
+        $scope.clearAlerts();
         console.log("hi");
         if (document.getElementById("replaceData").checked == true) {
             console.log("replace");
@@ -542,6 +577,36 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             }
             $scope.testArray = test;
             console.log($scope.testArray);
+            if (data.data == 'true') {
+                console.log("yes");
+                $("#added_file_successfully").show();
+                $("#couldnt_add_new_comp").hide();
+                $("#added_comp_successfully").hide();
+                $("#deleted_comp_successfully").hide();
+                $("#couldnt_delete_comp").hide();
+                $("#couldnt_update_comp").hide();
+                $("#id_already_exists_insert").hide();
+                $("#id_doesnt_exists_delete").hide();
+                $("#id_doesnt_exists_update").hide();
+                $("#no_id_typed").hide();
+                $("#updated_comp_successfully").hide();
+                $("#couldnt_add_new_file").hide();
+            }
+            else if (data.data == 'false') {
+                console.log("no");
+                $("#couldnt_add_new_file").show();
+                $("#couldnt_update_comp").hide();
+                $("#couldnt_add_new_comp").hide();
+                $("#added_comp_successfully").hide();
+                $("#deleted_comp_successfully").hide();
+                $("#couldnt_delete_comp").hide();
+                $("#updated_comp_successfully").hide();
+                $("#id_already_exists_insert").hide();
+                $("#id_doesnt_exists_delete").hide();
+                $("#id_doesnt_exists_update").hide();
+                $("#no_id_typed").hide();
+                $("#added_file_successfully").hide();
+            }
         });
 
     }
