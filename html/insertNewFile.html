@@ -8,9 +8,13 @@
             <table border="0">
             <form method="post" enctype="multipart/form-data">
                 <tr><td><input name="selectedFile" type="file" id="uploadedFile"/>
-                <input type="submit" name="submit" value="submit" class="btn btn-outline-dark" ng-click="uploadFile()"/></tr></td><br>
-                <tr><td><input type="radio" name="withReplace" value="withReplace" checked="checked"> Replace data for existing companies</tr></td>
-                <tr><td><input type="radio" name="withoutReplace" value="withoutReplace"> Don't replace data for existing companies</tr></td>
+                <input type="submit" name="submit" value="Upload" class="btn btn-outline-dark" ng-click="uploadFile()"/></tr></td><br>
+                <tr><td><div class="radio">
+                    <label><input type="radio" name="optradio" id="replaceData" checked> Replace data for existing companies</label>
+                </div></tr></td>
+                <tr><td><div class="radio">
+                    <label><input type="radio" name="optradio" id="dontReplaceData"> Don't replace data for existing companies</label>
+                </div></tr></td>
             </form>
             </table>
         </font>
@@ -18,4 +22,5 @@
 </div>
  <!--action="<?php echo $_SERVER['PHP_SELF'];?>"
  action="/roni/#"
- ng-model="selectedUploadedFile"-->
+ ng-model="selectedUploadedFile"
+ class="form-control"-->

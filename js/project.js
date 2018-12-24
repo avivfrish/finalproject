@@ -249,6 +249,8 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
     $scope.insertNewComp = function()
     {
+        console.log(document.getElementById("compID").value);
+        console.log($scope.arrayOfCompIDs);
         $scope.clearAlerts();
         if (document.getElementById("compID").value in $scope.arrayOfCompIDs || $scope.arrayOfCompIDs[$scope.arrayOfCompIDs.length-1] == document.getElementById("compID").value) {
             $("#id_already_exists_insert").show();
@@ -311,7 +313,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                     $("#id_doesnt_exists_update").hide();
                     $("#no_id_typed").hide();
                 }
-                //$scope.getCompIDs();
+                $scope.getCompIDs();
             });
         }
 
@@ -365,14 +367,16 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 			for (const item in data.data) {
 				compIDs.push(data.data[item]['ID'])
 			}
+			console.log(compIDs);
 			$scope.arrayOfCompIDs = compIDs;
+			console.log($scope.arrayOfCompIDs);
         });
 
     }
 
     $scope.deleteComp = function()
     {
-        //$scope.changeID();
+        $scope.getCompIDs();
         if ($scope.selectedIdValue in $scope.arrayOfCompIDs || $scope.arrayOfCompIDs[$scope.arrayOfCompIDs.length-1] == $scope.selectedIdValue) {
             $http({
                 method: 'POST',
@@ -407,6 +411,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                     $("#id_doesnt_exists_update").hide();
                     $("#no_id_typed").hide();
                 }
+                $scope.getCompIDs();
             });
         }
         else {
@@ -422,7 +427,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             $("#no_id_typed").hide();
         }
 
-        //$scope.getCompIDs();
+        $scope.getCompIDs();
     }
 
     $scope.changeID = function()
@@ -457,7 +462,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
     $scope.updateComp = function()
     {
-        //$scope.changeID();
+        $scope.getCompIDs();
         if ($scope.selectedIdValue in $scope.arrayOfCompIDs || $scope.arrayOfCompIDs[$scope.arrayOfCompIDs.length-1] == $scope.selectedIdValue) {
             $http({
                 method: 'POST',
@@ -495,6 +500,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                     $("#id_doesnt_exists_update").hide();
                     $("#no_id_typed").hide();
                 }
+                $scope.getCompIDs();
             });
         }
         else {
@@ -509,12 +515,18 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             $("#id_doesnt_exists_delete").hide();
             $("#no_id_typed").hide();
         }
-        //$scope.getCompIDs();
+        $scope.getCompIDs();
     }
 
     $scope.uploadFile = function()
     {
         console.log("hi");
+        if (document.getElementById("replaceData").checked == true) {
+            console.log("replace");
+        }
+        else if (document.getElementById("dontReplaceData").checked == true) {
+            console.log("don't replace");
+        }
         $http({
             method: 'POST',
             url: 'php/uploadFile.php',
@@ -529,7 +541,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                 test.push(data.data[item]['name'])
             }
             $scope.testArray = test;
-            //console.log($scope.testArray);
+            console.log($scope.testArray);
         });
 
     }
