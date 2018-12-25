@@ -1,17 +1,19 @@
 <div id="delete_comp" style="margin-top: 70px">
-    <h1 style="text-align: center; font-family: Arial Black, Gadget, sans-serif; font-size:4vw">Delete company</h1>
+    <link href='https://fonts.googleapis.com/css?family=Della Respira' rel='stylesheet'>
+    <h1 style="text-align: center; font-family: Della Respira; font-size:4vw; text-shadow: 2px 2px #808080"><b>Delete Company</b></h1>
     <center>
-        <font face="Arial Black">
-            Please insert the ID of the company you wish to delete<br>
+        <font face="Della Respira">
+            <p>Please insert the ID of the company<br>
+                you wish to delete</p>
         </font>
-        <font face="Arial">
+        <font face="Della Respira">
             <table border="0">
                 <tr><td><label>Select company ID: </label></td><td>
                 <input list="selectedID" class="form-control" ng-change="changeID()" ng-model="selectedIdValue">
                 <datalist id="selectedID">
                     <option ng-repeat="ID in arrayOfCompIDs" value="{{ID}}">{{ID}}</option>
                 </datalist></td><td>
-                <button type="submit" value="Send" class="btn btn-outline-dark" ng-click="deleteComp() ; clearAlerts()">Delete</button></td></tr>
+                <button type="submit" value="Send" class="btn btn-outline-dark" ng-click="deleteComp()"><i class="fa fa-trash"></i>   Delete</button></td></tr>
             </table>
         </font>
     </center>

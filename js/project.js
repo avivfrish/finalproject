@@ -263,9 +263,26 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
     $scope.insertNewComp = function()
     {
+        $scope.getCompIDs();
         console.log(document.getElementById("compID").value);
         console.log($scope.arrayOfCompIDs);
         $scope.clearAlerts();
+        /*$http({
+            method: 'POST',
+            url: 'php/insertNewComp.php',
+            params: {
+                companyID: document.getElementById("compID").value,
+                companyName: document.getElementById("compName").value,
+                street: document.getElementById("compStreet").value,
+                country: document.getElementById("compCountry").value,
+                state: document.getElementById("compState").value
+            }
+        }).then(function (data) {
+            console.log(data.data);
+            console.log("hi");
+            $scope.getCompIDs();
+            console.log($scope.arrayOfCompIDs);
+        });*/
         if (document.getElementById("compID").value in $scope.arrayOfCompIDs || $scope.arrayOfCompIDs[$scope.arrayOfCompIDs.length-1] == document.getElementById("compID").value) {
             $("#id_already_exists_insert").show();
             $("#couldnt_add_new_comp").hide();
@@ -398,8 +415,10 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
     $scope.deleteComp = function()
     {
+        $scope.clearAlerts();
         $scope.getCompIDs();
-        if ($scope.selectedIdValue in $scope.arrayOfCompIDs || $scope.arrayOfCompIDs[$scope.arrayOfCompIDs.length-1] == $scope.selectedIdValue) {
+        console.log($scope.selectedIdValue);
+        if ($scope.selectedIdValue in $scope.arrayOfCompIDs /*|| $scope.arrayOfCompIDs[$scope.arrayOfCompIDs.length-1] == $scope.selectedIdValue*/) {
             $http({
                 method: 'POST',
                 url: 'php/deleteComp.php',
@@ -490,6 +509,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
     $scope.updateComp = function()
     {
+        $scope.clearAlerts();
         $scope.getCompIDs();
         if ($scope.selectedIdValue in $scope.arrayOfCompIDs || $scope.arrayOfCompIDs[$scope.arrayOfCompIDs.length-1] == $scope.selectedIdValue) {
             $http({
@@ -503,7 +523,6 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             }).then(function (data) {
                 console.log(data.data);
                 if (data.data == 'true') {
-                    console.log("yes");
                     $("#updated_comp_successfully").show();
                     $("#couldnt_add_new_comp").hide();
                     $("#added_comp_successfully").hide();
@@ -518,7 +537,6 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
                     $("#couldnt_add_new_file").hide();
                 }
                 else if (data.data == 'false') {
-                    console.log("no");
                     $("#couldnt_update_comp").show();
                     $("#couldnt_add_new_comp").hide();
                     $("#added_comp_successfully").hide();
@@ -649,7 +667,21 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 		}); //success
 	}
 
-	
+	/*$csv = array();
+
+if (($file = fopen('test.csv', 'r')) === false)
+{
+	throw new Exception('There was an error loading the CSV file.');
+}
+else
+{
+	while (($line = fgetcsv($file, 1000)) !== false)
+	{
+		$csv[] = $line;
+	}
+
+	fclose($handle);
+}*/
 
 
 });	 //app.controller

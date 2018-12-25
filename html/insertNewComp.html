@@ -1,10 +1,12 @@
 <div id="new_comp" style="margin-top: 70px">
-    <h1 style="text-align: center; font-family: Arial Black, Gadget, sans-serif; font-size:4vw">Insert a New Company</h1>
+    <link href='https://fonts.googleapis.com/css?family=Alegreya SC' rel='stylesheet'>
+    <h1 style="text-align: center; font-family: Alegreya SC; font-size:4vw; text-shadow: 2px 2px #808080"><b>Add New Company</b></h1>
     <center>
-        <font face="Arial Black">
-            Please insert the following details of the company you wish to add
+        <font face="Alegreya SC">
+            <p>Please insert the following details<br>
+            of the company you wish to add</p>
         </font>
-        <font face="Arial">
+        <font face="Alegreya SC">
             <table border="0">
                 <form method="Post">
                     <tr><td>Company ID: </td><td><input class="form-control" type="text" name="companyID" id="compID" required></td></tr>
@@ -13,10 +15,10 @@
                     <tr><td>Country: </td><td><input class="form-control" type="text" name="country" id="compCountry"></td></tr>
                     <tr><td>State: </td><td><input class="form-control" type="text" name="state" id="compState"></td></tr>
                 </form>
+                <tr><td></td><td><button type="submit" value="send" class="btn btn-outline-dark" ng-click="insertNewComp()"><i class="fas fa-plus"></i>    Add</button>
+                <button type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearInsert()"><i class="fas fa-eraser"></i>    Clear</button></td></tr>
             </table>
         </font>
-        <button type="submit" value="send" class="btn btn-outline-dark" ng-click="insertNewComp() ; getCompIDs();">Add New Company</button>
-        <button type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearInsert()">Clear</button>
     </center>
 </div>
 
@@ -39,4 +41,6 @@
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
     <strong>Oops!</strong> Couldn't add company, please insert an ID!
 </div>
+
+<!--Arial Black, Gadget, sans-serif-->
 

@@ -1,13 +1,15 @@
 <div id="new_file" style="margin-top: 70px">
-    <h1 style="text-align: center; font-family: Arial Black, Gadget, sans-serif; font-size:4vw">Insert a New File</h1>
+    <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
+    <h1 style="text-align: center; font-family: Comfortaa; font-size:4vw; text-shadow: 2px 2px #808080"><b>Insert New File</b></h1>
     <center>
-        <font face="Arial Black">
-            Please select the file you wish to upload<br>
+        <font face="Comfortaa">
+            <p>Please select the file you wish to upload</p>
         </font>
-        <font face="Arial">
+        <font face="Comfortaa">
             <table border="0">
             <form method="post" enctype="multipart/form-data">
                 <tr><td><input name="selectedFile" type="file" id="uploadedFile"/>
+                <!--<tr><td><input type="file" name="file" onchange="angular.element(this).scope().service(this.files)"/>-->
                 <input type="submit" name="submit" value="Upload" class="btn btn-outline-dark" ng-click="uploadFile()"/></tr></td><br>
                 <tr><td><div class="radio">
                     <label><input type="radio" name="optradio" id="replaceData" checked> Replace data for existing companies</label>
@@ -33,4 +35,5 @@
  <!--action="<?php echo $_SERVER['PHP_SELF'];?>"
  action="/roni/#"
  ng-model="selectedUploadedFile"
- class="form-control"-->
+ class="form-control"
+ <i class="fas fa-arrow-up"></i>-->

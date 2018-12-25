@@ -1,10 +1,12 @@
 <div id="update_comp" style="margin-top: 70px">
-    <h1 style="text-align: center; font-family: Arial Black, Gadget, sans-serif; font-size:4vw">Update an Existing Company</h1>
+    <link href='https://fonts.googleapis.com/css?family=Overlock SC' rel='stylesheet'>
+    <h1 style="text-align: center; font-family: Overlock SC; font-size:4vw; text-shadow: 2px 2px #808080"><b>Update Existing Company</b></h1>
     <center>
-        <font face="Arial Black">
-            Please select the ID of the company you wish to update it's details and insert the new information
+        <font face="Overlock SC">
+            <p>Please select the ID of the company you wish to update<br>
+                it's details and insert the new information</p>
         </font>
-        <font face="Arial">
+        <font face="Overlock SC">
             <table border="0">
                 <form method="Post">
                     <tr><td><label>Select company ID: </label></td><td>
@@ -20,10 +22,10 @@
                     </select></td></tr>
                     <tr><td>New Information: </td><td><input type="text" name="newInfo" id="newInfo" class="form-control" ng-model="selectedNewInfo"></td></tr>
                 </form>
+                <tr><td></td><td><button type="submit" value="Send" class="btn btn-outline-dark" ng-click="updateComp()"><i class="fas fa-user-edit"></i>    Update</button>
+                <button type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearUpdate()"><i class="fas fa-eraser"></i>    Clear</button></td></tr>
             </table>
         </font>
-        <button type="submit" value="Send" class="btn btn-outline-dark" ng-click="updateComp() ; clearAlerts()">Update</button>
-        <button type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearUpdate()">Clear</button>
     </center>
 </div>
 
