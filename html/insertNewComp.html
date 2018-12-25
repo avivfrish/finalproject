@@ -1,0 +1,46 @@
+<div id="new_comp" style="margin-top: 70px">
+    <link href='https://fonts.googleapis.com/css?family=Alegreya SC' rel='stylesheet'>
+    <h1 style="text-align: center; font-family: Alegreya SC; font-size:4vw; text-shadow: 2px 2px #808080"><b>Add New Company</b></h1>
+    <center>
+        <font face="Alegreya SC">
+            <p>Please insert the following details<br>
+            of the company you wish to add</p>
+        </font>
+        <font face="Alegreya SC">
+            <table border="0">
+                <form method="Post">
+                    <tr><td>Company ID: </td><td><input class="form-control" type="text" name="companyID" id="compID" required></td></tr>
+                    <tr><td>Company Name: </td><td><input class="form-control" type="text" name="companyName" id="compName"></td></tr>
+                    <tr><td>Street: </td><td><input class="form-control" type="text" name="street" id="compStreet"></td></tr>
+                    <tr><td>Country: </td><td><input class="form-control" type="text" name="country" id="compCountry"></td></tr>
+                    <tr><td>State: </td><td><input class="form-control" type="text" name="state" id="compState"></td></tr>
+                </form>
+                <tr><td></td><td><button type="submit" value="send" class="btn btn-outline-dark" ng-click="insertNewComp()"><i class="fas fa-plus"></i>    Add</button>
+                <button type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearInsert()"><i class="fas fa-eraser"></i>    Clear</button></td></tr>
+            </table>
+        </font>
+    </center>
+</div>
+
+<div class="alert alert-success alert-dismissible" id="added_comp_successfully">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Success!</strong> Company added successfully.
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="couldnt_add_new_comp">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't add company.
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="id_already_exists_insert">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't add company, ID already exists!
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="no_id_typed">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't add company, please insert an ID!
+</div>
+
+<!--Arial Black, Gadget, sans-serif-->
+

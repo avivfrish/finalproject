@@ -38,18 +38,24 @@
 
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#" ng-click="show_stats();get_companies()">
-								<span class="glyphicon glyphicon glyphicon-option-vertical" aria-hidden="true">
-								</span>
-							Statistics
-						</a>
+						<li class="nav-item dropdown">
+							<a class="nav-link dropdown-toggle"  id="navbarDropdownMenuLink1" data-toggle="dropdown" href="#"  aria-haspopup="true"
+							   aria-expanded="false">Update</a>
+							<div class="dropdown-menu  dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
+								<a class="dropdown-item" href="#" ng-click="show_insert_new_comp();"><i class="fas fa-plus"></i> Add New Company </a>
+								<a class="dropdown-item" href="#" ng-click="show_update_comp();"><i class="fas fa-edit"></i> Update Company </a>
+								<a class="dropdown-item" href="#" ng-click="show_delete_comp();"><i class="fas fa-trash"></i> Delete Company </a>
+								<a class="dropdown-item" href="#" ng-click="show_insert_new_file();"><i class="fas fa-file-upload"></i> Upload New File </a>
+							</div>
+						</li>
+
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="#" ng-click="show_graph();">
+                        <a class="nav-link" href="#" ng-click="show_stats();get_companies()">
 								<span class="glyphicon glyphicon glyphicon-option-vertical" aria-hidden="true">
 								</span>
-							graph
-						</a>
+                            Statistics
+                        </a>
 					</li>
 
                 </ul>
@@ -136,4 +142,4 @@
 	</div>
 
 
-</div>	
+</div>

@@ -67,6 +67,13 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.selectedCompany="";
         $scope.allUsers=[];
         $scope.get_user_session();
+        $scope.arrayOfCompIDs = [];
+        $scope.testArray = [];
+        $scope.selectedIdValue = '';
+        $scope.selectedCompDetails = '';
+        $scope.selectedNewInfo = '';
+        $scope.selectedUploadedFile = '';
+        $scope.getCompIDs();
 	}; //the function
 
     $scope.get_user_session = function(){
@@ -133,6 +140,23 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#3ds").hide();
         $("#stats").hide();
         $("#loginForm").hide();
+        $("#new_file").hide();
+        $("#update_comp").hide();
+        $("#delete_comp").hide();
+        $("#new_comp").hide();
+        $("#couldnt_add_new_comp").hide();
+        $("#added_comp_successfully").hide();
+        $("#deleted_comp_successfully").hide();
+        $("#couldnt_delete_comp").hide();
+        $("#updated_comp_successfully").hide();
+        $("#couldnt_update_comp").hide();
+        $("#id_already_exists_insert").hide();
+        $("#id_doesnt_exists_delete").hide();
+        $("#id_doesnt_exists_update").hide();
+        $("#no_id_typed").hide();
+        $("#added_file_successfully").hide();
+        $("#couldnt_add_new_file").hide();
+
     };
 
 	$scope.show_search = function (searchBy) {
@@ -269,7 +293,373 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
+    $scope.insertNewComp = function()
+    {
+        $scope.getCompIDs();
+        console.log(document.getElementById("compID").value);
+        console.log($scope.arrayOfCompIDs);
+        $scope.clearAlerts();
+        /*$http({
+            method: 'POST',
+            url: 'php/insertNewComp.php',
+            params: {
+                companyID: document.getElementById("compID").value,
+                companyName: document.getElementById("compName").value,
+                street: document.getElementById("compStreet").value,
+                country: document.getElementById("compCountry").value,
+                state: document.getElementById("compState").value
+            }
+        }).then(function (data) {
+            console.log(data.data);
+            console.log("hi");
+            $scope.getCompIDs();
+            console.log($scope.arrayOfCompIDs);
+        });*/
+        if (document.getElementById("compID").value in $scope.arrayOfCompIDs || $scope.arrayOfCompIDs[$scope.arrayOfCompIDs.length-1] == document.getElementById("compID").value) {
+            $("#id_already_exists_insert").show();
+            $("#couldnt_add_new_comp").hide();
+            $("#added_comp_successfully").hide();
+            $("#deleted_comp_successfully").hide();
+            $("#couldnt_delete_comp").hide();
+            $("#updated_comp_successfully").hide();
+            $("#couldnt_update_comp").hide();
+            $("#id_doesnt_exists_delete").hide();
+            $("#id_doesnt_exists_update").hide();
+            $("#no_id_typed").hide();
+            $("#added_file_successfully").hide();
+            $("#couldnt_add_new_file").hide();
+        }
+        else if (document.getElementById("compID").value == null || document.getElementById("compID").value == 0){
+            $("#no_id_typed").show();
+            $("#id_already_exists_insert").hide();
+            $("#couldnt_add_new_comp").hide();
+            $("#added_comp_successfully").hide();
+            $("#deleted_comp_successfully").hide();
+            $("#couldnt_delete_comp").hide();
+            $("#updated_comp_successfully").hide();
+            $("#couldnt_update_comp").hide();
+            $("#id_doesnt_exists_delete").hide();
+            $("#id_doesnt_exists_update").hide();
+            $("#added_file_successfully").hide();
+            $("#couldnt_add_new_file").hide();
+        }
+        else {
+            $http({
+                method: 'POST',
+                url: 'php/insertNewComp.php',
+                params: {
+                    companyID: document.getElementById("compID").value,
+                    companyName: document.getElementById("compName").value,
+                    street: document.getElementById("compStreet").value,
+                    country: document.getElementById("compCountry").value,
+                    state: document.getElementById("compState").value
+                }
+            }).then(function (data) {
+                console.log(data.data);
+                if (data.data == 'true') {
+                    $("#added_comp_successfully").show();
+                    $("#couldnt_add_new_comp").hide();
+                    $("#deleted_comp_successfully").hide();
+                    $("#couldnt_delete_comp").hide();
+                    $("#updated_comp_successfully").hide();
+                    $("#couldnt_update_comp").hide();
+                    $("#id_already_exists_insert").hide();
+                    $("#id_doesnt_exists_delete").hide();
+                    $("#id_doesnt_exists_update").hide();
+                    $("#no_id_typed").hide();
+                    $("#added_file_successfully").hide();
+                    $("#couldnt_add_new_file").hide();
+                }
+                else if (data.data == 'false') {
+                    $("#couldnt_add_new_comp").show();
+                    $("#added_comp_successfully").hide();
+                    $("#deleted_comp_successfully").hide();
+                    $("#couldnt_delete_comp").hide();
+                    $("#updated_comp_successfully").hide();
+                    $("#couldnt_update_comp").hide();
+                    $("#id_already_exists_insert").hide();
+                    $("#id_doesnt_exists_delete").hide();
+                    $("#id_doesnt_exists_update").hide();
+                    $("#no_id_typed").hide();
+                    $("#added_file_successfully").hide();
+                    $("#couldnt_add_new_file").hide();
+                }
+                $scope.getCompIDs();
+            });
+        }
 
+    }
+
+    $scope.clearInsert = function()
+    {
+        document.getElementById('compID').value = '',
+        document.getElementById('compName').value = '',
+        document.getElementById('compStreet').value = '',
+        document.getElementById('compCountry').value = '',
+        document.getElementById('compState').value = ''
+        $("#id_already_exists_insert").hide();
+        $("#couldnt_add_new_comp").hide();
+        $("#added_comp_successfully").hide();
+        $("#deleted_comp_successfully").hide();
+        $("#couldnt_delete_comp").hide();
+        $("#updated_comp_successfully").hide();
+        $("#couldnt_update_comp").hide();
+        $("#id_doesnt_exists_delete").hide();
+        $("#id_doesnt_exists_update").hide();
+        $("#no_id_typed").hide();
+    }
+
+    $scope.clearUpdate = function()
+    {
+        document.getElementById('newInfo').value = ''
+        $("#id_already_exists_insert").hide();
+        $("#couldnt_add_new_comp").hide();
+        $("#added_comp_successfully").hide();
+        $("#deleted_comp_successfully").hide();
+        $("#couldnt_delete_comp").hide();
+        $("#updated_comp_successfully").hide();
+        $("#couldnt_update_comp").hide();
+        $("#id_doesnt_exists_delete").hide();
+        $("#id_doesnt_exists_update").hide();
+        $("#no_id_typed").hide();
+    }
+
+    $scope.getCompIDs = function()
+    {
+        $http({
+            method: 'POST',
+            url: 'php/getCompIDs.php',
+            params: {
+
+            }
+        }).then(function (data) {
+            console.log(data.data);
+            let compIDs = [];
+			for (const item in data.data) {
+				compIDs.push(data.data[item]['ID'])
+			}
+			console.log(compIDs);
+			$scope.arrayOfCompIDs = compIDs;
+			console.log($scope.arrayOfCompIDs);
+        });
+
+    }
+
+    $scope.deleteComp = function()
+    {
+        $scope.clearAlerts();
+        $scope.getCompIDs();
+        console.log($scope.selectedIdValue);
+        if ($scope.selectedIdValue in $scope.arrayOfCompIDs /*|| $scope.arrayOfCompIDs[$scope.arrayOfCompIDs.length-1] == $scope.selectedIdValue*/) {
+            $http({
+                method: 'POST',
+                url: 'php/deleteComp.php',
+                params: {
+                    selectedID : $scope.selectedIdValue
+                }
+
+            }).then(function (data) {
+                console.log(data.data);
+                if (data.data == 'true') {
+                    $("#deleted_comp_successfully").show();
+                    $("#couldnt_add_new_comp").hide();
+                    $("#added_comp_successfully").hide();
+                    $("#couldnt_delete_comp").hide();
+                    $("#updated_comp_successfully").hide();
+                    $("#couldnt_update_comp").hide();
+                    $("#id_already_exists_insert").hide();
+                    $("#id_doesnt_exists_delete").hide();
+                    $("#id_doesnt_exists_update").hide();
+                    $("#no_id_typed").hide();
+                    $("#added_file_successfully").hide();
+                    $("#couldnt_add_new_file").hide();
+                }
+                else if (data.data == 'false') {
+                    $("#couldnt_delete_comp").show();
+                    $("#couldnt_add_new_comp").hide();
+                    $("#added_comp_successfully").hide();
+                    $("#deleted_comp_successfully").hide();
+                    $("#updated_comp_successfully").hide();
+                    $("#couldnt_update_comp").hide();
+                    $("#id_already_exists_insert").hide();
+                    $("#id_doesnt_exists_delete").hide();
+                    $("#id_doesnt_exists_update").hide();
+                    $("#no_id_typed").hide();
+                    $("#added_file_successfully").hide();
+                    $("#couldnt_add_new_file").hide();
+                }
+                $scope.getCompIDs();
+            });
+        }
+        else {
+            $("#id_doesnt_exists_delete").show();
+            $("#couldnt_add_new_comp").hide();
+            $("#added_comp_successfully").hide();
+            $("#deleted_comp_successfully").hide();
+            $("#couldnt_delete_comp").hide();
+            $("#updated_comp_successfully").hide();
+            $("#couldnt_update_comp").hide();
+            $("#id_already_exists_insert").hide();
+            $("#id_doesnt_exists_update").hide();
+            $("#no_id_typed").hide();
+            $("#added_file_successfully").hide();
+            $("#couldnt_add_new_file").hide();
+        }
+
+        $scope.getCompIDs();
+    }
+
+    $scope.changeID = function()
+    {
+        $scope.getCompIDs();
+        document.getElementById('selectedID').value = '';
+        $("#id_already_exists_insert").hide();
+        $("#couldnt_add_new_comp").hide();
+        $("#added_comp_successfully").hide();
+        $("#deleted_comp_successfully").hide();
+        $("#couldnt_delete_comp").hide();
+        $("#updated_comp_successfully").hide();
+        $("#couldnt_update_comp").hide();
+        $("#id_doesnt_exists_delete").hide();
+        $("#id_doesnt_exists_update").hide();
+        $("#no_id_typed").hide();
+    }
+
+    $scope.clearAlerts = function()
+    {
+        $("#id_already_exists_insert").hide();
+        $("#couldnt_add_new_comp").hide();
+        $("#added_comp_successfully").hide();
+        $("#deleted_comp_successfully").hide();
+        $("#couldnt_delete_comp").hide();
+        $("#updated_comp_successfully").hide();
+        $("#couldnt_update_comp").hide();
+        $("#id_doesnt_exists_delete").hide();
+        $("#id_doesnt_exists_update").hide();
+        $("#no_id_typed").hide();
+    }
+
+    $scope.updateComp = function()
+    {
+        $scope.clearAlerts();
+        $scope.getCompIDs();
+        if ($scope.selectedIdValue in $scope.arrayOfCompIDs || $scope.arrayOfCompIDs[$scope.arrayOfCompIDs.length-1] == $scope.selectedIdValue) {
+            $http({
+                method: 'POST',
+                url: 'php/updateComp.php',
+                params: {
+                    selectedID : $scope.selectedIdValue,
+                    compDetails : $scope.selectedCompDetails,
+                    newInfo : $scope.selectedNewInfo
+                }
+            }).then(function (data) {
+                console.log(data.data);
+                if (data.data == 'true') {
+                    $("#updated_comp_successfully").show();
+                    $("#couldnt_add_new_comp").hide();
+                    $("#added_comp_successfully").hide();
+                    $("#deleted_comp_successfully").hide();
+                    $("#couldnt_delete_comp").hide();
+                    $("#couldnt_update_comp").hide();
+                    $("#id_already_exists_insert").hide();
+                    $("#id_doesnt_exists_delete").hide();
+                    $("#id_doesnt_exists_update").hide();
+                    $("#no_id_typed").hide();
+                    $("#added_file_successfully").hide();
+                    $("#couldnt_add_new_file").hide();
+                }
+                else if (data.data == 'false') {
+                    $("#couldnt_update_comp").show();
+                    $("#couldnt_add_new_comp").hide();
+                    $("#added_comp_successfully").hide();
+                    $("#deleted_comp_successfully").hide();
+                    $("#couldnt_delete_comp").hide();
+                    $("#updated_comp_successfully").hide();
+                    $("#id_already_exists_insert").hide();
+                    $("#id_doesnt_exists_delete").hide();
+                    $("#id_doesnt_exists_update").hide();
+                    $("#no_id_typed").hide();
+                    $("#added_file_successfully").hide();
+                    $("#couldnt_add_new_file").hide();
+                }
+                $scope.getCompIDs();
+            });
+        }
+        else {
+            $("#id_doesnt_exists_update").show();
+            $("#couldnt_add_new_comp").hide();
+            $("#added_comp_successfully").hide();
+            $("#deleted_comp_successfully").hide();
+            $("#couldnt_delete_comp").hide();
+            $("#updated_comp_successfully").hide();
+            $("#couldnt_update_comp").hide();
+            $("#id_already_exists_insert").hide();
+            $("#id_doesnt_exists_delete").hide();
+            $("#no_id_typed").hide();
+            $("#added_file_successfully").hide();
+            $("#couldnt_add_new_file").hide();
+        }
+        $scope.getCompIDs();
+    }
+
+    $scope.uploadFile = function()
+    {
+        $scope.clearAlerts();
+        console.log("hi");
+        if (document.getElementById("replaceData").checked == true) {
+            console.log("replace");
+        }
+        else if (document.getElementById("dontReplaceData").checked == true) {
+            console.log("don't replace");
+        }
+        $http({
+            method: 'POST',
+            url: 'php/uploadFile.php',
+            params: {
+                selectedFile: document.getElementById("uploadedFile").value
+            }
+        }).then(function (data) {
+            console.log(data.data);
+            console.log("bye");
+            let test = [];
+            for (const item in data.data) {
+                test.push(data.data[item]['name'])
+            }
+            $scope.testArray = test;
+            console.log($scope.testArray);
+            if (data.data == 'true') {
+                console.log("yes");
+                $("#added_file_successfully").show();
+                $("#couldnt_add_new_comp").hide();
+                $("#added_comp_successfully").hide();
+                $("#deleted_comp_successfully").hide();
+                $("#couldnt_delete_comp").hide();
+                $("#couldnt_update_comp").hide();
+                $("#id_already_exists_insert").hide();
+                $("#id_doesnt_exists_delete").hide();
+                $("#id_doesnt_exists_update").hide();
+                $("#no_id_typed").hide();
+                $("#updated_comp_successfully").hide();
+                $("#couldnt_add_new_file").hide();
+            }
+            else if (data.data == 'false') {
+                console.log("no");
+                $("#couldnt_add_new_file").show();
+                $("#couldnt_update_comp").hide();
+                $("#couldnt_add_new_comp").hide();
+                $("#added_comp_successfully").hide();
+                $("#deleted_comp_successfully").hide();
+                $("#couldnt_delete_comp").hide();
+                $("#updated_comp_successfully").hide();
+                $("#id_already_exists_insert").hide();
+                $("#id_doesnt_exists_delete").hide();
+                $("#id_doesnt_exists_update").hide();
+                $("#no_id_typed").hide();
+                $("#added_file_successfully").hide();
+            }
+        });
+
+    }
 
 	$scope.show_splunk = function () {
 
@@ -733,4 +1123,20 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
 });	 //app.controller
 
-	
+
+
+/*$csv = array();
+
+if (($file = fopen('test.csv', 'r')) === false)
+{
+throw new Exception('There was an error loading the CSV file.');
+}
+else
+{
+while (($line = fgetcsv($file, 1000)) !== false)
+{
+    $csv[] = $line;
+}
+
+fclose($handle);
+}*/
