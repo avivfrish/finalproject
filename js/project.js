@@ -16,7 +16,6 @@ app.directive('fileModel', ['$parse', function ($parse) {
 	};
 }]);
 
-
 		// We can write our own fileUpload service to reuse it in the controller
 		app.service('fileUpload', ['$http', function ($http) {
 			this.uploadFileToUrl = function(file, uploadUrl, name){
@@ -202,11 +201,12 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     $scope.show_stats = function () {
         $scope.hidePages();
-
         $("#stats").show();
-
-
+        $scope.showBarChart();
     };
+
+
+    
 
     $scope.nav_bar_admin = function () {
         console.log("nav bar");
@@ -249,7 +249,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         }); //request
     };
-
 
 
 	$scope.show_group = function (item) {
@@ -837,6 +836,57 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 		}); //success
 	};
 
+	$scope.showBarChart = function () {
+
+        $http({
+            method: 'POST',
+            url: 'php/getBiggestCompanies.php',
+            params: {
+
+            }
+        }).then(function (data) {
+            console.log("GET TOP 5")
+            console.log(data.data)
+            if (data !== "0") {
+                var ctx = document.getElementById("stackedBar").getContext("2d");
+
+                var stackedBar = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Risk Level', 'Risk Level2'],
+                        datasets: [
+                            {
+                                label: 'Competitors',
+                                data: [5, 2],
+                                backgroundColor: '#fa4437'
+                            },
+                            {
+                                label: 'Affiliate',
+                                data: [4, 8],
+                                backgroundColor: '#11e161'
+                            }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                stacked: true
+                            }],
+                            yAxes: [{
+                                stacked: true
+                            }]
+                        }
+                    }
+                });
+
+                document.getElementById("myPieChart").innerHTML = stackedBar;
+
+            } else {
+                console.log('get companies failed');
+            }
+        }); //success
+    };
+
 	$scope.filterBy = function(filter){
 	    console.log("TEST");
 	    console.log("FILTER", filter);
@@ -1098,7 +1148,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         console.log( $scope.selectedCompany);
         //document.getElementById("selectedResult").innerText = name;
 
-    }
+    };
 
     $scope.createNewStockGraph = function (name) {
 	    console.log("CREATE STOCK GRAPH");
@@ -1119,7 +1169,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             }
         );
 
-    }
+    };
 
 });	 //app.controller
 

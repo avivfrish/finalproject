@@ -36,7 +36,6 @@ if(!isset($_SESSION['user']))
     <script src="js/3d-force/src/3d-force-graph.min.js"></script>
 
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-
     <link rel="stylesheet" href="css/project.css">
     <link href="https://fonts.googleapis.com/css?family=Maven+Pro" rel="stylesheet">
 
