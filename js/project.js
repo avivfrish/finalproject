@@ -41,7 +41,7 @@ app.directive('fileModel', ['$parse', function ($parse) {
 
 //		 myApp.controller('myCtrl', ['$scope', 'fileUpload', function($scope, fileUpload){
 
-app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
+app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUpload) {
 
 	$scope.init_case = function () {
 		//$("#nav").show();
@@ -65,7 +65,7 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         console.log("hello");
         $scope.companies=[];
         $scope.selectedCompany="";
-
+        $scope.allUsers=[];
         $scope.get_user_session();
 	}; //the function
 
@@ -78,12 +78,49 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
             }
         }).then(function (data) {
             console.log(data.data);
-            let ind=(data.data).indexOf("@");
-            let user=(data.data).substr(0,ind);
-            document.getElementById("loggin_user").innerHTML="Hello " + user;
+
+            //let ind=(data.data).indexOf("@");
+            let user=(data.data)['user'];
+            let full_name=(data.data)['full_name'];
+            document.getElementById("loggin_user").innerHTML="Hello " + full_name;
+            console.log("is admin" + (data.data)['isAdmin']);
+            let isAdmin=(data.data)['isAdmin'];
+            console.log("is?" + isAdmin);
+            if (isAdmin===1)
+            {
+                console.log("vvfvfvfvf");
+                document.getElementById("nav_update").innerHTML="<a class=\"nav-link\" href=\"#\" ng-click=\"\">\n" +
+                    "                <span class=\"glyphicon glyphicon glyphicon-option-vertical\" aria-hidden=\"true\">\n" +
+                    "                </span>\n" +
+                    "            Update\n" +
+                    "            </a>";
+
+
+                angular.element(document.getElementById("navbar_admin")).append($compile("<a class=\"dropdown-item\"  href=\"#\" ng-click=\"nav_bar_admin();\" data-toggle=\"modal\" data-target=\"#admin_modal\">Admin</a>\n" +
+                    "\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">\n" +
+                    "\t\t\t\t\t\t\t\t<form action=\"/aviv/php/logout.php\">\n" +
+                    "\t\t\t\t\t\t\t\t\t<button style=\"padding: 0;bottom: 0;\" type=\"submit\"  class=\"btn btn-link\">logout</button>\n" +
+                    "\t\t\t\t\t\t\t\t</form> \n" +
+                    "\t\t\t\t\t\t\t</a>")($scope));
+
+
+
+            }
+            else {
+                angular.element(document.getElementById("navbar_admin")).append($compile(
+                    "\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">\n" +
+                    "\t\t\t\t\t\t\t\t<form action=\"/aviv/php/logout.php\">\n" +
+                    "\t\t\t\t\t\t\t\t\t<button style=\"padding: 0;bottom: 0;\" type=\"submit\"  class=\"btn btn-link\">logout</button>\n" +
+                    "\t\t\t\t\t\t\t\t</form> \n" +
+                    "\t\t\t\t\t\t\t</a>")($scope));
+
+            }
+
 
 
         });
+
+
 
     };
 
@@ -146,6 +183,30 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
 
     };
+
+    $scope.nav_bar_admin = function () {
+        console.log("nav bar");
+        $http({
+            method: 'POST',
+            url: 'php/get_all_users.php',
+            params: {
+
+            }
+        }).then(function (data) {
+            $scope.allUsers=data.data;
+            console.log(data.data);
+
+
+        });
+
+
+
+
+    };
+
+
+
+
 	$scope.show_graph = function () {
         $scope.hidePages();
 		$("#3ds").show();

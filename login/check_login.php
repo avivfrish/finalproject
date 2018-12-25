@@ -19,7 +19,7 @@ $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 
 $user=$_POST['inputEmail'];
-$pass=$_POST['inputPassword'];
+$pass=md5($_POST['inputPassword']);
 
 $sql = "SELECT * from users where [user]='$user' and [password] ='$pass'";
 $getResults= sqlsrv_query($conn, $sql);
@@ -28,19 +28,23 @@ if ($getResults == FALSE)
 $usr=array();
 if (sqlsrv_has_rows($getResults)===false)
 {
-    header('Location: /aviv/login');
+    header('Location: /aviv/login/?code=2');
 }
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     $usr[]=array(
         'uid' => $row['uid'],
         'user_name' => $row['user'],
-
+        'full_name' => $row['full_name'],
+        'isAdmin' => $row['isAdmin'],
     );
 }
 echo json_encode($usr);
 session_start();
+$_SESSION['uid'] = $usr[0]['uid'];
 $_SESSION['user'] = $usr[0]['user_name'];
+$_SESSION['full_name'] = $usr[0]['full_name'];
 $_SESSION['time'] = time();
+$_SESSION['isAdmin'] = $usr[0]['isAdmin'];
 if(isset($_SESSION['user']))
 {
     header('Location: /aviv');

@@ -10,9 +10,13 @@ if (!isset($_SESSION))
     session_start();
 }
 
-$sessions = array();
-
-//$sessions['user'] = $_SESSION['user'];
+$session = array(
+    'uid' => $_SESSION['uid'],
+    'user' => $_SESSION['user'],
+    'time' => $_SESSION['time'],
+    'isAdmin' => $_SESSION['isAdmin'],
+    'full_name' => $_SESSION['full_name']
+);
 
 header('Content-Type: application/json');
-echo json_encode($_SESSION['user']);
+echo json_encode($session);

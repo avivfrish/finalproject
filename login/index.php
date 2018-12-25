@@ -1,8 +1,20 @@
 <?php
-session_start();
-if(isset($_SESSION['user'])) {
-    header('Location: /aviv');
-                }
+    session_start();
+    if(isset($_SESSION['user']))
+    {
+        header('Location: /aviv');
+    }
+
+    $err=stripcslashes($_GET["code"]);
+    $msg="";
+    if ($err==="1")
+    {
+        $msg="Passwords Do Not Match!";
+    }
+    else if ($err==="2")
+    {
+        $msg="Wrong User Or Password!";
+    }
 ?>
 
 <html lang="en"  >
@@ -44,7 +56,7 @@ if(isset($_SESSION['user'])) {
                     <div class="panel">
                         <h2>User Login</h2>
                         <p>Please enter your email and password</p>
-                        <p><?php echo $msg; ?></p>
+
                     </div>
                     <form id="Login" action='check_login.php' method='post' accept-charset='UTF-8'>
                         <div class="form-group">
@@ -54,15 +66,103 @@ if(isset($_SESSION['user'])) {
                             <input type="password" class="form-control" id="inputPassword" name="inputPassword" placeholder="Password">
                         </div>
                         <div class="forgot">
-                            <a href="#">Forgot password?</a>
+                            <a href="#" data-toggle="modal" data-target="#register_modal">Not Registered?</a>
                         </div>
                         <button type="submit" class="btn btn-primary">Login</button>
-
+                        <p style="color:#ff3b00"><?php echo $msg ?></p>
                     </form>
                 </div>
             </div>
         </div>
     </div>
+
+    <div class="modal fade" id="register_modal" tabindex="-1" role="dialog" aria-labelledby="Register Modal" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" >Register New User</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form class="form-horizontal" role="form" method="POST" action="registration.php">
+                        <div class="row">
+                            <div class="col-md-3 field-label-responsive">
+                                <label for="name">Name</label>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                        <div class="input-group-addon" style="width: 2.6rem;padding-top: 10px"><i class="fa fa-user"></i></div>
+                                        <input type="text" name="name" class="form-control" id="name"
+                                               placeholder="John Doe" required autofocus>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 field-label-responsive">
+                                <label for="email">E-Mail Address</label>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                        <div class="input-group-addon" style="width: 2.6rem;padding-top: 10px"><i class="fa fa-at"></i></div>
+                                        <input type="text" name="email" class="form-control" id="email"
+                                               placeholder="you@example.com" required autofocus>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 field-label-responsive">
+                                <label for="password">Password</label>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group has-danger">
+                                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                        <div class="input-group-addon" style="width: 2.6rem;padding-top: 10px"><i class="fa fa-key"></i></div>
+                                        <input type="password" name="password" class="form-control" id="password"
+                                               placeholder="Password" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3 field-label-responsive">
+                                <label for="password">Confirm Password</label>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <div class="input-group mb-2 mr-sm-2 mb-sm-0">
+                                        <div class="input-group-addon" style="width: 2.6rem;padding-top: 10px">
+                                            <i class="fa fa-repeat"></i>
+                                        </div>
+                                        <input type="password" name="password-confirmation" class="form-control"
+                                               id="password-confirm" placeholder="Password" required>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-3"></div>
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-success"><i class="fa fa-user-plus"></i> Register</button>
+                            </div>
+                        </div>
+                    </form>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
 
 </body>
 </html>
