@@ -119,11 +119,11 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 
     $scope.show_stats = function () {
         $scope.hidePages();
-
         $("#stats").show();
-
-
+        $scope.showBarChart();
     };
+
+
 	$scope.show_graph = function () {
         $scope.hidePages();
 		$("#3ds").show();
@@ -137,7 +137,6 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         $("#nav").hide();
         $("#loginForm").show();
     };
-
 
 
 	$scope.show_group = function (item) {
@@ -180,8 +179,6 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
         });
 
     };
-
-
 
 	$scope.show_splunk = function () {
 
@@ -358,6 +355,57 @@ app.controller('ng-cases', function ($scope, $http, $interval, fileUpload) {
 			}
 		}); //success
 	};
+
+	$scope.showBarChart = function () {
+
+        $http({
+            method: 'POST',
+            url: 'php/getBiggestCompanies.php',
+            params: {
+
+            }
+        }).then(function (data) {
+            console.log("GET TOP 5")
+            console.log(data.data)
+            if (data !== "0") {
+                var ctx = document.getElementById("stackedBar").getContext("2d");
+
+                var stackedBar = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['Risk Level', 'Risk Level2'],
+                        datasets: [
+                            {
+                                label: 'Competitors',
+                                data: [5, 2],
+                                backgroundColor: '#fa4437'
+                            },
+                            {
+                                label: 'Affiliate',
+                                data: [4, 8],
+                                backgroundColor: '#11e161'
+                            }
+                        ]
+                    },
+                    options: {
+                        scales: {
+                            xAxes: [{
+                                stacked: true
+                            }],
+                            yAxes: [{
+                                stacked: true
+                            }]
+                        }
+                    }
+                });
+
+                document.getElementById("myPieChart").innerHTML = stackedBar;
+
+            } else {
+                console.log('get companies failed');
+            }
+        }); //success
+    };
 
 	$scope.filterBy = function(filter){
 	    console.log("TEST");
