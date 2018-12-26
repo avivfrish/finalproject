@@ -60,6 +60,10 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.arrayOfCities = [];
         $scope.arrayOfStreets = [];
 
+        $scope.distinctConnections = [];
+        $scope.getDistinctConnections();
+
+
         $scope.resultsOfSearch = [];
         console.log("hello");
         $scope.companies=[];
@@ -130,7 +134,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
-
     $scope.hidePages = function(){
         $("#home").hide();
         $("#search_compByName").hide();
@@ -155,8 +158,44 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#no_id_typed").hide();
         $("#added_file_successfully").hide();
         $("#couldnt_add_new_file").hide();
-
     };
+
+    $scope.show_insert_new_comp = function () {
+        console.log("SHOE INSERT NEW COMP");
+        $scope.hidePages();
+        $("#new_comp").show();
+    };
+
+    $scope.show_update_comp = function () {
+        $scope.hidePages();
+        $("#update_comp").show();
+    };
+
+    $scope.show_delete_comp = function () {
+        $scope.hidePages();
+        $("#delete_comp").show();
+    };
+
+    $scope.show_insert_new_file = function () {
+        $("#new_file").show();
+        $("#home").hide();
+        $("#search_comp").hide();
+        $("#delete_comp").hide();
+        $("#update_comp").hide();
+        $("#new_comp").hide();
+        $("#couldnt_add_new_comp").hide();
+        $("#added_comp_successfully").hide();
+        $("#deleted_comp_successfully").hide();
+        $("#couldnt_delete_comp").hide();
+        $("#updated_comp_successfully").hide();
+        $("#couldnt_update_comp").hide();
+        $("#id_already_exists_insert").hide();
+        $("#id_doesnt_exists_delete").hide();
+        $("#id_doesnt_exists_update").hide();
+        $("#no_id_typed").hide();
+        $("#added_file_successfully").hide();
+        $("#couldnt_add_new_file").hide();
+    }
 
 	$scope.show_search = function (searchBy) {
 		console.log("show search div");
@@ -183,6 +222,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 		//$("#topRow").empty();
 		//$("#topRow").prepend("<embed src='http://SERVERNAME:8000/en-US/app/cymng/TopRowTimeline?earliest=0&latest=' seamless frameborder='no' scrolling='no' width='470px' height='103px' style='margin-top:10px' target='_top'></embed>"); 
 	};
+
 	$scope.show_home = function () {
 		//show_cases_div - show cases div
 		
@@ -205,9 +245,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.showBarChart();
     };
 
-
-    
-
     $scope.nav_bar_admin = function () {
         console.log("nav bar");
         $http({
@@ -228,9 +265,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
-
-
-
 	$scope.show_graph = function () {
         $scope.hidePages();
 		$("#3ds").show();
@@ -249,7 +283,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
         }); //request
     };
-
 
 	$scope.show_group = function (item) {
 		console.log("obi");
@@ -712,11 +745,13 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
         return "#3ba4bc";
     };
+
     $scope.graph_on_click = function (node)
     {
         $("#comp_info").css("display","block");
         document.getElementById("graph_comp_name").innerText=node['id'];
     };
+
     $scope.get_python = function () {
         console.log("try python");
         $http({
@@ -764,7 +799,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
 
     };
-
 
 	$scope.get_companies = function ()
 	{
@@ -836,41 +870,98 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 		}); //success
 	};
 
+
+    $scope.getDistinctConnections = function (){
+        $http({
+            method: 'POST',
+            url: 'php/getDistinctConnections.php',
+            params: {
+
+            }
+        }).then(function (data) {
+            let connections = [];
+            for (const item in data.data){
+                connections.push(data.data[item]['relation']);
+            }
+            $scope.distinctConnections = connections;
+            //console.log("$scope.distinctConnections");
+            //console.log($scope.distinctConnections);
+        });
+
+    };
+
 	$scope.showBarChart = function () {
 
         $http({
             method: 'POST',
             url: 'php/getBiggestCompanies.php',
-            params: {
-
-            }
+            params: {}
         }).then(function (data) {
-            console.log("GET TOP 5")
-            console.log(data.data)
-            if (data !== "0") {
-                var ctx = document.getElementById("stackedBar").getContext("2d");
+            console.log("GET TOP 5");
+            console.log(data.data);
 
-                var stackedBar = new Chart(ctx, {
-                    type: 'bar',
+            if (data.data.length !== 0) {
+
+                let xLabels = [];
+                let dataForY = {'Competitors' : new Array(5).fill(0),
+                                'Affiliate' : new Array(5).fill(0) };
+
+                for (let i = 1 ; i <= 5; i++){
+                    for (let item in data.data){
+                        if((data.data)[item]['id'] === i){
+                            const name = (data.data)[item]['name'];
+                            const id = (data.data)[item]['id'];
+                            if (xLabels.indexOf(name) === -1 ){
+                                xLabels.push(name);
+                            }
+                            if ((data.data)[item]['relation'] === 'competition'){
+                                dataForY['Competitors'][id-1] = (data.data)[item]['count'];
+
+                            }
+                            else if ((data.data)[item]['relation'] === 'Affiliate'){
+                                dataForY['Affiliate'][id-1] = (data.data)[item]['count'];
+                            }
+
+                        }
+                    }
+                }
+
+                console.log("dataForY");
+                console.log(dataForY);
+
+                const ctx = document.getElementById("stackedBar").getContext("2d");
+
+                const stackedBar = new Chart(ctx, {
+                    //type: 'bar',
+                    type: 'horizontalBar',
                     data: {
-                        labels: ['Risk Level', 'Risk Level2'],
+                        labels: xLabels,
                         datasets: [
                             {
                                 label: 'Competitors',
-                                data: [5, 2],
+                                data: dataForY['Competitors'],
                                 backgroundColor: '#fa4437'
                             },
                             {
                                 label: 'Affiliate',
-                                data: [4, 8],
+                                data: dataForY['Affiliate'],
                                 backgroundColor: '#11e161'
                             }
                         ]
                     },
                     options: {
+                        labels:{
+                            display: true
+                        },
                         scales: {
                             xAxes: [{
-                                stacked: true
+                                labelFontColor: '#11e161',
+                                labelWrap: true,
+                                stacked: true,
+                                ticks : {
+                                    display: true,
+                                    wrap: true
+                                }
                             }],
                             yAxes: [{
                                 stacked: true
@@ -882,9 +973,9 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 document.getElementById("myPieChart").innerHTML = stackedBar;
 
             } else {
-                console.log('get companies failed');
+                console.log('get companies of showBarChart failed');
             }
-        }); //success
+        });
     };
 
 	$scope.filterBy = function(filter){
