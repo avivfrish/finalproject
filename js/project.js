@@ -242,6 +242,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     $scope.show_stats = function () {
         $scope.hidePages();
         $("#stats").show();
+        document.getElementById("myPieChart").innerHTML = "";
+        document.getElementById("stackedBar").innerHTML = "";
         $scope.showBarChart();
     };
 
@@ -884,8 +886,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 connections.push(data.data[item]['relation']);
             }
             $scope.distinctConnections = connections;
-            //console.log("$scope.distinctConnections");
-            //console.log($scope.distinctConnections);
+            console.log("getdistinctConnections");
+            console.log($scope.distinctConnections);
         });
 
     };
@@ -903,8 +905,11 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             if (data.data.length !== 0) {
 
                 let xLabels = [];
-                let dataForY = {'Competitors' : new Array(5).fill(0),
-                                'Affiliate' : new Array(5).fill(0) };
+
+                let dataForY = {};
+                for(let item in $scope.distinctConnections){
+                    dataForY[$scope.distinctConnections[item]] = new Array(5).fill(0);
+                }
 
                 for (let i = 1 ; i <= 5; i++){
                     for (let item in data.data){
@@ -914,20 +919,34 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                             if (xLabels.indexOf(name) === -1 ){
                                 xLabels.push(name);
                             }
-                            if ((data.data)[item]['relation'] === 'competition'){
-                                dataForY['Competitors'][id-1] = (data.data)[item]['count'];
-
-                            }
-                            else if ((data.data)[item]['relation'] === 'Affiliate'){
-                                dataForY['Affiliate'][id-1] = (data.data)[item]['count'];
-                            }
-
+                            const relationType = (data.data)[item]['relation'];
+                            dataForY[relationType][id-1] = (data.data)[item]['count'];
                         }
                     }
                 }
 
                 console.log("dataForY");
                 console.log(dataForY);
+
+                let letters = '0123456789ABCDEF';
+                let color = '#';
+                let colors=[];
+                for (let j=0; j < $scope.distinctConnections.length; j++)
+                {
+                    color = '#';
+                    for (let i = 0; i < 6; i++ ) {
+                        color += letters[Math.floor(Math.random() * 16)];
+                    }
+                    colors.push(color);
+                }
+
+                let dataSets = [];
+                for(let item in $scope.distinctConnections){
+                    const relation = $scope.distinctConnections[item];
+                    const itemForDataSets = {label: relation,
+                        data: dataForY[relation], backgroundColor: colors[item]};
+                    dataSets.push(itemForDataSets);
+                }
 
                 const ctx = document.getElementById("stackedBar").getContext("2d");
 
@@ -936,18 +955,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     type: 'horizontalBar',
                     data: {
                         labels: xLabels,
-                        datasets: [
-                            {
-                                label: 'Competitors',
-                                data: dataForY['Competitors'],
-                                backgroundColor: '#fa4437'
-                            },
-                            {
-                                label: 'Affiliate',
-                                data: dataForY['Affiliate'],
-                                backgroundColor: '#11e161'
-                            }
-                        ]
+                        datasets: dataSets
                     },
                     options: {
                         labels:{
@@ -970,7 +978,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     }
                 });
 
-                document.getElementById("myPieChart").innerHTML = stackedBar;
+                document.getElementById("stackedBar").innerHTML = stackedBar;
 
             } else {
                 console.log('get companies of showBarChart failed');
