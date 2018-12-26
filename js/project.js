@@ -872,7 +872,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 		}); //success
 	};
 
-
     $scope.getDistinctConnections = function (){
         $http({
             method: 'POST',
@@ -951,28 +950,29 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 const ctx = document.getElementById("stackedBar").getContext("2d");
 
                 const stackedBar = new Chart(ctx, {
-                    //type: 'bar',
-                    type: 'horizontalBar',
+                    type: 'bar',
                     data: {
                         labels: xLabels,
                         datasets: dataSets
                     },
                     options: {
-                        labels:{
-                            display: true
-                        },
                         scales: {
                             xAxes: [{
-                                labelFontColor: '#11e161',
-                                labelWrap: true,
                                 stacked: true,
-                                ticks : {
-                                    display: true,
-                                    wrap: true
+                                ticks: {
+                                    fontColor: "white",
+                                    fontSize: 10,
+                                    stepSize: 1,
+                                    beginAtZero: true,
+                                    autoSkip: false
                                 }
                             }],
                             yAxes: [{
-                                stacked: true
+                                stacked: true,
+                                ticks: {
+                                    fontColor: "white",
+                                    fontSize: 10,
+                                }
                             }]
                         }
                     }
