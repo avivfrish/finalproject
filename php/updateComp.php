@@ -9,7 +9,7 @@ $selectedCompDetails = $_GET["compDetails"];
 $selectedNewInfo = $_GET["newInfo"];
 
 $sql= /** @lang text */
-    "update companies set $selectedCompDetails = "."'".$selectedNewInfo."' where id = "."'".$selectedIdValue."'";
+    "update companies set $selectedCompDetails = "."'".$selectedNewInfo."' where identifier = "."'".$selectedIdValue."'";
 
     $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE) {

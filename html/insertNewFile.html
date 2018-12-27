@@ -1,16 +1,14 @@
 <div id="new_file" style="margin-top: 70px">
-    <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
-    <h1 style="text-align: center; font-family: Comfortaa; font-size:4vw; text-shadow: 2px 2px #808080"><b>Insert New File</b></h1>
+    <h1 style="text-align: center; font-family:'Maven Pro', sans-serif; font-size:4vw; text-shadow: 2px 2px #808080"><b>Insert New File</b></h1>
     <center>
-        <font face="Comfortaa">
+        <font face="Maven Pro">
             <p>Please select the file you wish to upload</p>
         </font>
-        <font face="Comfortaa">
+        <font face="Maven Pro">
             <table border="0">
             <form method="post" enctype="multipart/form-data">
-                <tr><td><input name="selectedFile" type="file" id="uploadedFile"/>
-                <!--<tr><td><input type="file" name="file" onchange="angular.element(this).scope().service(this.files)"/>-->
-                <input type="submit" name="submit" value="Upload" class="btn btn-outline-dark" ng-click="uploadFile()"/></tr></td><br>
+                <tr><td><input type="file" file-model="myFile"/>
+                <input type="submit" name="myFile" value="Upload" class="btn btn-outline-dark" ng-click="uploadFile()"/></tr></td><br>
                 <tr><td><div class="radio">
                     <label><input type="radio" name="optradio" id="replaceData" checked> Replace data for existing companies</label>
                 </div></tr></td>

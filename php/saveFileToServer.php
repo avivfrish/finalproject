@@ -4,21 +4,11 @@ $connectionInfo = array("UID" => "finalproject@avifinalproject", "pwd" => "1qaZ2
 $serverName = "tcp:avifinalproject.database.windows.net,1433";
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
-//'".$_GET['selectedFile']."'
-
 $sql= /** @lang text */
-    "bulk insert companies from 'D:\home\site\wwwroot\\roni\csv\\newData.csv' with (rowterminator = '\\n',fieldterminator = ',')";
-    //echo ($sql );
-
+    "select name from companies";
 $getResults= sqlsrv_query($conn, $sql);
-if ($getResults == FALSE) {
-    echo ("false");
-    //return (sqlsrv_errors());
-}
-else {
-    echo ("true");
-}
-
+if ($getResults == FALSE)
+    return (sqlsrv_errors());
 $array = array();
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     $array[] = array(
@@ -26,4 +16,5 @@ while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     );
 }
 sqlsrv_free_stmt($getResults);
-//echo json_encode($array);
+echo json_encode($array);
+
