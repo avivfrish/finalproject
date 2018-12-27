@@ -73,6 +73,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.selectedNewInfo = '';
         $scope.selectedUploadedFile = '';
         $scope.getCompIDs();
+        $scope.admin_checkbox={};
 	}; //the function
 
     $scope.get_user_session = function(){
@@ -206,7 +207,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     };
 
 
-    
+
 
     $scope.nav_bar_admin = function () {
         console.log("nav bar");
@@ -218,7 +219,34 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             }
         }).then(function (data) {
             $scope.allUsers=data.data;
+
+
+
+
+        });
+
+
+
+
+    };
+
+    $scope.admin_save_changes = function () {
+        var obi = $scope.allUsers;
+        console.log(obi);
+
+        $http({
+            method: 'POST',
+            url: 'php/set_user_admin.php',
+            data: $.param({
+                users: obi,
+            }),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).then(function (data) {
             console.log(data.data);
+
+
 
 
         });

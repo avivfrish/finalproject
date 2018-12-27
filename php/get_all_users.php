@@ -32,6 +32,7 @@ while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
         'full_name'=>$row['full_name'],
         'isAdmin'=>$row['isAdmin'],
         'isCurUser'=>$isCurUser,
+        'isChecked'=>$row['isAdmin']
     );
 
 }

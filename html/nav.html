@@ -115,14 +115,14 @@
 
 							<td ng-if="user.isAdmin=='1'" >
 								<label>
-									<input ng-if="user.isCurUser==1" type="checkbox" value="" checked disabled>
-									<input ng-if="user.isCurUser==0" type="checkbox" value="" checked>
+									<input ng-if="user.isCurUser==1" type="checkbox" value=""  ng-false-value="0" ng-true-value="1"  ng-model="user.isChecked" checked disabled>
+									<input ng-if="user.isCurUser==0" type="checkbox" value="" ng-false-value="0" ng-true-value="1"  ng-model="user.isChecked" checked>
 									<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
 								</label>
 							</td>
 							<td ng-if="user.isAdmin=='0'"  >
 								<label>
-									<input type="checkbox" value="">
+									<input type="checkbox" value="" ng-false-value="0" ng-true-value="1"  ng-model="user.isChecked" >
 									<span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
 								</label>
 							</td>
@@ -135,6 +135,7 @@
 
 				</div>
 				<div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" ng-click="admin_save_changes()">Save</button>
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				</div>
 			</div>
