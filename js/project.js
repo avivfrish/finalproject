@@ -242,8 +242,11 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     $scope.show_stats = function () {
         $scope.hidePages();
         $("#stats").show();
-        document.getElementById("myPieChart").innerHTML = "";
+        document.getElementById("ConnectionDoughnutChart").innerHTML = "" ;
+        document.getElementById("IndustryDoughnutChart").innerHTML = "" ;
+        document.getElementById("ProductsDoughnutChart").innerHTML = "" ;
         document.getElementById("stackedBar").innerHTML = "";
+        $scope.showDoughnut();
         $scope.showBarChart();
     };
 
@@ -802,74 +805,91 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
-	$scope.get_companies = function ()
+	$scope.showDoughnut = function ()
 	{
-		console.log("get_companies");
-		console.log("Coral");
-        console.log("Coral2");
+		console.log("showDoughnut");
 
         $http({
             method: 'POST',
-            url: 'php/get_companies_info.php',
+            url: 'php/getNumOfConnections.php',
             params: {
 
             }
         }).then(function (data) {
-			if (data !== "0"){
+			if (data.data.length !== 0){
                 console.log(data);
-				$scope.companies=(data.data);
-
+				$scope.connections=(data.data);
 
                 let letters = '0123456789ABCDEF';
                 let color = '#';
                 let colors=[];
-                let data_comp=[];
+                let connectionsCount=[];
                 let label=[];
-                for (let j=0;j<$scope.companies.length;j++)
+                for (let j=0;j<$scope.connections.length;j++)
                 {
                     color = '#';
                     for (let i = 0; i < 6; i++ ) {
                         color += letters[Math.floor(Math.random() * 16)];
                     }
                     colors.push(color);
-                    data_comp.push($scope.companies[j]['y']);
-                    label.push($scope.companies[j]['name']);
+                    connectionsCount.push($scope.connections[j]['count']);
+                    label.push($scope.connections[j]['relation']);
                 }
-
                 console.log(colors);
 
 
+                var ctx = document.getElementById("ConnectionDoughnutChart").getContext("2d");
+                var ctx2 = document.getElementById("IndustryDoughnutChart").getContext("2d");
+                var ctx3 = document.getElementById("ProductsDoughnutChart").getContext("2d");
 
-                var ctx = document.getElementById("myPieChart").getContext("2d");
-
-
-
-
-
-                var myPieChart = new Chart(ctx,{
-                    type: 'pie',
+                var ConnectionDoughnutChart  = new Chart(ctx,{
+                    type: 'doughnut',
                     data : {
                         datasets: [{
-                            data: data_comp,
+                            data: connectionsCount,
                             backgroundColor: colors
                         }],
-
-                        // These labels appear in the legend and in the tooltips when hovering different arcs
                         labels: label,
 
                     },
-                    options: {cutoutPercentage:0,legend:{display:true}},
-
+                    options: {cutoutPercentage:50,legend:{display:true}},
                 });
 
-                document.getElementById("myPieChart").innerHTML=myPieChart;
+                var IndustryDoughnutChart  = new Chart(ctx2,{
+                    type: 'doughnut',
+                    data : {
+                        datasets: [{
+                            data: connectionsCount,
+                            backgroundColor: colors
+                        }],
+                        labels: label,
 
-				console.log($scope.companies);
-			}
+                    },
+                    options: {cutoutPercentage:50,legend:{display:true}},
+                });
+
+                var ProductsDoughnutChart  = new Chart(ctx3,{
+                    type: 'doughnut',
+                    data : {
+                        datasets: [{
+                            data: connectionsCount,
+                            backgroundColor: colors
+                        }],
+                        labels: label,
+
+                    },
+                    options: {cutoutPercentage:50,legend:{display:true}},
+                });
+
+                document.getElementById("ConnectionDoughnutChart").innerHTML=ConnectionDoughnutChart ;
+                document.getElementById("IndustryDoughnutChart").innerHTML=IndustryDoughnutChart ;
+                document.getElementById("ProductsDoughnutChart").innerHTML=ProductsDoughnutChart ;
+
+            }
 			else {
 				console.log('get companies failed');
 			}
-		}); //success
+		});
 	};
 
     $scope.getDistinctConnections = function (){
