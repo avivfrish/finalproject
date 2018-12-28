@@ -101,13 +101,18 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             if (isAdmin===1)
             {
                 console.log("vvfvfvfvf");
-                document.getElementById("nav_update").innerHTML="<a class=\"nav-link\" href=\"#\" ng-click=\"\">\n" +
-                    "                <span class=\"glyphicon glyphicon glyphicon-option-vertical\" aria-hidden=\"true\">\n" +
-                    "                </span>\n" +
-                    "            Update\n" +
-                    "            </a>";
+                document.getElementById("nav_update").innerText="";
+                angular.element(document.getElementById("nav_update")).append($compile(
+                    "<a class=\"nav-link dropdown-toggle\"  id=\"navbarDropdownMenuLink1\" data-toggle=\"dropdown\" href=\"#\"  aria-haspopup=\"true\"\n" +
+                    "\t\t\t\t\t\t\t   aria-expanded=\"false\">Update</a>\n" +
+                    "\t\t\t\t\t\t\t<div class=\"dropdown-menu  dropdown-menu-right\" aria-labelledby=\"navbarDropdownMenuLink1\">\n" +
+                    "\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\" ng-click=\"show_insert_new_comp();\"><i class=\"fas fa-plus\"></i> Add New Company </a>\n" +
+                    "\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\" ng-click=\"show_update_comp();\"><i class=\"fas fa-edit\"></i> Update Company </a>\n" +
+                    "\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\" ng-click=\"show_delete_comp();\"><i class=\"fas fa-trash\"></i> Delete Company </a>\n" +
+                    "\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\" ng-click=\"show_insert_new_file();\"><i class=\"fas fa-file-upload\"></i> Upload New File </a>\n" +
+                    "\t\t\t\t\t\t\t</div>")($scope));
 
-
+                document.getElementById("navbar_admin").innerText="";
                 angular.element(document.getElementById("navbar_admin")).append($compile("<a class=\"dropdown-item\"  href=\"#\" ng-click=\"nav_bar_admin();\" data-toggle=\"modal\" data-target=\"#admin_modal\">Admin</a>\n" +
                     "\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">\n" +
                     "\t\t\t\t\t\t\t\t<form action=\"/aviv/php/logout.php\">\n" +
@@ -119,6 +124,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
             }
             else {
+                document.getElementById("navbar_admin").innerText="";
                 angular.element(document.getElementById("navbar_admin")).append($compile(
                     "\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">\n" +
                     "\t\t\t\t\t\t\t\t<form action=\"/aviv/php/logout.php\">\n" +
