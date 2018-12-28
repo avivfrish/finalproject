@@ -66,12 +66,13 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.selectedCompany="";
         $scope.allUsers=[];
         $scope.get_user_session();
+        $scope.arrayOfCompNames = [];
         $scope.arrayOfCompIDs = [];
-        $scope.testArray = [];
         $scope.selectedIdValue = '';
         $scope.selectedCompDetails = '';
         $scope.selectedNewInfo = '';
         $scope.selectedUploadedFile = '';
+        $scope.getCompNames();
         $scope.getCompIDs();
     }; //the function
 
@@ -142,16 +143,17 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#update_comp").hide();
         $("#delete_comp").hide();
         $("#new_comp").hide();
-        $("#couldnt_add_new_comp").hide();
         $("#added_comp_successfully").hide();
+        $("#couldnt_add_new_comp").hide();
+        $("#compName_already_exists_insert").hide();
+        $("#RSSD_ID_already_exists_insert").hide();
+        $("#no_compName_typed").hide();
         $("#deleted_comp_successfully").hide();
         $("#couldnt_delete_comp").hide();
         $("#updated_comp_successfully").hide();
         $("#couldnt_update_comp").hide();
-        $("#id_already_exists_insert").hide();
         $("#id_doesnt_exists_delete").hide();
         $("#id_doesnt_exists_update").hide();
-        $("#no_id_typed").hide();
         $("#added_file_successfully").hide();
         $("#couldnt_add_new_file").hide();
     };
@@ -306,18 +308,25 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     $scope.insertNewComp = function()
     {
+        $scope.getCompNames();
         $scope.getCompIDs();
-        console.log(document.getElementById("compID").value);
         console.log($scope.arrayOfCompIDs);
-        console.log($scope.arrayOfCompIDs.indexOf(parseInt(document.getElementById("compID").value)));
+        console.log(document.getElementById("compID").value);
+        /*console.log(document.getElementById("compName").value);
+        console.log($scope.arrayOfCompNames);
+        console.log($scope.arrayOfCompNames.indexOf(document.getElementById("compName").value));*/
         $scope.clearAlerts();
-        if ($scope.arrayOfCompIDs.includes(parseInt(document.getElementById("compID").value))) {
+        if ($scope.arrayOfCompNames.includes(document.getElementById("compName").value)) {
             $scope.clearAlerts();
-            $("#id_already_exists_insert").show();
+            $("#compName_already_exists_insert").show();
         }
-        else if ((parseInt(document.getElementById("compID").value)) == null || (parseInt(document.getElementById("compID").value)) == 0){
+        else if ($scope.arrayOfCompIDs.includes(parseInt(document.getElementById("compID").value))){
             $scope.clearAlerts();
-            $("#no_id_typed").show();
+            $("#RSSD_ID_already_exists_insert").show();
+        }
+        else if (document.getElementById("compName").value == null){
+            $scope.clearAlerts();
+            $("#no_compName_typed").show();
         }
         else {
             $http({
@@ -326,6 +335,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 params: {
                     companyName: document.getElementById("compName").value,
                     street: document.getElementById("compStreet").value,
+                    city: document.getElementById("compCity").value,
                     country: document.getElementById("compCountry").value,
                     state: document.getElementById("compState").value,
                     companyID: document.getElementById("compID").value
@@ -340,6 +350,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     $scope.clearAlerts();
                     $("#couldnt_add_new_comp").show();
                 }
+                $scope.getCompNames();
                 $scope.getCompIDs();
             });
         }
@@ -348,36 +359,41 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     $scope.clearInsert = function()
     {
-        document.getElementById('compID').value = '',
-            document.getElementById('compName').value = '',
+        document.getElementById('compName').value = '',
             document.getElementById('compStreet').value = '',
+            document.getElementById('compCity').value = '',
             document.getElementById('compCountry').value = '',
-            document.getElementById('compState').value = ''
-        $("#id_already_exists_insert").hide();
-        $("#couldnt_add_new_comp").hide();
-        $("#added_comp_successfully").hide();
-        $("#deleted_comp_successfully").hide();
-        $("#couldnt_delete_comp").hide();
-        $("#updated_comp_successfully").hide();
-        $("#couldnt_update_comp").hide();
-        $("#id_doesnt_exists_delete").hide();
-        $("#id_doesnt_exists_update").hide();
-        $("#no_id_typed").hide();
+            document.getElementById('compState').value = '',
+            document.getElementById('compID').value = ''
+        $scope.clearAlerts();
     }
 
     $scope.clearUpdate = function()
     {
         document.getElementById('newInfo').value = ''
-        $("#id_already_exists_insert").hide();
-        $("#couldnt_add_new_comp").hide();
-        $("#added_comp_successfully").hide();
-        $("#deleted_comp_successfully").hide();
-        $("#couldnt_delete_comp").hide();
-        $("#updated_comp_successfully").hide();
-        $("#couldnt_update_comp").hide();
-        $("#id_doesnt_exists_delete").hide();
-        $("#id_doesnt_exists_update").hide();
-        $("#no_id_typed").hide();
+        $scope.clearAlerts();
+    }
+
+    $scope.getCompNames = function()
+    {
+        $http({
+            method: 'POST',
+            url: 'php/getCompNames.php',
+            params: {
+
+            }
+        }).then(function (data) {
+            console.log(data.data);
+            let compNames = [];
+            for (const item in data.data) {
+                compNames.push(data.data[item]['name'])
+            }
+            console.log(compNames);
+            $scope.arrayOfCompNames = compNames;
+            console.log("this is an array of comp names");
+            console.log($scope.arrayOfCompNames);
+        });
+
     }
 
     $scope.getCompIDs = function()
@@ -392,11 +408,11 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             console.log(data.data);
             let compIDs = [];
             for (const item in data.data) {
-                compIDs.push(data.data[item]['identifier'])
+                compIDs.push(data.data[item]['RSSD_ID'])
             }
             console.log(compIDs);
             $scope.arrayOfCompIDs = compIDs;
-            console.log("this is array of comp ids");
+            console.log("this is an array of comp ids");
             console.log($scope.arrayOfCompIDs);
         });
 
@@ -445,16 +461,19 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     $scope.clearAlerts = function()
     {
-        $("#id_already_exists_insert").hide();
-        $("#couldnt_add_new_comp").hide();
         $("#added_comp_successfully").hide();
+        $("#couldnt_add_new_comp").hide();
+        $("#compName_already_exists_insert").hide();
+        $("#RSSD_ID_already_exists_insert").hide();
+        $("#no_compName_typed").hide();
         $("#deleted_comp_successfully").hide();
         $("#couldnt_delete_comp").hide();
         $("#updated_comp_successfully").hide();
         $("#couldnt_update_comp").hide();
         $("#id_doesnt_exists_delete").hide();
         $("#id_doesnt_exists_update").hide();
-        $("#no_id_typed").hide();
+        $("#added_file_successfully").hide();
+        $("#couldnt_add_new_file").hide();
     }
 
     $scope.updateComp = function() {
@@ -496,11 +515,10 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         let file = $scope.myFile;
         console.log('file is ');
         console.dir(file);
-        let uploadUrl = "/fileUpload";
+        let uploadUrl = 'php/fileUpload.php';
         fileUpload.uploadFileToUrl(file, uploadUrl);
         /*$scope.clearAlerts();
         console.log("hi");
-        //app.service.uploadFileToUrl();
         if (document.getElementById("replaceData").checked == true) {
             console.log("replace");
         }

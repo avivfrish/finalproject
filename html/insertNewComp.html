@@ -8,11 +8,12 @@
         <font face="Maven Pro">
             <table border="0">
                 <form method="Post">
-                    <tr><td>Company identifier: </td><td><input class="form-control" type="text" name="companyID" id="compID" required></td></tr>
                     <tr><td>Company Name: </td><td><input class="form-control" type="text" name="companyName" id="compName"></td></tr>
                     <tr><td>Street: </td><td><input class="form-control" type="text" name="street" id="compStreet"></td></tr>
-                    <tr><td>Country: </td><td><input class="form-control" type="text" name="country" id="compCountry"></td></tr>
-                    <tr><td>State: </td><td><input class="form-control" type="text" name="state" id="compState"></td></tr>
+                    <tr><td>city: </td><td><input class="form-control" type="text" name="city" id="compCity"></td></tr>
+                    <tr><td>country: </td><td><input class="form-control" type="text" name="country" id="compCountry"></td></tr>
+                    <tr><td>state: </td><td><input class="form-control" type="text" name="state" id="compState"></td></tr>
+                    <tr><td>RSSD_ID: </td><td><input class="form-control" type="text" name="companyID" id="compID"></td></tr>
                 </form>
                 <tr><td></td><td><button type="submit" value="send" class="btn btn-outline-dark" ng-click="insertNewComp()"><i class="fas fa-plus"></i>    Add</button>
                 <button type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearInsert()"><i class="fas fa-eraser"></i>    Clear</button></td></tr>
@@ -31,14 +32,19 @@
     <strong>Oops!</strong> Couldn't add company.
 </div>
 
-<div class="alert alert-danger alert-dismissible" id="id_already_exists_insert">
+<div class="alert alert-danger alert-dismissible" id="compName_already_exists_insert">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Oops!</strong> Couldn't add company, ID already exists!
+    <strong>Oops!</strong> Couldn't add company, company name already exists!
 </div>
 
-<div class="alert alert-danger alert-dismissible" id="no_id_typed">
+<div class="alert alert-danger alert-dismissible" id="RSSD_ID_already_exists_insert">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Oops!</strong> Couldn't add company, please insert an ID!
+    <strong>Oops!</strong> Couldn't add company, RSSD_ID already exists!
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="no_compName_typed">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't add company, please insert company name!
 </div>
 
 <!--Arial Black, Gadget, sans-serif-->
