@@ -8,19 +8,18 @@ $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 
 $sql= /** @lang text */
-    "select name from companies";
+    "SELECT relation, count(relation) as count
+    from connections
+    group by relation";
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
     return (sqlsrv_errors());
 $array = array();
-$temp=[450,120,300,800,150,150];
-$i=0;
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     $array[] = array(
-            'y'=>$temp[$i],
-            'name'=>$row['name']
+            'relation'=>$row['relation'],
+            'count'=>$row['count']
     );
-    $i=$i+1;
 }
 sqlsrv_free_stmt($getResults);
 echo json_encode($array);
