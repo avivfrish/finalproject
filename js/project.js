@@ -928,41 +928,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 		});
 	};
 
-    /*$scope.showWordCloud = function () {
-
-        $scope.wordCloud = {};
-        $scope.wordCloud['words'] = [
-            {text: 'Angular',size: 25, color: '#6d989e', tooltipText: 'Angular Tooltip'},
-            {text: 'Angular2',size: 35, color: '#473fa3', tooltipText: 'Angular2 Tooltip'}
-        ];
-
-
-        //self.height = $window.innerHeight * 0.5;
-        //self.width = $element.find('#wordsCloud')[0].offsetWidth;
-        //self.wordClicked = wordClicked;
-        //self.rotate = rotate;
-        //self.useTooltip = true;
-        //self.useTransition = false;
-        //self.random = random;
-
-        //function random() {
-          //  return 0.4; // a constant value here will ensure the word position is fixed upon each page refresh.
-        //}
-
-        //function rotate() {
-          //  return ~~(Math.random() * 2) * 90;
-        //}
-
-        //function wordClicked(word){
-          //  alert('text: ' + word.text + ',size: ' + word.size);
-        ///}
-    };
-
-    $scope.wordClicked = function (word) {
-        console.log('text: ' + word.text);
-    };    */
-
-
     $scope.getDistinctConnections = function (){
         $http({
             method: 'POST',
