@@ -136,6 +136,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     $scope.hidePages = function(){
         $("#home").hide();
+        $("#aboutUs").hide();
         $("#search_compByName").hide();
         $("#search_compByCity").hide();
         $("#searchResults").hide();
@@ -238,6 +239,14 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 		//$("#topRow").empty();
 		//$("#topRow").prepend("<embed src='http://SERVERNAME:8000/en-US/app/cymng/TopRowTimeline?earliest=0&latest=' seamless frameborder='no' scrolling='no' width='470px' height='103px' style='margin-top:10px' target='_top'></embed>"); 
 	};
+
+    $scope.show_about_us = function () {
+        //show_cases_div - show cases div
+
+        ////console.log("show_cases_div - show cases div");
+        $scope.hidePages();
+        $("#aboutUs").show();
+       };
 
     $scope.show_stats = function () {
         $scope.hidePages();
