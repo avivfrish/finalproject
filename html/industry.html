@@ -21,12 +21,16 @@
             <canvas id="stackedBar" width="150px" height="150px"></canvas>
         </div>
 
-        <div id="wordsCloud" style="width: 50%; height: 60%; display: inline-block">
+        <!--<div id="wordsCloud" style="width: 50%; height: 60%; display: inline-block">
             <word-cloud words="showWordCloud.words" padding="5" rotate="showWordCloud.rotate" use-tooltip="showWordCloud.useTooltip"
                random="showWordCloud.random" use-transition="showWordCloud.useTransition" on-click="showWordCloud.wordClicked">
             </word-cloud>
-        </div>
+        </div>-->
 
+    </div>
+
+    <div id="wordsCloud">
+        <word-cloud words="words" width="width" height="height" padding="padding" use-tooltip="true" on-click="wordClicked"></word-cloud>
     </div>
 
 </div>

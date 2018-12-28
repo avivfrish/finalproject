@@ -42,6 +42,34 @@ app.directive('fileModel', ['$parse', function ($parse) {
 
 app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUpload, $window, $element) {
 
+    var self = this;
+    self.height = $window.innerHeight * 0.5;
+    self.width = $element.find('#wordsCloud')[0].offsetWidth;
+    self.wordClicked = wordClicked;
+    self.rotate = rotate;
+    self.useTooltip = true;
+    self.useTransition = false;
+    self.words = [
+        {text: 'Angular',size: 25, color: '#6d989e', tooltipText: 'Angular Tooltip'},
+        {text: 'Angular2',size: 35, color: '#473fa3', tooltipText: 'Angular2 Tooltip'}
+    ]
+    self.random = random;
+
+    function random() {
+        return 0.4; // a constant value here will ensure the word position is fixed upon each page refresh.
+    }
+
+    function rotate() {
+        return ~~(Math.random() * 2) * 90;
+    }
+
+    function wordClicked(word){
+        console.log("v");
+        alert('text: ' + word.text + ',size: ' + word.size);
+    }
+
+
+
 
 	$scope.init_case = function () {
 		//$("#nav").show();
