@@ -4,9 +4,12 @@
     <content url="file://$MODULE_DIR$" />
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-<<<<<<<<< Temporary merge branch 1
     <orderEntry type="library" name="@types/angular" level="application" />
-=========
->>>>>>>>> Temporary merge branch 2
+    <orderEntry type="library" name="jquery" level="application" />
+    <orderEntry type="library" name="popper" level="application" />
+    <orderEntry type="library" name="bootstrap" level="application" />
+    <orderEntry type="library" name="angular" level="application" />
+    <orderEntry type="library" name="canvasjs" level="application" />
+    <orderEntry type="library" name="tv" level="application" />
   </component>
 </module>

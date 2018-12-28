@@ -1,29 +1,58 @@
 <div id="home">
 
-		<h1 style="margin-top: 60px">
-			Final Project for Ami & Tami <i class="fas fa-industry"></i>
-		</h1>
+	<p style="margin-top: 70px; font-size: 300%;">
+		<b>FINANCIAL ENTITY IDENTIFICATION</b>
+	</p>
 
-	<img src="../img/bank_2.png" alt="" height="200" width="200"/>
-	<div class="container">
-		<h1>My Bootstrap Page</h1>
-		<p>This is soume text.</p>
-	</div>
-	<button type="button" class="btn btn-default" ng-click="show_splunk()" >show companies statistic</button>
-	<div id="splunk" style="display: none">
-		<embed src='http://localhost:8000/en-US/app/search/cityhtml2' width='800px' height='600px' style='overflow:auto;' allowfullscreen>
-	</div>
-    <button type="button" class="btn btn-default" ng-click="azure()">azure</button>
-
-	<div class="dropdown">
-		<button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-			Dropdown button
-		</button>
-		<div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-			<a class="dropdown-item" href="#">Action</a>
-			<a class="dropdown-item" href="#">Another action</a>
-			<a class="dropdown-item" href="#">Something else here</a>
+	<div id="services" class="container-fluid text-center">
+		<h4>What we offer</h4>
+		<br>
+		<div class="row" style="margin-left: 17%">
+			<div class="service col-sm-3">
+				<span><i class="fas fa-bezier-curve fa-3x" style="margin-top: 10px; margin-bottom: 10px"></i></span>
+				<h4>Connections</h4>
+				<p>Find competitors, affiliates and subsidiaries between companies</p>
+			</div>
+			<div class="service col-sm-3">
+				<span><i class="fas fa-chart-pie fa-3x" style="margin-top: 10px; margin-bottom: 10px"></i></span>
+				<h4>Statistics</h4>
+				<p>Number of companies and more</p>
+			</div>
+			<div class="service col-sm-3">
+				<span><i class="fas fa-wrench fa-3x" style="margin-top: 10px; margin-bottom: 10px"></i></span>
+				<h4>Update Easily</h4>
+				<p>Insert, update and delete data</p>
+			</div>
 		</div>
 	</div>
+
+	<br>
+	<hr class="separatorLine">
+
+	<div class="col-sm-12" style="margin-top: 10px">
+		<div class="container-fluid text-center">
+			<div class="row">
+				<div class="col-sm-2 contactFields">
+					<h4 style="width: fit-content">Contact Us:</h4>
+				</div>
+				<div class="col-sm-2 form-group contactFields">
+					<input class="form-control" id="contactName" name="name" placeholder="Name" type="text" required>
+				</div>
+				<div class="col-sm-2 form-group contactFields" style="padding: 0 0">
+					<input class="form-control" id="contactEmail" name="email" placeholder="Email" type="email" required>
+				</div>
+				<div class="col-sm-5 contactFields">
+					<textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="1"></textarea>
+				</div>
+				<div class="col-sm-1 contactFields">
+					<button class="btn btn-info" type="submit">Send</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+	</div>
+
 
 </div>

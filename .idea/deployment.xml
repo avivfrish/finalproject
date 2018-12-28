@@ -2,10 +2,10 @@
 <project version="4">
   <component name="PublishConfigData" serverName="finalproject">
     <serverData>
-      <paths name="finalProject">
+      <paths name="finalproject">
         <serverdata>
           <mappings>
-            <mapping local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/site/wwwroot/pnina" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

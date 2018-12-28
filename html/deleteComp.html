@@ -1,0 +1,35 @@
+<div id="delete_comp" style="margin-top: 70px">
+    <link href='https://fonts.googleapis.com/css?family=Della Respira' rel='stylesheet'>
+    <h1 style="text-align: center; font-family: Della Respira; font-size:4vw; text-shadow: 2px 2px #808080"><b>Delete Company</b></h1>
+    <center>
+        <font face="Della Respira">
+            <p>Please insert the ID of the company<br>
+                you wish to delete</p>
+        </font>
+        <font face="Della Respira">
+            <table border="0">
+                <tr><td><label>Select company ID: </label></td><td>
+                <input list="selectedID" class="form-control" ng-change="changeID()" ng-model="selectedIdValue">
+                <datalist id="selectedID">
+                    <option ng-repeat="ID in arrayOfCompIDs" value="{{ID}}">{{ID}}</option>
+                </datalist></td><td>
+                <button type="submit" value="Send" class="btn btn-outline-dark" ng-click="deleteComp()"><i class="fa fa-trash"></i>   Delete</button></td></tr>
+            </table>
+        </font>
+    </center>
+</div>
+
+<div class="alert alert-success alert-dismissible" id="deleted_comp_successfully">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Success!</strong> Company deleted successfully.
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="couldnt_delete_comp">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't delete company.
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="id_doesnt_exists_delete">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't delete company, ID doesn't exists!
+</div>
