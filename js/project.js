@@ -740,10 +740,16 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
         return "#3ba4bc";
     };
+
+
     $scope.graph_on_click = function (node)
     {
         $("#comp_info").css("display","block");
         document.getElementById("graph_comp_name").innerText=node['id'];
+
+
+
+
     };
     $scope.get_python = function () {
         console.log("try python");

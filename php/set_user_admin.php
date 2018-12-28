@@ -9,7 +9,7 @@
 
 session_start();
 $users=$_POST['users'];
-echo json_encode($users);
+
 
 $connectionInfo = array("UID" => "finalproject@avifinalproject", "pwd" => "1qaZ2wsX", "Database" => "finalProject", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0);
 $serverName = "tcp:avifinalproject.database.windows.net,1433";
@@ -19,10 +19,19 @@ for ($i=0;$i<sizeof($users);$i++ )
 {
 
     //echo $users[$i]['isChecked'];
-    if ($users[$i]['isAdmin']!==$users[$i]['isChecked'])
+    if ($users[$i]['isAdmin']!=$users[$i]['isChecked'])
     {
         $sql="UPDATE users set isAdmin=".$users[$i]['isChecked']." where uid=".$users[$i]['uid'];
-        //echo "vfffffv";
+        $getResults= sqlsrv_query($conn, $sql);
+        if ($getResults == FALSE) {
+            echo 0;
+            die();
+        }
+        else{
+            sqlsrv_free_stmt($getResults);
+            echo 1;
+        }
+
     }
 
 }
