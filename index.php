@@ -16,6 +16,7 @@ if(!isset($_SESSION['user']))
 <html lang="en" ng-app="template" >
 <title>FEI</title>
 <head>
+    <meta charset="utf-8">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
     <!--<link rel="stylesheet" href="css/project.css">-->
@@ -41,10 +42,12 @@ if(!isset($_SESSION['user']))
 
 
     <!-- scripts for d3, d3-clound & angular-d3-word-cloud-master-->
-    <meta charset="utf-8">
-    <script src="/coral/d3/d3.v5.min.js"></script>
+
+
+    <script src="http://d3js.org/d3.v5.min.js"></script>
     <script src="/coral/d3-cloud/build/d3.layout.cloud.js"></script>
     <script src="/coral/angular-d3-word-cloud-master/dist/angular-word-cloud.min.js"></script>
+
 
 </head>
 <body id="allBody" style="text-align: center" ng-controller='ng-cases' ng-init="init_case();">

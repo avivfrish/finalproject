@@ -249,11 +249,9 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         document.getElementById("stackedBar").innerHTML = "";
         $scope.showDoughnut();
         $scope.showBarChart();
-        $scope.showWordCloud();
+        //$scope.showBarOfBiggestCompanyBySubsidiary();
+        //$scope.showWordCloud();
     };
-
-
-
 
     $scope.nav_bar_admin = function () {
         console.log("nav bar");
@@ -930,32 +928,40 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 		});
 	};
 
-    $scope.showWordCloud = function () {
-        var self = this;
-        self.height = $window.innerHeight * 0.5;
-        self.width = $element.find('#wordsCloud')[0].offsetWidth;
-        self.wordClicked = wordClicked;
-        self.rotate = rotate;
-        self.useTooltip = true;
-        self.useTransition = false;
-        self.words = [
+    /*$scope.showWordCloud = function () {
+
+        $scope.wordCloud = {};
+        $scope.wordCloud['words'] = [
             {text: 'Angular',size: 25, color: '#6d989e', tooltipText: 'Angular Tooltip'},
             {text: 'Angular2',size: 35, color: '#473fa3', tooltipText: 'Angular2 Tooltip'}
-        ]
-        self.random = random;
+        ];
 
-        function random() {
-            return 0.4; // a constant value here will ensure the word position is fixed upon each page refresh.
-        }
 
-        function rotate() {
-            return ~~(Math.random() * 2) * 90;
-        }
+        //self.height = $window.innerHeight * 0.5;
+        //self.width = $element.find('#wordsCloud')[0].offsetWidth;
+        //self.wordClicked = wordClicked;
+        //self.rotate = rotate;
+        //self.useTooltip = true;
+        //self.useTransition = false;
+        //self.random = random;
 
-        function wordClicked(word){
-            alert('text: ' + word.text + ',size: ' + word.size);
-        }
+        //function random() {
+          //  return 0.4; // a constant value here will ensure the word position is fixed upon each page refresh.
+        //}
+
+        //function rotate() {
+          //  return ~~(Math.random() * 2) * 90;
+        //}
+
+        //function wordClicked(word){
+          //  alert('text: ' + word.text + ',size: ' + word.size);
+        ///}
     };
+
+    $scope.wordClicked = function (word) {
+        console.log('text: ' + word.text);
+    };    */
+
 
     $scope.getDistinctConnections = function (){
         $http({
@@ -965,9 +971,10 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
             }
         }).then(function (data) {
-            let connections = [];
+            let connections = {};
             for (const item in data.data){
-                connections.push(data.data[item]['relation']);
+                connections[data.data[item]['relation']] = {'name': data.data[item]['relation'], 'isChecked' : 1};
+                //connections.push(data.data[item]['relation']);
             }
             $scope.distinctConnections = connections;
             console.log("getdistinctConnections");
@@ -981,7 +988,12 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $http({
             method: 'POST',
             url: 'php/getBiggestCompanies.php',
-            params: {}
+            data: $.param({
+                distinctConnections : $scope.distinctConnections
+            }),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
         }).then(function (data) {
             console.log("GET TOP 5");
             console.log(data.data);
@@ -992,7 +1004,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
                 let dataForY = {};
                 for(let item in $scope.distinctConnections){
-                    dataForY[$scope.distinctConnections[item]] = new Array(5).fill(0);
+                    dataForY[item] = new Array(5).fill(0);
                 }
 
                 for (let i = 1 ; i <= 5; i++){
@@ -1015,7 +1027,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 let letters = '0123456789ABCDEF';
                 let color = '#';
                 let colors=[];
-                for (let j=0; j < $scope.distinctConnections.length; j++)
+                for (let j=0; j < Object.keys($scope.distinctConnections).length ; j++)
                 {
                     color = '#';
                     for (let i = 0; i < 6; i++ ) {
@@ -1024,23 +1036,33 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     colors.push(color);
                 }
 
+                console.log("colors");
+                console.log(colors);
+
+
                 let dataSets = [];
+                let j = 0;
                 for(let item in $scope.distinctConnections){
-                    const relation = $scope.distinctConnections[item];
+                    const relation = item;
                     const itemForDataSets = {label: relation,
-                        data: dataForY[relation], backgroundColor: colors[item]};
+                        data: dataForY[relation], backgroundColor: colors[j]};
                     dataSets.push(itemForDataSets);
+                    j++;
                 }
 
                 const ctx = document.getElementById("stackedBar").getContext("2d");
 
                 const stackedBar = new Chart(ctx, {
-                    type: 'bar',
+                    type: 'horizontalBar',
                     data: {
                         labels: xLabels,
                         datasets: dataSets
                     },
                     options: {
+                        title: {
+                            display: true,
+                            text: 'Custom Chart Title'
+                        },
                         scales: {
                             xAxes: [{
                                 stacked: true,
@@ -1071,9 +1093,18 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         });
     };
 
+    $scope.showBarOfBiggestCompanyBySubsidiary= function () {
+        $http({
+            method: 'POST',
+            url: 'php/getBiggestCompaniesBySubsidiary.php',
+            params: {}
+        }).then(function (data) {
+            console.log("GET showBarOfBiggestCompany");
+            console.log(data.data);
+        });
+    };
+
 	$scope.filterBy = function(filter){
-	    console.log("TEST");
-	    console.log("FILTER", filter);
 	    $scope.filterBySearchByName = filter;
         document.getElementById("dropdownMenuLink").innerHTML = "Filter By: " + filter;
     };
@@ -1087,8 +1118,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
             }
         }).then(function (data) {
-        	console.log("GET COUNTRIES");
-            console.log(data.data);
         	let countries = [];
         	for (const item in data.data){
         		countries.push(data.data[item]['country']);
@@ -1129,15 +1158,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         newIframe = newIframe + "&output=embed' width='100%' height='320' frameborder='0' style='border:0' allowfullscreen></iframe>";
         document.getElementById("googleMap").innerHTML = newIframe;
 
-
-        /*if ( $scope.selectedStateValue ){
-            const toFillIn = "<iframe src='https://www.google.com/maps?&q=" + $scope.selectedStateValue + ',' + $scope.selectedCountryValue + "&output=embed' width='100%' height='320' frameborder='0' style='border:0' allowfullscreen></iframe>";
-            document.getElementById("googleMap").innerHTML = toFillIn;
-        }
-        else {
-            const toFillIn = "<iframe src='https://www.google.com/maps?&q=" + $scope.selectedCountryValue + "&output=embed' width='100%' height='320' frameborder='0' style='border:0' allowfullscreen></iframe>";
-            document.getElementById("googleMap").innerHTML = toFillIn;
-        }*/
         $("#loadingMap").hide();
         console.log("FINISH LOAD");
         $("#googleMap").show();

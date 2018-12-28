@@ -16,17 +16,26 @@
     </div>
 
 
-    <div class="secondStats" style="height: fit-content; margin-top: 60px">
-        <div style="width: 40%; height: 60%; display: inline-block">
-            <canvas id="stackedBar" width="150px" height="150px"></canvas>
+    <div class="secondStats" style="height: fit-content">
+        <div>
+            <h4>Show 5 Biggest Company By Number Of Relation</h4>
+
+            <span ng-repeat="connection in distinctConnections">
+                <label>
+                    <input type="checkbox" value="" ng-false-value="0" ng-true-value="1"
+                           ng-model="connection.isChecked" >
+                    <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                    {{connection.name}}
+                </label>
+            </span>
         </div>
 
-        <div id="wordsCloud" style="width: 50%; height: 60%; display: inline-block">
-            <word-cloud words="showWordCloud.words" padding="5" rotate="showWordCloud.rotate" use-tooltip="showWordCloud.useTooltip"
-               random="showWordCloud.random" use-transition="showWordCloud.useTransition" on-click="showWordCloud.wordClicked">
-            </word-cloud>
+        <div style="width: 70%; height: 20%; display: inline-block">
+            <canvas id="stackedBar"></canvas>
         </div>
 
     </div>
+
+
 
 </div>
