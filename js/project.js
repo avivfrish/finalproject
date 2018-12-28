@@ -78,6 +78,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.selectedUploadedFile = '';
         $scope.getCompIDs();
         $scope.admin_checkbox={};
+        $scope.graph_selected="";
 	}; //the function
 
     $scope.get_user_session = function(){
@@ -277,14 +278,14 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     };
 
     $scope.admin_save_changes = function () {
-        var obi = $scope.allUsers;
-        console.log(obi);
+        //var obi = $scope.allUsers;
+        //console.log(obi);
 
         $http({
             method: 'POST',
             url: 'php/set_user_admin.php',
             data: $.param({
-                users: obi,
+                users: $scope.allUsers,
             }),
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -791,11 +792,50 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         document.getElementById("graph_comp_name").innerText=node['id'];
 
 
+        $http({
+            method: 'POST',
+            url: 'php/get_company_by_name.php',
+            data: $.param({
+                comp: node['id'],
+            }),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).then(function (data) {
+            if (data.data==0)
+            {
+                document.getElementById("graph_comp_name").innerText=node['id'] +" - Not Found in DB";
+            }
+            else
+            {
+                $scope.graph_selected=[{'name':node['id'],'country':data.data[0]['state']}];
+                document.getElementById("graphDetails").style.display="";
+                document.getElementById("graph_rssd").innerText=data.data[0]['RSSD_ID'];
+                document.getElementById("graph_country").innerText=data.data[0]['state'];
+                //console.log(data.data);
+                document.getElementById("graph_btn").innerHTML="";
+                angular.element(document.getElementById("graph_btn")).append($compile(
+                   "<button type=\"button\" class=\"btn btn-light\" ng-click=\"update_search()\">Find Company</button>")($scope));
+
+            }
+
+
+
+
+
+        });
 
 
     };
 
+    $scope.update_search = function()
+    {
+
+        $scope.resultsOfSearch=$scope.graph_selected;
+    };
+
     $scope.get_python = function () {
+        document.getElementById("graphDetails").style.display="none";
         console.log("try python");
         $http({
             method: 'POST',
@@ -1326,10 +1366,17 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     };
 
     $scope.showMoreAboutResult = function (name) {
+
         $("#askToSelectResult").hide();
         $("#selectedResult").show();
+
+        $("#tab_GeneralInfo").tab("show");
+        //document.getElementById("tab_Stock").className=("nav-link");
+        //document.getElementById("tab_Competitors").className=("nav-link");
+        //document.getElementById("tab_Articles").className=("nav-link");
+        //document.getElementById("tab_GeneralInfo").className=("nav-link active show");
         $scope.selectedCompany=name;
-        console.log( $scope.selectedCompany);
+        console.log("showMoreAboutResult "+ $scope.selectedCompany);
         //document.getElementById("selectedResult").innerText = name;
 
     };

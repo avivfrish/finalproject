@@ -1,5 +1,4 @@
-
-<div id="searchResults" style="margin-bottom: 50px;">
+<div id="searchResults" style="margin-bottom: 50px;" xmlns="http://www.w3.org/1999/html">
 
     <div id="foundResults" class="container" >
         <div class="row" data-spy="scroll" data-target=".leftSideResults" data-offset="50">
@@ -34,16 +33,16 @@
 
                     <ul class="nav nav-tabs border rounded" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#GeneralInfo" role="tab" data-toggle="tab">General Information</a>
+                            <a class="nav-link active" id="tab_GeneralInfo" href="#GeneralInfo" role="tab" data-toggle="tab">General Information</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#Competitors" role="tab" data-toggle="tab" ng-click="get_python()">Competitors</a>
+                            <a class="nav-link"  id="tab_Competitors" href="#Competitors" role="tab" data-toggle="tab" ng-click="get_python()">Competitors</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#Stock" role="tab" data-toggle="tab">Stock</a>
+                            <a class="nav-link"  id="tab_Stock" href="#Stock" role="tab" data-toggle="tab">Stock</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#Articles" role="tab" data-toggle="tab">Articles</a>
+                            <a class="nav-link"  id="tab_Articles" href="#Articles" role="tab" data-toggle="tab">Articles</a>
                         </li>
                     </ul>
 
@@ -112,10 +111,28 @@
                         <div role="tabpanel" class="tab-pane container fade col-sm-12" id="Competitors">
 
                             <div id="3d-graph" width="600px" ></div>
-                            <div  id="graph_comp_name">
-                                Connection Details
+                            <div class="col-sm-12" id="graph_comp_name">
+                                Click on Node or Connection for Details
                             </div>
+                            <div cla="container">
+                                <div class="row " id="graphDetails" style="display: none;">
+                                    <div class="col-sm-2" >
+                                        RSSD ID
+                                    </div>
+                                    <div class="col-sm-4" id="graph_rssd">
+                                        RSSD ID
+                                    </div>
+                                    <div class="col-sm-2" >
+                                        country
+                                    </div>
+                                    <div class="col-sm-4" id="graph_country">
+                                        country
+                                    </div>
+                                </div>
+                                <div class="row" id="graph_btn">
 
+                                </div>
+                            </div>
                         </div>
 
                         <div role="tabpanel" class="tab-pane container fade" id="Stock">
