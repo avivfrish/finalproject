@@ -1,4 +1,4 @@
-let app = angular.module('template', ['chart.js']);
+let app = angular.module('template', ['chart.js','angular-d3-word-cloud']);
 
 app.directive('fileModel', ['$parse', function ($parse) {
 	return {
@@ -40,7 +40,8 @@ app.directive('fileModel', ['$parse', function ($parse) {
 
 //		 myApp.controller('myCtrl', ['$scope', 'fileUpload', function($scope, fileUpload){
 
-app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUpload) {
+app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUpload, $window, $element) {
+
 
 	$scope.init_case = function () {
 		//$("#nav").show();
@@ -62,7 +63,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
         $scope.distinctConnections = [];
         $scope.getDistinctConnections();
-
 
         $scope.resultsOfSearch = [];
         console.log("hello");
@@ -248,6 +248,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         document.getElementById("stackedBar").innerHTML = "";
         $scope.showDoughnut();
         $scope.showBarChart();
+        $scope.showWordCloud();
     };
 
     $scope.nav_bar_admin = function () {
@@ -425,7 +426,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             });
         }
 
-    }
+    };
 
     $scope.clearInsert = function()
     {
@@ -444,7 +445,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#id_doesnt_exists_delete").hide();
         $("#id_doesnt_exists_update").hide();
         $("#no_id_typed").hide();
-    }
+    };
 
     $scope.clearUpdate = function()
     {
@@ -459,7 +460,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#id_doesnt_exists_delete").hide();
         $("#id_doesnt_exists_update").hide();
         $("#no_id_typed").hide();
-    }
+    };
 
     $scope.getCompIDs = function()
     {
@@ -480,7 +481,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 			console.log($scope.arrayOfCompIDs);
         });
 
-    }
+    };
 
     $scope.deleteComp = function()
     {
@@ -544,7 +545,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }
 
         $scope.getCompIDs();
-    }
+    };
 
     $scope.changeID = function()
     {
@@ -560,7 +561,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#id_doesnt_exists_delete").hide();
         $("#id_doesnt_exists_update").hide();
         $("#no_id_typed").hide();
-    }
+    };
 
     $scope.clearAlerts = function()
     {
@@ -574,7 +575,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#id_doesnt_exists_delete").hide();
         $("#id_doesnt_exists_update").hide();
         $("#no_id_typed").hide();
-    }
+    };
 
     $scope.updateComp = function()
     {
@@ -637,7 +638,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             $("#couldnt_add_new_file").hide();
         }
         $scope.getCompIDs();
-    }
+    };
 
     $scope.uploadFile = function()
     {
@@ -696,7 +697,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             }
         });
 
-    }
+    };
 
 	$scope.show_splunk = function () {
 
@@ -891,6 +892,33 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 			}
 		});
 	};
+
+    $scope.showWordCloud = function () {
+        var self = this;
+        self.height = $window.innerHeight * 0.5;
+        self.width = $element.find('#wordsCloud')[0].offsetWidth;
+        self.wordClicked = wordClicked;
+        self.rotate = rotate;
+        self.useTooltip = true;
+        self.useTransition = false;
+        self.words = [
+            {text: 'Angular',size: 25, color: '#6d989e', tooltipText: 'Angular Tooltip'},
+            {text: 'Angular2',size: 35, color: '#473fa3', tooltipText: 'Angular2 Tooltip'}
+        ]
+        self.random = random;
+
+        function random() {
+            return 0.4; // a constant value here will ensure the word position is fixed upon each page refresh.
+        }
+
+        function rotate() {
+            return ~~(Math.random() * 2) * 90;
+        }
+
+        function wordClicked(word){
+            alert('text: ' + word.text + ',size: ' + word.size);
+        }
+    };
 
     $scope.getDistinctConnections = function (){
         $http({

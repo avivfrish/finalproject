@@ -2,23 +2,31 @@
 
 
     <div class="firstStats" style="height: fit-content">
-        <div style="width: 30%; height: 10%; display: inline-block">
-            <canvas id="ProductsDoughnutChart" width="100px" height="100px"></canvas>
+        <div style="width: 33%; height: 33%; display: inline-block">
+            <canvas id="ProductsDoughnutChart"></canvas>
         </div>
 
-        <div style="width: 30%; height: 10%; display: inline-block">
-            <canvas id="IndustryDoughnutChart" width="100px" height="100px"></canvas>
+        <div style="width: 33%; height: 33%; display: inline-block">
+            <canvas id="IndustryDoughnutChart"></canvas>
         </div>
 
-        <div style="width: 30%; height: 10%; display: inline-block">
-            <canvas id="ConnectionDoughnutChart" width="100px" height="100px"></canvas>
+        <div style="width: 33%; height: 33%; display: inline-block">
+            <canvas id="ConnectionDoughnutChart"></canvas>
         </div>
     </div>
 
-    <div class="secondStats" style="height: fit-content">
+
+    <div class="secondStats" style="height: fit-content; margin-top: 60px">
         <div style="width: 40%; height: 60%; display: inline-block">
             <canvas id="stackedBar" width="150px" height="150px"></canvas>
         </div>
+
+        <div id="wordsCloud" style="width: 50%; height: 60%; display: inline-block">
+            <word-cloud words="showWordCloud.words" padding="5" rotate="showWordCloud.rotate" use-tooltip="showWordCloud.useTooltip"
+               random="showWordCloud.random" use-transition="showWordCloud.useTransition" on-click="showWordCloud.wordClicked">
+            </word-cloud>
+        </div>
+
     </div>
 
 </div>
