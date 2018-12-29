@@ -7,8 +7,9 @@
         <div class="container">
             <div class="row">
                 <div class="col-xs-6 col-xs-offset-2">
+                    <center>
                     <div class="input-group">
-                        <div class="dropdown show">
+                        <!--<div class="dropdown show">
                             <a class="btn btn-secondary dropdown-toggle" style="width: fit-content" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Filter By:
                             </a>
@@ -17,7 +18,7 @@
                                 <a class="dropdown-item" href="#" ng-click="filterBy('Contains')">Contains</a>
                                 <a class="dropdown-item" href="#" ng-click="filterBy('Equals')">Equals</a>
                             </div>
-                        </div>
+                        </div>-->
                         <input type="hidden" name="nameInserted" value="nameInserted">
                         <input type="text" class="form-control" name="x" id="nameInserted" ng-model="selectedNameValue" placeholder="Company name">
                         <span class="input-group-btn"></span>
@@ -27,6 +28,7 @@
                         <span class="input-group-btn"></span>
 
                     </div>
+                    </center>
                 </div>
             </div>
         </div>
@@ -65,13 +67,21 @@
     <strong>Oops!</strong> Couldn't delete company, no such RSSD_ID!
 </div>
 
+<div class="alert alert-danger alert-dismissible" id="name_and_id_doesnt_match_delete">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't delete company, company name and RSSD_ID don't match!
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="name_and_id_doesnt_exist_delete">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't delete company, no such company name and no such RSSD_ID!
+</div>
+
 <div id="loading_delete">
     <h4>Deleting...</h4>
     <div class="loader"></div>
 </div>
 
-</div>
-</div>
 
 
 <!--<div id="delete_comp" style="margin-top: 70px">
