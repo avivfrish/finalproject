@@ -15,7 +15,14 @@ if ($getResults == FALSE) {
     echo ("false");
 }
 else {
-    echo ("true");
+    $rows = sqlsrv_has_rows($getResults);
+    if ($rows == true){
+        echo ("true");
+    }
+    else {
+        echo ("false");
+    }
+
 }
 //return (sqlsrv_errors());
 /*$array = array();

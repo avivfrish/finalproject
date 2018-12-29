@@ -407,10 +407,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             for (const item in data.data) {
                 compNames.push(data.data[item]['name'])
             }
-            console.log(compNames);
             $scope.arrayOfCompNames = compNames;
-            console.log("this is an array of comp names");
-            console.log($scope.arrayOfCompNames);
         });
 
     };
@@ -429,10 +426,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             for (const item in data.data) {
                 compIDs.push(data.data[item]['RSSD_ID'])
             }
-            console.log(compIDs);
             $scope.arrayOfCompIDs = compIDs;
-            console.log("this is an array of comp ids");
-            console.log($scope.arrayOfCompIDs);
         });
 
     };
@@ -571,10 +565,17 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }
     };
 
+    $scope.changeName = function()
+    {
+        $scope.getCompNames();
+        document.getElementById('selectedCompName').value = '';
+        $scope.clearAlerts();
+    };
+
     $scope.changeID = function()
     {
         $scope.getCompIDs();
-        document.getElementById('selectedID').value = '';
+        document.getElementById('selectedCompID').value = '';
         $scope.clearAlerts();
     };
 

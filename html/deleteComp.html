@@ -1,45 +1,23 @@
 <div id="delete_comp" style="margin-top: 70px">
-    <div class="tab-pane active" id="deleteCompany">
+        <center>
         <h1>Delete Company</h1>
         <p>Fill in the name or the RSSD_ID value<br>
             of the company you wish to delete</p>
-
-        <div class="container">
-            <div class="row">
-                <div class="col-xs-6 col-xs-offset-2">
-                    <center>
-                    <div class="input-group">
-                        <!--<div class="dropdown show">
-                            <a class="btn btn-secondary dropdown-toggle" style="width: fit-content" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Filter By:
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" href="#" ng-click="filterBy('None')">None</a>
-                                <a class="dropdown-item" href="#" ng-click="filterBy('Contains')">Contains</a>
-                                <a class="dropdown-item" href="#" ng-click="filterBy('Equals')">Equals</a>
-                            </div>
-                        </div>-->
-                        <input type="hidden" name="nameInserted" value="nameInserted">
-                        <input type="text" class="form-control" name="x" id="nameInserted" ng-model="selectedNameValue" placeholder="Company name">
-                        <span class="input-group-btn"></span>
-
-                        <input type="hidden" name="rssd_idInserted" value="rssd_idInserted">
-                        <input type="text" class="form-control" name="x" id="rssd_idInserted" ng-model="selectedIDValue" placeholder="RSSD_ID">
-                        <span class="input-group-btn"></span>
-
-                    </div>
-                    </center>
-                </div>
-            </div>
-        </div>
-        <!--<iframe frameBorder='0' scrolling='no' width='800' height='420' src='https://api.stockdio.com/visualization/financial/charts/v1/HistoricalPrices?app-key=C0F5BBE2E9E14259A7A3973EF8B03625&symbol=AAPL&displayPrices=Area&dividends=true&splits=true&palette=Financial-Light'></iframe>
-          -->
-        <br>
-        <button type="submit" value="Send" class="btn btn-outline-dark" ng-click="deleteComp()"><i class="fa fa-trash"></i>   Delete</button></td></tr>
-        <button type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearDelete()"><i class="fas fa-eraser"></i>    Clear</button>
-
-    </div>
-
+        <table border="0">
+            <form method="Post">
+                <tr><td>Company Name: </td><td><input list="selectedCompName" class="form-control" type="text" name="nameInserted" value="nameInserted" id="nameInserted" ng-change="changeName()" ng-model="selectedNameValue" placeholder="select name..">
+                    <datalist id="selectedCompName">
+                        <option ng-repeat="name in arrayOfCompNames" value="{{name}}">{{name}}</option>
+                    </datalist></td></tr>
+                <tr><td>RSSD_ID: </td><td><input list="selectedCompID" class="form-control" type="text" name="rssd_idInserted" value="rssd_idInserted" id="rssd_idInserted" ng-change="changeID()" ng-model="selectedIDValue" placeholder="select RSSD_ID..">
+                    <datalist id="selectedCompID">
+                        <option ng-repeat="RSSD_ID in arrayOfCompIDs" value="{{RSSD_ID}}">{{RSSD_ID}}</option>
+                    </datalist></td></tr>
+            </form>
+            <tr><td></td><td><button type="submit" value="Send" class="btn btn-outline-dark" ng-click="deleteComp()"><i class="fa fa-trash"></i>   Delete</button>
+            <button type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearDelete()"><i class="fas fa-eraser"></i>    Clear</button></td></tr>
+        </table>
+        </center>
 </div>
 
 <div class="alert alert-success alert-dismissible" id="deleted_comp_successfully">
@@ -102,4 +80,33 @@
             </table>
         </font>
     </center>
+</div>
+
+<div class="input-group"></div>-->
+
+<!-- <div class="container">
+            <div class="row">
+                <div class="col-xs-6 col-xs-offset-2">
+                        div class="dropdown show">
+                            <a class="btn btn-secondary dropdown-toggle" style="width: fit-content" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Filter By:
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="#" ng-click="filterBy('None')">None</a>
+                                <a class="dropdown-item" href="#" ng-click="filterBy('Contains')">Contains</a>
+                                <a class="dropdown-item" href="#" ng-click="filterBy('Equals')">Equals</a>
+                            </div>
+                        </div>
+<input type="hidden" name="nameInserted" value="nameInserted">
+<input type="text" class="form-control" name="x" id="nameInserted" ng-model="selectedNameValue" placeholder="Company name">
+<span class="input-group-btn"></span>
+
+<input type="hidden" name="rssd_idInserted" value="rssd_idInserted">
+<input type="text" class="form-control" name="x" id="rssd_idInserted" ng-model="selectedIDValue" placeholder="RSSD_ID">
+<span class="input-group-btn"></span>
+
+
+
+</div>
+</div>
 </div>-->
