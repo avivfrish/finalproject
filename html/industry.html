@@ -23,7 +23,7 @@
             <span ng-repeat="connection in distinctConnections">
                 <label>
                     <input type="checkbox" value="" ng-false-value="0" ng-true-value="1"
-                           ng-model="connection.isChecked" ng-click="$scope.showBarChart();">
+                           ng-model="connection.isChecked" ng-change="showBarChart();">
                     <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
                     {{connection.name}}
                 </label>

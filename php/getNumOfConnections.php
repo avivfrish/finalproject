@@ -8,9 +8,9 @@ $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 
 $sql= /** @lang text */
-    "SELECT relation, count(relation) as count
-    from connections
-    group by relation";
+    "SELECT conn_type as relation, count(conn_type) as count
+    from connections_prod
+    group by conn_type";
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
     return (sqlsrv_errors());

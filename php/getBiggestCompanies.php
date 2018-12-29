@@ -7,7 +7,6 @@
  */
 
 $distinctConnections = $_POST['distinctConnections'];
-//echo(json_encode($distinctConnections));
 
 $connectionInfo = array("UID" => "finalproject@avifinalproject", "pwd" => "1qaZ2wsX", "Database" => "finalProject", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0);
 $serverName = "tcp:avifinalproject.database.windows.net,1433";
@@ -21,10 +20,10 @@ foreach ($distinctConnections as $key=>$value){
     //echo ("IS CHECKED ".$isChecked." NAME".$name);
     if($isChecked == 1){
         if ($firstStatWhere){
-            $whereStatement = $whereStatement."or relation = '".$name."' ";
+            $whereStatement = $whereStatement."or conn_type = '".$name."' ";
         }
         else{
-            $whereStatement = $whereStatement."relation = '".$name."' ";
+            $whereStatement = $whereStatement."conn_type = '".$name."' ";
             $firstStatWhere = true;
         }
     }
@@ -34,26 +33,32 @@ $whereStatement = $whereStatement.") ";
 
 // GET top 5 of companies with the biggest number of connection
 $sql= /** @lang text */
-    "SELECT top 5 records as name, count(relation) as count 
-    from connections ".$whereStatement."group by records order by count(relation) desc";
-//echo ("SQL ".$sql);
+    "SELECT top 5 comp1 as name, count(conn_type) as count 
+    from connections_prod ".$whereStatement."group by comp1 order by count(conn_type) desc";
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
     return (sqlsrv_errors());
 $arrayOfNames = array();
+$j = 1;
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
-    array_push($arrayOfNames, $row['name']);
+    $arrayOfNames[] = array(
+        'id'=>$j,
+        'name'=>$row['name'],
+    );
+    $j++;
 }
 sqlsrv_free_stmt($getResults);
+//echo json_encode($arrayOfNames);
 
 $resultArray = array();
-for ($i = 0; $i <= count($arrayOfNames); $i++){
-    $name = $arrayOfNames[$i];
+foreach ($arrayOfNames as $key=>$value) {
+    $name = $arrayOfNames[$key]['name'];
+    $id = $arrayOfNames[$key]['id'];
     $sql= /** @lang text */
-        "SELECT relation, count(relation) as count
-    from connections ".$whereStatement.
-    "and (records = '".$name."') ".
-    "group by relation";
+        "SELECT conn_type as relation, count(conn_type) as count
+    from connections_prod ".$whereStatement.
+        "and (comp1 = '".$name."' or comp1 = '".$name."') ".
+        "group by conn_type";
     $getResults= sqlsrv_query($conn, $sql);
     if ($getResults == FALSE)
         return (sqlsrv_errors());
@@ -62,7 +67,7 @@ for ($i = 0; $i <= count($arrayOfNames); $i++){
             'name'=>$name,
             'relation'=>$row['relation'],
             'count'=>$row['count'],
-            'id'=>$i+1
+            'id'=>$id
         );
     }
     sqlsrv_free_stmt($getResults);

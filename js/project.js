@@ -875,10 +875,21 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
 
                 var ctx = document.getElementById("ConnectionDoughnutChart").getContext("2d");
+                if ($scope.ConnectionDoughnutChart){
+                    $scope.ConnectionDoughnutChart.destroy();
+                }
+
                 var ctx2 = document.getElementById("IndustryDoughnutChart").getContext("2d");
+                if ($scope.IndustryDoughnutChart){
+                    $scope.IndustryDoughnutChart.destroy();
+                }
+
                 var ctx3 = document.getElementById("ProductsDoughnutChart").getContext("2d");
+                if ($scope.ProductsDoughnutChart){
+                    $scope.ProductsDoughnutChart.destroy();
+                }
 
-                var ConnectionDoughnutChart  = new Chart(ctx,{
+                $scope.ConnectionDoughnutChart  = new Chart(ctx,{
                     type: 'doughnut',
                     data : {
                         datasets: [{
@@ -888,10 +899,16 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                         labels: label,
 
                     },
-                    options: {cutoutPercentage:50,legend:{display:true}},
+                    options: {
+                        title: {
+                            display: true,
+                            text: 'Connections Type Chart'
+                        },
+                        cutoutPercentage:50,
+                        legend:{display:true}},
                 });
 
-                var IndustryDoughnutChart  = new Chart(ctx2,{
+                $scope.IndustryDoughnutChart  = new Chart(ctx2,{
                     type: 'doughnut',
                     data : {
                         datasets: [{
@@ -901,10 +918,16 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                         labels: label,
 
                     },
-                    options: {cutoutPercentage:50,legend:{display:true}},
+                    options: {
+                        title: {
+                            display: true,
+                            text: 'Industry Chart'
+                        },
+                        cutoutPercentage:50,
+                        legend:{display:true}},
                 });
 
-                var ProductsDoughnutChart  = new Chart(ctx3,{
+                $scope.ProductsDoughnutChart  = new Chart(ctx3,{
                     type: 'doughnut',
                     data : {
                         datasets: [{
@@ -914,12 +937,18 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                         labels: label,
 
                     },
-                    options: {cutoutPercentage:50,legend:{display:true}},
+                    options: {
+                        title: {
+                            display: true,
+                            text: 'Products Chart'
+                        },
+                        cutoutPercentage:50,
+                        legend:{display:true}},
                 });
 
-                document.getElementById("ConnectionDoughnutChart").innerHTML=ConnectionDoughnutChart ;
-                document.getElementById("IndustryDoughnutChart").innerHTML=IndustryDoughnutChart ;
-                document.getElementById("ProductsDoughnutChart").innerHTML=ProductsDoughnutChart ;
+                document.getElementById("ConnectionDoughnutChart").innerHTML=$scope.ConnectionDoughnutChart ;
+                document.getElementById("IndustryDoughnutChart").innerHTML=$scope.IndustryDoughnutChart ;
+                document.getElementById("ProductsDoughnutChart").innerHTML=$scope.ProductsDoughnutChart ;
 
             }
 			else {
@@ -949,6 +978,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     };
 
 	$scope.showBarChart = function () {
+	    console.log("showBarChart");
+        document.getElementById("stackedBar").innerHTML = "";
 
         $http({
             method: 'POST',
@@ -1016,18 +1047,17 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 }
 
                 const ctx = document.getElementById("stackedBar").getContext("2d");
+                if ($scope.stackedBar){
+                    $scope.stackedBar.destroy();
+                }
 
-                const stackedBar = new Chart(ctx, {
+                $scope.stackedBar = new Chart(ctx, {
                     type: 'horizontalBar',
                     data: {
                         labels: xLabels,
                         datasets: dataSets
                     },
                     options: {
-                        title: {
-                            display: true,
-                            text: 'Custom Chart Title'
-                        },
                         scales: {
                             xAxes: [{
                                 stacked: true,
@@ -1050,7 +1080,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     }
                 });
 
-                document.getElementById("stackedBar").innerHTML = stackedBar;
+                document.getElementById("stackedBar").innerHTML = $scope.stackedBar;
 
             } else {
                 console.log('get companies of showBarChart failed');
