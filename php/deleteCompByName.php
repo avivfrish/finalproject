@@ -1,13 +1,14 @@
 <?php
+
 $connectionInfo = array("UID" => "finalproject@avifinalproject", "pwd" => "1qaZ2wsX", "Database" => "finalProject", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0);
 $serverName = "tcp:avifinalproject.database.windows.net,1433";
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
-$selectedIdValue = $_GET["selectedID"];
+$selectedNameValue = $_GET["nameInserted"];
 $sql= /** @lang text */
-    "delete from companies where identifier = "."'".$selectedIdValue."'";
+    "delete from company_prod where name = "."'".$selectedNameValue."'";
 //echo ($sql);
-    $getResults= sqlsrv_query($conn, $sql);
+$getResults= sqlsrv_query($conn, $sql);
 
 if ($getResults == FALSE) {
     echo ("false");

@@ -1,4 +1,80 @@
 <div id="delete_comp" style="margin-top: 70px">
+    <div class="tab-pane active" id="deleteCompany">
+        <h1>Delete Company</h1>
+        <p>Fill in the name or the RSSD_ID value<br>
+            of the company you wish to delete</p>
+
+        <div class="container">
+            <div class="row">
+                <div class="col-xs-6 col-xs-offset-2">
+                    <div class="input-group">
+                        <div class="dropdown show">
+                            <a class="btn btn-secondary dropdown-toggle" style="width: fit-content" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Filter By:
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                                <a class="dropdown-item" href="#" ng-click="filterBy('None')">None</a>
+                                <a class="dropdown-item" href="#" ng-click="filterBy('Contains')">Contains</a>
+                                <a class="dropdown-item" href="#" ng-click="filterBy('Equals')">Equals</a>
+                            </div>
+                        </div>
+                        <input type="hidden" name="nameInserted" value="nameInserted">
+                        <input type="text" class="form-control" name="x" id="nameInserted" ng-model="selectedNameValue" placeholder="Company name">
+                        <span class="input-group-btn"></span>
+
+                        <input type="hidden" name="rssd_idInserted" value="rssd_idInserted">
+                        <input type="text" class="form-control" name="x" id="rssd_idInserted" ng-model="selectedIDValue" placeholder="RSSD_ID">
+                        <span class="input-group-btn"></span>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--<iframe frameBorder='0' scrolling='no' width='800' height='420' src='https://api.stockdio.com/visualization/financial/charts/v1/HistoricalPrices?app-key=C0F5BBE2E9E14259A7A3973EF8B03625&symbol=AAPL&displayPrices=Area&dividends=true&splits=true&palette=Financial-Light'></iframe>
+          -->
+        <br>
+        <button type="submit" value="Send" class="btn btn-outline-dark" ng-click="deleteComp()"><i class="fa fa-trash"></i>   Delete</button></td></tr>
+        <button type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearDelete()"><i class="fas fa-eraser"></i>    Clear</button>
+
+    </div>
+
+</div>
+
+<div class="alert alert-success alert-dismissible" id="deleted_comp_successfully">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Success!</strong> Company deleted successfully.
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="couldnt_delete_comp">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't delete company.
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="name_and_id_not_inserted_delete">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't delete company, please type the name or the RSSD_ID of the company
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="name_doesnt_exists_delete">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't delete company, no such company name!
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="id_doesnt_exists_delete">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't delete company, no such RSSD_ID!
+</div>
+
+<div id="loading_delete">
+    <h4>Deleting...</h4>
+    <div class="loader"></div>
+</div>
+
+</div>
+</div>
+
+
+<!--<div id="delete_comp" style="margin-top: 70px">
     <h1 style="text-align: center; font-family: 'Maven Pro', sans-serif; font-size:4vw; text-shadow: 2px 2px #808080"><b>Delete Company</b></h1>
     <center>
         <font face="Maven Pro">
@@ -16,19 +92,4 @@
             </table>
         </font>
     </center>
-</div>
-
-<div class="alert alert-success alert-dismissible" id="deleted_comp_successfully">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Success!</strong> Company deleted successfully.
-</div>
-
-<div class="alert alert-danger alert-dismissible" id="couldnt_delete_comp">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Oops!</strong> Couldn't delete company.
-</div>
-
-<div class="alert alert-danger alert-dismissible" id="id_doesnt_exists_delete">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Oops!</strong> Couldn't delete company, ID doesn't exists!
-</div>
+</div>-->
