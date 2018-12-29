@@ -1106,9 +1106,12 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     dataSets.push(itemForDataSets);
                 }
 
+                document.getElementById("stackedBar").innerHTML="";
                 const ctx = document.getElementById("stackedBar").getContext("2d");
-
-                const stackedBar = new Chart(ctx, {
+                if ($scope.stackedBar){
+                    $scope.stackedBar.destroy();
+                }
+                $scope.stackedBar = new Chart(ctx, {
                     type: 'bar',
                     data: {
                         labels: xLabels,
@@ -1137,7 +1140,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     }
                 });
 
-                document.getElementById("stackedBar").innerHTML = stackedBar;
+                document.getElementById("stackedBar").innerHTML = $scope.stackedBar;
 
             } else {
                 console.log('get companies of showBarChart failed');
