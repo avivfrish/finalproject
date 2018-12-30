@@ -42,6 +42,34 @@ app.directive('fileModel', ['$parse', function ($parse) {
 
 app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUpload, $window, $element) {
 
+    var self = this;
+    self.height = $window.innerHeight * 0.5;
+    self.width = $element.find('#wordsCloud')[0].offsetWidth;
+    self.wordClicked = wordClicked;
+    self.rotate = rotate;
+    self.useTooltip = true;
+    self.useTransition = false;
+    self.words = [
+        {text: 'Angular',size: 25, color: '#6d989e', tooltipText: 'Angular Tooltip'},
+        {text: 'Angular2',size: 35, color: '#473fa3', tooltipText: 'Angular2 Tooltip'}
+    ]
+    self.random = random;
+
+    function random() {
+        return 0.4; // a constant value here will ensure the word position is fixed upon each page refresh.
+    }
+
+    function rotate() {
+        return ~~(Math.random() * 2) * 90;
+    }
+
+    function wordClicked(word){
+        console.log("v");
+        alert('text: ' + word.text + ',size: ' + word.size);
+    }
+
+
+
 
 	$scope.init_case = function () {
 		//$("#nav").show();
@@ -100,13 +128,18 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             if (isAdmin===1)
             {
                 console.log("vvfvfvfvf");
-                document.getElementById("nav_update").innerHTML="<a class=\"nav-link\" href=\"#\" ng-click=\"\">\n" +
-                    "                <span class=\"glyphicon glyphicon glyphicon-option-vertical\" aria-hidden=\"true\">\n" +
-                    "                </span>\n" +
-                    "            Update\n" +
-                    "            </a>";
+                document.getElementById("nav_update").innerText="";
+                angular.element(document.getElementById("nav_update")).append($compile(
+                    "<a class=\"nav-link dropdown-toggle\"  id=\"navbarDropdownMenuLink1\" data-toggle=\"dropdown\" href=\"#\"  aria-haspopup=\"true\"\n" +
+                    "\t\t\t\t\t\t\t   aria-expanded=\"false\">Update</a>\n" +
+                    "\t\t\t\t\t\t\t<div class=\"dropdown-menu  dropdown-menu-right\" aria-labelledby=\"navbarDropdownMenuLink1\">\n" +
+                    "\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\" ng-click=\"show_insert_new_comp();\"><i class=\"fas fa-plus\"></i> Add New Company </a>\n" +
+                    "\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\" ng-click=\"show_update_comp();\"><i class=\"fas fa-edit\"></i> Update Company </a>\n" +
+                    "\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\" ng-click=\"show_delete_comp();\"><i class=\"fas fa-trash\"></i> Delete Company </a>\n" +
+                    "\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\" ng-click=\"show_insert_new_file();\"><i class=\"fas fa-file-upload\"></i> Upload New File </a>\n" +
+                    "\t\t\t\t\t\t\t</div>")($scope));
 
-
+                document.getElementById("navbar_admin").innerText="";
                 angular.element(document.getElementById("navbar_admin")).append($compile("<a class=\"dropdown-item\"  href=\"#\" ng-click=\"nav_bar_admin();\" data-toggle=\"modal\" data-target=\"#admin_modal\">Admin</a>\n" +
                     "\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">\n" +
                     "\t\t\t\t\t\t\t\t<form action=\"/aviv/php/logout.php\">\n" +
@@ -118,6 +151,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
             }
             else {
+                document.getElementById("navbar_admin").innerText="";
                 angular.element(document.getElementById("navbar_admin")).append($compile(
                     "\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">\n" +
                     "\t\t\t\t\t\t\t\t<form action=\"/aviv/php/logout.php\">\n" +
@@ -249,8 +283,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         document.getElementById("stackedBar").innerHTML = "";
         $scope.showDoughnut();
         $scope.showBarChart();
-        //$scope.showBarOfBiggestCompanyBySubsidiary();
-        //$scope.showWordCloud();
+        $scope.showWordCloud();
     };
 
     $scope.nav_bar_admin = function () {
@@ -275,14 +308,14 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     };
 
     $scope.admin_save_changes = function () {
-        var obi = $scope.allUsers;
-        console.log(obi);
+        //var obi = $scope.allUsers;
+        //console.log(obi);
 
         $http({
             method: 'POST',
             url: 'php/set_user_admin.php',
             data: $.param({
-                users: obi,
+                users: $scope.allUsers,
             }),
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded'
@@ -789,11 +822,50 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         document.getElementById("graph_comp_name").innerText=node['id'];
 
 
+        $http({
+            method: 'POST',
+            url: 'php/get_company_by_name.php',
+            data: $.param({
+                comp: node['id'],
+            }),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).then(function (data) {
+            if (data.data==0)
+            {
+                document.getElementById("graph_comp_name").innerText=node['id'] +" - Not Found in DB";
+            }
+            else
+            {
+                $scope.graph_selected=[{'name':node['id'],'country':data.data[0]['state']}];
+                document.getElementById("graphDetails").style.display="";
+                document.getElementById("graph_rssd").innerText=data.data[0]['RSSD_ID'];
+                document.getElementById("graph_country").innerText=data.data[0]['state'];
+                //console.log(data.data);
+                document.getElementById("graph_btn").innerHTML="";
+                angular.element(document.getElementById("graph_btn")).append($compile(
+                   "<button type=\"button\" class=\"btn btn-light\" ng-click=\"update_search()\">Find Company</button>")($scope));
+
+            }
+
+
+
+
+
+        });
 
 
     };
 
+    $scope.update_search = function()
+    {
+
+        $scope.resultsOfSearch=$scope.graph_selected;
+    };
+
     $scope.get_python = function () {
+        document.getElementById("graphDetails").style.display="none";
         console.log("try python");
         $http({
             method: 'POST',
@@ -956,6 +1028,33 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 			}
 		});
 	};
+
+    $scope.showWordCloud = function () {
+        var self = this;
+        self.height = $window.innerHeight * 0.5;
+        self.width = $element.find('#wordsCloud')[0].offsetWidth;
+        self.wordClicked = wordClicked;
+        self.rotate = rotate;
+        self.useTooltip = true;
+        self.useTransition = false;
+        self.words = [
+            {text: 'Angular',size: 25, color: '#6d989e', tooltipText: 'Angular Tooltip'},
+            {text: 'Angular2',size: 35, color: '#473fa3', tooltipText: 'Angular2 Tooltip'}
+        ]
+        self.random = random;
+
+        function random() {
+            return 0.4; // a constant value here will ensure the word position is fixed upon each page refresh.
+        }
+
+        function rotate() {
+            return ~~(Math.random() * 2) * 90;
+        }
+
+        function wordClicked(word){
+            alert('text: ' + word.text + ',size: ' + word.size);
+        }
+    };
 
     $scope.getDistinctConnections = function (){
         $http({
@@ -1341,10 +1440,17 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     };
 
     $scope.showMoreAboutResult = function (name) {
+
         $("#askToSelectResult").hide();
         $("#selectedResult").show();
+
+        $("#tab_GeneralInfo").tab("show");
+        //document.getElementById("tab_Stock").className=("nav-link");
+        //document.getElementById("tab_Competitors").className=("nav-link");
+        //document.getElementById("tab_Articles").className=("nav-link");
+        //document.getElementById("tab_GeneralInfo").className=("nav-link active show");
         $scope.selectedCompany=name;
-        console.log( $scope.selectedCompany);
+        console.log("showMoreAboutResult "+ $scope.selectedCompany);
         //document.getElementById("selectedResult").innerText = name;
 
     };
@@ -1369,6 +1475,28 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         );
 
     };
+
+
+    $scope.enter_comment = function ()
+    {
+        if ($("#contactName").val()==="")
+        {
+            document.getElementById("errorComment").innerHTML="Please enter your name";
+        }
+        else if ($("#contactEmail").val()==="")
+        {
+            document.getElementById("errorComment").innerHTML="Please enter your email";
+        }
+        else if ($("#comments").val()==="")
+        {
+            document.getElementById("errorComment").innerHTML="Please enter your email";
+        }
+
+
+
+    };
+
+
 
 });	 //app.controller
 
