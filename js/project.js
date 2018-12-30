@@ -1439,6 +1439,28 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
+
+    $scope.enter_comment = function ()
+    {
+        if ($("#contactName").val()==="")
+        {
+            document.getElementById("errorComment").innerHTML="Please enter your name";
+        }
+        else if ($("#contactEmail").val()==="")
+        {
+            document.getElementById("errorComment").innerHTML="Please enter your email";
+        }
+        else if ($("#comments").val()==="")
+        {
+            document.getElementById("errorComment").innerHTML="Please enter your email";
+        }
+
+
+
+    };
+
+
+
 });	 //app.controller
 
 
