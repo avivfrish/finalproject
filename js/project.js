@@ -42,35 +42,6 @@ app.directive('fileModel', ['$parse', function ($parse) {
 
 app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUpload, $window, $element) {
 
-    var self = this;
-    self.height = $window.innerHeight * 0.5;
-    self.width = $element.find('#wordsCloud')[0].offsetWidth;
-    self.wordClicked = wordClicked;
-    self.rotate = rotate;
-    self.useTooltip = true;
-    self.useTransition = false;
-    self.words = [
-        {text: 'Angular',size: 25, color: '#6d989e', tooltipText: 'Angular Tooltip'},
-        {text: 'Angular2',size: 35, color: '#473fa3', tooltipText: 'Angular2 Tooltip'}
-    ]
-    self.random = random;
-
-    function random() {
-        return 0.4; // a constant value here will ensure the word position is fixed upon each page refresh.
-    }
-
-    function rotate() {
-        return ~~(Math.random() * 2) * 90;
-    }
-
-    function wordClicked(word){
-        console.log("v");
-        alert('text: ' + word.text + ',size: ' + word.size);
-    }
-
-
-
-
 	$scope.init_case = function () {
 		//$("#nav").show();
         $scope.hidePages();
@@ -91,6 +62,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
         $scope.distinctConnections = [];
         $scope.getDistinctConnections();
+        $scope.words = [];
+        $scope.getWordsToWordCloud();
 
         $scope.resultsOfSearch = [];
         console.log("hello");
@@ -928,23 +901,15 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 console.log(data);
 				$scope.connections=(data.data);
 
-                let letters = '0123456789ABCDEF';
-                let color = '#';
-                let colors=[];
                 let connectionsCount=[];
                 let label=[];
                 for (let j=0;j<$scope.connections.length;j++)
                 {
-                    color = '#';
-                    for (let i = 0; i < 6; i++ ) {
-                        color += letters[Math.floor(Math.random() * 16)];
-                    }
-                    colors.push(color);
                     connectionsCount.push($scope.connections[j]['count']);
                     label.push($scope.connections[j]['relation']);
                 }
-                console.log(colors);
 
+                let colors = $scope.getColors($scope.connections.length);
 
                 var ctx = document.getElementById("ConnectionDoughnutChart").getContext("2d");
                 if ($scope.ConnectionDoughnutChart){
@@ -972,10 +937,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
                     },
                     options: {
-                        title: {
-                            display: true,
-                            text: 'Connections Type Chart'
-                        },
                         cutoutPercentage:50,
                         legend:{display:true}},
                 });
@@ -991,10 +952,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
                     },
                     options: {
-                        title: {
-                            display: true,
-                            text: 'Industry Chart'
-                        },
                         cutoutPercentage:50,
                         legend:{display:true}},
                 });
@@ -1010,10 +967,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
                     },
                     options: {
-                        title: {
-                            display: true,
-                            text: 'Products Chart'
-                        },
                         cutoutPercentage:50,
                         legend:{display:true}},
                 });
@@ -1029,33 +982,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 		});
 	};
 
-    $scope.showWordCloud = function () {
-        var self = this;
-        self.height = $window.innerHeight * 0.5;
-        self.width = $element.find('#wordsCloud')[0].offsetWidth;
-        self.wordClicked = wordClicked;
-        self.rotate = rotate;
-        self.useTooltip = true;
-        self.useTransition = false;
-        self.words = [
-            {text: 'Angular',size: 25, color: '#6d989e', tooltipText: 'Angular Tooltip'},
-            {text: 'Angular2',size: 35, color: '#473fa3', tooltipText: 'Angular2 Tooltip'}
-        ]
-        self.random = random;
-
-        function random() {
-            return 0.4; // a constant value here will ensure the word position is fixed upon each page refresh.
-        }
-
-        function rotate() {
-            return ~~(Math.random() * 2) * 90;
-        }
-
-        function wordClicked(word){
-            alert('text: ' + word.text + ',size: ' + word.size);
-        }
-    };
-
     $scope.getDistinctConnections = function (){
         $http({
             method: 'POST',
@@ -1067,13 +993,27 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             let connections = {};
             for (const item in data.data){
                 connections[data.data[item]['relation']] = {'name': data.data[item]['relation'], 'isChecked' : 1};
-                //connections.push(data.data[item]['relation']);
             }
             $scope.distinctConnections = connections;
-            console.log("getdistinctConnections");
-            console.log($scope.distinctConnections);
+            //console.log("getdistinctConnections");
+            //console.log($scope.distinctConnections);
         });
 
+    };
+
+    $scope.getColors = function(numOfColors) {
+        let letters = '0123456789ABCDEF';
+        let color = '#';
+        let colors=[];
+        for (let j=0; j < numOfColors ; j++)
+        {
+            color = '#';
+            for (let i = 0; i < 6; i++ ) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            colors.push(color);
+        }
+        return colors;
     };
 
 	$scope.showBarChart = function () {
@@ -1119,21 +1059,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 console.log("dataForY");
                 console.log(dataForY);
 
-                let letters = '0123456789ABCDEF';
-                let color = '#';
-                let colors=[];
-                for (let j=0; j < Object.keys($scope.distinctConnections).length ; j++)
-                {
-                    color = '#';
-                    for (let i = 0; i < 6; i++ ) {
-                        color += letters[Math.floor(Math.random() * 16)];
-                    }
-                    colors.push(color);
-                }
-
-                console.log("colors");
-                console.log(colors);
-
+                let colors = $scope.getColors(Object.keys($scope.distinctConnections).length);
 
                 let dataSets = [];
                 let j = 0;
@@ -1185,6 +1111,70 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 console.log('get companies of showBarChart failed');
             }
         });
+    };
+
+
+	$scope.showWordCloud = function(){
+	    //document.getElementById("wordsCloud").innerHTML = "";
+        var self = this;
+        self.height = $window.innerHeight * 0.5;
+        self.width = $element.find('#wordsCloud')[0].offsetWidth;
+        self.rotate = rotate;
+        self.useTooltip = true;
+        self.useTransition = true;
+        self.words = $scope.words;
+        self.random = random;
+        //document.getElementById("wordsCloud").innerHTML = '<word-cloud words="words" width="width" height="height" padding="padding" random="random" use-tooltip="true"></word-cloud>';
+
+        function rotate(){
+            return ~~(Math.random() * 2) * 90;
+        }
+
+        function random(){
+            return 0.4; //a constant value here will ensure the word position is fixed upon each page refresh.
+        }
+    };
+
+    $scope.getWordsToWordCloud = function(){
+        $http({
+            method: 'POST',
+            url: 'php/getNamesWithRevenue.php',
+            data: $.param({}),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).then(function (data) {
+            console.log("GET Revenue");
+            console.log(data.data);
+
+            if (data.data.length !== 0) {
+                let allRevenues = [];
+                for (const item in data.data){
+                    allRevenues.push(Number(data.data[item]['revenue']));
+                }
+                allRevenues = allRevenues.sort(function(a,b){a-b});
+
+                const minRevenue = allRevenues[0];
+                const maxRevenue = allRevenues[allRevenues.length-1];
+
+                let colors = $scope.getColors(data.data.length);
+
+                let j = 0;
+                for (const item in data.data){
+                    const name = data.data[item]['name'];
+                    const revenue = Number(data.data[item]['revenue']);
+                    const sizeByRevenue = ((revenue - minRevenue)/(maxRevenue - minRevenue))*40+20;
+                    const tooltipText = 'Revenue: ' + revenue.toString() + ' $';
+                    const wordToInsert = {text: name, size: sizeByRevenue, color: colors[j], tooltipText: tooltipText };
+                    $scope.words.push(wordToInsert);
+                    j++;
+                }
+
+            } else {
+                console.log('get companies names with revenue failed');
+            }
+        });
+
     };
 
     $scope.showBarOfBiggestCompanyBySubsidiary= function () {
