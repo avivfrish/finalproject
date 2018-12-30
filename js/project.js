@@ -40,7 +40,7 @@ app.directive('fileModel', ['$parse', function ($parse) {
 
 //		 myApp.controller('myCtrl', ['$scope', 'fileUpload', function($scope, fileUpload){
 
-app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUpload, $window, $element) {
+app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUpload, $window, $element, $timeout) {
 
     var self = this;
     self.height = $window.innerHeight * 0.5;
@@ -1029,32 +1029,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 		});
 	};
 
-    $scope.showWordCloud = function () {
-        var self = this;
-        self.height = $window.innerHeight * 0.5;
-        self.width = $element.find('#wordsCloud')[0].offsetWidth;
-        self.wordClicked = wordClicked;
-        self.rotate = rotate;
-        self.useTooltip = true;
-        self.useTransition = false;
-        self.words = [
-            {text: 'Angular',size: 25, color: '#6d989e', tooltipText: 'Angular Tooltip'},
-            {text: 'Angular2',size: 35, color: '#473fa3', tooltipText: 'Angular2 Tooltip'}
-        ]
-        self.random = random;
-
-        function random() {
-            return 0.4; // a constant value here will ensure the word position is fixed upon each page refresh.
-        }
-
-        function rotate() {
-            return ~~(Math.random() * 2) * 90;
-        }
-
-        function wordClicked(word){
-            alert('text: ' + word.text + ',size: ' + word.size);
-        }
-    };
 
     $scope.getDistinctConnections = function (){
         $http({
@@ -1479,19 +1453,59 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     $scope.enter_comment = function ()
     {
+        console.log("comments " + $("#contactName").val());
         if ($("#contactName").val()==="")
         {
             document.getElementById("errorComment").innerHTML="Please enter your name";
+            $timeout(function() {
+                document.getElementById("errorComment").innerHTML="";
+            },3000);
         }
         else if ($("#contactEmail").val()==="")
         {
             document.getElementById("errorComment").innerHTML="Please enter your email";
+            $timeout(function() {
+                document.getElementById("errorComment").innerHTML="";
+            },3000);
         }
         else if ($("#comments").val()==="")
         {
-            document.getElementById("errorComment").innerHTML="Please enter your email";
+            document.getElementById("errorComment").innerHTML="Please enter your comment";
+            $timeout(function() {
+                document.getElementById("errorComment").innerHTML="";
+            },3000);
         }
 
+
+        $http({
+            method: 'POST',
+            url: 'php/insert_comment.php',
+            data: $.param({
+                name: $("#contactName").val(),
+                email: $("#contactEmail").val(),
+                comment: $("#comments").val(),
+            }),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).then(function (data) {
+            if (data.data==="1")
+            {
+                document.getElementById("errorComment").innerHTML="thank you for your comment!";
+                $timeout(function() {
+                    document.getElementById("errorComment").innerHTML="";
+                },3000);
+            }
+            if (data.data==="0")
+            {
+                document.getElementById("errorComment").innerHTML="ops! try again";
+                $timeout(function() {
+                    document.getElementById("errorComment").innerHTML="";
+                },3000);
+            }
+
+
+        });
 
 
     };
