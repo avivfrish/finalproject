@@ -30,11 +30,13 @@ foreach ($distinctConnections as $key=>$value){
 }
 $whereStatement = $whereStatement.") ";
 
-
 // GET top 5 of companies with the biggest number of connection
 $sql= /** @lang text */
-    "SELECT top 5 comp1 as name, count(conn_type) as count 
-    from connections_prod ".$whereStatement."group by comp1 order by count(conn_type) desc";
+    "SELECT top 5 oneCompany as name, count(conn_type) as count
+    from (SELECT distinct comp1 as oneCompany,comp2 as twoCompany,conn_type from connections_prod
+           Union
+           SELECT distinct comp2 as oneCompany,comp1 as twoCompany,conn_type from connections_prod) as compConnections "
+    .$whereStatement."group by oneCompany order by count(conn_type) desc";
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
     return (sqlsrv_errors());
@@ -48,7 +50,6 @@ while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     $j++;
 }
 sqlsrv_free_stmt($getResults);
-//echo json_encode($arrayOfNames);
 
 $resultArray = array();
 foreach ($arrayOfNames as $key=>$value) {
@@ -57,7 +58,7 @@ foreach ($arrayOfNames as $key=>$value) {
     $sql= /** @lang text */
         "SELECT conn_type as relation, count(conn_type) as count
     from connections_prod ".$whereStatement.
-        "and (comp1 = '".$name."' or comp1 = '".$name."') ".
+        "and (comp1 = '".$name."' or comp2 = '".$name."') ".
         "group by conn_type";
     $getResults= sqlsrv_query($conn, $sql);
     if ($getResults == FALSE)

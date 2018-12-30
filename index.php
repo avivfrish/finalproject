@@ -42,11 +42,9 @@ if(!isset($_SESSION['user']))
 
 
     <!-- scripts for d3, d3-clound & angular-d3-word-cloud-master-->
-
-
-    <script src="http://d3js.org/d3.v5.min.js"></script>
-    <script src="/coral/d3-cloud/build/d3.layout.cloud.js"></script>
-    <script src="/coral/angular-d3-word-cloud-master/dist/angular-word-cloud.min.js"></script>
+    <script src="d3/d3.v5.min.js"></script>
+    <script src="d3-cloud/build/d3.layout.cloud.js"></script>
+    <script src="angular-d3-word-cloud-master/dist/angular-word-cloud.min.js"></script>
 
 
 </head>
