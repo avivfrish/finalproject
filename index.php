@@ -4,7 +4,7 @@ $now = time();
 if(!isset($_SESSION['user']))
 {
     session_destroy();
-    header('Location: /coral/login');
+    header('Location: /pnina/login');
 }
 /*if ($now > $_SESSION['time']) {
     session_destroy();
@@ -52,6 +52,7 @@ if(!isset($_SESSION['user']))
 	<?php
 
 		include "html/home.html";
+        include "html/aboutUs.html";
 		include "html/nav.html";
 		include "html/industry.html";
 		include "html/searchByName.html";

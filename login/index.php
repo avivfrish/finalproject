@@ -2,7 +2,7 @@
     session_start();
     if(isset($_SESSION['user']))
     {
-        header('Location: /coral');
+        header('Location: /pninsa');
     }
 
     $err=stripcslashes($_GET["code"]);
