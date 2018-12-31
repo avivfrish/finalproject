@@ -246,7 +246,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         ////console.log("show_cases_div - show cases div");
         $scope.hidePages();
         $("#aboutUs").show();
-       };
+        console.log("about us")
+    };
 
     $scope.show_stats = function () {
         $scope.hidePages();

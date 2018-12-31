@@ -1,58 +1,166 @@
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
 <div id="home">
 
-	<p style="margin-top: 70px; font-size: 300%;">
-		<b>FINANCIAL ENTITY IDENTIFICATION</b>
+	<p style="margin-top: 70px; font-size: 300%; color: #0056b3">
+		<b></b>
 	</p>
+	<!--<div style="background-image: url(/pnina/img/items_and_business.jpg);">
+		<p style="margin-top: 70px; font-size: 300%;">
+			<b>FINANCIAL ENTITY IDENTIFICATION</b>
+		</p>
 
-	<div id="services" class="container-fluid text-center">
-		<h4>What we offer</h4>
-		<br>
-		<div class="row" style="margin-left: 17%">
-			<div class="service col-sm-3">
-				<span><i class="fas fa-bezier-curve fa-3x" style="margin-top: 10px; margin-bottom: 10px"></i></span>
-				<h4>Connections</h4>
-				<p>Find competitors, affiliates and subsidiaries between companies</p>
+		<div id="services" class="container-fluid text-center">
+			<h4>What we offer</h4>
+			<br>
+			<div class="row" style="margin-left: 17%">
+				<div class="service col-sm-3">
+					<span><i class="fas fa-bezier-curve fa-3x" style="margin-top: 10px; margin-bottom: 10px"></i></span>
+					<h4>Connections</h4>
+					<p>Find competitors, affiliates and subsidiaries between companies</p>
+				</div>
+				<div class="service col-sm-3">
+					<span><i class="fas fa-chart-pie fa-3x" style="margin-top: 10px; margin-bottom: 10px"></i></span>
+					<h4>Statistics</h4>
+					<p>Number of companies and more</p>
+				</div>
+				<div class="service col-sm-3">
+					<span><i class="fas fa-wrench fa-3x" style="margin-top: 10px; margin-bottom: 10px"></i></span>
+					<h4>Update Easily</h4>
+					<p>Insert, update and delete data</p>
+				</div>
 			</div>
-			<div class="service col-sm-3">
-				<span><i class="fas fa-chart-pie fa-3x" style="margin-top: 10px; margin-bottom: 10px"></i></span>
+		</div>
+	</div>-->
+
+
+	<!--<div class="carousel slide container-fluid" data-ride="carousel">
+		<ul class="carousel-indicators">
+			<li data-target="#articlesCarousel" data-slide-to="0" class="active"></li>
+			<li data-target="#articlesCarousel" data-slide-to="1"></li>
+			<li data-target="#articlesCarousel" data-slide-to="2"></li>
+		</ul>
+
+		<div class="carousel-inner" style="background-image: url(/pnina/img/items_and_business.jpg);">
+			<div class="carousel-item d-none d-md-block">
+				<h2>Connections</h2>
+				<h3>Find competitors, affiliates and subsidiaries between companies</h3>
+			</div>
+			<div class="carousel-item">
 				<h4>Statistics</h4>
 				<p>Number of companies and more</p>
 			</div>
-			<div class="service col-sm-3">
-				<span><i class="fas fa-wrench fa-3x" style="margin-top: 10px; margin-bottom: 10px"></i></span>
+			<div class="carousel-item">
 				<h4>Update Easily</h4>
 				<p>Insert, update and delete data</p>
 			</div>
 		</div>
-	</div>
 
-	<br>
-	<hr class="separatorLine">
+		<a class="carousel-control-next" role="button" data-slide="next">
+			<span class="carousel-control-next-icon" aria-hidden="true"></span>
+			<span class="sr-only">Next</span>
+		</a>
 
-	<div class="col-sm-12" style="margin-top: 10px">
-		<div class="container-fluid text-center">
-			<div class="row">
-				<div class="col-sm-2 contactFields">
-					<h4 style="width: fit-content">Contact Us:</h4>
+
+	</div>-->
+
+	<div class="overlay">
+		<div id="carouselExampleCaptions" class="carousel slide mb 5" data-ride="carousel">
+			<ol class="carousel-indicators">
+				<li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+				<li data-target="#carouselExampleCaptions" data-slide-to="1" class=""></li>
+				<li data-target="#carouselExampleCaptions" data-slide-to="2" class=""></li>
+			</ol>
+			<div class="carousel-inner" role="listbox">
+				<div class="carousel-item active">
+					<img class="d-block"  src="/pnina/img/comp3.jpg" alt="First slide [800x400]" >
+					<div class="carousel-caption d-block">
+						<br>
+						<br>
+						<h1>Subsidiaries Connections</h1>
+						<br>
+						<br>
+						<br>
+						<h3>Find all the Subsidiaries of the biggest financial companies</h3>
+					</div>
 				</div>
-				<div class="col-sm-2 form-group contactFields">
-					<input class="form-control" id="contactName" name="name" placeholder="Name" type="text" required>
+				<div class="carousel-item">
+					<img class="d-block w-100 img-responsive"  src="/pnina/img/sub5.jpg" alt="First slide [800x400]" >
+					<div class="carousel-caption d-block align-items-center justify-content-center">
+						<br>
+						<br>
+						<h1>Competition Connections</h1>
+						<br>
+						<br>
+						<br>
+						<h3>Find all the Competitors of the biggest financial companies</h3>
+					</div>
 				</div>
-				<div class="col-sm-2 form-group contactFields" style="padding: 0 0">
-					<input class="form-control" id="contactEmail" name="email" placeholder="Email" type="email" required>
-				</div>
-				<div class="col-sm-5 contactFields">
-					<textarea class="form-control" id="comments" name="comments" placeholder="Comment" rows="1"></textarea>
-				</div>
-				<div class="col-sm-1 contactFields">
-					<button class="btn btn-info" type="submit">Send</button>
+				<div class="carousel-item">
+					<img class="d-block w-100 img-responsive"  src="/pnina/img/stat5.jpg" alt="First slide [800x400]" >
+					<div class="carousel-caption d-block align-items-center justify-content-center">
+						<br>
+						<br>
+						<h1>Statistics</h1>
+						<br>
+						<br>
+						<br>
+						<h3>Comfortable visualization of Statistics and useful information about the companies</h3>
+					</div>
 				</div>
 			</div>
+			<a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+				<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+				<span class="sr-only">Previous</span>
+			</a>
+			<a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+				<span class="carousel-control-next-icon" aria-hidden="true"></span>
+				<span class="sr-only">Next</span>
+			</a>
 		</div>
 	</div>
 
 
-	</div>
+	<section id="test" class="test bg-grey roomy-60 fix" style="background-color: rgba(204,225,233,0.5)">
+		<div class="container" >
+			<div class="row">
+				<div class="col-md-12 col-sm-12 col-xs-12">
+					<div class="main_test fix">
+						<div class="head_title text-center fix">
+							<br>
+							<h2 class="text-uppercase" style="color: #002752">Q & A</h2>
+						</div>
+					</div>
+				</div>
+
+				<div class="row justify-content-md-center">
+					<div class="col-md-6">
+						<div class="main_test fix">
+							<div class="test_item fix">
+								<div class="item_text">
+									<h5>Why Should I Use FEI Platform?</h5>
+									<h6>FEI platform gives the average web user the ability to stay connected to the market.
+									<br>Therefor, the platform gives every analyst and every worker in your company the power to make the right decisions.</h6>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="main_test fix">
+							<div class="test_item fix">
+								<div class="item_text">
+									<h5>I'm Missing Some Companies. How Can I Add Them?</h5>
+									<h6>You can ask your platform administrator to add companies to the platform.</h6>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section><!-- End off test section -->
+
+
 
 
 </div>
