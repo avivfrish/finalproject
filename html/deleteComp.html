@@ -5,11 +5,11 @@
             of the company you wish to delete</p>
         <table border="0">
             <form method="Post">
-                <tr><td>Company Name: </td><td><input list="selectedCompName" class="form-control" type="text" name="nameInserted" value="nameInserted" id="nameInserted" ng-change="changeName()" ng-model="selectedNameValue" placeholder="select name..">
+                <tr><td>Company Name: </td><td><input list="selectedCompName" class="form-control" type="text" name="nameInserted" id="nameInserted" ng-change="changeName()" ng-model="selectedNameValue" placeholder="select name..">
                     <datalist id="selectedCompName">
                         <option ng-repeat="name in arrayOfCompNames" value="{{name}}">{{name}}</option>
                     </datalist></td></tr>
-                <tr><td>RSSD_ID: </td><td><input list="selectedCompID" class="form-control" type="text" name="rssd_idInserted" value="rssd_idInserted" id="rssd_idInserted" ng-change="changeID()" ng-model="selectedIDValue" placeholder="select RSSD_ID..">
+                <tr><td>RSSD_ID: </td><td><input list="selectedCompID" class="form-control" type="text" name="rssd_idInserted" id="rssd_idInserted" ng-change="changeID()" ng-model="selectedIDValue" placeholder="select RSSD_ID..">
                     <datalist id="selectedCompID">
                         <option ng-repeat="RSSD_ID in arrayOfCompIDs" value="{{RSSD_ID}}">{{RSSD_ID}}</option>
                     </datalist></td></tr>

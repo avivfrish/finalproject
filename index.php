@@ -53,11 +53,12 @@ if(!isset($_SESSION['user']))
         include "html/searchModals.html";
         include "html/graph.html";
         include "html/login.html";
-
 		include "html/updateComp.html";
         include "html/insertNewComp.html";
         include "html/deleteComp.html";
         include "html/insertNewFile.html";
+        include "html/updateCompByName.html";
+        include "html/updateCompByID.html";
 	?>
 </body>
 </html>
