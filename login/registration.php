@@ -27,7 +27,7 @@ $sql="INSERT into users ([user],[password],full_name,isAdmin) OUTPUT Inserted.ui
 
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
-    header('Location: /coral/login');
+    header('Location: /aviv/login');
 else
 {
     $uid="";

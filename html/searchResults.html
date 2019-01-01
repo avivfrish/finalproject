@@ -33,16 +33,16 @@
 
                     <ul class="nav nav-tabs border rounded" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="tab_GeneralInfo" href="#GeneralInfo" role="tab" data-toggle="tab">General Information</a>
+                            <a class="nav-link active" id="tab_GeneralInfo" href="#GeneralInfo" role="tab" data-toggle="tab" ng-click="setCurrentTabSearch(true)">General Information</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link"  id="tab_Competitors" href="#Connections" role="tab" data-toggle="tab" ng-click="get_python()">Competitors</a>
+                            <a class="nav-link"  id="tab_Competitors" href="#Connections" role="tab" data-toggle="tab" ng-click="get_python();setCurrentTabSearch(false)">Competitors</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link"  id="tab_Stock" href="#Stock" role="tab" data-toggle="tab">Stock</a>
+                            <a class="nav-link"  id="tab_Stock" href="#Stock" role="tab" data-toggle="tab" ng-click="setCurrentTabSearch(false)">Stock</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link"  id="tab_Articles" href="#Articles" role="tab" data-toggle="tab">Articles</a>
+                            <a class="nav-link"  id="tab_Articles" href="#Articles" role="tab" data-toggle="tab" ng-click="setCurrentTabSearch(false)">Articles</a>
                         </li>
                     </ul>
 

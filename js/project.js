@@ -80,6 +80,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.admin_checkbox={};
 
         $scope.allcomments=[];
+        $scope.tabSearchGeneral=true;
 	}; //the function
 
     $scope.get_user_session = function(){
@@ -835,8 +836,11 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     $scope.update_search = function()
     {
-
+        //console.log("before "+ $scope.resultsOfSearch);
         $scope.resultsOfSearch=$scope.graph_selected;
+        $scope.selectedCompany=$scope.graph_selected[0]['name'];
+        console.log("after ", $scope.resultsOfSearch);
+        //$scope.showMoreAboutResult($scope.graph_selected);
     };
 
     $scope.get_python = function () {
@@ -1418,8 +1422,17 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         });
     };
 
-    $scope.showMoreAboutResult = function (name) {
 
+    $scope.setCurrentTabSearch = function(isGeneral)
+    {
+
+        $scope.tabSearchGeneral=isGeneral;
+
+
+    };
+
+    $scope.showMoreAboutResult = function (name) {
+        console.log("comp",$scope.selectedCompany);
         $("#askToSelectResult").hide();
         $("#selectedResult").show();
 
@@ -1433,11 +1446,15 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             document.getElementById($scope.selectedCompany).style.boxShadow = "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)";
         }
         $scope.selectedCompany=name;
-        console.log("showMoreAboutResult "+ $scope.selectedCompany);
+        console.log("showMoreAboutResult "+ $scope.tabSearchGeneral);
 
         document.getElementById("selectedCompanyName").innerHTML = name;
-        document.getElementById("rightSideResults").style.height = (20+ document.getElementById("GeneralInfo").offsetHeight).toString();
-        document.getElementById("leftSideResults").style.height = (20+document.getElementById("GeneralInfo").offsetHeight).toString();
+        if ($scope.tabSearchGeneral === true)
+        {
+            document.getElementById("rightSideResults").style.height = (30+ document.getElementById("GeneralInfo").offsetHeight).toString();
+            document.getElementById("leftSideResults").style.height = (30+document.getElementById("GeneralInfo").offsetHeight).toString();
+
+        }
         console.log("INNER HEIGHT", document.getElementById("GeneralInfo").offsetHeight);
 
         //document.getElementById("selectedResult").innerText = name;
