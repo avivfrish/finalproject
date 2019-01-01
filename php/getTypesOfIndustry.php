@@ -12,7 +12,7 @@ $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 
 $sql= /** @lang text */
-    "select distinct Industry from company_prod";
+    "select distinct Industry from company_prod where Industry!='NA' ";
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
     return (sqlsrv_errors());

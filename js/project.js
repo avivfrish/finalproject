@@ -269,6 +269,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.showDoughnut();
         $scope.showBarChart();
         $scope.showWordCloud();
+        $scope.getIndustry();
     };
 
     $scope.nav_bar_admin = function () {
@@ -1201,11 +1202,43 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             $scope.industries = [];
             if (data.data.length !== 0){
                 for (const item in data.data){
-                    let industry = data.data[item]['industry'];
-                    industry = industry.split('|');
-                    $scope.industries.push(industry)
+                    let industries = data.data[item]['industry'];
+                    industries = industries.split('|');
+                    //console.log("industry ", industries);
+                    for (const industryItem in industries){
+                        const industry = industries[industryItem].trim();
+                        //console.log("industry ",industry);
+                        if (industry !== "" && industry !== "," && ($scope.industries).indexOf(industry) === -1 ){
+                            $scope.industries.push(industry);
+                        }
+                    }
                 }
-                //TODO
+
+                $http({
+                    method: 'POST',
+                    url: 'php/getIndustryStatistic.php',
+                    data: $.param({
+                        industries : $scope.industries
+                    }),
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }).then(function (data) {
+                    console.log("GET industry Stats");
+                    console.log(data.data);
+                    if (data.data.length !== 0){
+
+                    }
+                    else {
+                        console.log('get statistic of industry failed');
+                    }
+                });
+
+
+
+                console.log("$scope.industries ! ");
+                console.log($scope.industries);
+
             }
             else {
                 console.log('get type of industry failed');
