@@ -10,5 +10,5 @@
 session_start();
 
 session_destroy();
-header('Location: /pnina/login');
+header('Location: /roni/login');
 exit();

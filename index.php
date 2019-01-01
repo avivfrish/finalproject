@@ -4,7 +4,7 @@ $now = time();
 if(!isset($_SESSION['user']))
 {
     session_destroy();
-    header('Location: /pnina/login');
+    header('Location: /roni/login');
 }
 /*if ($now > $_SESSION['time']) {
     session_destroy();
@@ -60,8 +60,6 @@ if(!isset($_SESSION['user']))
         include "html/searchResults.html";
         include "html/searchModals.html";
         include "html/graph.html";
-
-
 		include "html/updateComp.html";
         include "html/insertNewComp.html";
         include "html/chooseHowToDelete.html";

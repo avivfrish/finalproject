@@ -75,6 +75,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.arrayOfCompIDs = [];
         $scope.arrayOfDeleteResNames = [];
         $scope.arrayOfDeleteResIDs = [];
+        $scope.resultsOfDeleteSearch = [];
         $scope.selectedIdValue = '';
         $scope.selectedCompDetails = '';
         $scope.selectedNewInfo = '';
@@ -120,7 +121,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 document.getElementById("navbar_admin").innerText="";
                 angular.element(document.getElementById("navbar_admin")).append($compile("<a class=\"dropdown-item\"  href=\"#\" ng-click=\"nav_bar_admin();\" data-toggle=\"modal\" data-target=\"#admin_modal\">Admin</a>\n" +
                     "\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">\n" +
-                    "\t\t\t\t\t\t\t\t<form action=\"/aviv/php/logout.php\">\n" +
+                    "\t\t\t\t\t\t\t\t<form action=\"/roni/php/logout.php\">\n" +
                     "\t\t\t\t\t\t\t\t\t<button style=\"padding: 0;bottom: 0;\" type=\"submit\"  class=\"btn btn-link\">logout</button>\n" +
                     "\t\t\t\t\t\t\t\t</form> \n" +
                     "\t\t\t\t\t\t\t</a>")($scope));
@@ -132,7 +133,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 document.getElementById("navbar_admin").innerText="";
                 angular.element(document.getElementById("navbar_admin")).append($compile(
                     "\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">\n" +
-                    "\t\t\t\t\t\t\t\t<form action=\"/aviv/php/logout.php\">\n" +
+                    "\t\t\t\t\t\t\t\t<form action=\"/roni/php/logout.php\">\n" +
                     "\t\t\t\t\t\t\t\t\t<button style=\"padding: 0;bottom: 0;\" type=\"submit\"  class=\"btn btn-link\">logout</button>\n" +
                     "\t\t\t\t\t\t\t\t</form> \n" +
                     "\t\t\t\t\t\t\t</a>")($scope));
@@ -222,43 +223,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#new_file").show();
 
     };
-
-    $scope.show_insert_new_comp = function () {
-        console.log("SHOE INSERT NEW COMP");
-        $scope.hidePages();
-        $("#new_comp").show();
-    };
-
-    $scope.show_update_comp = function () {
-        $scope.hidePages();
-        $("#update_comp").show();
-    };
-
-    $scope.show_delete_comp = function () {
-        $scope.hidePages();
-        $("#delete_comp").show();
-    };
-
-    $scope.show_insert_new_file = function () {
-        $("#new_file").show();
-        $("#home").hide();
-        $("#search_comp").hide();
-        $("#delete_comp").hide();
-        $("#update_comp").hide();
-        $("#new_comp").hide();
-        $("#couldnt_add_new_comp").hide();
-        $("#added_comp_successfully").hide();
-        $("#deleted_comp_successfully").hide();
-        $("#couldnt_delete_comp").hide();
-        $("#updated_comp_successfully").hide();
-        $("#couldnt_update_comp").hide();
-        $("#id_already_exists_insert").hide();
-        $("#id_doesnt_exists_delete").hide();
-        $("#id_doesnt_exists_update").hide();
-        $("#no_id_typed").hide();
-        $("#added_file_successfully").hide();
-        $("#couldnt_add_new_file").hide();
-    }
 
     $scope.show_search = function (searchBy) {
         console.log("show search div");
@@ -565,7 +529,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     };
 
     $scope.showDeleteResults = function () {
-        $("#show_delete_results").show();
         $scope.clearAlerts();
         let compName, compID;
         compName = document.getElementById("companyNameSearched").value;
@@ -583,25 +546,29 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             }
         }).then(function (data) {
             console.log(data.data);
-                $scope.clearAlerts();
-                let deleteResName = [];
-                let deleteResID = [];
-                for (const item in data.data) {
-                    deleteResName.push(data.data[item]['name']['RSSD_ID'])
-                }
-                $scope.arrayOfDeleteResNames = deleteResName;
-                for (const item in data.data) {
-                    deleteResName.push(data.data[item]['RSSD_ID'])
-                }
-                $scope.arrayOfDeleteResIDs = deleteResID;
-                console.log("arrays: ");
-                console.log($scope.arrayOfDeleteResNames);
-                console.log($scope.arrayOfDeleteResIDs);
-                //$("#deleted_comp_successfully").show();
+            $scope.clearAlerts();
+            //console.log("results:");
+            $scope.resultsOfDeleteSearch = data.data;
+            /*let deleteResName = [];
+            let deleteResID = [];
+            console.log($scope.resultsOfDeleteSearch);
+            for (const i in $scope.resultsOfDeleteSearch){
+                console.log($scope.resultsOfDeleteSearch[i]['name']);
+                console.log($scope.resultsOfDeleteSearch[i]['id']);
+            }
+            for (const item in $scope.resultsOfDeleteSearch) {
+                deleteResName.push(data.data[item]['name']);
+                deleteResID.push(data.data[item]['id']);
+            }
+            $scope.arrayOfDeleteResNames = deleteResName;
+            $scope.arrayOfDeleteResIDs = deleteResID;
+            console.log($scope.arrayOfDeleteResNames);
+            console.log($scope.arrayOfDeleteResIDs);
+            //$("#deleted_comp_successfully").show();
 
-                //$scope.clearAlerts();
-                //$("#couldnt_delete_comp").show();
-
+            //$scope.clearAlerts();
+            //$("#couldnt_delete_comp").show();*/
+            $("#show_delete_results").show();
         });
     };
 
@@ -975,8 +942,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         return "#3ba4bc";
     };
 
-
-
     $scope.graph_on_click = function (node)
     {
         $("#comp_info").css("display","block");
@@ -1300,7 +1265,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             }
         });
     };
-
 
 	$scope.showWordCloud = function(){
 	    //document.getElementById("wordsCloud").innerHTML = "";
