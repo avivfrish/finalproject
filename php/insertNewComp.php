@@ -4,7 +4,7 @@ $serverName = "tcp:avifinalproject.database.windows.net,1433";
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 $sql =/** @lang text */
-    "INSERT INTO company_prod(name,street,city,country,state,RSSD_ID) Values('".$_GET['companyName']."','".$_GET['street']."','".$_GET['city']."','".$_GET['country']."','".$_GET['state']."','".$_GET['companyID']."')";
+    "INSERT INTO test(name,street,city,country,state,RSSD_ID) Values('".$_GET['companyName']."','".$_GET['street']."','".$_GET['city']."','".$_GET['country']."','".$_GET['state']."','".$_GET['companyID']."')";
     $getResults= sqlsrv_query($conn, $sql);
 
 if ($getResults == FALSE) {

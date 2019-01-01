@@ -8,7 +8,7 @@ $selectedNameValue = $_GET["nameInserted"];
 $selectedIDValue = $_GET["rssd_idInserted"];
 
 $sql= /** @lang text */
-    "select * from company_prod where name = "."'".$selectedNameValue."' and RSSD_ID = "."'".$selectedIDValue."'";
+    "select * from test where name = "."'".$selectedNameValue."' and RSSD_ID = "."'".$selectedIDValue."'";
     //echo ($sql);
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE) {

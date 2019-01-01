@@ -9,7 +9,7 @@ $selectedCompDetails = $_GET["compDetailsUpdateById"];
 $selectedNewInfo = $_GET["newInfoUpdateById"];
 
 $sql= /** @lang text */
-    "update company_prod set $selectedCompDetails = "."'".$selectedNewInfo."' where RSSD_ID = "."'".$selectedIDValue."'";
+    "update test set $selectedCompDetails = "."'".$selectedNewInfo."' where RSSD_ID = "."'".$selectedIDValue."'";
 
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE) {

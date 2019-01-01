@@ -1,6 +1,5 @@
-<div id="delete_comp" style="margin-top: 70px">
-        <center>
-        <h1>Delete Company</h1>
+<div id="delete_by_filling">
+    <center>
         <p>Fill in the name or the RSSD_ID value<br>
             of the company you wish to delete</p>
         <table border="0">
@@ -15,9 +14,9 @@
                     </datalist></td></tr>
             </form>
             <tr><td></td><td><button type="submit" value="Send" class="btn btn-outline-dark" ng-click="deleteComp()"><i class="fa fa-trash"></i>   Delete</button>
-            <button type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearDelete()"><i class="fas fa-eraser"></i>    Clear</button></td></tr>
+                <button type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearDelete()"><i class="fas fa-eraser"></i>    Clear</button></td></tr>
         </table>
-        </center>
+    </center>
 </div>
 
 <div class="alert alert-success alert-dismissible" id="deleted_comp_successfully">
@@ -59,54 +58,3 @@
     <h4>Deleting...</h4>
     <div class="loader"></div>
 </div>
-
-
-
-<!--<div id="delete_comp" style="margin-top: 70px">
-    <h1 style="text-align: center; font-family: 'Maven Pro', sans-serif; font-size:4vw; text-shadow: 2px 2px #808080"><b>Delete Company</b></h1>
-    <center>
-        <font face="Maven Pro">
-            <p>Please insert the ID of the company<br>
-                you wish to delete</p>
-        </font>
-        <font face="Maven Pro">
-            <table border="0">
-                <tr><td><label>Select company ID: </label></td><td>
-                <input list="selectedID" class="form-control" ng-change="changeID()" ng-model="selectedIdValue">
-                <datalist id="selectedID">
-                    <option ng-repeat="identifier in arrayOfCompIDs" value="{{identifier}}">{{identifier}}</option>
-                </datalist></td><td>
-                <button type="submit" value="Send" class="btn btn-outline-dark" ng-click="deleteComp()"><i class="fa fa-trash"></i>   Delete</button></td></tr>
-            </table>
-        </font>
-    </center>
-</div>
-
-<div class="input-group"></div>-->
-
-<!-- <div class="container">
-            <div class="row">
-                <div class="col-xs-6 col-xs-offset-2">
-                        div class="dropdown show">
-                            <a class="btn btn-secondary dropdown-toggle" style="width: fit-content" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                Filter By:
-                            </a>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                <a class="dropdown-item" href="#" ng-click="filterBy('None')">None</a>
-                                <a class="dropdown-item" href="#" ng-click="filterBy('Contains')">Contains</a>
-                                <a class="dropdown-item" href="#" ng-click="filterBy('Equals')">Equals</a>
-                            </div>
-                        </div>
-<input type="hidden" name="nameInserted" value="nameInserted">
-<input type="text" class="form-control" name="x" id="nameInserted" ng-model="selectedNameValue" placeholder="Company name">
-<span class="input-group-btn"></span>
-
-<input type="hidden" name="rssd_idInserted" value="rssd_idInserted">
-<input type="text" class="form-control" name="x" id="rssd_idInserted" ng-model="selectedIDValue" placeholder="RSSD_ID">
-<span class="input-group-btn"></span>
-
-
-
-</div>
-</div>
-</div>-->

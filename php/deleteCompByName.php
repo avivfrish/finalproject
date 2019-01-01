@@ -6,7 +6,7 @@ $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 $selectedNameValue = $_GET["nameInserted"];
 $sql= /** @lang text */
-    "delete from company_prod where name = "."'".$selectedNameValue."'";
+    "delete from test where name = "."'".$selectedNameValue."'";
 //echo ($sql);
 $getResults= sqlsrv_query($conn, $sql);
 

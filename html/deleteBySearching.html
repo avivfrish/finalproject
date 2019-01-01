@@ -1,0 +1,22 @@
+<div id="delete_by_searching">
+    <center>
+        <p>Fill in the name or the RSSD_ID value<br>
+            and search companies to delete</p>
+        <table border="0">
+            <form method="Post">
+                <tr><td>Company Name: </td><td><input class="form-control" type="text" name="companyName" id="companyNameSearched" placeholder="type here.."></td></tr>
+                <tr><td>RSSD_ID: </td><td><input class="form-control" type="text" name="rssd_id" id="companyIdSearched" placeholder="type here.."></td></tr>
+            </form>
+            <tr><td><div class="dropdown show">
+                <a class="btn btn-secondary dropdown-toggle" style="width: fit-content" href="#" role="button" id="dropdownMenuLinkDelete" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Filter By:
+                </a>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    <a class="dropdown-item" href="#" ng-click="deleteFilterBy('Contains')">Contains</a>
+                    <a class="dropdown-item" href="#" ng-click="deleteFilterBy('Equals')">Equals</a>
+                </div>
+            </div></td><td><button type="submit" value="Send" class="btn btn-outline-dark" ng-click="showDeleteResults()"><i class="fas fa-search"></i>   Search</button>
+                <button type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearDeleteBySearch()"><i class="fas fa-eraser"></i>    Clear</button></td></tr>
+        </table>
+    </center>
+</div>

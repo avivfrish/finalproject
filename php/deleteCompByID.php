@@ -6,7 +6,7 @@ $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 $selectedIDValue = $_GET["rssd_idInserted"];
 $sql= /** @lang text */
-    "delete from company_prod where RSSD_ID = "."'".$selectedIDValue."'";
+    "delete from test where RSSD_ID = "."'".$selectedIDValue."'";
 //echo ($sql);
 $getResults= sqlsrv_query($conn, $sql);
 

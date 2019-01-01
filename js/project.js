@@ -68,6 +68,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.get_user_session();
         $scope.arrayOfCompNames = [];
         $scope.arrayOfCompIDs = [];
+        $scope.arrayOfDeleteResNames = [];
+        $scope.arrayOfDeleteResIDs = [];
         $scope.selectedIdValue = '';
         $scope.selectedCompDetails = '';
         $scope.selectedNewInfo = '';
@@ -171,6 +173,10 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#name_and_id_doesnt_match_delete").hide();
         $("#name_and_id_doesnt_exist_delete").hide();
         $("#id_doesnt_exists_update").hide();
+        $("#show_delete_results").hide();
+        $("#delete_by").hide();
+        $("#delete_by_searching").hide();
+        $("#delete_by_filling").hide();
     };
 
     $scope.show_insert_new_comp = function () {
@@ -185,7 +191,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     $scope.show_delete_comp = function () {
         $scope.hidePages();
-        $("#delete_comp").show();
+        $("#delete_by").show();
     };
 
     $scope.show_update_comp_by_name = function () {
@@ -420,6 +426,13 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.clearAlerts();
     };
 
+    $scope.clearDeleteBySearch = function()
+    {
+        document.getElementById("companyNameSearched").value = '';
+        document.getElementById("companyIdSearched").value = '';
+        $scope.clearAlerts();
+    };
+
     $scope.getCompNames = function()
     {
         $http({
@@ -458,13 +471,65 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
+    $scope.showDeleteResults = function () {
+        $("#show_delete_results").show();
+        $scope.clearAlerts();
+        let compName, compID;
+        compName = document.getElementById("companyNameSearched").value;
+        compID = document.getElementById("companyIdSearched").value;
+        console.log(compName);
+        console.log(compID);
+
+        $http({
+            method: 'POST',
+            url: 'php/deleteResults.php',
+            params: {
+                deleteResFilterBy : $scope.deleteResultsFilterBy,
+                name : compName,
+                id : compID
+            }
+        }).then(function (data) {
+            console.log(data.data);
+                $scope.clearAlerts();
+                let deleteResName = [];
+                let deleteResID = [];
+                for (const item in data.data) {
+                    deleteResName.push(data.data[item]['name']['RSSD_ID'])
+                }
+                $scope.arrayOfDeleteResNames = deleteResName;
+                for (const item in data.data) {
+                    deleteResName.push(data.data[item]['RSSD_ID'])
+                }
+                $scope.arrayOfDeleteResIDs = deleteResID;
+                console.log("arrays: ");
+                console.log($scope.arrayOfDeleteResNames);
+                console.log($scope.arrayOfDeleteResIDs);
+                //$("#deleted_comp_successfully").show();
+
+                //$scope.clearAlerts();
+                //$("#couldnt_delete_comp").show();
+
+        });
+    };
+
+    $scope.show_delete_by_filling = function()
+    {
+        $("#delete_by_filling").show();
+        $("#delete_by_searching").hide();
+    };
+
+    $scope.show_delete_by_searching = function()
+    {
+        $("#delete_by_searching").show();
+        $("#delete_by_filling").hide();
+    };
+
     $scope.deleteComp = function()
     {
         $scope.clearAlerts();
         let compName = document.getElementById("nameInserted").value;
         let compID = document.getElementById("rssd_idInserted").value;
-        console.log(compName);
-        console.log(compID);
+
 
         if (compName != '' && compID == ''){
             $scope.deleteCompByName();
@@ -476,7 +541,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             $("#name_and_id_not_inserted_delete").show();
         }
         else {
-            console.log("name not null, id not null");
             $scope.checkIfNameAndIdMatch();
         }
     };
@@ -764,10 +828,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
-    $scope.showDeleteResults = function(){
-        console.log("hi");
-    };
-
     $scope.show_splunk = function () {
 
         console.log("show_splunk");
@@ -1001,6 +1061,13 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         console.log("FILTER", filter);
         $scope.filterBySearchByName = filter;
         document.getElementById("dropdownMenuLink").innerHTML = "Filter By: " + filter;
+    };
+
+    $scope.deleteFilterBy = function(filter){
+        console.log("TEST");
+        console.log("FILTER", filter);
+        $scope.deleteResultsFilterBy = filter;
+        document.getElementById("dropdownMenuLinkDelete").innerHTML = "Filter By: " + filter;
     };
 
     $scope.get_countries = function()
@@ -1281,21 +1348,3 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     };
 
 });	 //app.controller
-
-
-
-/*$csv = array();
-
-if (($file = fopen('test.csv', 'r')) === false)
-{
-throw new Exception('There was an error loading the CSV file.');
-}
-else
-{
-while (($line = fgetcsv($file, 1000)) !== false)
-{
-    $csv[] = $line;
-}
-
-fclose($handle);
-}*/
