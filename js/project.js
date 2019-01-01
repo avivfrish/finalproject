@@ -75,7 +75,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 		//$("#nav").show();
         $scope.hidePages();
 		$("#home").show();
-        document.getElementById("loggin_user").innerHTML="Hello Avi";
+        document.getElementById("loggin_user").innerHTML="";
 
         $scope.selectedCountryValue="";
         $scope.selectedStateValue="";
@@ -106,6 +106,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.selectedUploadedFile = '';
         $scope.getCompIDs();
         $scope.admin_checkbox={};
+
+        $scope.allcomments=[];
 	}; //the function
 
     $scope.get_user_session = function(){
@@ -139,8 +141,11 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     "\t\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\" ng-click=\"show_insert_new_file();\"><i class=\"fas fa-file-upload\"></i> Upload New File </a>\n" +
                     "\t\t\t\t\t\t\t</div>")($scope));
 
+
+
                 document.getElementById("navbar_admin").innerText="";
                 angular.element(document.getElementById("navbar_admin")).append($compile("<a class=\"dropdown-item\"  href=\"#\" ng-click=\"nav_bar_admin();\" data-toggle=\"modal\" data-target=\"#admin_modal\">Admin</a>\n" +
+                    "\t\t\t\t\t\t\t<a class=\"dropdown-item\"  href=\"#\" ng-click=\"nav_bar_comment();\" data-toggle=\"modal\" data-target=\"#admin_comment_modal\">Comments</a>\n" +
                     "\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">\n" +
                     "\t\t\t\t\t\t\t\t<form action=\"/aviv/php/logout.php\">\n" +
                     "\t\t\t\t\t\t\t\t\t<button style=\"padding: 0;bottom: 0;\" type=\"submit\"  class=\"btn btn-link\">logout</button>\n" +
@@ -296,15 +301,48 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             }
         }).then(function (data) {
             $scope.allUsers=data.data;
-
-
-
-
         });
+    };
+    $scope.nav_bar_comment = function () {
+        console.log("nav comment bar");
+        $http({
+            method: 'POST',
+            url: 'php/get_all_comments.php',
+            params: {
+
+            }
+        }).then(function (data) {
+            console.log(data.data);
+            $scope.allcomments=data.data;
+        });
+    };
 
 
+    $scope.showWordCloud = function () {
+        var self = this;
+        self.height = $window.innerHeight * 0.5;
+        self.width = $element.find('#wordsCloud')[0].offsetWidth;
+        self.wordClicked = wordClicked;
+        self.rotate = rotate;
+        self.useTooltip = true;
+        self.useTransition = false;
+        self.words = [
+            {text: 'Angular',size: 25, color: '#6d989e', tooltipText: 'Angular Tooltip'},
+            {text: 'Angular2',size: 35, color: '#473fa3', tooltipText: 'Angular2 Tooltip'}
+        ]
+        self.random = random;
 
+        function random() {
+            return 0.4; // a constant value here will ensure the word position is fixed upon each page refresh.
+        }
 
+        function rotate() {
+            return ~~(Math.random() * 2) * 90;
+        }
+
+        function wordClicked(word){
+            alert('text: ' + word.text + ',size: ' + word.size);
+        }
     };
 
     $scope.admin_save_changes = function () {
