@@ -38,8 +38,8 @@ input[list] {
 }
 
 .navbar-custom {
-    background-color: rgba(178, 195, 203, 0.5);
-    display: inline-block;
+    background-color: #d8d8d8;
+    display: block;
     padding-bottom: 10px;
     padding-top: 10px;
 }
@@ -670,4 +670,11 @@ left: 50%;
 #carouselExampleCaptions > .carousel-indicators > .active {
     background-color: white;
     border: 1px solid white;
+}
+
+.carousel-indicators li {
+    width: 30px;
+    height: 30px;
+    border: none;
+    border-radius: 100%;
 }
