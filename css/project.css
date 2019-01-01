@@ -14,12 +14,12 @@ input[list] {
     border-style: ridge;
 }
 
-.leftSideResults {
+#leftSideResults {
     height: 500px;
     overflow-y: scroll;
 }
 
-.rightSideResults {
+#rightSideResults {
     background-color: #e5e5e5;
     height: 500px;
     border-radius: 5px;

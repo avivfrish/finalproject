@@ -66,7 +66,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.getWordsToWordCloud();
 
         $scope.resultsOfSearch = [];
-        console.log("hello");
         $scope.companies=[];
         $scope.selectedCompany="";
         $scope.allUsers=[];
@@ -207,15 +206,12 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     }
 
 	$scope.show_search = function (searchBy) {
-		console.log("show search div");
         $scope.hidePages();
         if (searchBy == 'name'){
-            console.log("show search name");
             $("#search_compByName").show();
         }
         else {
             $scope.filterBySearchByName = 'None';
-            console.log("show search city");
             $("#search_compByCity").show();
             $("#stateOptions").hide();
             $("#cityOptions").hide();
@@ -744,21 +740,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
-	$scope.show_splunk = function () {
-
-		console.log("show_splunk");
-		console.log(document.getElementById("splunk").style.display);
-		if(document.getElementById("splunk").style.display==="none")
-		{
-
-			document.getElementById("splunk").style.display="block";
-		}		
-		else
-		{
-			document.getElementById("splunk").style.display="none";
-		}
-	};
-
 	$scope.graph = function(){
 		//const gData = {nodes: [{id: 64, group: 1}, {id: 192, group: 1}, {id: 2, group: 2}, {id: 419, group: 1}, {id: 260, group: 1}, {id: 165, group: 1}, {id: 39, group: 1}, {id: 200, group: 1}, {id: 103, group: 1}, {id: 265, group: 1}, {id: 11, group: 1}, {id: 432, group: 1}, {id: 336, group: 1}, {id: 308, group: 1}, {id: 21, group: 1}, {id: 278, group: 1}, {id: 407, group: 1}, {id: 412, group: 1}, {id: 125, group: 1}, {id: 31, group:1}],
 		//	links: [{source: 64, target: 2}, {source: 192, target: 39}, {source: 192, target: 2}, {source: 2, target: 31}, {source: 2, target: 165}, {source: 2, target: 260}, {source: 2, target: 39}, {source: 2, target: 125}, {source: 2, target: 200}, {source: 2, target: 419}, {source: 2, target: 308}, {source: 2, target: 432}, {source: 2, target: 407}, {source: 2, target: 11}, {source: 2, target: 21}, {source: 2, target: 412}, {source: 2, target: 103}, {source: 2, target: 265}, {source: 2, target: 336}, {source: 2, target: 278}, {source: 260, target: 165}, {source: 260, target: 31}, {source: 260, target: 11}, {source: 260, target: 103}, {source: 260, target: 278}, {source: 200, target: 125}, {source: 103, target: 278}, {source: 265, target: 407}, {source: 265, target: 11}, {source: 265, target: 278}, {source: 11, target: 407}, {source: 11, target: 278}, {source: 308, target: 412}, {source: 21, target: 407}, {source: 21, target: 278}, {source: 278, target: 407}, {source: 125, target: 31}]};
@@ -849,7 +830,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     $scope.get_python = function () {
         document.getElementById("graphDetails").style.display="none";
-        console.log("try python");
         $http({
             method: 'POST',
             url: 'php/get_python.php',
@@ -858,7 +838,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             }
         }).then(function (data) {
 
-            console.log(data.data);
+            //console.log(data.data);
 
             /*var graph_data=data.data;
             graph_data=graph_data.replace("\'nodes\'","\"nodes\"");
@@ -898,8 +878,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
 	$scope.showDoughnut = function ()
 	{
-		console.log("showDoughnut");
-
         $http({
             method: 'POST',
             url: 'php/getNumOfConnections.php',
@@ -908,7 +886,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             }
         }).then(function (data) {
 			if (data.data.length !== 0){
-                console.log(data);
+                //console.log(data);
 				$scope.connections=(data.data);
 
                 let connectionsCount=[];
@@ -1027,7 +1005,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     };
 
 	$scope.showBarChart = function () {
-	    console.log("showBarChart");
         document.getElementById("stackedBar").innerHTML = "";
 
         $http({
@@ -1066,9 +1043,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     }
                 }
 
-                console.log("dataForY");
-                console.log(dataForY);
-
                 let colors = $scope.getColors(Object.keys($scope.distinctConnections).length);
 
                 let dataSets = [];
@@ -1097,7 +1071,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                             xAxes: [{
                                 stacked: true,
                                 ticks: {
-                                    fontColor: "white",
+                                    fontColor: "black",
                                     fontSize: 10,
                                     stepSize: 1,
                                     beginAtZero: true,
@@ -1107,7 +1081,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                             yAxes: [{
                                 stacked: true,
                                 ticks: {
-                                    fontColor: "white",
+                                    fontColor: "black",
                                     fontSize: 10,
                                 }
                             }]
@@ -1225,7 +1199,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     {
         $("#googleMap").hide();
         $("#loadingMap").show();
-        console.log("LOAD");
         let newIframe = "<iframe src='https://www.google.com/maps?&q=";
         if( $scope.selectedStreetValue ){
             newIframe = newIframe + $scope.selectedStreetValue;
@@ -1253,13 +1226,11 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         document.getElementById("googleMap").innerHTML = newIframe;
 
         $("#loadingMap").hide();
-        console.log("FINISH LOAD");
         $("#googleMap").show();
     };
 
     $scope.getStatesByCountry = function (callback)
     {
-        console.log("GET states");
         $http({
             method: 'POST',
             url: 'php/getStatesByCountry.php',
@@ -1267,21 +1238,19 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 selectedCountry : $scope.selectedCountryValue
             }
         }).then(function (data) {
-            console.log("GET states 2");
-            console.log(data.data);
+            //onsole.log("GET states");
+            //console.log(data.data);
             let statesByCountry = [];
             for (const item in data.data){
                 statesByCountry.push(data.data[item]['state']);
             }
             $scope.arrayOfStates = statesByCountry;
-            console.log("LEN", $scope.arrayOfStates.length);
             callback($scope.arrayOfStates.length);
         });
     };
 
     $scope.getCities = function (callback)
     {
-        console.log("GET cities");
         $http({
             method: 'POST',
             url: 'php/getCity.php',
@@ -1290,13 +1259,12 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 selectedState : $scope.selectedStateValue
             }
         }).then(function (data) {
-            console.log(data.data);
+            //console.log(data.data);
             let cities = [];
             for (const item in data.data){
                 cities.push(data.data[item]['city']);
             }
             $scope.arrayOfCities = cities;
-            console.log("LEN", $scope.arrayOfCities.length);
             callback($scope.arrayOfCities.length);
         });
     };
@@ -1335,13 +1303,12 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 selectedCity : $scope.selectedCityValue
             }
         }).then(function (data) {
-            console.log(data.data);
+            //console.log(data.data);
             let streets = [];
             for (const item in data.data){
                 streets.push(data.data[item]['street']);
             }
             $scope.arrayOfStreets = streets;
-            console.log("LEN", $scope.arrayOfStreets.length);
             callback($scope.arrayOfStreets.length);
         });
     };
@@ -1422,9 +1389,9 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }).then(function (data) {
             if(data.data.length > 0){
                 console.log("GET Address");
-                console.log(data.data);
+                //console.log(data.data);
                 $scope.resultsOfSearch = data.data;
-                console.log($scope.resultsOfSearch);
+                //console.log($scope.resultsOfSearch);
                 $("#loadingResults").hide();
                 $("#foundResults").show();
                 $("#askToSelectResult").show();
@@ -1445,12 +1412,22 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#selectedResult").show();
 
         $("#tab_GeneralInfo").tab("show");
+        document.getElementById(name).style.boxShadow = "rgb(141, 195, 207) 0px 4px 8px 0px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px";
         //document.getElementById("tab_Stock").className=("nav-link");
         //document.getElementById("tab_Competitors").className=("nav-link");
         //document.getElementById("tab_Articles").className=("nav-link");
         //document.getElementById("tab_GeneralInfo").className=("nav-link active show");
+        if ($scope.selectedCompany !== ""){
+            document.getElementById($scope.selectedCompany).style.boxShadow = "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)";
+        }
         $scope.selectedCompany=name;
         console.log("showMoreAboutResult "+ $scope.selectedCompany);
+
+        document.getElementById("selectedCompanyName").innerHTML = name;
+        document.getElementById("rightSideResults").style.height = (20+ document.getElementById("GeneralInfo").offsetHeight).toString();
+        document.getElementById("leftSideResults").style.height = (20+document.getElementById("GeneralInfo").offsetHeight).toString();
+        console.log("INNER HEIGHT", document.getElementById("GeneralInfo").offsetHeight);
+
         //document.getElementById("selectedResult").innerText = name;
 
     };
