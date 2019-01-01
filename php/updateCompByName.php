@@ -4,21 +4,21 @@ $connectionInfo = array("UID" => "finalproject@avifinalproject", "pwd" => "1qaZ2
 $serverName = "tcp:avifinalproject.database.windows.net,1433";
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
-$selectedIdValue = $_GET["selectedID"];
-$selectedCompDetails = $_GET["compDetails"];
-$selectedNewInfo = $_GET["newInfo"];
+$selectedNameValue = $_GET["nameInserted"];
+$selectedCompDetails = $_GET["compDetailsUpdateByName"];
+$selectedNewInfo = $_GET["newInfoUpdateByName"];
 
 $sql= /** @lang text */
-    "update test set $selectedCompDetails = "."'".$selectedNewInfo."' where identifier = "."'".$selectedIdValue."'";
+    "update test set $selectedCompDetails = "."'".$selectedNewInfo."' where name = "."'".$selectedNameValue."'";
 
-    $getResults= sqlsrv_query($conn, $sql);
+$getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE) {
     echo ("false");
 }
 else {
     echo ("true");
 }
-    //return (sqlsrv_errors());
+//return (sqlsrv_errors());
 /*$array = array();
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     $array[] = array(

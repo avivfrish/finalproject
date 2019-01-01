@@ -1,45 +1,10 @@
 <div id="update_comp" style="margin-top: 70px">
-    <link href='https://fonts.googleapis.com/css?family=Overlock SC' rel='stylesheet'>
-    <h1 style="text-align: center; font-family: Overlock SC; font-size:4vw; text-shadow: 2px 2px #808080"><b>Update Existing Company</b></h1>
+    <h1>Update Existing Company</h1>
     <center>
-        <font face="Overlock SC">
-            <p>Please select the ID of the company you wish to update<br>
-                it's details and insert the new information</p>
-        </font>
-        <font face="Overlock SC">
-            <table border="0">
-                <form method="Post">
-                    <tr><td><label>Select company ID: </label></td><td>
-                        <input list="selectedID" class="form-control" ng-change="changeID()" ng-model="selectedIdValue">
-                        <datalist id="selectedID">
-                            <option ng-repeat="ID in arrayOfCompIDs" value="{{ID}}">{{ID}}</option>
-                        </datalist>
-                    <tr><td>Details to Update: </td><td><select class="custom-select mr-sm-2" name="compDetails" id="compDetails" ng-model="selectedCompDetails">
-                        <option>name</option>
-                        <option>street</option>
-                        <option>country</option>
-                        <option>state</option>
-                    </select></td></tr>
-                    <tr><td>New Information: </td><td><input type="text" name="newInfo" id="newInfo" class="form-control" ng-model="selectedNewInfo"></td></tr>
-                </form>
-                <tr><td></td><td><button type="submit" value="Send" class="btn btn-outline-dark" ng-click="updateComp()"><i class="fas fa-user-edit"></i>    Update</button>
-                <button type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearUpdate()"><i class="fas fa-eraser"></i>    Clear</button></td></tr>
-            </table>
-        </font>
+        <p>Please select the field you wish to update by</p>
+        <table border="0">
+            <button type="submit" value="Send" class="btn btn-outline-dark" ng-click="show_update_comp_by_name()">Update by name</button>
+            <button type="submit" value="Send" class="btn btn-outline-dark" ng-click="show_update_comp_by_ID()">Update by RSSD_ID</button>
+        </table>
     </center>
-</div>
-
-<div class="alert alert-success alert-dismissible" id="updated_comp_successfully">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Success!</strong> Company updated successfully.
-</div>
-
-<div class="alert alert-danger alert-dismissible" id="couldnt_update_comp">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Oops!</strong> Couldn't update company.
-</div>
-
-<div class="alert alert-danger alert-dismissible" id="id_doesnt_exists_update">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Oops!</strong> Couldn't update company, ID doesn't exists!
 </div>

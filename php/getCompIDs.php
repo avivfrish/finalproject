@@ -4,14 +4,14 @@ $serverName = "tcp:avifinalproject.database.windows.net,1433";
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 $sql= /** @lang text */
-    "select ID from companies";
+    "select distinct RSSD_ID from test";
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
     return (sqlsrv_errors());
 $array = array();
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     $array[] = array(
-        'ID'=>$row['ID']
+        'RSSD_ID'=>$row['RSSD_ID']
     );
 }
 sqlsrv_free_stmt($getResults);

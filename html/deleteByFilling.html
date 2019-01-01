@@ -1,0 +1,60 @@
+<div id="delete_by_filling">
+    <center>
+        <p>Fill in the name or the RSSD_ID value<br>
+            of the company you wish to delete</p>
+        <table border="0">
+            <form method="Post">
+                <tr><td>Company Name: </td><td><input list="selectedCompName" class="form-control" type="text" name="nameInserted" id="nameInserted" ng-change="changeName()" ng-model="selectedNameValue" placeholder="select name..">
+                    <datalist id="selectedCompName">
+                        <option ng-repeat="name in arrayOfCompNames" value="{{name}}">{{name}}</option>
+                    </datalist></td></tr>
+                <tr><td>RSSD_ID: </td><td><input list="selectedCompID" class="form-control" type="text" name="rssd_idInserted" id="rssd_idInserted" ng-change="changeID()" ng-model="selectedIDValue" placeholder="select RSSD_ID..">
+                    <datalist id="selectedCompID">
+                        <option ng-repeat="RSSD_ID in arrayOfCompIDs" value="{{RSSD_ID}}">{{RSSD_ID}}</option>
+                    </datalist></td></tr>
+            </form>
+            <tr><td></td><td><button type="submit" value="Send" class="btn btn-outline-dark" ng-click="deleteComp()"><i class="fa fa-trash"></i>   Delete</button>
+                <button type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearDelete()"><i class="fas fa-eraser"></i>    Clear</button></td></tr>
+        </table>
+    </center>
+</div>
+
+<div class="alert alert-success alert-dismissible" id="deleted_comp_successfully">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Success!</strong> Company deleted successfully.
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="couldnt_delete_comp">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't delete company.
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="name_and_id_not_inserted_delete">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't delete company, please type the name or the RSSD_ID of the company
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="name_doesnt_exists_delete">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't delete company, no such company name!
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="id_doesnt_exists_delete">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't delete company, no such RSSD_ID!
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="name_and_id_doesnt_match_delete">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't delete company, company name and RSSD_ID don't match!
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="name_and_id_doesnt_exist_delete">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't delete company, no such company name and no such RSSD_ID!
+</div>
+
+<div id="loading_delete">
+    <h4>Deleting...</h4>
+    <div class="loader"></div>
+</div>

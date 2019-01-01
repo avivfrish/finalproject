@@ -1,24 +1,24 @@
 <div id="new_comp" style="margin-top: 70px">
-    <link href='https://fonts.googleapis.com/css?family=Alegreya SC' rel='stylesheet'>
-    <h1 style="text-align: center; font-family: Alegreya SC; font-size:4vw; text-shadow: 2px 2px #808080"><b>Add New Company</b></h1>
+    <h1><b>Add New Company</b></h1>
     <center>
-        <font face="Alegreya SC">
+
             <p>Please insert the following details<br>
             of the company you wish to add</p>
-        </font>
-        <font face="Alegreya SC">
+
+
             <table border="0">
                 <form method="Post">
-                    <tr><td>Company ID: </td><td><input class="form-control" type="text" name="companyID" id="compID" required></td></tr>
-                    <tr><td>Company Name: </td><td><input class="form-control" type="text" name="companyName" id="compName"></td></tr>
-                    <tr><td>Street: </td><td><input class="form-control" type="text" name="street" id="compStreet"></td></tr>
-                    <tr><td>Country: </td><td><input class="form-control" type="text" name="country" id="compCountry"></td></tr>
-                    <tr><td>State: </td><td><input class="form-control" type="text" name="state" id="compState"></td></tr>
+                    <tr><td>Company Name: </td><td><input class="form-control" type="text" name="companyName" id="compName" placeholder="type here.."></td></tr>
+                    <tr><td>Street: </td><td><input class="form-control" type="text" name="street" id="compStreet" placeholder="type here.."></td></tr>
+                    <tr><td>city: </td><td><input class="form-control" type="text" name="city" id="compCity" placeholder="type here.."></td></tr>
+                    <tr><td>country: </td><td><input class="form-control" type="text" name="country" id="compCountry" placeholder="type here.."></td></tr>
+                    <tr><td>state: </td><td><input class="form-control" type="text" name="state" id="compState" placeholder="type here.."></td></tr>
+                    <tr><td>RSSD_ID: </td><td><input class="form-control" type="text" name="companyID" id="compID" placeholder="type here.."></td></tr>
                 </form>
                 <tr><td></td><td><button type="submit" value="send" class="btn btn-outline-dark" ng-click="insertNewComp()"><i class="fas fa-plus"></i>    Add</button>
                 <button type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearInsert()"><i class="fas fa-eraser"></i>    Clear</button></td></tr>
             </table>
-        </font>
+
     </center>
 </div>
 
@@ -32,14 +32,24 @@
     <strong>Oops!</strong> Couldn't add company.
 </div>
 
-<div class="alert alert-danger alert-dismissible" id="id_already_exists_insert">
+<div class="alert alert-danger alert-dismissible" id="compName_already_exists_insert">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Oops!</strong> Couldn't add company, ID already exists!
+    <strong>Oops!</strong> Couldn't add company, company name already exists!
 </div>
 
-<div class="alert alert-danger alert-dismissible" id="no_id_typed">
+<div class="alert alert-danger alert-dismissible" id="RSSD_ID_already_exists_insert">
     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Oops!</strong> Couldn't add company, please insert an ID!
+    <strong>Oops!</strong> Couldn't add company, RSSD_ID already exists!
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="no_compName_typed">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't add company, please insert company name!
+</div>
+
+<div id="loading_new_comp">
+    <h4>Adding...</h4>
+    <div class="loader"></div>
 </div>
 
 <!--Arial Black, Gadget, sans-serif-->

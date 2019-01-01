@@ -1,0 +1,46 @@
+<div id="update_comp_by_ID">
+    <center>
+        <p>Please choose the field you wish to update<br>
+            and insert the new information</p>
+
+        <table border="0">
+            <form method="Post">
+                <tr><td>RSSD_ID: </td><td><input list="selectedCompID" class="form-control" type="text" name="rssd_idInserted" id="rssd_idInserted" ng-change="changeID()" ng-model="selectedIDValue" placeholder="select RSSD_ID..">
+                    <datalist id="selectedCompID">
+                        <option ng-repeat="RSSD_ID in arrayOfCompIDs" value="{{RSSD_ID}}">{{RSSD_ID}}</option>
+                    </datalist></td></tr>
+                <tr><td>Details to Update: </td><td><select class="custom-select mr-sm-2" name="compDetails" id="compDetailsUpdateById" ng-model="selectedCompDetails" placeholder="select field..">
+                    <option> </option>
+                    <option>Company name</option>
+                    <option>street</option>
+                    <option>city</option>
+                    <option>country</option>
+                    <option>state</option>
+                </select></td></tr>
+                <tr><td>New Information: </td><td><input type="text" name="newInfo" id="newInfoUpdateById" class="form-control" ng-model="selectedNewInfo"></td></tr>
+                <tr><td></td><td><button type="submit" value="Send" class="btn btn-outline-dark" ng-click="updateCompByID()"><i class="fas fa-user-edit"></i>    Update</button>
+                    <button type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearUpdateByID()"><i class="fas fa-eraser"></i>    Clear</button></td></tr>
+            </form>
+        </table>
+    </center>
+</div>
+
+<div class="alert alert-success alert-dismissible" id="updated_comp_by_id_successfully">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Success!</strong> Company updated successfully.
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="couldnt_update_comp_by_id">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't update company.
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="id_doesnt_exists_update">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't update company, no such RSSD_ID!
+</div>
+
+<div id="loading_update_by_ID">
+    <h4>Updating...</h4>
+    <div class="loader"></div>
+</div>

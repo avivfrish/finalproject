@@ -64,8 +64,13 @@ if(!isset($_SESSION['user']))
 
 		include "html/updateComp.html";
         include "html/insertNewComp.html";
-        include "html/deleteComp.html";
+        include "html/chooseHowToDelete.html";
         include "html/insertNewFile.html";
+        include "html/updateCompByName.html";
+        include "html/updateCompByID.html";
+        include "html/deleteByFilling.html";
+        include "html/deleteBySearching.html";
+        include "html/showDeleteResults.html";
 	?>
 </body>
 </html>
