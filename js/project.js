@@ -214,6 +214,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.hidePages();
         if (searchBy == 'name'){
             $("#search_compByName").show();
+            $scope.filterBySearchByName = 'Contains';
         }
         else {
             $scope.filterBySearchByName = 'None';
@@ -1159,7 +1160,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 for (const item in data.data){
                     const name = data.data[item]['name'];
                     const revenue = Number(data.data[item]['revenue']);
-                    const sizeByRevenue = ((revenue - minRevenue)/(maxRevenue - minRevenue))*40+20;
+                    const sizeByRevenue = ((revenue - minRevenue)/(maxRevenue - minRevenue))*80+20;
                     const tooltipText = 'Revenue: ' + revenue.toString() + ' $';
                     const wordToInsert = {text: name, size: sizeByRevenue, color: colors[j], tooltipText: tooltipText };
                     $scope.words.push(wordToInsert);
@@ -1183,6 +1184,35 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             console.log(data.data);
         });
     };
+
+
+    $scope.getIndustry = function () {
+        $http({
+            method: 'POST',
+            url: 'php/getTypesOfIndustry.php',
+            data: $.param({
+            }),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).then(function (data) {
+            console.log("GET Type of industry");
+            console.log(data.data);
+            $scope.industries = [];
+            if (data.data.length !== 0){
+                for (const item in data.data){
+                    let industry = data.data[item]['industry'];
+                    industry = industry.split('|');
+                    $scope.industries.push(industry)
+                }
+                //TODO
+            }
+            else {
+                console.log('get type of industry failed');
+            }
+        });
+    };
+
 
 	$scope.filterBy = function(filter){
 	    $scope.filterBySearchByName = filter;
@@ -1436,8 +1466,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         console.log("showMoreAboutResult "+ $scope.selectedCompany);
 
         document.getElementById("selectedCompanyName").innerHTML = name;
-        document.getElementById("rightSideResults").style.height = (20+ document.getElementById("GeneralInfo").offsetHeight).toString();
-        document.getElementById("leftSideResults").style.height = (20+document.getElementById("GeneralInfo").offsetHeight).toString();
+        document.getElementById("rightSideResults").style.height = (30 + document.getElementById("GeneralInfo").offsetHeight).toString();
+        document.getElementById("leftSideResults").style.height = (30 +document.getElementById("GeneralInfo").offsetHeight).toString();
         console.log("INNER HEIGHT", document.getElementById("GeneralInfo").offsetHeight);
 
         //document.getElementById("selectedResult").innerText = name;
