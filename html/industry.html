@@ -3,47 +3,54 @@
 
     <div class="firstStats" style="height: fit-content">
         <div style="width: 33%; height: 33%; display: inline-block">
+            <h4>Products Statistic</h4>
             <canvas id="ProductsDoughnutChart"></canvas>
         </div>
 
         <div style="width: 33%; height: 33%; display: inline-block">
+            <h4>Industry Statistic</h4>
             <canvas id="IndustryDoughnutChart"></canvas>
         </div>
 
         <div style="width: 33%; height: 33%; display: inline-block">
+            <h4>Connections Type Statistic</h4>
             <canvas id="ConnectionDoughnutChart"></canvas>
         </div>
     </div>
 
 
     <div class="secondStats" style="height: fit-content">
-        <div>
-            <h4>Show 5 Biggest Company By Number Of Relation</h4>
 
-            <span ng-repeat="connection in distinctConnections">
-                <label>
-                    <input type="checkbox" value="" ng-false-value="0" ng-true-value="1"
-                           ng-model="connection.isChecked" ng-change="showBarChart();">
-                    <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
-                    {{connection.name}}
-                </label>
-            </span>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm-6" style="width: 50%; height: 40%; display: inline-block">
+                    <div>
+                        <h4>Show 5 Biggest Company By Number Of Relation</h4>
+
+                        <span ng-repeat="connection in distinctConnections">
+                            <label>
+                                <input type="checkbox" value="" ng-false-value="0" ng-true-value="1"
+                                       ng-model="connection.isChecked" ng-change="showBarChart();">
+                                <span class="cr"><i class="cr-icon glyphicon glyphicon-ok"></i></span>
+                                {{connection.name}}
+                            </label>
+                        </span>
+                    </div>
+                    <canvas id="stackedBar"></canvas>
+                </div>
+
+                <div class="col-sm-6" id="wordsCloud" style="width: 40%; height: 40%; display: inline-block; position: relative">
+                    <h4>Biggest Company By Revenue</h4>
+                    <word-cloud words="words" width="width" height="height" padding="padding" random="random" use-tooltip="true"></word-cloud>
+                </div>
+            </div>
         </div>
 
-        <!--<div id="wordsCloud" style="width: 50%; height: 60%; display: inline-block">
-            <word-cloud words="showWordCloud.words" padding="5" rotate="showWordCloud.rotate" use-tooltip="showWordCloud.useTooltip"
-               random="showWordCloud.random" use-transition="showWordCloud.useTransition" on-click="showWordCloud.wordClicked">
-            </word-cloud>
-        </div>-->
 
     </div>
-        <div style="width: 70%; height: 20%; display: inline-block">
-            <canvas id="stackedBar"></canvas>
-        </div>
 
-    <div id="wordsCloud">
-        <word-cloud words="words" width="width" height="height" padding="padding" use-tooltip="true" on-click="wordClicked"></word-cloud>
-    </div>
+
+
 
 
 

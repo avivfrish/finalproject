@@ -2,11 +2,11 @@
 
     <div id="foundResults" class="container" >
         <div class="row" data-spy="scroll" data-target=".leftSideResults" data-offset="50">
-            <div class="leftSideResults border rounded col-sm-4">
+            <div class="leftSideResults border rounded col-sm-4" id="leftSideResults">
                 <table class="table">
                     <tr ng-repeat="result in resultsOfSearch">
                         <td>
-                            <div class="card" ng-click="showMoreAboutResult(result.name); createNewStockGraph(result.name);" >
+                            <div class="card" id ="{{result.name}}" ng-click="showMoreAboutResult(result.name); createNewStockGraph(result.name);" >
                                 <div class="card-header">
                                     <h4 class="card-title">{{result.name}}</h4>
                                     <p class="card-text">financial company</p>
@@ -25,7 +25,7 @@
 
 
 
-            <div class="rightSideResults border rounded col-sm-8">
+            <div class="border rounded col-sm-8" id = "rightSideResults" >
                 <div id="askToSelectResult">
                     Select Search Result to show more..
                 </div>
@@ -36,7 +36,7 @@
                             <a class="nav-link active" id="tab_GeneralInfo" href="#GeneralInfo" role="tab" data-toggle="tab">General Information</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link"  id="tab_Competitors" href="#Competitors" role="tab" data-toggle="tab" ng-click="get_python()">Competitors</a>
+                            <a class="nav-link"  id="tab_Competitors" href="#Connections" role="tab" data-toggle="tab" ng-click="get_python()">Competitors</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link"  id="tab_Stock" href="#Stock" role="tab" data-toggle="tab">Stock</a>
@@ -47,12 +47,12 @@
                     </ul>
 
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane container active" id="GeneralInfo">
+                        <div role="tabpanel" class="tab-pane container active" id="GeneralInfo" style="height: fit-content">
                             <div class="container-fluid titleOfGeneralResult">
                                 <div class="row">
                                     <div class="col-sm-8">
                                         <br>
-                                        <h2> Ally Financial </h2>
+                                        <h3 id="selectedCompanyName"></h3>
                                         <h4>Public company of Financial services</h4>
                                     </div>
                                     <div class="col-sm-4" style="margin-top: 20px">
@@ -108,7 +108,7 @@
 
                         </div>
 
-                        <div role="tabpanel" class="tab-pane container fade col-sm-12" id="Competitors">
+                        <div role="tabpanel" class="tab-pane container fade col-sm-12" id="Connections">
 
                             <div id="3d-graph" width="600px" ></div>
                             <div class="col-sm-12" id="graph_comp_name">

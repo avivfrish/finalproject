@@ -52,6 +52,7 @@ if(!isset($_SESSION['user']))
 	<?php
 
 		include "html/home.html";
+        include "html/aboutUs.html";
 		include "html/nav.html";
 		include "html/industry.html";
 		include "html/searchByName.html";
