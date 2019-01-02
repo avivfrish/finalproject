@@ -4,11 +4,19 @@
     <table class="table table-striped table-bordered">
         <tr>
             <th>Company name</th>
+            <th>Street</th>
+            <th>City</th>
+            <th>Country</th>
+            <th>State</th>
             <th>RSSD_ID</th>
             <th>Delete?</th>
         </tr>
         <tr ng-repeat="result in resultsOfDeleteSearch">
             <td>{{result.name}}</td>
+            <td>{{result.street}}</td>
+            <td>{{result.city}}</td>
+            <td>{{result.country}}</td>
+            <td>{{result.state}}</td>
             <td>{{result.id}}</td>
             <td><button type="submit" value="Send" class="btn btn-outline-dark" ng-click="deleteSearchResults(result.name)"><i class="fa fa-trash"></i>   Delete</button>
                 <!--<input ng-if="result.delete==1" type="checkbox" value=""  ng-false-value="0" ng-true-value="1"  ng-model="result.isChecked" checked disabled>

@@ -9,7 +9,7 @@ $compID = $_GET["id"];
 $deleteResultsFilterBy = $_GET["deleteResFilterBy"];
 
 $sql= /** @lang text */
-    "select name, RSSD_ID from test where ";
+    "select name, street, city, country, state, RSSD_ID from test where ";
 
 $operator = '=';
 $char = '';
@@ -56,8 +56,11 @@ else if ($getResults == TRUE) {
     while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
         $array[] = array(
             'name'=>$row['name'],
-            'id'=>$row['RSSD_ID'],
-            //'delete'=>"0"
+            'street'=>$row['street'],
+            'city'=>$row['city'],
+            'country'=>$row['country'],
+            'state'=>$row['state'],
+            'id'=>$row['RSSD_ID']
         );
     }
     sqlsrv_free_stmt($getResults);
