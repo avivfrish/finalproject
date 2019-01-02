@@ -62,6 +62,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
         $scope.distinctConnections = [];
         $scope.getDistinctConnections();
+        $scope.industriesStatistic = [];
+        $scope.getIndustry();
         $scope.words = [];
         $scope.getWordsToWordCloud();
 
@@ -269,7 +271,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.showDoughnut();
         $scope.showBarChart();
         $scope.showWordCloud();
-        $scope.getIndustry();
+        //$scope.getIndustry();
     };
 
     $scope.nav_bar_admin = function () {
@@ -910,6 +912,17 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     label.push($scope.connections[j]['relation']);
                 }
 
+
+                let industryCount=[];
+                let industryLabel=[];
+                for (let j=0;j<$scope.industriesStatistic.length;j++)
+                {
+                    industryCount.push($scope.industriesStatistic[j]['count']);
+                    industryLabel.push($scope.industriesStatistic[j]['industry']);
+                }
+                let industryColors = $scope.getColors($scope.industriesStatistic.length);
+
+
                 let colors = $scope.getColors($scope.connections.length);
 
                 var ctx = document.getElementById("ConnectionDoughnutChart").getContext("2d");
@@ -946,10 +959,10 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     type: 'doughnut',
                     data : {
                         datasets: [{
-                            data: connectionsCount,
-                            backgroundColor: colors
+                            data: industryCount,
+                            backgroundColor: industryColors
                         }],
-                        labels: label,
+                        labels: industryLabel,
 
                     },
                     options: {
@@ -1206,7 +1219,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     industries = industries.split('|');
                     //console.log("industry ", industries);
                     for (const industryItem in industries){
-                        const industry = industries[industryItem].trim();
+                        const industry = (industries[industryItem].trim()).toUpperCase();
                         //console.log("industry ",industry);
                         if (industry !== "" && industry !== "," && ($scope.industries).indexOf(industry) === -1 ){
                             $scope.industries.push(industry);
@@ -1225,19 +1238,16 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     }
                 }).then(function (data) {
                     console.log("GET industry Stats");
-                    console.log(data.data);
                     if (data.data.length !== 0){
-
+                        $scope.industriesStatistic = data.data;
+                        $scope.industriesStatistic.sort((a,b) => (a.count < b.count) ? 1 : ((b.count < a.count) ? -1 : 0));
+                        $scope.industriesStatistic = $scope.industriesStatistic.slice(0,5);
+                        console.log($scope.industriesStatistic);
                     }
                     else {
                         console.log('get statistic of industry failed');
                     }
                 });
-
-
-
-                console.log("$scope.industries ! ");
-                console.log($scope.industries);
 
             }
             else {
