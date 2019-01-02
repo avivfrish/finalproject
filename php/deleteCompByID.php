@@ -4,7 +4,7 @@ $connectionInfo = array("UID" => "finalproject@avifinalproject", "pwd" => "1qaZ2
 $serverName = "tcp:avifinalproject.database.windows.net,1433";
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
-$selectedIDValue = $_GET["rssd_idInserted"];
+$selectedIDValue = $_GET["rssd_idInsertedDelete"];
 $sql= /** @lang text */
     "delete from test where RSSD_ID = "."'".$selectedIDValue."'";
 //echo ($sql);

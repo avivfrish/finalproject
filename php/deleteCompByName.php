@@ -4,7 +4,7 @@ $connectionInfo = array("UID" => "finalproject@avifinalproject", "pwd" => "1qaZ2
 $serverName = "tcp:avifinalproject.database.windows.net,1433";
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
-$selectedNameValue = $_GET["nameInserted"];
+$selectedNameValue = $_GET["nameInsertedDelete"];
 $sql= /** @lang text */
     "delete from test where name = "."'".$selectedNameValue."'";
 //echo ($sql);

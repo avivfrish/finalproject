@@ -199,6 +199,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     $scope.show_insert_new_comp = function () {
         $scope.hidePages();
         $("#new_comp").show();
+        $scope.clearInsert();
     };
 
     $scope.show_update_comp = function () {
@@ -214,11 +215,13 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     $scope.show_update_comp_by_name = function () {
         $("#update_comp_by_name").show();
         $("#update_comp_by_ID").hide();
+        $scope.clearUpdateByName();
     };
 
     $scope.show_update_comp_by_ID = function () {
         $("#update_comp_by_ID").show();
         $("#update_comp_by_name").hide();
+        $scope.clearUpdateByID();
     };
 
     $scope.show_insert_new_file = function () {
@@ -481,8 +484,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     $scope.clearDelete = function()
     {
-        document.getElementById("nameInserted").value = '';
-        document.getElementById("rssd_idInserted").value = '';
+        document.getElementById("nameInsertedDelete").value = '';
+        document.getElementById("rssd_idInsertedDelete").value = '';
         $scope.clearAlerts();
     };
 
@@ -586,20 +589,23 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     {
         $("#delete_by_filling").show();
         $("#delete_by_searching").hide();
+        $scope.clearDelete();
     };
 
     $scope.show_delete_by_searching = function()
     {
         $("#delete_by_searching").show();
         $("#delete_by_filling").hide();
+        $scope.clearDeleteBySearch();
     };
 
     $scope.deleteComp = function()
     {
         $scope.clearAlerts();
-        let compName = document.getElementById("nameInserted").value;
-        let compID = document.getElementById("rssd_idInserted").value;
-
+        let compName = document.getElementById("nameInsertedDelete").value;
+        let compID = document.getElementById("rssd_idInsertedDelete").value;
+        console.log(compName);
+        console.log(compID);
 
         if (compName != '' && compID == ''){
             $scope.deleteCompByName();
@@ -620,13 +626,13 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.clearAlerts();
         $scope.getCompNames();
         $scope.getCompIDs();
-        if ($scope.arrayOfCompNames.includes(document.getElementById("nameInserted").value)){
+        if ($scope.arrayOfCompNames.includes(document.getElementById("nameInsertedDelete").value)){
             $("#loading_delete").show();
             $http({
                 method: 'POST',
                 url: 'php/deleteCompByName.php',
                 params: {
-                    nameInserted : $scope.selectedNameValue
+                    nameInsertedDelete : $scope.selectedNameValue
                 }
             }).then(function (data) {
                 console.log(data.data);
@@ -655,14 +661,14 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     {
         $scope.clearAlerts();
         $scope.getCompIDs();
-        if ($scope.arrayOfCompIDs.includes(parseInt(document.getElementById("rssd_idInserted").value))){
+        if ($scope.arrayOfCompIDs.includes(parseInt(document.getElementById("rssd_idInsertedDelete").value))){
             $("#loading_delete").show();
             console.log($scope.selectedIDValue);
             $http({
                 method: 'POST',
                 url: 'php/deleteCompByID.php',
                 params: {
-                    rssd_idInserted : $scope.selectedIDValue
+                    rssd_idInsertedDelete : $scope.selectedIDValue
                 }
             }).then(function (data) {
                 console.log(data.data);
