@@ -69,6 +69,7 @@ if(!isset($_SESSION['user']))
         include "html/deleteByFilling.html";
         include "html/deleteBySearching.html";
         include "html/showDeleteResults.html";
+        include "html/updateBySearching.html"
 	?>
 </body>
 </html>

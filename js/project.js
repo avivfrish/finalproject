@@ -194,6 +194,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#delete_by_filling").hide();
         $("#no_filter").hide();
         $("#searching_delete_results").hide();
+        $("#manual_update").hide();
+        $("#update_by_search").hide();
     };
 
     $scope.show_insert_new_comp = function () {
@@ -222,6 +224,18 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#update_comp_by_ID").show();
         $("#update_comp_by_name").hide();
         $scope.clearUpdateByID();
+    };
+
+    $scope.show_manual_update = function () {
+        $("#manual_update").show();
+        $("#update_by_search").hide();
+    };
+
+    $scope.show_update_by_searching = function () {
+        $("#update_by_search").show();
+        $("#manual_update").hide();
+        $("#update_comp_by_ID").hide();
+        $("#update_comp_by_name").hide();
     };
 
     $scope.show_insert_new_file = function () {
@@ -1364,10 +1378,13 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     };
 
     $scope.deleteFilterBy = function(filter){
-        console.log("TEST");
-        console.log("FILTER", filter);
         $scope.deleteResultsFilterBy = filter;
         document.getElementById("dropdownMenuLinkDelete").innerHTML = "Filter By: " + filter;
+    };
+
+    $scope.updateFilterBy = function(filter){
+        $scope.updateResultsFilterBy = filter;
+        document.getElementById("dropdownMenuLinkUpdate").innerHTML = "Filter By: " + filter;
     };
 
     $scope.get_countries = function()

@@ -1,6 +1,17 @@
 <div id="update_comp" style="margin-top: 70px">
     <h1>Update Existing Company</h1>
     <center>
+        <p>How would you like to search a company for update?</p>
+        <table border="0">
+            <button type="submit" value="Send" class="btn btn-outline-dark" ng-click="show_update_by_searching()">Search by name or RSSD_ID</button>
+            <button type="submit" value="Send" class="btn btn-outline-dark" ng-click="show_manual_update()">Manual search</button>
+        </table>
+    </center>
+</div>
+
+<div id="manual_update">
+    <center>
+        <br>
         <p>Please select the field you wish to update by</p>
         <table border="0">
             <button type="submit" value="Send" class="btn btn-outline-dark" ng-click="show_update_comp_by_name()">Update by name</button>
