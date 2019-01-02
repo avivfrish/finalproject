@@ -76,6 +76,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.arrayOfDeleteResNames = [];
         $scope.arrayOfDeleteResIDs = [];
         $scope.resultsOfDeleteSearch = [];
+        $scope.companyToDelete = '';
         $scope.selectedIdValue = '';
         $scope.selectedCompDetails = '';
         $scope.selectedNewInfo = '';
@@ -191,6 +192,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#delete_by").hide();
         $("#delete_by_searching").hide();
         $("#delete_by_filling").hide();
+        $("#no_filter").hide();
+        $("#searching_delete_results").hide();
     };
 
     $scope.show_insert_new_comp = function () {
@@ -488,6 +491,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         document.getElementById("companyNameSearched").value = '';
         document.getElementById("companyIdSearched").value = '';
         $scope.clearAlerts();
+        $("#show_delete_results").hide();
     };
 
     $scope.getCompNames = function()
@@ -530,46 +534,52 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     $scope.showDeleteResults = function () {
         $scope.clearAlerts();
+        $("#searching_delete_results").show();
         let compName, compID;
         compName = document.getElementById("companyNameSearched").value;
         compID = document.getElementById("companyIdSearched").value;
-        console.log(compName);
-        console.log(compID);
+        if ($scope.deleteResultsFilterBy != "Contains" && $scope.deleteResultsFilterBy != "Equals"){
+            $scope.clearAlerts();
+            $("#no_filter").show();
+        }
+        else {
+            $http({
+                method: 'POST',
+                url: 'php/deleteResults.php',
+                params: {
+                    deleteResFilterBy : $scope.deleteResultsFilterBy,
+                    name : compName,
+                    id : compID
+                }
+            }).then(function (data) {
+                $scope.clearAlerts();
+                console.log(data.data);
+                $scope.resultsOfDeleteSearch = data.data;
+                $("#show_delete_results").show();
+            });
+        }
 
+    };
+
+    $scope.deleteSearchResults = function(name)
+    {
+        $scope.companyToDelete = name;
+        console.log($scope.companyToDelete);
+        $("#show_delete_results").show();
         $http({
             method: 'POST',
-            url: 'php/deleteResults.php',
+            url: 'php/deleteSearchResults.php',
             params: {
-                deleteResFilterBy : $scope.deleteResultsFilterBy,
-                name : compName,
-                id : compID
+                compToDelete : $scope.companyToDelete
             }
         }).then(function (data) {
             console.log(data.data);
-            $scope.clearAlerts();
-            //console.log("results:");
-            $scope.resultsOfDeleteSearch = data.data;
-            /*let deleteResName = [];
-            let deleteResID = [];
-            console.log($scope.resultsOfDeleteSearch);
-            for (const i in $scope.resultsOfDeleteSearch){
-                console.log($scope.resultsOfDeleteSearch[i]['name']);
-                console.log($scope.resultsOfDeleteSearch[i]['id']);
-            }
-            for (const item in $scope.resultsOfDeleteSearch) {
-                deleteResName.push(data.data[item]['name']);
-                deleteResID.push(data.data[item]['id']);
-            }
-            $scope.arrayOfDeleteResNames = deleteResName;
-            $scope.arrayOfDeleteResIDs = deleteResID;
-            console.log($scope.arrayOfDeleteResNames);
-            console.log($scope.arrayOfDeleteResIDs);
-            //$("#deleted_comp_successfully").show();
+            $scope.showDeleteResults();
+            $scope.getCompNames();
+            $scope.getCompIDs();
 
-            //$scope.clearAlerts();
-            //$("#couldnt_delete_comp").show();*/
-            $("#show_delete_results").show();
         });
+
     };
 
     $scope.show_delete_by_filling = function()
@@ -756,6 +766,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#loading_update_by_ID").hide();
         $("#added_file_successfully").hide();
         $("#couldnt_add_new_file").hide();
+        $("#no_filter").hide();
+        $("#searching_delete_results").hide();
     };
 
     $scope.updateComp = function() {

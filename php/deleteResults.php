@@ -29,6 +29,19 @@ if ($deleteResultsFilterBy == 'Contains'){
         $sql = $sql."RSSD_ID ".$operator." '".$char.$compID.$char."' ";
     }
 }
+else if ($deleteResultsFilterBy == 'Equals'){
+    if ($compName and !$compID){
+        $sql = $sql."name = '".$compName."' ";
+    }
+    else if ($compID and !$compName){
+        $sql = $sql."RSSD_ID = '".$compID."' ";
+    }
+    else if ($compName and $compID){
+        $sql = $sql."name = '".$compName."' ";
+        $sql = $sql."and ";
+        $sql = $sql."RSSD_ID = '".$compID."' ";
+    }
+}
 
 $getResults= sqlsrv_query($conn, $sql);
 if($deleteResultsFilterBy == ''){
@@ -43,7 +56,8 @@ else if ($getResults == TRUE) {
     while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
         $array[] = array(
             'name'=>$row['name'],
-            'id'=>$row['RSSD_ID']
+            'id'=>$row['RSSD_ID'],
+            //'delete'=>"0"
         );
     }
     sqlsrv_free_stmt($getResults);

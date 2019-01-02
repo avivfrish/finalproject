@@ -4,26 +4,25 @@ $connectionInfo = array("UID" => "finalproject@avifinalproject", "pwd" => "1qaZ2
 $serverName = "tcp:avifinalproject.database.windows.net,1433";
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
-$checkList = $_GET["selectedID"];
-$selectedCompDetails = $_GET["compDetails"];
-$selectedNewInfo = $_GET["newInfo"];
+$companyToDelete = $_GET["compToDelete"];
+//echo ($companyToDelete);
 
 $sql= /** @lang text */
-    "update test set $selectedCompDetails = "."'".$selectedNewInfo."' where identifier = "."'".$selectedIdValue."'";
+    "delete from test where name = "."'".$companyToDelete."'";
+//echo ($sql);
+$getResults= sqlsrv_query($conn, $sql);
 
-    $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE) {
     echo ("false");
+//echo (sqlsrv_errors());
 }
 else {
     echo ("true");
-}
-    //return (sqlsrv_errors());
-/*$array = array();
+};
+/* $array = array();
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     $array[] = array(
         'name'=>$row['name']
     );
-}*/
+} */
 sqlsrv_free_stmt($getResults);
-//echo json_encode($array);
