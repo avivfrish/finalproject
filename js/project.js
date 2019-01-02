@@ -60,10 +60,13 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.arrayOfCities = [];
         $scope.arrayOfStreets = [];
 
+        // INITIALIZE FOR STATS
         $scope.distinctConnections = [];
         $scope.getDistinctConnections();
         $scope.industriesStatistic = [];
         $scope.getIndustry();
+        $scope.productsStatistic = [];
+        $scope.getProducts();
         $scope.words = [];
         $scope.getWordsToWordCloud();
 
@@ -922,6 +925,15 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 }
                 let industryColors = $scope.getColors($scope.industriesStatistic.length);
 
+                let productCount=[];
+                let productLabel=[];
+                for (let j=0;j<$scope.productsStatistic.length;j++)
+                {
+                    productCount.push($scope.productsStatistic[j]['count']);
+                    productLabel.push($scope.productsStatistic[j]['product']);
+                }
+                let productColors = $scope.getColors($scope.productsStatistic.length);
+
 
                 let colors = $scope.getColors($scope.connections.length);
 
@@ -974,10 +986,10 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     type: 'doughnut',
                     data : {
                         datasets: [{
-                            data: connectionsCount,
-                            backgroundColor: colors
+                            data: productCount,
+                            backgroundColor: productColors
                         }],
-                        labels: label,
+                        labels: productLabel,
 
                     },
                     options: {
@@ -1188,7 +1200,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
-    $scope.showBarOfBiggestCompanyBySubsidiary= function () {
+    /*$scope.showBarOfBiggestCompanyBySubsidiary= function () {
         $http({
             method: 'POST',
             url: 'php/getBiggestCompaniesBySubsidiary.php',
@@ -1197,7 +1209,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             console.log("GET showBarOfBiggestCompany");
             console.log(data.data);
         });
-    };
+    };*/
 
 
     $scope.getIndustry = function () {
@@ -1210,8 +1222,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         }).then(function (data) {
-            console.log("GET Type of industry");
-            console.log(data.data);
+            //console.log("GET Type of industry");
+            //console.log(data.data);
             $scope.industries = [];
             if (data.data.length !== 0){
                 for (const item in data.data){
@@ -1237,12 +1249,12 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                         'Content-Type': 'application/x-www-form-urlencoded'
                     }
                 }).then(function (data) {
-                    console.log("GET industry Stats");
+                    //console.log("GET industry Stats");
                     if (data.data.length !== 0){
                         $scope.industriesStatistic = data.data;
                         $scope.industriesStatistic.sort((a,b) => (a.count < b.count) ? 1 : ((b.count < a.count) ? -1 : 0));
                         $scope.industriesStatistic = $scope.industriesStatistic.slice(0,5);
-                        console.log($scope.industriesStatistic);
+                        //console.log($scope.industriesStatistic);
                     }
                     else {
                         console.log('get statistic of industry failed');
@@ -1256,8 +1268,71 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         });
     };
 
+    $scope.getProducts = function () {
+        $http({
+            method: 'POST',
+            url: 'php/getTypesOfProducts.php',
+            data: $.param({
+            }),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).then(function (data) {
+            console.log("GET Type of Products");
+            //console.log(data.data);
+            $scope.products = [];
+            if (data.data.length !== 0){
+                for (const item in data.data){
+                    let Products = data.data[item]['Products'];
+                    Products = Products.split('|');
+                    //console.log("Products ", Products);
+                    for (const productItem in Products){
+                        const product = ((Products[productItem].trim()).toUpperCase()).split(",");
+                        for (const moreProductsItem in product){
+                            const moreProduct = product[moreProductsItem].trim();
+                            if (moreProduct !== "" && moreProduct !== "LIST..." && moreProduct !== "(" &&
+                                moreProduct !== "FOR" && moreProduct !== "AND" &&
+                                moreProduct !== ")" && ($scope.products).indexOf(moreProduct) === -1 ) {
+                                $scope.products.push(moreProduct);
+                            }
+                        }
+                    }
+                }
+                console.log("$scope.products");
+                console.log($scope.products);
 
-	$scope.filterBy = function(filter){
+                $http({
+                    method: 'POST',
+                    url: 'php/getProductsStatistic.php',
+                    data: $.param({
+                        products : $scope.products
+                    }),
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    }
+                }).then(function (data) {
+                    console.log("GET products Stats");
+                    //console.log(data.data);
+                    if (data.data.length !== 0){
+                        $scope.productsStatistic = data.data;
+                        $scope.productsStatistic.sort((a,b) => (a.count < b.count) ? 1 : ((b.count < a.count) ? -1 : 0));
+                        $scope.productsStatistic = $scope.productsStatistic.slice(0,5);
+                        console.log($scope.productsStatistic);
+                    }
+                    else {
+                        console.log('get statistic of products failed');
+                    }
+                });
+
+            }
+            else {
+                console.log('get type of products failed');
+            }
+        });
+    };
+
+
+    $scope.filterBy = function(filter){
 	    $scope.filterBySearchByName = filter;
         document.getElementById("dropdownMenuLink").innerHTML = "Filter By: " + filter;
     };

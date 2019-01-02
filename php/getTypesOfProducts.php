@@ -2,9 +2,10 @@
 /**
  * Created by PhpStorm.
  * User: CORAL SCHARF
- * Date: 01/01/2019
- * Time: 14:25
+ * Date: 02/01/2019
+ * Time: 12:02
  */
+
 $connectionInfo = array("UID" => "finalproject@avifinalproject", "pwd" => "1qaZ2wsX", "Database" => "finalProject", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0);
 $serverName = "tcp:avifinalproject.database.windows.net,1433";
 $conn = sqlsrv_connect($serverName, $connectionInfo);
@@ -12,14 +13,14 @@ $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 
 $sql= /** @lang text */
-    "select distinct Industry from company_prod where Industry!='NA' ";
+    "select distinct Products from company_prod where Products!='NA' ";
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
     return (sqlsrv_errors());
 $array = array();
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     $array[] = array(
-        'industry'=>$row['Industry']
+        'Products'=>$row['Products']
     );
 }
 sqlsrv_free_stmt($getResults);
