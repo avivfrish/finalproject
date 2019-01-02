@@ -12,7 +12,7 @@ $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 $searchBy = $_GET["searchBy"];
 $sql= /** @lang text */
-    "select NAME, COUNTRY from companiesNIC where ";
+    "select name, country from company_prod where ";
 
 if($searchBy == 'Name'){
     $name = $_GET["name"];
@@ -28,13 +28,13 @@ if($searchBy == 'Name'){
     }
 
     if ($name){
-        $sql = $sql."NAME ".$operator." '".$char.$name.$char."' ";
+        $sql = $sql."name ".$operator." '".$char.$name.$char."' ";
     }
     if ($cik){
         if($name){
             $sql = $sql."AND ";
         }
-        $sql = $sql."SEC_CIK ".$operator." '".$char.$cik.$char."' ";
+        //$sql = $sql."SEC_CIK ".$operator." '".$char.$cik.$char."' ";
     }
     if ($id){
         if($name or $cik){
@@ -50,25 +50,25 @@ else{
     $street = $_GET["street"];
 
     if ($country){
-        $sql = $sql."COUNTRY = '".$country."' ";
+        $sql = $sql."country = '".$country."' ";
     }
     if ($state){
         if($country){
             $sql = $sql."AND ";
         }
-        $sql = $sql."StateLong = '".$state."' ";
+        $sql = $sql."state = '".$state."' ";
     }
     if ($city){
         if($country or $state){
             $sql = $sql."AND ";
         }
-        $sql = $sql."CITY = '".$city."' ";
+        $sql = $sql."city = '".$city."' ";
     }
     if ($street){
         if($city or $country or $state){
             $sql = $sql."AND ";
         }
-        $sql = $sql."STREET = '".$street."' ";
+        $sql = $sql."street = '".$street."' ";
     }
 }
 
@@ -78,8 +78,8 @@ if ($getResults == FALSE)
 $array = array();
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     $array[] = array(
-        'name'=>$row['NAME'],
-        'country'=>$row['COUNTRY'],
+        'name'=>$row['name'],
+        'country'=>$row['country'],
         'state'=>"l"//$row['StateLong']
     );
 }

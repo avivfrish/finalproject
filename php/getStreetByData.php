@@ -15,10 +15,10 @@ $selectedState = $_GET["selectedState"];
 $selectedCity = $_GET["selectedCity"];
 
 $sql= /** @lang text */
-    "select distinct STREET from companiesNIC where STREET!='None' and COUNTRY = "."'".$selectedCountry."' and CITY = "."'".$selectedCity."'";
+    "select distinct street from company_prod where street is not null and country = "."'".$selectedCountry."' and city = "."'".$selectedCity."'";
 
 if($selectedState){
-    $sql = $sql." and StateLong = '".$selectedState."'";
+    $sql = $sql." and state = '".$selectedState."'";
 }
 
 $getResults= sqlsrv_query($conn, $sql);
@@ -27,7 +27,7 @@ if ($getResults == FALSE)
 $array = array();
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     $array[] = array(
-        'street'=>$row['STREET']
+        'street'=>$row['street']
     );
 }
 sqlsrv_free_stmt($getResults);
