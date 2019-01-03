@@ -1523,6 +1523,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     $scope.searchForResults = function (searchBy)
     {
+        $scope.selectedCompany="";
         const resultsElement = document.getElementById("searchResults");
 
         $("#foundResults").hide();
@@ -1533,7 +1534,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         resultsElement.scrollIntoView({ behavior: 'smooth'});
 
         let name, cik, id;
-        if (searchBy == 'Name'){
+        if (searchBy === 'Name'){
             console.log("Search results for Name");
             name = document.getElementById("nameSearched").value;
             cik = document.getElementById("cikSearched").value;
@@ -1611,10 +1612,9 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             }
         }
 
-        //console.log("NAME MORE");
-        //console.log(name);
-        //console.log("compInfo");
-        //console.log(compInfo);
+        console.log("compInfo");
+        console.log(compInfo);
+
 
         //GET Type
         let types = compInfo['type'];
@@ -1666,6 +1666,18 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         document.getElementById("secondTitleResult").innerHTML = secondTitle;
 
 
+        //Get LOGO
+        const logo = compInfo['logo'];
+        if(logo === 'NA'){
+            document.getElementById("companyLogoDiv").innerHTML = '';
+            //$('#companyLogo').attr('src', '');
+            //document.getElementById("companyLogo").src = "#";
+        }
+        else {
+            document.getElementById("companyLogoDiv").innerHTML = '<img class ="logoImg" id="companyLogo" src="" alt="logo" height="100" width="150">';
+            document.getElementById("companyLogo").src = logo.toString();
+        }
+
 
         //console.log("INNER HEIGHT", document.getElementById("GeneralInfo").offsetHeight);
 
@@ -1678,8 +1690,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
         }
         console.log("INNER HEIGHT", document.getElementById("GeneralInfo").offsetHeight);
-
-
 
     };
 
