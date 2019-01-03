@@ -41,17 +41,18 @@
             </form>
         </div>
 
+    <div class="alert alert-success alert-dismissible" id="added_file_successfully" style="display: none">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Success!</strong> File added successfully.
+    </div>
+
+    <div class="alert alert-danger alert-dismissible" id="couldnt_add_new_file" style="display: none">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Oops!</strong> Couldn't add file.
+    </div>
 </div>
 
-<div class="alert alert-success alert-dismissible" id="added_file_successfully">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Success!</strong> File added successfully.
-</div>
 
-<div class="alert alert-danger alert-dismissible" id="couldnt_add_new_file">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Oops!</strong> Couldn't add file.
-</div>
  <!--action="<?php echo $_SERVER['PHP_SELF'];?>"
  action="/roni/#"
  ng-model="selectedUploadedFile"

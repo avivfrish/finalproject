@@ -26,10 +26,25 @@ app.directive('fileModel', ['$parse', function ($parse) {
 					transformRequest: angular.identity,
 					headers: {'Content-Type': undefined,'Process-Data': false}
 				}).then(function(data){
-                    console.log(data);
+                    let res=data.data;
+                    if (res==="0")
+                    {
+                        console.log("good");
+                        document.getElementById("couldnt_add_new_file").style.display="none";
+                        document.getElementById("added_file_successfully").style.display="block";
+                    }
+                    else {
+                        console.log("not good");
+                        document.getElementById("couldnt_add_new_file").style.display="block";
+                        document.getElementById("added_file_successfully").style.display="none";
+                    }
+                    console.log("res",res );
+
+
+
 					//$scope.uploadFile(data,name);
 
-					console.log("Success");
+
 				})
 
 			}
@@ -84,6 +99,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
         $scope.allcomments = [];
         $scope.tabSearchGeneral = true;
+        $scope.allFiles=[];
     }; //the function
 
     $scope.get_user_session = function () {
@@ -118,6 +134,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 document.getElementById("navbar_admin").innerText = "";
                 angular.element(document.getElementById("navbar_admin")).append($compile("<a class=\"dropdown-item\"  href=\"#\" ng-click=\"nav_bar_admin();\" data-toggle=\"modal\" data-target=\"#admin_modal\">Admin</a>\n" +
                     "\t\t\t\t\t\t\t<a class=\"dropdown-item\"  href=\"#\" ng-click=\"nav_bar_comment();\" data-toggle=\"modal\" data-target=\"#admin_comment_modal\">Comments</a>\n" +
+                    "\t\t\t\t\t\t\t<a class=\"dropdown-item\"  href=\"#\" ng-click=\"nav_bar_files();\" data-toggle=\"modal\" data-target=\"#admin_file_modal\">Uploaded Files</a>\n" +
                     "\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">\n" +
                     "\t\t\t\t\t\t\t\t<form action=\"/aviv/php/logout.php\">\n" +
                     "\t\t\t\t\t\t\t\t\t<button style=\"padding: 0;bottom: 0;\" type=\"submit\"  class=\"btn btn-link\">logout</button>\n" +
@@ -285,11 +302,21 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             url: 'php/get_all_comments.php',
             params: {}
         }).then(function (data) {
-            console.log(data.data);
+            //console.log(data.data);
             $scope.allcomments = data.data;
         });
     };
-
+    $scope.nav_bar_files= function () {
+        console.log("nav comment bar");
+        $http({
+            method: 'POST',
+            url: 'php/get_all_upload_files.php',
+            params: {}
+        }).then(function (data) {
+            //console.log(data.data);
+            $scope.allFiles= data.data;
+        });
+    };
 
     $scope.admin_save_changes = function () {
         //var obi = $scope.allUsers;
@@ -1523,6 +1550,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     $scope.searchForResults = function (searchBy)
     {
+        $scope.selectedCompany="";
         const resultsElement = document.getElementById("searchResults");
 
         $("#foundResults").hide();
@@ -1533,7 +1561,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         resultsElement.scrollIntoView({ behavior: 'smooth'});
 
         let name, cik, id;
-        if (searchBy == 'Name'){
+        if (searchBy === 'Name'){
             console.log("Search results for Name");
             name = document.getElementById("nameSearched").value;
             cik = document.getElementById("cikSearched").value;

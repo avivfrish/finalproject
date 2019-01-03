@@ -13,7 +13,7 @@ $password_confirmation=md5(stripcslashes($_POST["password-confirmation"]));
 $err="";
 if ($password!==$password_confirmation)
 {
-    header('Location: /coral/login/?code=1');
+    header('Location: /aviv/login/?code=1');
     return false;
 }
 
@@ -42,7 +42,7 @@ else
     $_SESSION['time'] = time();
     if(isset($_SESSION['user']))
     {
-        header('Location: /coral');
+        header('Location: /aviv');
     }
 
 
