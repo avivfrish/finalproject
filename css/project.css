@@ -116,7 +116,7 @@ text-align: center;
 .tableOfGeneralInfo {
     width: 100%;
     margin-bottom: 1rem;
-    background-color: #3ba3ba3d;
+    background-color: #3ba3ba3d !important;
     border-radius: 15px;
 }
 
