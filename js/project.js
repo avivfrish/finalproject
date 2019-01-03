@@ -500,6 +500,13 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#show_update_results").hide();
     };
 
+    $scope.clearInfoUpdateBySearch = function()
+    {
+        document.getElementById("compDetailsToUpdateBySearch").value = '';
+        document.getElementById("newInfoToUpdateBySearch").value = '';
+        $scope.clearAlerts();
+    };
+
     $scope.getCompNames = function()
     {
         $http({
