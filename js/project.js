@@ -198,6 +198,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#manual_update").hide();
         $("#update_by_search").hide();
         $("#show_update_results").hide();
+        $("#loading_search_results_update").hide();
+        $("#no_filter_update").hide();
     };
 
     $scope.show_insert_new_comp = function () {
@@ -416,6 +418,126 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
+    $scope.clearAlerts = function()
+    {
+        $("#added_comp_successfully").hide();
+        $("#couldnt_add_new_comp").hide();
+        $("#compName_already_exists_insert").hide();
+        $("#RSSD_ID_already_exists_insert").hide();
+        $("#no_compName_typed").hide();
+        $("#loading_new_comp").hide();
+        $("#deleted_comp_successfully").hide();
+        $("#couldnt_delete_comp").hide();
+        $("#name_and_id_doesnt_match_delete").hide();
+        $("#id_doesnt_exists_delete").hide();
+        $("#name_and_id_not_inserted_delete").hide();
+        $("#name_doesnt_exists_delete").hide();
+        $("#name_and_id_doesnt_exist_delete").hide();
+        $("#loading_delete").hide();
+        $("#updated_comp_by_name_successfully").hide();
+        $("#updated_comp_by_id_successfully").hide();
+        $("#couldnt_update_comp_by_name").hide();
+        $("#couldnt_update_comp_by_id").hide();
+        $("#name_doesnt_exists_update").hide();
+        $("#id_doesnt_exists_update").hide();
+        $("#loading_update_by_name").hide();
+        $("#loading_update_by_ID").hide();
+        $("#added_file_successfully").hide();
+        $("#couldnt_add_new_file").hide();
+        $("#no_filter").hide();
+        $("#searching_for_results").hide();
+        $("#loading_search_results_update").hide();
+        $("#no_filter_update").hide();
+    };
+
+    $scope.clearInsert = function()
+    {
+        document.getElementById('compName').value = '',
+            document.getElementById('compStreet').value = '',
+            document.getElementById('compCity').value = '',
+            document.getElementById('compCountry').value = '',
+            document.getElementById('compState').value = '',
+            document.getElementById('compID').value = ''
+        $scope.clearAlerts();
+    };
+
+    $scope.clearUpdateByName = function()
+    {
+        document.getElementById("selectedCompName").value = '';
+        document.getElementById("compDetailsUpdateByName").value = '';
+        document.getElementById("newInfoUpdateByName").value = '';
+        $scope.clearAlerts();
+    };
+
+    $scope.clearUpdateByID = function()
+    {
+        document.getElementById("selectedCompID").value = '';
+        document.getElementById("compDetailsUpdateById").value = '';
+        document.getElementById("newInfoUpdateById").value = '';
+        $scope.clearAlerts();
+    };
+
+    $scope.clearDelete = function()
+    {
+        document.getElementById("nameInsertedDelete").value = '';
+        document.getElementById("rssd_idInsertedDelete").value = '';
+        $scope.clearAlerts();
+    };
+
+    $scope.clearDeleteBySearch = function()
+    {
+        document.getElementById("companyNameSearched").value = '';
+        document.getElementById("companyIdSearched").value = '';
+        $scope.clearAlerts();
+        $("#show_delete_results").hide();
+    };
+
+    $scope.clearUpdateBySearch = function()
+    {
+        document.getElementById("companyNameSearchedToUpdate").value = '';
+        document.getElementById("companyIdSearchedSearchedToUpdate").value = '';
+        $scope.clearAlerts();
+        $("#show_update_results").hide();
+    };
+
+    $scope.getCompNames = function()
+    {
+        $http({
+            method: 'POST',
+            url: 'php/getCompNames.php',
+            params: {
+
+            }
+        }).then(function (data) {
+            console.log(data.data);
+            let compNames = [];
+            for (const item in data.data) {
+                compNames.push(data.data[item]['name'])
+            }
+            $scope.arrayOfCompNames = compNames;
+        });
+
+    };
+
+    $scope.getCompIDs = function()
+    {
+        $http({
+            method: 'POST',
+            url: 'php/getCompIDs.php',
+            params: {
+
+            }
+        }).then(function (data) {
+            console.log(data.data);
+            let compIDs = [];
+            for (const item in data.data) {
+                compIDs.push(data.data[item]['RSSD_ID'])
+            }
+            $scope.arrayOfCompIDs = compIDs;
+        });
+
+    };
+
     $scope.insertNewComp = function()
     {
         $scope.getCompNames();
@@ -468,86 +590,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 $scope.getCompIDs();
             });
         }
-
-    };
-
-    $scope.clearInsert = function()
-    {
-        document.getElementById('compName').value = '',
-            document.getElementById('compStreet').value = '',
-            document.getElementById('compCity').value = '',
-            document.getElementById('compCountry').value = '',
-            document.getElementById('compState').value = '',
-            document.getElementById('compID').value = ''
-        $scope.clearAlerts();
-    };
-
-    $scope.clearUpdateByName = function()
-    {
-        document.getElementById("selectedCompName").value = '';
-        document.getElementById("compDetailsUpdateByName").value = '';
-        document.getElementById("newInfoUpdateByName").value = '';
-        $scope.clearAlerts();
-    };
-
-    $scope.clearUpdateByID = function()
-    {
-        document.getElementById("selectedCompID").value = '';
-        document.getElementById("compDetailsUpdateById").value = '';
-        document.getElementById("newInfoUpdateById").value = '';
-        $scope.clearAlerts();
-    };
-
-    $scope.clearDelete = function()
-    {
-        document.getElementById("nameInsertedDelete").value = '';
-        document.getElementById("rssd_idInsertedDelete").value = '';
-        $scope.clearAlerts();
-    };
-
-    $scope.clearDeleteBySearch = function()
-    {
-        document.getElementById("companyNameSearched").value = '';
-        document.getElementById("companyIdSearched").value = '';
-        $scope.clearAlerts();
-        $("#show_delete_results").hide();
-    };
-
-    $scope.getCompNames = function()
-    {
-        $http({
-            method: 'POST',
-            url: 'php/getCompNames.php',
-            params: {
-
-            }
-        }).then(function (data) {
-            console.log(data.data);
-            let compNames = [];
-            for (const item in data.data) {
-                compNames.push(data.data[item]['name'])
-            }
-            $scope.arrayOfCompNames = compNames;
-        });
-
-    };
-
-    $scope.getCompIDs = function()
-    {
-        $http({
-            method: 'POST',
-            url: 'php/getCompIDs.php',
-            params: {
-
-            }
-        }).then(function (data) {
-            console.log(data.data);
-            let compIDs = [];
-            for (const item in data.data) {
-                compIDs.push(data.data[item]['RSSD_ID'])
-            }
-            $scope.arrayOfCompIDs = compIDs;
-        });
 
     };
 
@@ -762,36 +804,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.clearAlerts();
     };
 
-    $scope.clearAlerts = function()
-    {
-        $("#added_comp_successfully").hide();
-        $("#couldnt_add_new_comp").hide();
-        $("#compName_already_exists_insert").hide();
-        $("#RSSD_ID_already_exists_insert").hide();
-        $("#no_compName_typed").hide();
-        $("#loading_new_comp").hide();
-        $("#deleted_comp_successfully").hide();
-        $("#couldnt_delete_comp").hide();
-        $("#name_and_id_doesnt_match_delete").hide();
-        $("#id_doesnt_exists_delete").hide();
-        $("#name_and_id_not_inserted_delete").hide();
-        $("#name_doesnt_exists_delete").hide();
-        $("#name_and_id_doesnt_exist_delete").hide();
-        $("#loading_delete").hide();
-        $("#updated_comp_by_name_successfully").hide();
-        $("#updated_comp_by_id_successfully").hide();
-        $("#couldnt_update_comp_by_name").hide();
-        $("#couldnt_update_comp_by_id").hide();
-        $("#name_doesnt_exists_update").hide();
-        $("#id_doesnt_exists_update").hide();
-        $("#loading_update_by_name").hide();
-        $("#loading_update_by_ID").hide();
-        $("#added_file_successfully").hide();
-        $("#couldnt_add_new_file").hide();
-        $("#no_filter").hide();
-        $("#searching_for_results").hide();
-    };
-
     $scope.updateComp = function() {
         $scope.clearAlerts();
         $scope.getCompIDs();
@@ -834,9 +846,10 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         compID = document.getElementById("companyIdSearchedSearchedToUpdate").value;
         if ($scope.updateResultsFilterBy != "Contains" && $scope.updateResultsFilterBy != "Equals"){
             $scope.clearAlerts();
-            $("#no_filter").show();
+            $("#no_filter_update").show();
         }
         else {
+            $("#loading_search_results_update").show();
             $http({
                 method: 'POST',
                 url: 'php/updateResults.php',
