@@ -7,7 +7,7 @@ $conn = sqlsrv_connect($serverName, $connectionInfo);
 //'".$_GET['selectedFile']."'
 
 $sql= /** @lang text */
-    "bulk insert companies from 'D:\home\site\wwwroot\\roni\csv\\newData.csv' with (rowterminator = '\\n',fieldterminator = ',')";
+    "bulk insert companies from  with (rowterminator = '\\n',fieldterminator = ',')";
     //echo ($sql );
 
 $getResults= sqlsrv_query($conn, $sql);

@@ -25,15 +25,13 @@ app.directive('fileModel', ['$parse', function ($parse) {
 				$http.post(uploadUrl, fd, {
 					transformRequest: angular.identity,
 					headers: {'Content-Type': undefined,'Process-Data': false}
-				})
-				.success(function(data){
-					console.log(data);
+				}).then(function(data){
+                    console.log(data);
+					//$scope.uploadFile(data,name);
 
 					console.log("Success");
 				})
-				.error(function(){
-					console.log("Success");
-				});
+
 			}
 		}]);
 
@@ -42,16 +40,16 @@ app.directive('fileModel', ['$parse', function ($parse) {
 
 app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUpload, $window, $element, $timeout) {
 
-	$scope.init_case = function () {
-		//$("#nav").show();
+    $scope.init_case = function () {
+        //$("#nav").show();
         $scope.hidePages();
-		$("#home").show();
-        document.getElementById("loggin_user").innerHTML="";
+        $("#home").show();
+        document.getElementById("loggin_user").innerHTML = "";
 
-        $scope.selectedCountryValue="";
-        $scope.selectedStateValue="";
-        $scope.selectedCityValue="";
-        $scope.selectedStreetValue="";
+        $scope.selectedCountryValue = "";
+        $scope.selectedStateValue = "";
+        $scope.selectedCityValue = "";
+        $scope.selectedStreetValue = "";
 
         $scope.arrayOfCountries = [];
         //autocomplete(document.getElementById("myInput"), $scope.arrayOfCountries22);
@@ -66,9 +64,9 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.getWordsToWordCloud();
 
         $scope.resultsOfSearch = [];
-        $scope.companies=[];
-        $scope.selectedCompany="";
-        $scope.allUsers=[];
+        $scope.companies = [];
+        $scope.selectedCompany = "";
+        $scope.allUsers = [];
         $scope.get_user_session();
         $scope.arrayOfCompIDs = [];
         $scope.testArray = [];
@@ -77,33 +75,30 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.selectedNewInfo = '';
         $scope.selectedUploadedFile = '';
         $scope.getCompIDs();
-        $scope.admin_checkbox={};
+        $scope.admin_checkbox = {};
 
-        $scope.allcomments=[];
-        $scope.tabSearchGeneral=true;
-	}; //the function
+        $scope.allcomments = [];
+        $scope.tabSearchGeneral = true;
+    }; //the function
 
-    $scope.get_user_session = function(){
+    $scope.get_user_session = function () {
         $http({
             method: 'POST',
             url: 'php/get_user_session.php',
-            params: {
-
-            }
+            params: {}
         }).then(function (data) {
             console.log(data.data);
 
             //let ind=(data.data).indexOf("@");
-            let user=(data.data)['user'];
-            let full_name=(data.data)['full_name'];
-            document.getElementById("loggin_user").innerHTML="Hello " + full_name;
+            let user = (data.data)['user'];
+            let full_name = (data.data)['full_name'];
+            document.getElementById("loggin_user").innerHTML = "Hello " + full_name;
             console.log("is admin" + (data.data)['isAdmin']);
-            let isAdmin=(data.data)['isAdmin'];
+            let isAdmin = (data.data)['isAdmin'];
             console.log("is?" + isAdmin);
-            if (isAdmin===1)
-            {
+            if (isAdmin === 1) {
                 console.log("vvfvfvfvf");
-                document.getElementById("nav_update").innerText="";
+                document.getElementById("nav_update").innerText = "";
                 angular.element(document.getElementById("nav_update")).append($compile(
                     "<a class=\"nav-link dropdown-toggle\"  id=\"navbarDropdownMenuLink1\" data-toggle=\"dropdown\" href=\"#\"  aria-haspopup=\"true\"\n" +
                     "\t\t\t\t\t\t\t   aria-expanded=\"false\">Update</a>\n" +
@@ -115,8 +110,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     "\t\t\t\t\t\t\t</div>")($scope));
 
 
-
-                document.getElementById("navbar_admin").innerText="";
+                document.getElementById("navbar_admin").innerText = "";
                 angular.element(document.getElementById("navbar_admin")).append($compile("<a class=\"dropdown-item\"  href=\"#\" ng-click=\"nav_bar_admin();\" data-toggle=\"modal\" data-target=\"#admin_modal\">Admin</a>\n" +
                     "\t\t\t\t\t\t\t<a class=\"dropdown-item\"  href=\"#\" ng-click=\"nav_bar_comment();\" data-toggle=\"modal\" data-target=\"#admin_comment_modal\">Comments</a>\n" +
                     "\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">\n" +
@@ -126,10 +120,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     "\t\t\t\t\t\t\t</a>")($scope));
 
 
-
-            }
-            else {
-                document.getElementById("navbar_admin").innerText="";
+            } else {
+                document.getElementById("navbar_admin").innerText = "";
                 angular.element(document.getElementById("navbar_admin")).append($compile(
                     "\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">\n" +
                     "\t\t\t\t\t\t\t\t<form action=\"/aviv/php/logout.php\">\n" +
@@ -140,14 +132,12 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             }
 
 
-
         });
-
 
 
     };
 
-    $scope.hidePages = function(){
+    $scope.hidePages = function () {
         $("#home").hide();
         $("#aboutUs").hide();
         $("#search_compByName").hide();
@@ -211,12 +201,11 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#couldnt_add_new_file").hide();
     }
 
-	$scope.show_search = function (searchBy) {
+    $scope.show_search = function (searchBy) {
         $scope.hidePages();
-        if (searchBy == 'name'){
+        if (searchBy == 'name') {
             $("#search_compByName").show();
-        }
-        else {
+        } else {
             $scope.filterBySearchByName = 'None';
             $("#search_compByCity").show();
             $("#stateOptions").hide();
@@ -225,30 +214,30 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             $("#loadingMap").hide();
         }
 
-		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
+        //document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
 
-		//$("#open_caseOrIntell").text("Add Case");
-		//$("#open_caseOrIntell").target("#add_case_modal");
-		//$("#open_caseOrIntell").href("#add_case_modal")
-		//$("#topRow").empty();
-		//$("#topRow").prepend("<embed src='http://SERVERNAME:8000/en-US/app/cymng/TopRowTimeline?earliest=0&latest=' seamless frameborder='no' scrolling='no' width='470px' height='103px' style='margin-top:10px' target='_top'></embed>"); 
-	};
+        //$("#open_caseOrIntell").text("Add Case");
+        //$("#open_caseOrIntell").target("#add_case_modal");
+        //$("#open_caseOrIntell").href("#add_case_modal")
+        //$("#topRow").empty();
+        //$("#topRow").prepend("<embed src='http://SERVERNAME:8000/en-US/app/cymng/TopRowTimeline?earliest=0&latest=' seamless frameborder='no' scrolling='no' width='470px' height='103px' style='margin-top:10px' target='_top'></embed>");
+    };
 
-	$scope.show_home = function () {
-		//show_cases_div - show cases div
-		
-		////console.log("show_cases_div - show cases div");
+    $scope.show_home = function () {
+        //show_cases_div - show cases div
+
+        ////console.log("show_cases_div - show cases div");
         $scope.hidePages();
-		$("#home").show();
+        $("#home").show();
 
-		//document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
+        //document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
 
-		//$("#open_caseOrIntell").text("Add Case");
-		//$("#open_caseOrIntell").target("#add_case_modal");
-		//$("#open_caseOrIntell").href("#add_case_modal")
-		//$("#topRow").empty();
-		//$("#topRow").prepend("<embed src='http://SERVERNAME:8000/en-US/app/cymng/TopRowTimeline?earliest=0&latest=' seamless frameborder='no' scrolling='no' width='470px' height='103px' style='margin-top:10px' target='_top'></embed>"); 
-	};
+        //$("#open_caseOrIntell").text("Add Case");
+        //$("#open_caseOrIntell").target("#add_case_modal");
+        //$("#open_caseOrIntell").href("#add_case_modal")
+        //$("#topRow").empty();
+        //$("#topRow").prepend("<embed src='http://SERVERNAME:8000/en-US/app/cymng/TopRowTimeline?earliest=0&latest=' seamless frameborder='no' scrolling='no' width='470px' height='103px' style='margin-top:10px' target='_top'></embed>");
+    };
 
     $scope.show_about_us = function () {
         //show_cases_div - show cases div
@@ -262,9 +251,9 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     $scope.show_stats = function () {
         $scope.hidePages();
         $("#stats").show();
-        document.getElementById("ConnectionDoughnutChart").innerHTML = "" ;
-        document.getElementById("IndustryDoughnutChart").innerHTML = "" ;
-        document.getElementById("ProductsDoughnutChart").innerHTML = "" ;
+        document.getElementById("ConnectionDoughnutChart").innerHTML = "";
+        document.getElementById("IndustryDoughnutChart").innerHTML = "";
+        document.getElementById("ProductsDoughnutChart").innerHTML = "";
         document.getElementById("stackedBar").innerHTML = "";
         $scope.showDoughnut();
         $scope.showBarChart();
@@ -276,11 +265,9 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $http({
             method: 'POST',
             url: 'php/get_all_users.php',
-            params: {
-
-            }
+            params: {}
         }).then(function (data) {
-            $scope.allUsers=data.data;
+            $scope.allUsers = data.data;
         });
     };
     $scope.nav_bar_comment = function () {
@@ -288,12 +275,10 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $http({
             method: 'POST',
             url: 'php/get_all_comments.php',
-            params: {
-
-            }
+            params: {}
         }).then(function (data) {
             console.log(data.data);
-            $scope.allcomments=data.data;
+            $scope.allcomments = data.data;
         });
     };
 
@@ -315,67 +300,57 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             console.log(data.data);
 
 
-
-
         });
-
-
 
 
     };
 
-	$scope.show_graph = function () {
+    $scope.show_graph = function () {
         $scope.hidePages();
-		$("#3ds").show();
-		$scope.graph();
+        $("#3ds").show();
+        $scope.graph();
 
 
-	};
+    };
 
     $scope.nav_bar_log_out = function () {
         var request = $http({
             method: "POST",
-            url:"php/logout.php",
-            data: $.param({
-
-            }),
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            url: "php/logout.php",
+            data: $.param({}),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
         }); //request
     };
 
-	$scope.show_group = function (item) {
-		console.log("obi");
-		$("#groups").css("display","block");
-		var request = $http({
-			method: "POST",
-			url:"php/init_case.php",
-			data: $.param({
-				id:item,
-			}),
-			headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
-		}); //request
-		request.success(function (data) {
-			if (data != "0"){
-				console.log('init_cases - success');
-				$scope.cases=(data);
-				console.log(data);
-			}
-			else {
-				console.log('init_case - failed');
-			}
-		}); //success
-		
+    $scope.show_group = function (item) {
+        console.log("obi");
+        $("#groups").css("display", "block");
+        var request = $http({
+            method: "POST",
+            url: "php/init_case.php",
+            data: $.param({
+                id: item,
+            }),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }); //request
+        request.success(function (data) {
+            if (data != "0") {
+                console.log('init_cases - success');
+                $scope.cases = (data);
+                console.log(data);
+            } else {
+                console.log('init_case - failed');
+            }
+        }); //success
 
-	}; //the funtion
-	
-    $scope.azure = function()
-    {
+
+    }; //the funtion
+
+    $scope.azure = function () {
         $http({
             method: 'POST',
             url: 'php/azure.php',
-            params: {
-
-            }
+            params: {}
         }).then(function (data) {
             console.log(data.data);
             console.log("vfv");
@@ -384,8 +359,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
-    $scope.insertNewComp = function()
-    {
+    $scope.insertNewComp = function () {
         $scope.getCompIDs();
         console.log(document.getElementById("compID").value);
         console.log($scope.arrayOfCompIDs);
@@ -406,7 +380,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             $scope.getCompIDs();
             console.log($scope.arrayOfCompIDs);
         });*/
-        if (document.getElementById("compID").value in $scope.arrayOfCompIDs || $scope.arrayOfCompIDs[$scope.arrayOfCompIDs.length-1] == document.getElementById("compID").value) {
+        if (document.getElementById("compID").value in $scope.arrayOfCompIDs || $scope.arrayOfCompIDs[$scope.arrayOfCompIDs.length - 1] == document.getElementById("compID").value) {
             $("#id_already_exists_insert").show();
             $("#couldnt_add_new_comp").hide();
             $("#added_comp_successfully").hide();
@@ -419,8 +393,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             $("#no_id_typed").hide();
             $("#added_file_successfully").hide();
             $("#couldnt_add_new_file").hide();
-        }
-        else if (document.getElementById("compID").value == null || document.getElementById("compID").value == 0){
+        } else if (document.getElementById("compID").value == null || document.getElementById("compID").value == 0) {
             $("#no_id_typed").show();
             $("#id_already_exists_insert").hide();
             $("#couldnt_add_new_comp").hide();
@@ -433,8 +406,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             $("#id_doesnt_exists_update").hide();
             $("#added_file_successfully").hide();
             $("#couldnt_add_new_file").hide();
-        }
-        else {
+        } else {
             $http({
                 method: 'POST',
                 url: 'php/insertNewComp.php',
@@ -460,8 +432,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     $("#no_id_typed").hide();
                     $("#added_file_successfully").hide();
                     $("#couldnt_add_new_file").hide();
-                }
-                else if (data.data == 'false') {
+                } else if (data.data == 'false') {
                     $("#couldnt_add_new_comp").show();
                     $("#added_comp_successfully").hide();
                     $("#deleted_comp_successfully").hide();
@@ -481,13 +452,12 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
-    $scope.clearInsert = function()
-    {
+    $scope.clearInsert = function () {
         document.getElementById('compID').value = '',
-        document.getElementById('compName').value = '',
-        document.getElementById('compStreet').value = '',
-        document.getElementById('compCountry').value = '',
-        document.getElementById('compState').value = ''
+            document.getElementById('compName').value = '',
+            document.getElementById('compStreet').value = '',
+            document.getElementById('compCountry').value = '',
+            document.getElementById('compState').value = ''
         $("#id_already_exists_insert").hide();
         $("#couldnt_add_new_comp").hide();
         $("#added_comp_successfully").hide();
@@ -500,8 +470,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#no_id_typed").hide();
     };
 
-    $scope.clearUpdate = function()
-    {
+    $scope.clearUpdate = function () {
         document.getElementById('newInfo').value = ''
         $("#id_already_exists_insert").hide();
         $("#couldnt_add_new_comp").hide();
@@ -515,29 +484,25 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#no_id_typed").hide();
     };
 
-    $scope.getCompIDs = function()
-    {
+    $scope.getCompIDs = function () {
         $http({
             method: 'POST',
             url: 'php/getCompIDs.php',
-            params: {
-
-            }
+            params: {}
         }).then(function (data) {
             console.log(data.data);
             let compIDs = [];
-			for (const item in data.data) {
-				compIDs.push(data.data[item]['ID'])
-			}
-			console.log(compIDs);
-			$scope.arrayOfCompIDs = compIDs;
-			console.log($scope.arrayOfCompIDs);
+            for (const item in data.data) {
+                compIDs.push(data.data[item]['ID'])
+            }
+            console.log(compIDs);
+            $scope.arrayOfCompIDs = compIDs;
+            console.log($scope.arrayOfCompIDs);
         });
 
     };
 
-    $scope.deleteComp = function()
-    {
+    $scope.deleteComp = function () {
         $scope.clearAlerts();
         $scope.getCompIDs();
         console.log($scope.selectedIdValue);
@@ -546,7 +511,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 method: 'POST',
                 url: 'php/deleteComp.php',
                 params: {
-                    selectedID : $scope.selectedIdValue
+                    selectedID: $scope.selectedIdValue
                 }
 
             }).then(function (data) {
@@ -564,8 +529,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     $("#no_id_typed").hide();
                     $("#added_file_successfully").hide();
                     $("#couldnt_add_new_file").hide();
-                }
-                else if (data.data == 'false') {
+                } else if (data.data == 'false') {
                     $("#couldnt_delete_comp").show();
                     $("#couldnt_add_new_comp").hide();
                     $("#added_comp_successfully").hide();
@@ -581,8 +545,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 }
                 $scope.getCompIDs();
             });
-        }
-        else {
+        } else {
             $("#id_doesnt_exists_delete").show();
             $("#couldnt_add_new_comp").hide();
             $("#added_comp_successfully").hide();
@@ -600,8 +563,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.getCompIDs();
     };
 
-    $scope.changeID = function()
-    {
+    $scope.changeID = function () {
         $scope.getCompIDs();
         document.getElementById('selectedID').value = '';
         $("#id_already_exists_insert").hide();
@@ -616,8 +578,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#no_id_typed").hide();
     };
 
-    $scope.clearAlerts = function()
-    {
+    $scope.clearAlerts = function () {
         $("#id_already_exists_insert").hide();
         $("#couldnt_add_new_comp").hide();
         $("#added_comp_successfully").hide();
@@ -630,18 +591,17 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#no_id_typed").hide();
     };
 
-    $scope.updateComp = function()
-    {
+    $scope.updateComp = function () {
         $scope.clearAlerts();
         $scope.getCompIDs();
-        if ($scope.selectedIdValue in $scope.arrayOfCompIDs || $scope.arrayOfCompIDs[$scope.arrayOfCompIDs.length-1] == $scope.selectedIdValue) {
+        if ($scope.selectedIdValue in $scope.arrayOfCompIDs || $scope.arrayOfCompIDs[$scope.arrayOfCompIDs.length - 1] == $scope.selectedIdValue) {
             $http({
                 method: 'POST',
                 url: 'php/updateComp.php',
                 params: {
-                    selectedID : $scope.selectedIdValue,
-                    compDetails : $scope.selectedCompDetails,
-                    newInfo : $scope.selectedNewInfo
+                    selectedID: $scope.selectedIdValue,
+                    compDetails: $scope.selectedCompDetails,
+                    newInfo: $scope.selectedNewInfo
                 }
             }).then(function (data) {
                 console.log(data.data);
@@ -658,8 +618,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     $("#no_id_typed").hide();
                     $("#added_file_successfully").hide();
                     $("#couldnt_add_new_file").hide();
-                }
-                else if (data.data == 'false') {
+                } else if (data.data == 'false') {
                     $("#couldnt_update_comp").show();
                     $("#couldnt_add_new_comp").hide();
                     $("#added_comp_successfully").hide();
@@ -675,8 +634,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 }
                 $scope.getCompIDs();
             });
-        }
-        else {
+        } else {
             $("#id_doesnt_exists_update").show();
             $("#couldnt_add_new_comp").hide();
             $("#added_comp_successfully").hide();
@@ -693,8 +651,53 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.getCompIDs();
     };
 
-    $scope.uploadFile = function()
+    $scope.uploadFile2 = function (file,name)
     {
+        console.log("file:" + file + " " + name);
+        $http({
+            method: "POST",
+            url: "php/get_industry.php",
+            data: $.param({
+                id: file,
+
+            }),
+            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
+        }).then(function (data) {
+            if (data != "0") {
+                console.log(data.data);
+
+            } else {
+                console.log(data.data);
+            }
+        }); //success
+
+    };
+
+    $scope.uploadFile = function ()
+    {
+
+
+        let file = $scope.myFile;
+
+        console.dir(file);
+
+        let uploadUrl = "php/get_industry.php";
+        let text = file.name;
+        fileUpload.uploadFileToUrl(file, uploadUrl, text);
+
+    };
+
+
+    $scope.uploadFile1 = function()
+    {
+        let file = $scope.myFile;
+
+
+        let uploadUrl = "php/uploadFile.php";
+        let text = $scope.name;
+        fileUpload.uploadFileToUrl(file, uploadUrl, text);
+
+
         $scope.clearAlerts();
         console.log("hi");
         if (document.getElementById("replaceData").checked == true) {
@@ -839,7 +842,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         //console.log("before "+ $scope.resultsOfSearch);
         $scope.resultsOfSearch=$scope.graph_selected;
         $scope.selectedCompany=$scope.graph_selected[0]['name'];
-        console.log("after ", $scope.resultsOfSearch);
+        //console.log("after ", $scope.resultsOfSearch);
         //$scope.showMoreAboutResult($scope.graph_selected);
     };
 
