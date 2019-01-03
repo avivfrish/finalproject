@@ -84,6 +84,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.selectedUploadedFile = '';
         $scope.selectedNameValue = '';
         $scope.selectedIDValue = '';
+        $scope.selectedCompDetailsToUpdateBySearch = '';
+        $scope.selectedNewInfoToUpdateBySearch = '';
         $scope.getCompNames();
         $scope.getCompIDs();
         $scope.admin_checkbox={};
@@ -847,7 +849,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     $scope.showUpdateResults = function () {
         $scope.clearAlerts();
-        //$("#searching_for_results").show();
         let compName, compID;
         compName = document.getElementById("companyNameSearchedToUpdate").value;
         compID = document.getElementById("companyIdSearchedSearchedToUpdate").value;
@@ -872,6 +873,29 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 $("#show_update_results").show();
             });
         }
+
+    };
+
+    $scope.updateSearchResults = function(id)
+    {
+        $scope.companyToUpdate = id;
+        console.log($scope.companyToUpdate);
+        $("#show_update_results").show();
+        $http({
+            method: 'POST',
+            url: 'php/updateSearchResults.php',
+            params: {
+                compToUpdate : $scope.companyToUpdate,
+                compDetailsUpdateBySearch: $scope.selectedCompDetailsToUpdateBySearch,
+                newInfoUpdateBySearch: $scope.selectedNewInfoToUpdateBySearch
+            }
+        }).then(function (data) {
+            console.log(data.data);
+            $scope.showUpdateResults();
+            $scope.getCompNames();
+            $scope.getCompIDs();
+
+        });
 
     };
 

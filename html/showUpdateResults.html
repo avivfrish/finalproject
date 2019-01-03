@@ -6,13 +6,13 @@
             <form method="Post">
                 <tr><td>Details to Update: </td><td><select class="custom-select mr-sm-2" name="compDetailsToUpdateBySearch" id="compDetailsToUpdateBySearch" ng-model="selectedCompDetailsToUpdateBySearch" placeholder="select field..">
                     <option> </option>
-                    <option>Company name</option>
+                    <option>name</option>
                     <option>street</option>
                     <option>city</option>
                     <option>country</option>
                     <option>state</option>
                 </select></td><td></td></tr>
-                <tr><td>New Information: </td><td><input type="text" name="ToUpdateBySearch" id="newInfoToUpdateBySearch" class="form-control" ng-model="selectedNewInfo" placeholder="type here.."></td>
+                <tr><td>New Information: </td><td><input type="text" name="ToUpdateBySearch" id="newInfoToUpdateBySearch" class="form-control" ng-model="selectedNewInfoToUpdateBySearch" placeholder="type here.."></td>
                 <td><button type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearInfoUpdateBySearch()"><i class="fas fa-eraser"></i>    Clear</button></td></tr>
             </form>
         </table>
@@ -34,7 +34,7 @@
                 <td>{{result.country}}</td>
                 <td>{{result.state}}</td>
                 <td>{{result.id}}</td>
-                <td><button type="submit" value="Send" class="btn btn-outline-dark" ng-click="deleteSearchResults(result.name)"><i class="fas fa-user-edit"></i>   Update</button>
+                <td><button type="submit" value="Send" class="btn btn-outline-dark" ng-click="updateSearchResults(result.id)"><i class="fas fa-user-edit"></i>   Update</button>
                     <!--<input ng-if="result.delete==1" type="checkbox" value=""  ng-false-value="0" ng-true-value="1"  ng-model="result.isChecked" checked disabled>
                     <input ng-if="result.delete==0" type="checkbox" value="" ng-false-value="0" ng-true-value="1"  ng-model="result.isChecked" checked>--></td>
             </tr>
