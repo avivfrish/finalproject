@@ -76,6 +76,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.arrayOfDeleteResNames = [];
         $scope.arrayOfDeleteResIDs = [];
         $scope.resultsOfDeleteSearch = [];
+        $scope.resultsOfUpdateSearch = [];
         $scope.companyToDelete = '';
         $scope.selectedIdValue = '';
         $scope.selectedCompDetails = '';
@@ -193,9 +194,10 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#delete_by_searching").hide();
         $("#delete_by_filling").hide();
         $("#no_filter").hide();
-        $("#searching_delete_results").hide();
+        $("#searching_for_results").hide();
         $("#manual_update").hide();
         $("#update_by_search").hide();
+        $("#show_update_results").hide();
     };
 
     $scope.show_insert_new_comp = function () {
@@ -551,7 +553,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     $scope.showDeleteResults = function () {
         $scope.clearAlerts();
-        $("#searching_delete_results").show();
+        $("#searching_for_results").show();
         let compName, compID;
         compName = document.getElementById("companyNameSearched").value;
         compID = document.getElementById("companyIdSearched").value;
@@ -787,7 +789,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#added_file_successfully").hide();
         $("#couldnt_add_new_file").hide();
         $("#no_filter").hide();
-        $("#searching_delete_results").hide();
+        $("#searching_for_results").hide();
     };
 
     $scope.updateComp = function() {
@@ -822,6 +824,35 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             $("#id_doesnt_exists_update").show();
         }
         $scope.getCompIDs();
+    };
+
+    $scope.showUpdateResults = function () {
+        $scope.clearAlerts();
+        //$("#searching_for_results").show();
+        let compName, compID;
+        compName = document.getElementById("companyNameSearchedToUpdate").value;
+        compID = document.getElementById("companyIdSearchedSearchedToUpdate").value;
+        if ($scope.updateResultsFilterBy != "Contains" && $scope.updateResultsFilterBy != "Equals"){
+            $scope.clearAlerts();
+            $("#no_filter").show();
+        }
+        else {
+            $http({
+                method: 'POST',
+                url: 'php/updateResults.php',
+                params: {
+                    updateResFilterBy : $scope.updateResultsFilterBy,
+                    name : compName,
+                    id : compID
+                }
+            }).then(function (data) {
+                $scope.clearAlerts();
+                console.log(data.data);
+                $scope.resultsOfUpdateSearch = data.data;
+                $("#show_update_results").show();
+            });
+        }
+
     };
 
     $scope.updateCompByName = function()

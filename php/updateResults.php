@@ -6,7 +6,7 @@ $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 $compName = $_GET["name"];
 $compID = $_GET["id"];
-$deleteResultsFilterBy = $_GET["deleteResFilterBy"];
+$updateResultsFilterBy = $_GET["updateResFilterBy"];
 
 $sql= /** @lang text */
     "select name, street, city, country, state, RSSD_ID from test where ";
@@ -14,7 +14,7 @@ $sql= /** @lang text */
 $operator = '=';
 $char = '';
 
-if ($deleteResultsFilterBy == 'Contains'){
+if ($updateResultsFilterBy == 'Contains'){
     $operator = 'LIKE';
     $char = '%';
     if ($compName and !$compID){
@@ -29,7 +29,7 @@ if ($deleteResultsFilterBy == 'Contains'){
         $sql = $sql."RSSD_ID ".$operator." '".$char.$compID.$char."' ";
     }
 }
-else if ($deleteResultsFilterBy == 'Equals'){
+else if ($updateResultsFilterBy == 'Equals'){
     if ($compName and !$compID){
         $sql = $sql."name = '".$compName."' ";
     }
@@ -44,6 +44,9 @@ else if ($deleteResultsFilterBy == 'Equals'){
 }
 
 $getResults= sqlsrv_query($conn, $sql);
+if($updateResultsFilterBy == ''){
+    echo ("no_filter");
+}
 if ($getResults == FALSE){
     echo ("false");
     //return (sqlsrv_errors());

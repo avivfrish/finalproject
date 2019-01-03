@@ -1,0 +1,27 @@
+<div id="show_update_results">
+    <center>
+        <p>Select the companies you wish to update</p>
+        <table class="table table-striped table-bordered">
+            <tr>
+                <th>Company name</th>
+                <th>Street</th>
+                <th>City</th>
+                <th>Country</th>
+                <th>State</th>
+                <th>RSSD_ID</th>
+                <th>Update?</th>
+            </tr>
+            <tr ng-repeat="result in resultsOfUpdateSearch">
+                <td>{{result.name}}</td>
+                <td>{{result.street}}</td>
+                <td>{{result.city}}</td>
+                <td>{{result.country}}</td>
+                <td>{{result.state}}</td>
+                <td>{{result.id}}</td>
+                <td><button type="submit" value="Send" class="btn btn-outline-dark" ng-click="deleteSearchResults(result.name)"><i class="fas fa-user-edit"></i>   Update</button>
+                    <!--<input ng-if="result.delete==1" type="checkbox" value=""  ng-false-value="0" ng-true-value="1"  ng-model="result.isChecked" checked disabled>
+                    <input ng-if="result.delete==0" type="checkbox" value="" ng-false-value="0" ng-true-value="1"  ng-model="result.isChecked" checked>--></td>
+            </tr>
+        </table>
+    </center>
+</div>
