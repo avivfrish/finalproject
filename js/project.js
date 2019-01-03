@@ -1549,7 +1549,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }).then(function (data) {
             if(data.data.length > 0){
                 console.log("GET Address");
-                //console.log(data.data);
                 $scope.resultsOfSearch = data.data;
                 //console.log($scope.resultsOfSearch);
                 $("#loadingResults").hide();
@@ -1583,10 +1582,75 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.selectedCompany=name;
         console.log("showMoreAboutResult "+ $scope.selectedCompany);
 
-        document.getElementById("selectedCompanyName").innerHTML = name;
+        document.getElementById("selectedCompanyName").innerHTML = name.toUpperCase();
+
+        //Get relevant item in scope.resultsOfSearch
+        let compInfo = {};
+        for(const item in $scope.resultsOfSearch){
+            if($scope.resultsOfSearch[item]['name'] === name){
+                compInfo = $scope.resultsOfSearch[item];
+            }
+        }
+
+        //console.log("NAME MORE");
+        //console.log(name);
+        //console.log("compInfo");
+        //console.log(compInfo);
+
+        //GET Type
+        let types = compInfo['type'];
+        let stringOfType = "";
+        if (types!='NA'){
+            types = types.split('|');
+            for (const typeItem in types){
+                const type = types[typeItem].trim();
+                if (type !== ""){
+                    if(stringOfType === ""){
+                        stringOfType = stringOfType + type.toString();
+                    }
+                    else {
+                        stringOfType = stringOfType + " & " + type.toString();
+                    }
+                }
+            }
+        }
+        if((stringOfType.toUpperCase()).includes("COMPANY") === false){
+            stringOfType = stringOfType + " Company";
+        }
+
+        //GET Industry
+        let industries = compInfo['industry'];
+        let stringOfIndustry = "";
+        if (industries!='NA'){
+            industries = industries.split('|');
+            for (const industryItem in industries){
+                const industry = industries[industryItem].trim();
+                if (industry !== "" && industry !== ","){
+                    if(stringOfIndustry === ""){
+                        stringOfIndustry = stringOfIndustry + industry.toString();
+                    }
+                    else {
+                        stringOfIndustry = stringOfIndustry + " & " + industry.toString();
+                    }
+                }
+            }
+        }
+
+        let secondTitle = stringOfType;
+        if(stringOfIndustry !== ""){
+            secondTitle = secondTitle + " of " + stringOfIndustry;
+        }
+        if (secondTitle === ' Company'){
+            secondTitle = "";
+        }
+
+        document.getElementById("secondTitleResult").innerHTML = secondTitle;
+
+
+
         document.getElementById("rightSideResults").style.height = (30 + document.getElementById("GeneralInfo").offsetHeight).toString();
         document.getElementById("leftSideResults").style.height = (30 +document.getElementById("GeneralInfo").offsetHeight).toString();
-        console.log("INNER HEIGHT", document.getElementById("GeneralInfo").offsetHeight);
+        //console.log("INNER HEIGHT", document.getElementById("GeneralInfo").offsetHeight);
 
         //document.getElementById("selectedResult").innerText = name;
 
