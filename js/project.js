@@ -686,27 +686,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.getCompIDs();
     };
 
-    $scope.uploadFile2 = function (file,name)
-    {
-        console.log("file:" + file + " " + name);
-        $http({
-            method: "POST",
-            url: "php/get_industry.php",
-            data: $.param({
-                id: file,
-
-            }),
-            headers: {'Content-Type': 'application/x-www-form-urlencoded'}
-        }).then(function (data) {
-            if (data != "0") {
-                console.log(data.data);
-
-            } else {
-                console.log(data.data);
-            }
-        }); //success
-
-    };
 
     $scope.uploadFile = function ()
     {
@@ -722,8 +701,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
-
-    $scope.uploadFile1 = function()
+    /*$scope.uploadFile1 = function()
     {
         let file = $scope.myFile;
 
@@ -788,7 +766,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             }
         });
 
-    };
+    };*/
 
 	$scope.graph = function(){
 		//const gData = {nodes: [{id: 64, group: 1}, {id: 192, group: 1}, {id: 2, group: 2}, {id: 419, group: 1}, {id: 260, group: 1}, {id: 165, group: 1}, {id: 39, group: 1}, {id: 200, group: 1}, {id: 103, group: 1}, {id: 265, group: 1}, {id: 11, group: 1}, {id: 432, group: 1}, {id: 336, group: 1}, {id: 308, group: 1}, {id: 21, group: 1}, {id: 278, group: 1}, {id: 407, group: 1}, {id: 412, group: 1}, {id: 125, group: 1}, {id: 31, group:1}],
@@ -816,15 +794,24 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     $scope.graph_link_color =function(link)
     {
-        if (link['label']=='Affiliate')
+        if (link['label'] === 'Affiliate')
         {
             return 'green';
         }
-        return "red";
+        else if (link['label'] === "Competition") {
+            return "red";
+        }
+        else
+        {
+            return "blue";
+        }
     };
     $scope.graph_node_color =function(node)
     {
-
+        if (node['group'] === "1")
+        {
+            return "#3bbc53";
+        }
         return "#3ba4bc";
     };
 
@@ -835,7 +822,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#comp_info").css("display","block");
         document.getElementById("graph_comp_name").innerText=node['id'];
 
-
+        console.log("group",node['group']);
         $http({
             method: 'POST',
             url: 'php/get_company_by_name.php',
@@ -854,7 +841,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             {
                 $scope.graph_selected=[{'name':node['id'],'country':data.data[0]['state']}];
                 document.getElementById("graphDetails").style.display="";
-                document.getElementById("graph_rssd").innerText=data.data[0]['RSSD_ID'];
+                document.getElementById("graph_rssd").innerText=data.data[0]['street'];
                 document.getElementById("graph_country").innerText=data.data[0]['state'];
                 //console.log(data.data);
                 document.getElementById("graph_btn").innerHTML="";
@@ -882,6 +869,9 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     };
 
     $scope.get_python = function () {
+
+        document.getElementById("graph_btn").innerHTML="";
+
         document.getElementById("graphDetails").style.display="none";
         $http({
             method: 'POST',
@@ -891,7 +881,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             }
         }).then(function (data) {
 
-            //console.log(data.data);
+            console.log(data.data);
 
             /*var graph_data=data.data;
             graph_data=graph_data.replace("\'nodes\'","\"nodes\"");
@@ -915,7 +905,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 //.nodeLabel('id')
                 .onNodeClick(node =>  $scope.graph_on_click(node))
                 .nodeColor(node=> $scope.graph_node_color(node))
-
+                .linkLabel(d => `<span style="color: #403d3e">${d.label}</span>`)
                 .linkColor(link => $scope.graph_link_color(link))
                 .height(300)
                 .width(600)
@@ -1334,7 +1324,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     }
                 }
                 console.log("$scope.products");
-                console.log($scope.products);
+               // console.log($scope.products);
 
                 $http({
                     method: 'POST',

@@ -15,7 +15,7 @@ $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 
 
-$sql= "select * from companiesNIC where NAME='$comp_name'";
+$sql= "select * from company_prod where name='$comp_name'";
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
     return (sqlsrv_errors());
@@ -29,7 +29,7 @@ $array = array();
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     $array[] = array(
         'name' =>$row['NAME'],
-        'RSSD_ID' => $row['RSSD_ID'],
+        'street' => $row['street'],
         'state' => $row['COUNTRY'],
         'city' => $row['CITY']
     );

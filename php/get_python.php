@@ -16,7 +16,7 @@ $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 
 
-$sql="select * from connections where records='".$company."' or word='".$company."'";
+$sql="select * from connections_prod where comp1='".$company."' or comp2='".$company."'";
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
     return (sqlsrv_errors());
@@ -24,27 +24,44 @@ $comp_conn= array();
 $nodes=array();
 $nodes_for_unique=array();
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
-    if (!in_array($row['records'],$nodes_for_unique))
+
+    if (!in_array($row['comp1'],$nodes_for_unique))
     {
+        $g1="0";
+        $comp=strtolower($company);
+        if ($comp==strtolower($row['comp1']))
+        {
+            $g1="1";
+        }
         $nodes[] = array(
-            'id' => $row['records'],
+            'id' => $row['comp1'],
+            'group' => $g1
         );
-        $nodes_for_unique[]=$row['records'];
+        $nodes_for_unique[]=$row['comp1'];
     }
-    if (!in_array($row['word'],$nodes_for_unique))
+    if (!in_array($row['comp2'],$nodes_for_unique))
     {
+        $g2="0";
+        $comp=strtolower($company);
+        if ($comp==strtolower($row['comp2']))
+        {
+            $g2="1";
+        }
         $nodes[] = array(
-            'id' => $row['word'],
+            'id' => $row['comp2'],
+            'group' => $g2
         );
-        $nodes_for_unique[]=$row['word'];
+        $nodes_for_unique[]=$row['comp2'];
     }
     $comp_conn[] = array(
-        'source'=>$row['records'],
-        'target'=>$row['word'],
-        'label'=>$row['relation'],
+        'source'=>$row['comp1'],
+        'target'=>$row['comp2'],
+        'label'=>$row['conn_type'],
+
     );
 
 }
+
 $to_graph=array(
     'nodes' =>  $nodes,
     'links' => $comp_conn
