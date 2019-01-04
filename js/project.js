@@ -68,6 +68,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.words = [];
         $scope.getWordsToWordCloud();
 
+
         $scope.resultsOfSearch = [];
         $scope.companies = [];
         $scope.selectedCompany = "";
@@ -258,14 +259,10 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     $scope.show_stats = function () {
         $scope.hidePages();
         $("#stats").show();
-        document.getElementById("ConnectionDoughnutChart").innerHTML = "";
-        document.getElementById("IndustryDoughnutChart").innerHTML = "";
-        document.getElementById("ProductsDoughnutChart").innerHTML = "";
-        document.getElementById("stackedBar").innerHTML = "";
         $scope.showDoughnut();
         $scope.showBarChart();
         $scope.showWordCloud();
-        //$scope.getIndustry();
+        $scope.getIndustry();
     };
 
     $scope.nav_bar_admin = function () {
@@ -278,6 +275,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             $scope.allUsers = data.data;
         });
     };
+
     $scope.nav_bar_comment = function () {
         console.log("nav comment bar");
         $http({
@@ -289,7 +287,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             $scope.allcomments = data.data;
         });
     };
-
 
     $scope.admin_save_changes = function () {
         //var obi = $scope.allUsers;
@@ -904,6 +901,9 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
 	$scope.showDoughnut = function ()
 	{
+        document.getElementById("ConnectionDoughnutChart").innerHTML = "";
+        document.getElementById("IndustryDoughnutChart").innerHTML = "";
+        document.getElementById("ProductsDoughnutChart").innerHTML = "";
         $http({
             method: 'POST',
             url: 'php/getNumOfConnections.php',
@@ -1162,7 +1162,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }
 
         function random(){
-            return 0.4; //a constant value here will ensure the word position is fixed upon each page refresh.
+            return 1; //a constant value here will ensure the word position is fixed upon each page refresh.
         }
     };
 
@@ -1176,7 +1176,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             }
         }).then(function (data) {
             console.log("GET Revenue");
-            console.log(data.data);
+            //console.log(data.data);
 
             if (data.data.length !== 0) {
                 let allRevenues = [];
@@ -1194,12 +1194,14 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 for (const item in data.data){
                     const name = data.data[item]['name'];
                     const revenue = Number(data.data[item]['revenue']);
-                    const sizeByRevenue = ((revenue - minRevenue)/(maxRevenue - minRevenue))*80+20;
+                    const sizeByRevenue = ((revenue - minRevenue)/(maxRevenue - minRevenue))*20+10;
                     const tooltipText = 'Revenue: ' + revenue.toString() + ' $';
                     const wordToInsert = {text: name, size: sizeByRevenue, color: colors[j], tooltipText: tooltipText };
                     $scope.words.push(wordToInsert);
                     j++;
                 }
+                $scope.words.sort((a,b) => (a.size < b.size) ? 1 : ((b.size < a.size) ? -1 : 0));
+                console.log($scope.words);
 
             } else {
                 console.log('get companies names with revenue failed');
@@ -1207,18 +1209,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         });
 
     };
-
-    /*$scope.showBarOfBiggestCompanyBySubsidiary= function () {
-        $http({
-            method: 'POST',
-            url: 'php/getBiggestCompaniesBySubsidiary.php',
-            params: {}
-        }).then(function (data) {
-            console.log("GET showBarOfBiggestCompany");
-            console.log(data.data);
-        });
-    };*/
-
 
     $scope.getIndustry = function () {
         $http({
@@ -1306,8 +1296,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                         }
                     }
                 }
-                console.log("$scope.products");
-                console.log($scope.products);
+                //console.log("$scope.products");
+                //console.log($scope.products);
 
                 $http({
                     method: 'POST',
@@ -1619,7 +1609,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         //GET Type
         let types = compInfo['type'];
         let stringOfType = "";
-        if (types!='NA'){
+        if (types!=='NA'){
             types = types.split('|');
             for (const typeItem in types){
                 const type = types[typeItem].trim();
@@ -1640,7 +1630,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         //GET Industry
         let industries = compInfo['industry'];
         let stringOfIndustry = "";
-        if (industries!='NA'){
+        if (industries!=='NA'){
             industries = industries.split('|');
             for (const industryItem in industries){
                 const industry = industries[industryItem].trim();

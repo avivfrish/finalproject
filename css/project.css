@@ -254,13 +254,16 @@ hr.separatorLine {
     border-top: 3px double #000000;
 }
 
+hr.industrySeparatorLine {
+    height: 10px;
+    border: 0;
+    box-shadow: 0 10px 10px -10px #214b7f52 inset;
+}
+
 .contactFields{
     padding-left: 5px;
     padding-right: 5px;
 }
-
-
-
 
 
 @media(min-width: 768px) {
