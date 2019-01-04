@@ -1669,6 +1669,49 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }
 
 
+        //Get summary
+        document.getElementById("summaryOfResult").innerHTML = compInfo['summary'];
+
+        //Get Address
+        let address = "";
+        const street = compInfo['street'];
+        if(street!==null){
+            address = address + street;
+        }
+
+        const city = compInfo['city'];
+        if(city!==null){
+            if(address===""){
+                address = address + city;
+            }else {
+                address = address + ", " + city;
+            }
+        }
+        const state = compInfo['state'];
+        if(state!==null){
+            if(address===""){
+                address = address + state;
+            }else {
+                address = address + ", " + state;
+            }
+        }
+        const country = compInfo['country'];
+        if(country!==null){
+            if(address===""){
+                address = address + country;
+            }else {
+                address = address + ", " + country;
+            }
+        }
+        if (address===""){
+            address="No Data Found";
+        }
+
+        document.getElementById("addressOfResult").innerHTML = address;
+
+
+
+
         //console.log("INNER HEIGHT", document.getElementById("GeneralInfo").offsetHeight);
 
         //document.getElementById("selectedResult").innerText = name;
