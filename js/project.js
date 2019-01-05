@@ -1705,15 +1705,61 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }
         if (address===""){
             address="No Data Found";
+        }else {
+            const addressSplit = address.split(" ");
+            address = "";
+            for (const item in addressSplit){
+                address = address + addressSplit[item].charAt(0).toUpperCase() +
+                    addressSplit[item].slice(1).toLowerCase() + " ";
+            }
         }
 
         document.getElementById("addressOfResult").innerHTML = address;
 
+        //Get Founded
+        let founded = compInfo['founded'];
+        if (founded==="NA"){
+            founded="No Data Found";
+        }else {
+            if (founded.charAt(1) === '|'){
+                founded = founded.slice(1);
+            }
+            founded = (founded.split("|"))[1];
+        }
+        document.getElementById("foundedOfResult").innerHTML = founded;
+
+        //Get Revenue
+        let revenue = compInfo['revenue'];
+        if (revenue==="NA"){
+            revenue="No Data Found";
+        }else {
+            revenue = revenue + " $";
+        }
+        document.getElementById("revenueOfResult").innerHTML = revenue;
+
+        //Get NumOfEmployees
+        let numOfEmployees = compInfo['numOfEmployee'];
+        if (numOfEmployees==="NA"){
+            numOfEmployees="No Data Found";
+        }else {
+            const numOfEmployeesSplit = numOfEmployees.split("|");
+            numOfEmployees = "";
+            for(const item in numOfEmployeesSplit){
+                const valueOfItem = numOfEmployeesSplit[item];
+                if (valueOfItem !== ""){
+                    if (numOfEmployees === "" || valueOfItem.indexOf("(") !== -1){
+                        numOfEmployees = numOfEmployees + valueOfItem + " ";
+                    } else {
+                        numOfEmployees = numOfEmployees + ", " + valueOfItem + " ";
+                    }
+                }
+            }
+        }
+        document.getElementById("numOfEmployeesOfResult").innerHTML = numOfEmployees;
 
 
 
         //console.log("INNER HEIGHT", document.getElementById("GeneralInfo").offsetHeight);
-
         //document.getElementById("selectedResult").innerText = name;
 
         if ($scope.tabSearchGeneral === true)
@@ -1722,7 +1768,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             document.getElementById("leftSideResults").style.height = (30+document.getElementById("GeneralInfo").offsetHeight).toString();
 
         }
-        console.log("INNER HEIGHT", document.getElementById("GeneralInfo").offsetHeight);
+        //console.log("INNER HEIGHT", document.getElementById("GeneralInfo").offsetHeight);
 
     };
 

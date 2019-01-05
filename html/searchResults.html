@@ -36,7 +36,7 @@
                             <a class="nav-link active" id="tab_GeneralInfo" href="#GeneralInfo" role="tab" data-toggle="tab" ng-click="setCurrentTabSearch(true)">General Information</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link"  id="tab_Competitors" href="#Connections" role="tab" data-toggle="tab" ng-click="get_python();setCurrentTabSearch(false)">Competitors</a>
+                            <a class="nav-link"  id="tab_Competitors" href="#Connections" role="tab" data-toggle="tab" ng-click="get_python();setCurrentTabSearch(false)">Connections</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link"  id="tab_Stock" href="#Stock" role="tab" data-toggle="tab" ng-click="setCurrentTabSearch(false)">Stock</a>
@@ -71,11 +71,11 @@
 
                             <div class="container-fluid titleOfGeneralResult" style="margin-top: 20px">
                                 <div class="row">
-                                    <div class="col-sm-8">
+                                    <div class="col-sm-7">
                                         <p id="summaryOfResult">
                                         </p>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-5">
                                         <table class="table tableOfGeneralInfo">
                                             <tr>
                                                 <td>Address</td>
@@ -83,19 +83,15 @@
                                             </tr>
                                             <tr>
                                                 <td>Founded</td>
-                                                <td>1919</td>
+                                                <td id="foundedOfResult"></td>
                                             </tr>
                                             <tr>
                                                 <td>Revenue</td>
-                                                <td>US$ 9.866 billion </td>
+                                                <td id="revenueOfResult"></td>
                                             </tr>
                                             <tr>
-                                                <td>Number of employees</td>
-                                                <td>7,678</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Website</td>
-                                                <td><a href="https://www.ally.com">www.ally.com</a></td>
+                                                <td>Number Of Employees</td>
+                                                <td id="numOfEmployeesOfResult"></td>
                                             </tr>
                                         </table>
                                     </div>

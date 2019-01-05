@@ -12,7 +12,8 @@ $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 $searchBy = $_GET["searchBy"];
 $sql= /** @lang text */
-    "select name, street, city, state, country, wiki_img, wiki_first, Type, Industry from company_prod where ";
+    "select name, street, city, state, country, wiki_img, wiki_first, Type, Industry, Founded, Revenue,
+     NumberOfEmployees from company_prod where ";
 
 if($searchBy == 'Name'){
     $name = $_GET["name"];
@@ -86,7 +87,10 @@ while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
         'logo'=>$row['wiki_img'],
         'summary'=>$row['wiki_first'],
         'type'=>$row['Type'],
-        'industry'=>$row['Industry']
+        'industry'=>$row['Industry'],
+        'founded'=>$row['Founded'],
+        'revenue'=>$row['Revenue'],
+        'numOfEmployee'=>$row['NumberOfEmployees']
     );
 }
 sqlsrv_free_stmt($getResults);
