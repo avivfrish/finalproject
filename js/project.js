@@ -83,6 +83,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.words = [];
         $scope.getWordsToWordCloud();
 
+
         $scope.resultsOfSearch = [];
         $scope.companies = [];
         $scope.selectedCompany = "";
@@ -275,14 +276,10 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     $scope.show_stats = function () {
         $scope.hidePages();
         $("#stats").show();
-        document.getElementById("ConnectionDoughnutChart").innerHTML = "";
-        document.getElementById("IndustryDoughnutChart").innerHTML = "";
-        document.getElementById("ProductsDoughnutChart").innerHTML = "";
-        document.getElementById("stackedBar").innerHTML = "";
         $scope.showDoughnut();
         $scope.showBarChart();
         $scope.showWordCloud();
-        //$scope.getIndustry();
+        $scope.getIndustry();
     };
 
     $scope.nav_bar_admin = function () {
@@ -295,6 +292,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             $scope.allUsers = data.data;
         });
     };
+
     $scope.nav_bar_comment = function () {
         console.log("nav comment bar");
         $http({
@@ -317,6 +315,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             $scope.allFiles= data.data;
         });
     };
+
 
     $scope.admin_save_changes = function () {
         //var obi = $scope.allUsers;
@@ -812,6 +811,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             return "black";
         }
     };
+
     $scope.graph_node_color =function(node)
     {
         if (node['group'] === "1")
@@ -820,8 +820,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }
         return "#464f52";
     };
-
-
 
     $scope.graph_on_click = function (node)
     {
@@ -947,6 +945,9 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
 	$scope.showDoughnut = function ()
 	{
+        document.getElementById("ConnectionDoughnutChart").innerHTML = "";
+        document.getElementById("IndustryDoughnutChart").innerHTML = "";
+        document.getElementById("ProductsDoughnutChart").innerHTML = "";
         $http({
             method: 'POST',
             url: 'php/getNumOfConnections.php',
@@ -1116,7 +1117,9 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
                 let dataForY = {};
                 for(let item in $scope.distinctConnections){
-                    dataForY[item] = new Array(5).fill(0);
+                    if($scope.distinctConnections[item]['isChecked'] === 1){
+                        dataForY[item] = new Array(5).fill(0);
+                    }
                 }
 
                 for (let i = 1 ; i <= 5; i++){
@@ -1128,7 +1131,9 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                                 xLabels.push(name);
                             }
                             const relationType = (data.data)[item]['relation'];
-                            dataForY[relationType][id-1] = (data.data)[item]['count'];
+                            if($scope.distinctConnections[relationType]['isChecked'] === 1){
+                                dataForY[relationType][id-1] = (data.data)[item]['count'];
+                            }
                         }
                     }
                 }
@@ -1205,7 +1210,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }
 
         function random(){
-            return 0.4; //a constant value here will ensure the word position is fixed upon each page refresh.
+            return 1; //a constant value here will ensure the word position is fixed upon each page refresh.
         }
     };
 
@@ -1219,7 +1224,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             }
         }).then(function (data) {
             console.log("GET Revenue");
-            console.log(data.data);
+            //console.log(data.data);
 
             if (data.data.length !== 0) {
                 let allRevenues = [];
@@ -1237,12 +1242,14 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 for (const item in data.data){
                     const name = data.data[item]['name'];
                     const revenue = Number(data.data[item]['revenue']);
-                    const sizeByRevenue = ((revenue - minRevenue)/(maxRevenue - minRevenue))*80+20;
+                    const sizeByRevenue = ((revenue - minRevenue)/(maxRevenue - minRevenue))*20+10;
                     const tooltipText = 'Revenue: ' + revenue.toString() + ' $';
                     const wordToInsert = {text: name, size: sizeByRevenue, color: colors[j], tooltipText: tooltipText };
                     $scope.words.push(wordToInsert);
                     j++;
                 }
+                $scope.words.sort((a,b) => (a.size < b.size) ? 1 : ((b.size < a.size) ? -1 : 0));
+                console.log($scope.words);
 
             } else {
                 console.log('get companies names with revenue failed');
@@ -1250,18 +1257,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         });
 
     };
-
-    /*$scope.showBarOfBiggestCompanyBySubsidiary= function () {
-        $http({
-            method: 'POST',
-            url: 'php/getBiggestCompaniesBySubsidiary.php',
-            params: {}
-        }).then(function (data) {
-            console.log("GET showBarOfBiggestCompany");
-            console.log(data.data);
-        });
-    };*/
-
 
     $scope.getIndustry = function () {
         $http({
@@ -1329,27 +1324,32 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         }).then(function (data) {
-            console.log("GET Type of Products");
-            //console.log(data.data);
             $scope.products = [];
             if (data.data.length !== 0){
                 for (const item in data.data){
                     let Products = data.data[item]['Products'];
                     Products = Products.split('|');
-                    //console.log("Products ", Products);
                     for (const productItem in Products){
-                        const product = ((Products[productItem].trim()).toUpperCase()).split(",");
+                        let product = ((Products[productItem].trim()).toUpperCase()).split(",");
                         for (const moreProductsItem in product){
-                            const moreProduct = product[moreProductsItem].trim();
-                            if (moreProduct !== "" && moreProduct !== "LIST..." && moreProduct !== "(" &&
-                                moreProduct !== "FOR" && moreProduct !== "AND" &&
-                                moreProduct !== ")" && ($scope.products).indexOf(moreProduct) === -1 ) {
+                            let moreProduct = product[moreProductsItem];
+                            moreProduct = moreProduct.replace("LIST...","");
+                            moreProduct = moreProduct.replace("FOR","");
+                            moreProduct = moreProduct.replace("(","");
+                            moreProduct = moreProduct.replace(")","");
+                            moreProduct = moreProduct.replace("&","");
+                            moreProduct = moreProduct.replace(";","");
+                            moreProduct = moreProduct.replace("AND","");
+                            moreProduct = moreProduct.replace("IN","");
+                            moreProduct = moreProduct.replace("  "," ");
+                            moreProduct = moreProduct.trim();
+                            if (moreProduct !== "" && ($scope.products).indexOf(moreProduct) === -1 ) {
                                 $scope.products.push(moreProduct);
                             }
                         }
                     }
                 }
-                console.log("$scope.products");
+                //console.log("$scope.products");
                // console.log($scope.products);
 
                 $http({
@@ -1629,7 +1629,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     $scope.showMoreAboutResult = function (name) {
 
         $("#askToSelectResult").hide();
-        $("#selectedResult").show();
 
         $("#tab_GeneralInfo").tab("show");
         document.getElementById(name).style.boxShadow = "rgb(141, 195, 207) 0px 4px 8px 0px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px";
@@ -1655,15 +1654,21 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             }
         }
 
-        //console.log("NAME MORE");
-        //console.log(name);
-        //console.log("compInfo");
-        //console.log(compInfo);
+        console.log("compInfo");
+        console.log(compInfo);
+
+        //Get wiki_name
+        const wiki_name = compInfo['wiki_name'];
+        console.log("wiki_name");
+        console.log(wiki_name);
+        if(wiki_name!=='NA'){
+            document.getElementById("wikiNameOfResult").innerHTML = "Redirected from " + wiki_name;
+        }
 
         //GET Type
         let types = compInfo['type'];
         let stringOfType = "";
-        if (types!='NA'){
+        if (types!=='NA'){
             types = types.split('|');
             for (const typeItem in types){
                 const type = types[typeItem].trim();
@@ -1684,7 +1689,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         //GET Industry
         let industries = compInfo['industry'];
         let stringOfIndustry = "";
-        if (industries!='NA'){
+        if (industries!=='NA'){
             industries = industries.split('|');
             for (const industryItem in industries){
                 const industry = industries[industryItem].trim();
@@ -1710,20 +1715,156 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         document.getElementById("secondTitleResult").innerHTML = secondTitle;
 
 
+        //Get LOGO
+        const logo = compInfo['logo'];
+        if(logo.includes(".png") === true || logo.includes(".jpeg") === true ){
+            document.getElementById("companyLogo").src = logo.toString();
+        }
+        else {
+            document.getElementById("companyLogo").src = '/coral/img/pictLogo.png';
+        }
+
+        //Get Products
+        let Products = compInfo['products'];
+        $scope.resultProducts = [];
+        if(Products !== 'NA'){
+            Products = Products.split('|');
+            for (const productItem in Products){
+                let product = ((Products[productItem].trim()).toUpperCase()).split(",");
+                for (const moreProductsItem in product){
+                    let moreProduct = product[moreProductsItem];
+                    moreProduct = moreProduct.replace("LIST...","");
+                    moreProduct = moreProduct.replace("FOR","");
+                    moreProduct = moreProduct.replace("(","");
+                    moreProduct = moreProduct.replace(")","");
+                    moreProduct = moreProduct.replace("&","");
+                    moreProduct = moreProduct.replace(";","");
+                    moreProduct = moreProduct.replace("AND","");
+                    moreProduct = moreProduct.replace("IN","");
+                    moreProduct = moreProduct.replace("  "," ");
+                    moreProduct = moreProduct.trim();
+                    if (moreProduct !== "" && ($scope.resultProducts).indexOf(moreProduct) === -1 ) {
+                        const moreProductSplit = moreProduct.split(" ");
+                        moreProduct = "";
+                        for (const item in moreProductSplit){
+                            moreProduct = moreProduct + moreProductSplit[item].charAt(0).toUpperCase() +
+                                moreProductSplit[item].slice(1).toLowerCase() + " ";
+                        }
+                        $scope.resultProducts.push(moreProduct);
+                    }
+                }
+            }
+        }
+
+        console.log("$scope.resultProducts");
+        console.log($scope.resultProducts);
+
+
+        //Get summary
+        document.getElementById("summaryOfResult").innerHTML = compInfo['summary'];
+
+        //Get Address
+        let address = "";
+        const street = compInfo['street'];
+        if(street!==null){
+            address = address + street;
+        }
+
+        const city = compInfo['city'];
+        if(city!==null){
+            if(address===""){
+                address = address + city;
+            }else {
+                address = address + ", " + city;
+            }
+        }
+        const state = compInfo['state'];
+        if(state!==null){
+            if(address===""){
+                address = address + state;
+            }else {
+                address = address + ", " + state;
+            }
+        }
+        const country = compInfo['country'];
+        if(country!==null){
+            if(address===""){
+                address = address + country;
+            }else {
+                address = address + ", " + country;
+            }
+        }
+        if (address===""){
+            address="No Data Found";
+        }else {
+            const addressSplit = address.split(" ");
+            address = "";
+            for (const item in addressSplit){
+                address = address + addressSplit[item].charAt(0).toUpperCase() +
+                    addressSplit[item].slice(1).toLowerCase() + " ";
+            }
+        }
+
+        document.getElementById("addressOfResult").innerHTML = address;
+
+        //Get Founded
+        let founded = compInfo['founded'];
+        if (founded==="NA"){
+            founded="No Data Found";
+        }else {
+            if (founded.charAt(1) === '|'){
+                founded = founded.slice(1);
+            }
+            founded = (founded.split("|"))[1];
+        }
+        document.getElementById("foundedOfResult").innerHTML = founded;
+
+        //Get Revenue
+        let revenue = compInfo['revenue'];
+        if (revenue==="NA"){
+            revenue="No Data Found";
+        }else {
+            revenue = revenue + " $";
+        }
+        document.getElementById("revenueOfResult").innerHTML = revenue;
+
+        //Get NumOfEmployees
+        let numOfEmployees = compInfo['numOfEmployee'];
+        if (numOfEmployees==="NA"){
+            numOfEmployees="No Data Found";
+        }else {
+            const numOfEmployeesSplit = numOfEmployees.split("|");
+            numOfEmployees = "";
+            for(const item in numOfEmployeesSplit){
+                const valueOfItem = numOfEmployeesSplit[item];
+                if (valueOfItem !== ""){
+                    if (numOfEmployees === "" || valueOfItem.indexOf("(") !== -1){
+                        numOfEmployees = numOfEmployees + valueOfItem + " ";
+                    } else {
+                        numOfEmployees = numOfEmployees + ", " + valueOfItem + " ";
+                    }
+                }
+            }
+        }
+        document.getElementById("numOfEmployeesOfResult").innerHTML = numOfEmployees;
+
+        //Get Stocks
+        const allTradedAs = compInfo['TradedAs'];
+        const exchanges = ["NYSE", "NASDAQ", "LSE", "NSE", "ASX", "NZX", "SGX", "FWB", "TSX"];
+        let stocks = {};
+
+        $("#selectedResult").show();
 
         //console.log("INNER HEIGHT", document.getElementById("GeneralInfo").offsetHeight);
-
         //document.getElementById("selectedResult").innerText = name;
 
         if ($scope.tabSearchGeneral === true)
         {
-            document.getElementById("rightSideResults").style.height = (30+ document.getElementById("GeneralInfo").offsetHeight).toString();
-            document.getElementById("leftSideResults").style.height = (30+document.getElementById("GeneralInfo").offsetHeight).toString();
+            document.getElementById("rightSideResults").style.height = (70 + document.getElementById("GeneralInfo").offsetHeight).toString();
+            document.getElementById("leftSideResults").style.height = (70 + document.getElementById("GeneralInfo").offsetHeight).toString();
 
         }
-        console.log("INNER HEIGHT", document.getElementById("GeneralInfo").offsetHeight);
-
-
+        //console.log("INNER HEIGHT", document.getElementById("GeneralInfo").offsetHeight);
 
     };
 
