@@ -882,8 +882,25 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     $scope.update_search = function()
     {
-        //console.log("before "+ $scope.resultsOfSearch);
-        $scope.resultsOfSearch=$scope.graph_selected;
+        $http({
+            method: 'POST',
+            url: 'php/getAddress.php',
+            data: $.param({
+                searchBy:"graph",
+                company_graph: $scope.graph_selected[0]['name']
+            }),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).then(function (data) {
+            console.log(data.data);
+            $scope.resultsOfSearch=data.data;
+
+        });
+
+
+            //console.log("before "+ $scope.resultsOfSearch);
+
         $scope.selectedCompany=$scope.graph_selected[0]['name'];
         //console.log("after ", $scope.resultsOfSearch);
         //$scope.showMoreAboutResult($scope.graph_selected);
@@ -1567,6 +1584,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     $scope.searchForResults = function (searchBy)
     {
         $scope.selectedCompany="";
+
         const resultsElement = document.getElementById("searchResults");
 
         $("#foundResults").hide();
@@ -1587,7 +1605,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $http({
             method: 'POST',
             url: 'php/getAddress.php',
-            params: {
+            data: $.param({
                 searchBy : searchBy,
                 filterBy : $scope.filterBySearchByName,
                 name : name,
@@ -1597,10 +1615,16 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 state : $scope.selectedStateValue,
                 city : $scope.selectedCityValue,
                 street : $scope.selectedStreetValue
+
+            }),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;text/html;charset=utf-8'
             }
         }).then(function (data) {
+            console.log(data);
             if(data.data.length > 0){
                 console.log("GET Address");
+                console.log(data.data);
                 $scope.resultsOfSearch = data.data;
                 //console.log($scope.resultsOfSearch);
                 $("#loadingResults").hide();

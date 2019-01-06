@@ -6,20 +6,20 @@
  * Time: 18:02
  */
 
-$connectionInfo = array("UID" => "finalproject@avifinalproject", "pwd" => "1qaZ2wsX", "Database" => "finalProject", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0);
+$connectionInfo = array("UID" => "finalproject@avifinalproject", "pwd" => "1qaZ2wsX", "Database" => "finalProject", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0,"CharacterSet" => "UTF-8");
 $serverName = "tcp:avifinalproject.database.windows.net,1433";
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
-$searchBy = $_GET["searchBy"];
+$searchBy = $_POST["searchBy"];
 $sql= /** @lang text */
     "select name, street, city, state, country, wiki_name, wiki_img, wiki_first, Products, Type, TradedAs, Industry, Founded, Revenue,
      NumberOfEmployees from company_prod where ";
 
 if($searchBy == 'Name'){
-    $name = $_GET["name"];
-    $cik = $_GET["cik"];
-    $id = $_GET["id"];
-    $filterBy = $_GET["filterBy"];
+    $name = $_POST["name"];
+    $cik = $_POST["cik"];
+    $id = $_POST["id"];
+    $filterBy = $_POST["filterBy"];
 
     $operator = '=';
     $char = '';
@@ -44,11 +44,17 @@ if($searchBy == 'Name'){
         $sql = $sql."RSSD_ID ".$operator." '".$char.$id.$char."' ";
     }
 }
+else if ($searchBy=="graph")
+{
+    $comp = $_POST['company_graph'];
+    $sql="select * from company_prod where name='$comp'";
+}
 else{
-    $country = $_GET["country"];
-    $state = $_GET["state"];
-    $city = $_GET["city"];
-    $street = $_GET["street"];
+
+    $country = $_POST["country"];
+    $state = $_POST["state"];
+    $city = $_POST["city"];
+    $street = $_POST["street"];
 
     if ($country){
         $sql = $sql."country = '".$country."' ";
@@ -73,28 +79,45 @@ else{
     }
 }
 
+
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
     return (sqlsrv_errors());
 $array = array();
+$count=0;
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
+
     $array[] = array(
-        'name'=>$row['name'],
-        'street'=>$row['street'],
-        'city'=>$row['city'],
-        'state'=>$row['state'],
-        'country'=>$row['country'],
-        'wiki_name'=>$row['wiki_name'],
-        'logo'=>$row['wiki_img'],
-        'summary'=>$row['wiki_first'],
-        'products'=>$row['Products'],
-        'type'=>$row['Type'],
-        'TradedAs'=>$row['TradedAs'],
-        'industry'=>$row['Industry'],
-        'founded'=>$row['Founded'],
-        'revenue'=>$row['Revenue'],
-        'numOfEmployee'=>$row['NumberOfEmployees']
+        'name'=>str_replace("'","",$row['name']),
+        'street'=>str_replace("'","",$row['street']),
+        'city'=>str_replace("'","",$row['city']),
+        'state'=>str_replace("'","",$row['state']),
+        'country'=>str_replace("'","",$row['country']),
+        'wiki_name'=>str_replace("'","",$row['wiki_name']),
+        'logo'=>str_replace("'","",$row['wiki_img']),
+        'summary'=>str_replace("'","",$row['wiki_first']),
+        'products'=>str_replace("'","",$row['Products']),
+        'type'=>str_replace("'","",$row['Type']),
+        'TradedAs'=>str_replace("'","",$row['TradedAs']),
+        'industry'=>str_replace("'","",$row['Industry']),
+        'founded'=>str_replace("'","",$row['Founded']),
+        'revenue'=>str_replace("'","",$row['Revenue']),
+        'numOfEmployee'=>str_replace("'","",$row['NumberOfEmployees'])
     );
+    $count=$count+1;
+
 }
+
 sqlsrv_free_stmt($getResults);
-echo json_encode($array);
+
+#echo json_encode($array);
+$json  = json_encode($array);
+$error = json_last_error();
+if ($error == 0)
+{
+    echo $json;
+}
+else
+{
+    echo $error;
+}
