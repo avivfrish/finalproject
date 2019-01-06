@@ -92,7 +92,7 @@ if ($isMother == 0)
 }
 
 
-
+$sisterCount=0;
 
 $sql="select * from connections where (comp1='".$company."' or comp2='".$company."') and conn_type!='Sisters'";
 $getResults= sqlsrv_query($conn, $sql);

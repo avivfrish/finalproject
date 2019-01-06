@@ -804,9 +804,12 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         else if (link['label'] === "Sisters") {
             return "#31963e";
         }
+        else if (link['label'] === "Subsidiaries") {
+            return "blue";
+        }
         else
         {
-            return "blue";
+            return "black";
         }
     };
     $scope.graph_node_color =function(node)
@@ -891,7 +894,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     $scope.get_python = function () {
 
         document.getElementById("graph_btn").innerHTML="";
-
+        document.getElementById("graph_comp_name").innerText="Click on Node or Connection for Details";
         document.getElementById("graphDetails").style.display="none";
         $http({
             method: 'POST',
