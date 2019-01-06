@@ -801,6 +801,9 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         else if (link['label'] === "Competition") {
             return "red";
         }
+        else if (link['label'] === "Sisters") {
+            return "#31963e";
+        }
         else
         {
             return "blue";
@@ -810,9 +813,9 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     {
         if (node['group'] === "1")
         {
-            return "#3bbc53";
+            return "#31a9bc";
         }
-        return "#3ba4bc";
+        return "#464f52";
     };
 
 
@@ -858,6 +861,23 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
 
     };
+    $scope.graph_link_dist = function(link) {
+
+         if (link['label'] === "Competition") {
+            return 50;
+        }
+        else if (link['label'] === "Sisters") {
+            return 20;
+        }
+         else if (link['label'] === "Subsidiaries") {
+             return 20;
+         }
+        else
+        {
+            return 5;
+        }
+
+    };
 
     $scope.update_search = function()
     {
@@ -901,7 +921,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 .backgroundColor('#e5e5e5')
                 .nodeAutoColorBy('group')
                 //.linkAutoColorBy(d => gData.nodes[d.source].group)
-                .linkOpacity(0.5)
+                .linkOpacity(0.7)
+                .linkWidth(1)
                 //.nodeLabel('id')
                 .onNodeClick(node =>  $scope.graph_on_click(node))
                 .nodeColor(node=> $scope.graph_node_color(node))
@@ -910,8 +931,10 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 .height(300)
                 .width(600)
                 .showNavInfo(0)
-
                 .nodeLabel(d => `<span style="color: #403d3e">${d.id}</span>`);
+            const linkForce = Graph
+                .d3Force('link')
+                .distance(link => $scope.graph_link_dist(link));
 
 
         });
