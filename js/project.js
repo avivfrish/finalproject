@@ -792,13 +792,12 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }
         return "red";
     };
+
     $scope.graph_node_color =function(node)
     {
 
         return "#3ba4bc";
     };
-
-
 
     $scope.graph_on_click = function (node)
     {
@@ -1073,7 +1072,9 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
                 let dataForY = {};
                 for(let item in $scope.distinctConnections){
-                    dataForY[item] = new Array(5).fill(0);
+                    if($scope.distinctConnections[item]['isChecked'] === 1){
+                        dataForY[item] = new Array(5).fill(0);
+                    }
                 }
 
                 for (let i = 1 ; i <= 5; i++){
@@ -1085,7 +1086,9 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                                 xLabels.push(name);
                             }
                             const relationType = (data.data)[item]['relation'];
-                            dataForY[relationType][id-1] = (data.data)[item]['count'];
+                            if($scope.distinctConnections[relationType]['isChecked'] === 1){
+                                dataForY[relationType][id-1] = (data.data)[item]['count'];
+                            }
                         }
                     }
                 }
@@ -1276,21 +1279,26 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         }).then(function (data) {
-            console.log("GET Type of Products");
-            //console.log(data.data);
             $scope.products = [];
             if (data.data.length !== 0){
                 for (const item in data.data){
                     let Products = data.data[item]['Products'];
                     Products = Products.split('|');
-                    //console.log("Products ", Products);
                     for (const productItem in Products){
-                        const product = ((Products[productItem].trim()).toUpperCase()).split(",");
+                        let product = ((Products[productItem].trim()).toUpperCase()).split(",");
                         for (const moreProductsItem in product){
-                            const moreProduct = product[moreProductsItem].trim();
-                            if (moreProduct !== "" && moreProduct !== "LIST..." && moreProduct !== "(" &&
-                                moreProduct !== "FOR" && moreProduct !== "AND" &&
-                                moreProduct !== ")" && ($scope.products).indexOf(moreProduct) === -1 ) {
+                            let moreProduct = product[moreProductsItem];
+                            moreProduct = moreProduct.replace("LIST...","");
+                            moreProduct = moreProduct.replace("FOR","");
+                            moreProduct = moreProduct.replace("(","");
+                            moreProduct = moreProduct.replace(")","");
+                            moreProduct = moreProduct.replace("&","");
+                            moreProduct = moreProduct.replace(";","");
+                            moreProduct = moreProduct.replace("AND","");
+                            moreProduct = moreProduct.replace("IN","");
+                            moreProduct = moreProduct.replace("  "," ");
+                            moreProduct = moreProduct.trim();
+                            if (moreProduct !== "" && ($scope.products).indexOf(moreProduct) === -1 ) {
                                 $scope.products.push(moreProduct);
                             }
                         }
@@ -1576,7 +1584,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     $scope.showMoreAboutResult = function (name) {
 
         $("#askToSelectResult").hide();
-        $("#selectedResult").show();
 
         $("#tab_GeneralInfo").tab("show");
         document.getElementById(name).style.boxShadow = "rgb(141, 195, 207) 0px 4px 8px 0px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px";
@@ -1605,6 +1612,13 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         console.log("compInfo");
         console.log(compInfo);
 
+        //Get wiki_name
+        const wiki_name = compInfo['wiki_name'];
+        console.log("wiki_name");
+        console.log(wiki_name);
+        if(wiki_name!=='NA'){
+            document.getElementById("wikiNameOfResult").innerHTML = "Redirected from " + wiki_name;
+        }
 
         //GET Type
         let types = compInfo['type'];
@@ -1658,15 +1672,47 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
         //Get LOGO
         const logo = compInfo['logo'];
-        if(logo === 'NA'){
-            document.getElementById("companyLogoDiv").innerHTML = '';
-            //$('#companyLogo').attr('src', '');
-            //document.getElementById("companyLogo").src = "#";
-        }
-        else {
-            document.getElementById("companyLogoDiv").innerHTML = '<img class ="logoImg" id="companyLogo" src="" alt="logo" height="100" width="150">';
+        if(logo.includes(".png") === true || logo.includes(".jpeg") === true ){
             document.getElementById("companyLogo").src = logo.toString();
         }
+        else {
+            document.getElementById("companyLogo").src = '/coral/img/pictLogo.png';
+        }
+
+        //Get Products
+        let Products = compInfo['products'];
+        $scope.resultProducts = [];
+        if(Products !== 'NA'){
+            Products = Products.split('|');
+            for (const productItem in Products){
+                let product = ((Products[productItem].trim()).toUpperCase()).split(",");
+                for (const moreProductsItem in product){
+                    let moreProduct = product[moreProductsItem];
+                    moreProduct = moreProduct.replace("LIST...","");
+                    moreProduct = moreProduct.replace("FOR","");
+                    moreProduct = moreProduct.replace("(","");
+                    moreProduct = moreProduct.replace(")","");
+                    moreProduct = moreProduct.replace("&","");
+                    moreProduct = moreProduct.replace(";","");
+                    moreProduct = moreProduct.replace("AND","");
+                    moreProduct = moreProduct.replace("IN","");
+                    moreProduct = moreProduct.replace("  "," ");
+                    moreProduct = moreProduct.trim();
+                    if (moreProduct !== "" && ($scope.resultProducts).indexOf(moreProduct) === -1 ) {
+                        const moreProductSplit = moreProduct.split(" ");
+                        moreProduct = "";
+                        for (const item in moreProductSplit){
+                            moreProduct = moreProduct + moreProductSplit[item].charAt(0).toUpperCase() +
+                                moreProductSplit[item].slice(1).toLowerCase() + " ";
+                        }
+                        $scope.resultProducts.push(moreProduct);
+                    }
+                }
+            }
+        }
+
+        console.log("$scope.resultProducts");
+        console.log($scope.resultProducts);
 
 
         //Get summary
@@ -1757,15 +1803,15 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }
         document.getElementById("numOfEmployeesOfResult").innerHTML = numOfEmployees;
 
-
+        $("#selectedResult").show();
 
         //console.log("INNER HEIGHT", document.getElementById("GeneralInfo").offsetHeight);
         //document.getElementById("selectedResult").innerText = name;
 
         if ($scope.tabSearchGeneral === true)
         {
-            document.getElementById("rightSideResults").style.height = (30+ document.getElementById("GeneralInfo").offsetHeight).toString();
-            document.getElementById("leftSideResults").style.height = (30+document.getElementById("GeneralInfo").offsetHeight).toString();
+            document.getElementById("rightSideResults").style.height = (70 + document.getElementById("GeneralInfo").offsetHeight).toString();
+            document.getElementById("leftSideResults").style.height = (70 + document.getElementById("GeneralInfo").offsetHeight).toString();
 
         }
         //console.log("INNER HEIGHT", document.getElementById("GeneralInfo").offsetHeight);
