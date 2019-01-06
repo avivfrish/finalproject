@@ -1803,6 +1803,11 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }
         document.getElementById("numOfEmployeesOfResult").innerHTML = numOfEmployees;
 
+        //Get Stocks
+        const allTradedAs = compInfo['TradedAs'];
+        const exchanges = ["NYSE", "NASDAQ", "LSE", "NSE", "ASX", "NZX", "SGX", "FWB", "TSX"];
+        let stocks = {};
+
         $("#selectedResult").show();
 
         //console.log("INNER HEIGHT", document.getElementById("GeneralInfo").offsetHeight);
