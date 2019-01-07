@@ -9,7 +9,7 @@ $compID = $_GET["id"];
 $deleteResultsFilterBy = $_GET["deleteResFilterBy"];
 
 $sql= /** @lang text */
-    "select name, street, city, country, state, RSSD_ID from test where ";
+    "select ID, name, street, city, country, state, RSSD_ID from company_prod where ";
 
 $operator = '=';
 $char = '';
@@ -49,17 +49,25 @@ if ($getResults == FALSE){
     //return (sqlsrv_errors());
 }
 else if ($getResults == TRUE) {
-    $array = array();
-    while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
-        $array[] = array(
-            'name'=>$row['name'],
-            'street'=>$row['street'],
-            'city'=>$row['city'],
-            'country'=>$row['country'],
-            'state'=>$row['state'],
-            'id'=>$row['RSSD_ID']
-        );
+    $rows = sqlsrv_has_rows($getResults);
+    if ($rows == true){
+        $array = array();
+        while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
+            $array[] = array(
+                'id'=>$row['ID'],
+                'name'=>$row['name'],
+                'street'=>$row['street'],
+                'city'=>$row['city'],
+                'country'=>$row['country'],
+                'state'=>$row['state'],
+                'RSSD_ID'=>$row['RSSD_ID']
+            );
+        }
+        sqlsrv_free_stmt($getResults);
+        echo json_encode($array);
     }
-    sqlsrv_free_stmt($getResults);
-    echo json_encode($array);
+    else {
+        echo ("no_rows");
+    }
+
 }

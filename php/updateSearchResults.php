@@ -10,7 +10,7 @@ $selectedNewInfoToUpdateBySearch = $_GET["newInfoUpdateBySearch"];
 //echo ($companyToDelete);
 
 $sql= /** @lang text */
-    "update test set $selectedCompDetailsToUpdateBySearch = "."'".$selectedNewInfoToUpdateBySearch."' where RSSD_ID = "."'".$companyToUpdate."'";
+    "update company_prod set $selectedCompDetailsToUpdateBySearch = "."'".$selectedNewInfoToUpdateBySearch."' where ID = "."'".$companyToUpdate."'";
 //echo ($sql);
 $getResults= sqlsrv_query($conn, $sql);
 

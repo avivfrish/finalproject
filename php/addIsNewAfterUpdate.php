@@ -4,21 +4,38 @@ $connectionInfo = array("UID" => "finalproject@avifinalproject", "pwd" => "1qaZ2
 $serverName = "tcp:avifinalproject.database.windows.net,1433";
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
+$companyToUpdate = $_GET["compToUpdate"];
+$selectedNameValue = $_GET["nameInserted"];
 $selectedIDValue = $_GET["rssd_idInserted"];
-$selectedCompDetails = $_GET["compDetailsUpdateById"];
-$selectedNewInfo = $_GET["newInfoUpdateById"];
 
 $sql= /** @lang text */
-    "update company_prod set $selectedCompDetails = "."'".$selectedNewInfo."' where RSSD_ID = "."'".$selectedIDValue."'";
+    "update company_prod set isNew = 1 where ";
 
+if ($companyToUpdate){
+    //echo (" company to update ");
+    $sql = $sql."id = ".$companyToUpdate." ";
+    //echo ($sql);
+}
+else if ($selectedNameValue){
+    //echo (" selected name ");
+    $sql = $sql."name = '".$selectedNameValue."' ";
+    //echo ($sql);
+}
+else if ($selectedIDValue){
+    //echo (" selected id ");
+    $sql = $sql."RSSD_ID = ".$selectedIDValue." ";
+    //echo ($sql);
+}
+//echo ($sql);
 $getResults= sqlsrv_query($conn, $sql);
-if ($getResults == FALSE) {
+if ($getResults == FALSE){
     echo ("false");
+    //return (sqlsrv_errors());
 }
 else {
     echo ("true");
 }
-//return (sqlsrv_errors());
+
 /*$array = array();
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     $array[] = array(

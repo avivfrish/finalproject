@@ -4,7 +4,7 @@ $serverName = "tcp:avifinalproject.database.windows.net,1433";
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 $sql= /** @lang text */
-    "select distinct RSSD_ID from test";
+    "select distinct RSSD_ID from company_prod";
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
     return (sqlsrv_errors());

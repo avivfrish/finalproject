@@ -4,26 +4,21 @@ $connectionInfo = array("UID" => "finalproject@avifinalproject", "pwd" => "1qaZ2
 $serverName = "tcp:avifinalproject.database.windows.net,1433";
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
-$selectedIDValue = $_GET["rssd_idInserted"];
-$selectedCompDetails = $_GET["compDetailsUpdateById"];
-$selectedNewInfo = $_GET["newInfoUpdateById"];
+$compToDeleteFromConnections = $_GET["comp"];
 
 $sql= /** @lang text */
-    "update company_prod set $selectedCompDetails = "."'".$selectedNewInfo."' where RSSD_ID = "."'".$selectedIDValue."'";
-
+    "select id, comp1, comp2 from connections_prod where comp1 = "."'".$compToDeleteFromConnections."' or comp2 = "."'".$compToDeleteFromConnections."' ";
 $getResults= sqlsrv_query($conn, $sql);
-if ($getResults == FALSE) {
-    echo ("false");
+if ($getResults == FALSE){
+    echo ("false get connections sql ");
 }
-else {
-    echo ("true");
-}
-//return (sqlsrv_errors());
-/*$array = array();
+$array = array();
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     $array[] = array(
-        'name'=>$row['name']
+        'id'=>$row['id'],
+        'comp1'=>$row['comp1'],
+        'comp2'=>$row['comp2']
     );
-}*/
+}
 sqlsrv_free_stmt($getResults);
-//echo json_encode($array);
+echo json_encode($array);

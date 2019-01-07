@@ -4,15 +4,12 @@ $connectionInfo = array("UID" => "finalproject@avifinalproject", "pwd" => "1qaZ2
 $serverName = "tcp:avifinalproject.database.windows.net,1433";
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
-$checkList = $_GET["selectedID"];
-$selectedCompDetails = $_GET["compDetails"];
-$selectedNewInfo = $_GET["newInfo"];
+$rowToDeleteFromConnections = $_GET["row"];
 
 $sql= /** @lang text */
-    "update company_prod set $selectedCompDetails = "."'".$selectedNewInfo."' where identifier = "."'".$selectedIdValue."'";
-
-    $getResults= sqlsrv_query($conn, $sql);
-if ($getResults == FALSE) {
+    "delete from connections_prod where id = "."'".$rowToDeleteFromConnections."' ";
+$getResults= sqlsrv_query($conn, $sql);
+if ($getResults == FALSE){
     echo ("false");
 }
 else {

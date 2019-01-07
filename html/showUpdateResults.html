@@ -33,10 +33,8 @@
                 <td>{{result.city}}</td>
                 <td>{{result.country}}</td>
                 <td>{{result.state}}</td>
-                <td>{{result.id}}</td>
-                <td><button type="submit" value="Send" class="btn btn-outline-dark" ng-click="updateSearchResults(result.id)"><i class="fas fa-user-edit"></i>   Update</button>
-                    <!--<input ng-if="result.delete==1" type="checkbox" value=""  ng-false-value="0" ng-true-value="1"  ng-model="result.isChecked" checked disabled>
-                    <input ng-if="result.delete==0" type="checkbox" value="" ng-false-value="0" ng-true-value="1"  ng-model="result.isChecked" checked>--></td>
+                <td>{{result.RSSD_ID}}</td>
+                <td><button type="submit" value="Send" class="btn btn-outline-dark" id="{{result.id}}" ng-click="updateSearchResults(result.id)"><i class="fas fa-user-edit"></i>   Update</button></td>
             </tr>
         </table>
     </center>
@@ -45,4 +43,19 @@
 <div id="updating">
     <h4>Updating...</h4>
     <div class="loader"></div>
+</div>
+
+<div class="alert alert-success alert-dismissible" id="updated_comp_successfully">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Success!</strong> Company updated successfully.
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="couldnt_update_comp">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't update company.
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="couldnt_find_update_results">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't find companies.
 </div>

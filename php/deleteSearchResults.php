@@ -8,8 +8,8 @@ $companyToDelete = $_GET["compToDelete"];
 //echo ($companyToDelete);
 
 $sql= /** @lang text */
-    "delete from test where name = "."'".$companyToDelete."'";
-//echo ($sql);
+    "delete from company_prod where ID = "."'".$companyToDelete."'";
+echo ($sql);
 $getResults= sqlsrv_query($conn, $sql);
 
 if ($getResults == FALSE) {
