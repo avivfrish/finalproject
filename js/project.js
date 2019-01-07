@@ -1850,8 +1850,25 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
         //Get Stocks
         const allTradedAs = compInfo['TradedAs'];
-        const exchanges = ["NYSE", "NASDAQ", "LSE", "NSE", "ASX", "NZX", "SGX", "FWB", "TSX"];
-        let stocks = {};
+        const exchanges = ["|NYSE|:", "|NASDAQ|:", "|LSE|:", "|NSE|:", "|ASX|:", "|NZX|:", "|SGX|:", "|FWB|:", "|TSX|:"];
+        $scope.stocksOfResult = {};
+        let j = 0 ;
+        for(let item in exchanges){
+            const exchange = exchanges[item];
+            const indexOfExchange = allTradedAs.indexOf(exchange);
+            if(indexOfExchange !== -1){
+                const endOfIndex = indexOfExchange + exchange.length;
+                let tmpTradedAs = allTradedAs.slice(endOfIndex);
+                if(tmpTradedAs[0] === '|'){
+                    tmpTradedAs = tmpTradedAs.slice(1);
+                }
+                const stock = tmpTradedAs.split('|')[0];
+                $scope.stocksOfResult[j] = {'exchange': (exchange.replace("|","")).replace("|:",""), 'stock': stock};
+                j++;
+            }
+        }
+        console.log("stocks");
+        console.log($scope.stocksOfResult);
 
         $("#selectedResult").show();
 
@@ -1868,25 +1885,47 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
-    $scope.createNewStockGraph = function (name) {
-	    console.log("CREATE STOCK GRAPH");
-        document.getElementById("fillHrefForStock").innerHTML = '<a href="https://www.tradingview.com/symbols/NYSE-ALLY/" rel="noopener" target="_blank"><span class="blue-text">AAPL chart</span></a>';
-        new TradingView.widget(
-            {
-                "width" : "500px",
-                "height": "450px",
-                "interval": "D",
-                "timezone": "Etc/UTC",
-                "theme": "Light",
-                "style": "1",
-                "locale": "en",
-                "toolbar_bg": "#f1f3f6",
-                "enable_publishing": false,
-                "allow_symbol_change": true,
-                "container_id": "tradingview_a5966"
-            }
-        );
+    $scope.createNewStockGraph = function (companyName) {
+        if(Object.keys($scope.stocksOfResult).length!==0){
+            console.log("CREATE STOCK GRAPH");
+            const exchange = ($scope.stocksOfResult[0]['exchange']).trim();
+            const stock = ($scope.stocksOfResult[0]['stock']).trim();
+            const hrefOfResult = "https://www.tradingview.com/symbols/" + exchange + "-" + stock + "/";
+            //console.log(hrefOfResult);
+            //console.log("hrefOfResreult");
+            const stringToHref = "<a href=" + hrefOfResult + "rel='noopener' target='_blank'><span class='blue-text'>" +
+                stock + " Quotes</span></a></div>";
 
+            document.getElementById("fillHrefForStock").innerHTML = stringToHref;
+
+            const forSymbols = exchange+":"+stock;
+
+            new TradingView.widget(
+                {
+                    "width": 500,
+                    "height": 450,
+                    "symbol": forSymbols,
+                    "interval": "D",
+                    "timezone": "Etc/UTC",
+                    "theme": "Light",
+                    "style": "1",
+                    "locale": "en",
+                    "toolbar_bg": "#f1f3f6",
+                    "enable_publishing": false,
+                    "allow_symbol_change": true,
+                    "container_id": "tradingview_dd592"
+                }
+            );
+
+            document.getElementById("stockOf").innerHTML = companyName.toUpperCase() + " STOCK";
+            document.getElementById("tradedAsTitle").innerHTML = "Traded As: " + forSymbols;
+            $("#StockFound").show();
+            $("#StockNotFound").hide();
+        }
+        else {
+            $("#StockFound").hide();
+            $("#StockNotFound").show();
+        }
     };
 
 
