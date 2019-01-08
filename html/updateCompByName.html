@@ -1,6 +1,6 @@
 <div id="update_comp_by_name">
     <center>
-    <p>Please choose the field you wish to update<br>
+    <p><br>Please choose the field you wish to update<br>
     and insert the new information</p>
 
     <table border="0">
@@ -16,9 +16,11 @@
                 <option>country</option>
                 <option>state</option>
             </select></td></tr>
-            <tr><td>New Information: </td><td><input type="text" name="newInfo" id="newInfoUpdateByName" class="form-control" ng-model="selectedNewInfo"></td></tr>
-            <tr><td></td><td><button type="submit" value="Send" class="btn btn-outline-dark" ng-click="updateCompByName()"><i class="fas fa-user-edit"></i>    Update</button>
-                <button type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearUpdateByName()"><i class="fas fa-eraser"></i>    Clear</button></td></tr>
+            <tr><td>New Information: </td><td><input type="text" name="newInfo" id="newInfoUpdateByName" class="form-control" ng-model="selectedNewInfo"><br></td></tr>
+            <table border="0">
+                <tr><td><br></td><td><button type="submit" value="Send" class="btn btn-outline-dark mr-3" style="width: fit-content;background-color: #1F497D;color: white; display: inline-block" ng-click="updateCompByID()"><i class="fas fa-user-edit"></i>    Update</button>
+                    <button type="reset" value="Reset form" class="btn btn-outline-dark" style="width: fit-content;background-color: #1F497D;color: white" ng-click="clearUpdateByID()"><i class="fas fa-eraser"></i>    Clear</button></td></tr>
+            </table>
         </form>
     </table>
     </center>

@@ -13,7 +13,7 @@ $password_confirmation=md5(stripcslashes($_POST["password-confirmation"]));
 $err="";
 if ($password!==$password_confirmation)
 {
-    header('Location: /coral/login/?code=1');
+    header('Location: /pnina/login/?code=1');
     return false;
 }
 
@@ -27,7 +27,7 @@ $sql="INSERT into users ([user],[password],full_name,isAdmin) OUTPUT Inserted.ui
 
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
-    header('Location: /coral/login');
+    header('Location: /pnina/login');
 else
 {
     $uid="";
@@ -42,7 +42,7 @@ else
     $_SESSION['time'] = time();
     if(isset($_SESSION['user']))
     {
-        header('Location: /coral');
+        header('Location: /pnina');
     }
 
 
