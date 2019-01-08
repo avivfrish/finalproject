@@ -4,7 +4,7 @@ $now = time();
 if(!isset($_SESSION['user']))
 {
     session_destroy();
-    header('Location: /roni/login');
+    header('Location: /coral/login');
 }
 /*if ($now > $_SESSION['time']) {
     session_destroy();
