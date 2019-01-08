@@ -1894,7 +1894,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     $scope.createNewStockGraph = function (name) {
 	    console.log("CREATE STOCK GRAPH");
-        document.getElementById("fillHrefForStock").innerHTML = '<a href="https://www.tradingview.com/symbols/NYSE-ALLY/" rel="noopener" target="_blank"><span class="blue-text">AAPL chart</span></a>';
+        document.getElementById("fillHrefForStock").innerHTML = "<a href=\"https://www.tradingview.com/symbols/NYSE-ALLY/\" rel=\"noopener\" target=\"_blank\"><span class=\"blue-text\">ALLY Quotes</span></a> by TradingView</div>";
         new TradingView.widget(
             {
                 "width" : "500px",
