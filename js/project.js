@@ -360,6 +360,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             $scope.allcomments = data.data;
         });
     };
+
     $scope.nav_bar_files= function () {
         console.log("nav comment bar");
         $http({
@@ -371,7 +372,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             $scope.allFiles= data.data;
         });
     };
-
 
     $scope.admin_save_changes = function () {
         //var obi = $scope.allUsers;
@@ -1791,9 +1791,56 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             console.log(data);
             if(data.data.length > 0){
                 console.log("GET Address");
-                console.log(data.data);
                 $scope.resultsOfSearch = data.data;
-                //console.log($scope.resultsOfSearch);
+                console.log($scope.resultsOfSearch);
+                const lenOfResultsOfSearch = Object.keys($scope.resultsOfSearch).length;
+                let j = 0 ;
+                while(j<lenOfResultsOfSearch){
+                    let address = "";
+                    const street = $scope.resultsOfSearch[j]['street'];
+                    if(street!==null){
+                        address = address + street;
+                    }
+                    const city = $scope.resultsOfSearch[j]['city'];
+                    if(city!==null){
+                        if(address===""){
+                            address = address + city;
+                        }else {
+                            address = address + ", " + city;
+                        }
+                    }
+                    const state = $scope.resultsOfSearch[j]['state'];
+                    if(state!==null){
+                        if(city===null){
+                            address = address + state;
+                        }else {
+                            address = address + ", " + state;
+                        }
+                    }
+                    const country = $scope.resultsOfSearch[j]['country'];
+                    if(country!==null){
+                        if(state===null){
+                            address = address + country;
+                        }else {
+                            address = address + ", " + country;
+                        }
+                    }
+                    if (address===""){
+                        address="No Data Found";
+                    }else {
+                        const addressSplit = address.split(" ");
+                        address = "";
+                        for (const item in addressSplit){
+                            address = address + addressSplit[item].charAt(0).toUpperCase() +
+                                addressSplit[item].slice(1).toLowerCase() + " ";
+                        }
+                    }
+                    $scope.resultsOfSearch[j]['address'] = address;
+                    $scope.resultsOfSearch[j]['name'] = $scope.resultsOfSearch[j]['name'].toUpperCase();
+                    j++;
+                }
+
+
                 $("#loadingResults").hide();
                 $("#foundResults").show();
                 $("#askToSelectResult").show();
@@ -1955,7 +2002,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         document.getElementById("summaryOfResult").innerHTML = compInfo['summary'];
 
         //Get Address
-        let address = "";
+        /*let address = "";
         const street = compInfo['street'];
         if(street!==null){
             address = address + street;
@@ -1971,7 +2018,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }
         const state = compInfo['state'];
         if(state!==null){
-            if(address===""){
+            if(city!==null){
                 address = address + state;
             }else {
                 address = address + ", " + state;
@@ -1979,7 +2026,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }
         const country = compInfo['country'];
         if(country!==null){
-            if(address===""){
+            if(state!==null){
                 address = address + country;
             }else {
                 address = address + ", " + country;
@@ -1994,9 +2041,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 address = address + addressSplit[item].charAt(0).toUpperCase() +
                     addressSplit[item].slice(1).toLowerCase() + " ";
             }
-        }
-
-        document.getElementById("addressOfResult").innerHTML = address;
+        }*/
+        document.getElementById("addressOfResult").innerHTML = compInfo['address'];
 
         //Get Founded
         let founded = compInfo['founded'];
