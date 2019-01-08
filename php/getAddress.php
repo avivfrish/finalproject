@@ -17,7 +17,6 @@ $sql= /** @lang text */
 
 if($searchBy == 'Name'){
     $name = $_POST["name"];
-    $cik = $_POST["cik"];
     $id = $_POST["id"];
     $filterBy = $_POST["filterBy"];
 
@@ -31,14 +30,8 @@ if($searchBy == 'Name'){
     if ($name){
         $sql = $sql."name ".$operator." '".$char.$name.$char."' ";
     }
-    if ($cik){
-        if($name){
-            $sql = $sql."AND ";
-        }
-        //$sql = $sql."SEC_CIK ".$operator." '".$char.$cik.$char."' ";
-    }
     if ($id){
-        if($name or $cik){
+        if($name){
             $sql = $sql."AND ";
         }
         $sql = $sql."RSSD_ID ".$operator." '".$char.$id.$char."' ";

@@ -27,7 +27,7 @@ $sql="INSERT into users ([user],[password],full_name,isAdmin) OUTPUT Inserted.ui
 
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
-    header('Location: /roni/login');
+    header('Location: /coral/login');
 else
 {
     $uid="";
@@ -42,7 +42,7 @@ else
     $_SESSION['time'] = time();
     if(isset($_SESSION['user']))
     {
-        header('Location: /roni');
+        header('Location: /coral');
     }
 
 

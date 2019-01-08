@@ -2090,11 +2090,10 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
         resultsElement.scrollIntoView({ behavior: 'smooth'});
 
-        let name, cik, id;
+        let name, id;
         if (searchBy === 'Name'){
             console.log("Search results for Name");
             name = document.getElementById("nameSearched").value;
-            cik = document.getElementById("cikSearched").value;
             id = document.getElementById("idSearched").value;
         }
 
@@ -2105,7 +2104,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 searchBy : searchBy,
                 filterBy : $scope.filterBySearchByName,
                 name : name,
-                cik : cik,
                 id : id,
                 country : $scope.selectedCountryValue,
                 state : $scope.selectedStateValue,
