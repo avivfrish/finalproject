@@ -15,7 +15,7 @@ if ($getResults == FALSE)
 $array = array();
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     $array[] = array(
-            'name'=>$row['name']
+        'name'=>$row['name']
     );
 }
 sqlsrv_free_stmt($getResults);

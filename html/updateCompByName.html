@@ -1,0 +1,46 @@
+<div id="update_comp_by_name">
+    <center>
+    <p>Please choose the field you wish to update<br>
+    and insert the new information</p>
+
+    <table border="0">
+        <form method="Post">
+            <tr><td>Company Name: </td><td><input list="selectedCompName" class="form-control" type="text" name="nameInserted" id="nameInserted" ng-change="changeName()" ng-model="selectedNameValue" placeholder="select name..">
+                <datalist id="selectedCompName">
+                    <option ng-repeat="name in arrayOfCompNames" value="{{name}}">{{name}}</option>
+                </datalist></td></tr>
+            <tr><td>Details to Update: </td><td><select class="custom-select mr-sm-2" name="compDetails" id="compDetailsUpdateByName" ng-model="selectedCompDetails" placeholder="select field..">
+                <option> </option>
+                <option>street</option>
+                <option>city</option>
+                <option>country</option>
+                <option>state</option>
+            </select></td></tr>
+            <tr><td>New Information: </td><td><input type="text" name="newInfo" id="newInfoUpdateByName" class="form-control" ng-model="selectedNewInfo"></td></tr>
+            <tr><td></td><td><button type="submit" value="Send" class="btn btn-outline-dark" ng-click="updateCompByName()"><i class="fas fa-user-edit"></i>    Update</button>
+                <button type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearUpdateByName()"><i class="fas fa-eraser"></i>    Clear</button></td></tr>
+        </form>
+    </table>
+    </center>
+
+</div>
+
+<div class="alert alert-success alert-dismissible" id="updated_comp_by_name_successfully">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Success!</strong> Company updated successfully.
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="couldnt_update_comp_by_name">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't update company.
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="name_doesnt_exists_update">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't update company, no such company name!
+</div>
+
+<div id="loading_update_by_name">
+    <h4>Updating...</h4>
+    <div class="loader"></div>
+</div>

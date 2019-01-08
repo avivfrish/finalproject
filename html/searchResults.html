@@ -1,18 +1,17 @@
 <div id="searchResults" style="margin-bottom: 50px;" xmlns="http://www.w3.org/1999/html">
 
-    <div id="foundResults" class="container" >
-        <div class="row" data-spy="scroll" data-target=".leftSideResults" data-offset="50">
-            <div class="leftSideResults border rounded col-sm-4" id="leftSideResults">
+    <div id="foundResults" class="container justify-content-center">
+        <div class="row justify-content-center" data-spy="scroll" data-target=".leftSideResults" data-offset="50">
+            <div class="leftSideResults border rounded justify-content-center" style="width: 250px;alignment: center">
                 <table class="table">
                     <tr ng-repeat="result in resultsOfSearch">
                         <td>
                             <div class="card" id ="{{result.name}}" ng-click="showMoreAboutResult(result.name); createNewStockGraph(result.name);" >
                                 <div class="card-header">
-                                    <h4 class="card-title">{{result.name}}</h4>
-                                    <p class="card-text">financial company</p>
+                                    <h4 class="card-title" style="font-size: 15px;font-weight: bold">{{result.name}}</h4>
                                 </div>
                                 <div class="card-body">
-                                    <p>
+                                    <p style="font-size: 15px">
                                         Country: {{result.country}}<br>
                                         State: {{result.state}}
                                     </p>
@@ -63,7 +62,7 @@
                             </div>
 
                             <div class="products" style="margin-top: 20px">
-                                <span class="badge badge-pill badge-info" style="margin-left: 5px; margin-right: 5px;" ng-repeat="product in resultProducts">{{product}}</span>
+                                <span class="badge badge-pill badge-info" style="margin-left: 5px; margin-right: 5px; margin-bottom: 5px" ng-repeat="product in resultProducts">{{product}}</span>
                             </div>
 
                             <div class="container-fluid titleOfGeneralResult" style="margin-top: 20px">
@@ -103,7 +102,7 @@
                             <div class="col-sm-12" id="graph_comp_name">
                                 Click on Node or Connection for Details
                             </div>
-                            <div cla="container">
+                            <div class="container">
                                 <div class="row">
                                     <div class="col-sm-3" style="padding-left: 0">
                                         <span style="color: #31a9bc;font-size: 15px"><i class="fas fa-circle"></i>Selected Company</span>
@@ -144,18 +143,28 @@
                         </div>
 
 
-
-
-
-
                         <div role="tabpanel" class="tab-pane container fade" id="Stock">
-                            <div class="tradingview-widget-container">
-                                <div id="tradingview_a5966"></div>
-                                <div class="tradingview-widget-copyright" id="fillHrefForStock">
 
+                            <div id="StockFound">
+                                <br>
+                                <h3 id="stockOf"></h3>
+                                <h5 id="tradedAsTitle"></h5>
+                                <div class="tradingview-widget-container">
+                                    <div id="tradingview_dd592"></div>
+                                    <div class="tradingview-widget-copyright">
+                                        <div id="fillHrefForStock">
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+
+                            <div id="StockNotFound">
+                                <br><br>
+                                <h3>No Data About Stock Found</h3>
+                            </div>
+
                         </div>
+
 
                         <div role="tabpanel" class="tab-pane container fade" id="Articles">
 

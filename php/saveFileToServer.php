@@ -4,8 +4,6 @@ $connectionInfo = array("UID" => "finalproject@avifinalproject", "pwd" => "1qaZ2
 $serverName = "tcp:avifinalproject.database.windows.net,1433";
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
-echo ("Roni");
-
 $sql= /** @lang text */
     "select name from companies";
 $getResults= sqlsrv_query($conn, $sql);
@@ -19,3 +17,4 @@ while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
 }
 sqlsrv_free_stmt($getResults);
 echo json_encode($array);
+
