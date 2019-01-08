@@ -2,7 +2,7 @@
 
     <div id="foundResults" class="container justify-content-center">
         <div class="row justify-content-center" data-spy="scroll" data-target=".leftSideResults" data-offset="50">
-            <div class="leftSideResults border rounded justify-content-center" style="width: 250px;alignment: center">
+            <div class="leftSideResults border rounded justify-content-center" id="leftSideResults" style="width: 250px;alignment: center">
                 <table class="table">
                     <tr ng-repeat="result in resultsOfSearch">
                         <td>
@@ -11,9 +11,8 @@
                                     <h4 class="card-title" style="font-size: 15px;font-weight: bold">{{result.name}}</h4>
                                 </div>
                                 <div class="card-body">
-                                    <p style="font-size: 15px">
-                                        Country: {{result.country}}<br>
-                                        State: {{result.state}}
+                                    <p style="font-size: 15px; display: inline-block">
+                                        Address: {{result.address}}
                                     </p>
                                 </div>
                             </div>
@@ -102,7 +101,7 @@
                             <div class="col-sm-12" id="graph_comp_name">
                                 Click on Node or Connection for Details
                             </div>
-                            <div cla="container">
+                            <div class="container">
                                 <div class="row">
                                     <div class="col-sm-3" style="padding-left: 0">
                                         <span style="color: #31a9bc;font-size: 15px"><i class="fas fa-circle"></i>Selected Company</span>
@@ -142,7 +141,6 @@
                             </div>
                         </div>
 
-
                         <div role="tabpanel" class="tab-pane container fade" id="Stock">
 
                             <div id="StockFound">
@@ -164,7 +162,6 @@
                             </div>
 
                         </div>
-
 
                         <div role="tabpanel" class="tab-pane container fade" id="Articles">
 

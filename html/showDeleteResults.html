@@ -1,13 +1,47 @@
 <div id="show_delete_results">
     <center>
     <p>Select the companies you wish to delete</p>
-    <table>
+    <table class="table table-striped table-bordered">
         <tr>
             <th>Company name</th>
+            <th>Street</th>
+            <th>City</th>
+            <th>Country</th>
+            <th>State</th>
             <th>RSSD_ID</th>
             <th>Delete?</th>
         </tr>
+        <tr ng-repeat="result in resultsOfDeleteSearch">
+            <td>{{result.name}}</td>
+            <td>{{result.street}}</td>
+            <td>{{result.city}}</td>
+            <td>{{result.country}}</td>
+            <td>{{result.state}}</td>
+            <td>{{result.RSSD_ID}}</td>
+            <td><button type="submit" value="Send" class="btn btn-outline-dark" ng-click="deleteSearchResults(result.id, result.name)"><i class="fa fa-trash"></i>   Delete</button>
+                <!--<input ng-if="result.delete==1" type="checkbox" value=""  ng-false-value="0" ng-true-value="1"  ng-model="result.isChecked" checked disabled>
+                <input ng-if="result.delete==0" type="checkbox" value="" ng-false-value="0" ng-true-value="1"  ng-model="result.isChecked" checked>--></td>
+        </tr>
     </table>
-    <button type="submit" value="Send" class="btn btn-outline-dark" ng-click="deleteComp()"><i class="fa fa-trash"></i>   Delete</button>
     </center>
+</div>
+
+<div id="deleting">
+    <h4>Deleting...</h4>
+    <div class="loader"></div>
+</div>
+
+<div class="alert alert-success alert-dismissible" id="deleted_comp_successfully_by_search">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Success!</strong> Company deleted successfully.
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="couldnt_delete_comp_by_search">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't delete company.
+</div>
+
+<div class="alert alert-danger alert-dismissible" id="couldnt_find_delete_results">
+    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+    <strong>Oops!</strong> Couldn't find companies.
 </div>

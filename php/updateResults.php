@@ -6,7 +6,7 @@ $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 $compName = $_GET["name"];
 $compID = $_GET["id"];
-$deleteResultsFilterBy = $_GET["deleteResFilterBy"];
+$updateResultsFilterBy = $_GET["updateResFilterBy"];
 
 $sql= /** @lang text */
     "select ID, name, street, city, country, state, RSSD_ID from company_prod where ";
@@ -14,7 +14,7 @@ $sql= /** @lang text */
 $operator = '=';
 $char = '';
 
-if ($deleteResultsFilterBy == 'Contains'){
+if ($updateResultsFilterBy == 'Contains'){
     $operator = 'LIKE';
     $char = '%';
     if ($compName and !$compID){
@@ -29,7 +29,7 @@ if ($deleteResultsFilterBy == 'Contains'){
         $sql = $sql."RSSD_ID ".$operator." '".$char.$compID.$char."' ";
     }
 }
-else if ($deleteResultsFilterBy == 'Equals'){
+else if ($updateResultsFilterBy == 'Equals'){
     if ($compName and !$compID){
         $sql = $sql."name = '".$compName."' ";
     }
@@ -50,24 +50,47 @@ if ($getResults == FALSE){
 }
 else if ($getResults == TRUE) {
     $rows = sqlsrv_has_rows($getResults);
-    if ($rows == true){
+    if ($rows == true) {
         $array = array();
         while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
             $array[] = array(
-                'id'=>$row['ID'],
-                'name'=>$row['name'],
-                'street'=>$row['street'],
-                'city'=>$row['city'],
-                'country'=>$row['country'],
-                'state'=>$row['state'],
-                'RSSD_ID'=>$row['RSSD_ID']
+                'id' => $row['ID'],
+                'name' => $row['name'],
+                'street' => $row['street'],
+                'city' => $row['city'],
+                'country' => $row['country'],
+                'state' => $row['state'],
+                'RSSD_ID' => $row['RSSD_ID']
             );
         }
         sqlsrv_free_stmt($getResults);
         echo json_encode($array);
+    } else {
+        echo("no_rows");
     }
-    else {
-        echo ("no_rows");
-    }
-
 }
+
+
+
+/*$getResults= sqlsrv_query($conn, $sql);
+
+if ($getResults == FALSE){
+    echo ("false");
+    //return (sqlsrv_errors());
+}
+else if ($getResults == TRUE) {
+    $array = array();
+    while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
+        $array[] = array(
+            'id'=>$row['ID'],
+            'name'=>$row['name'],
+            'street'=>$row['street'],
+            'city'=>$row['city'],
+            'country'=>$row['country'],
+            'state'=>$row['state'],
+            'RSSD_ID'=>$row['RSSD_ID']
+        );
+    }
+    sqlsrv_free_stmt($getResults);
+    echo json_encode($array);
+}*/

@@ -4,24 +4,23 @@ $connectionInfo = array("UID" => "finalproject@avifinalproject", "pwd" => "1qaZ2
 $serverName = "tcp:avifinalproject.database.windows.net,1433";
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
-$selectedNameValue = $_GET["nameInsertedDelete"];
-$sql= /** @lang text */
-    "delete from test where name = "."'".$selectedNameValue."'";
-//echo ($sql);
-$getResults= sqlsrv_query($conn, $sql);
+$rowToDeleteFromConnections = $_GET["row"];
 
-if ($getResults == FALSE) {
+$sql= /** @lang text */
+    "delete from connections_prod where id = "."'".$rowToDeleteFromConnections."' ";
+$getResults= sqlsrv_query($conn, $sql);
+if ($getResults == FALSE){
     echo ("false");
-//echo (sqlsrv_errors());
 }
 else {
     echo ("true");
-};
-/* $array = array();
+}
+    //return (sqlsrv_errors());
+/*$array = array();
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     $array[] = array(
         'name'=>$row['name']
     );
-} */
+}*/
 sqlsrv_free_stmt($getResults);
 //echo json_encode($array);

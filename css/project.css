@@ -63,7 +63,7 @@ input[list] {
 }
 
 .card {
-    display: flex;
+    display: inherit !important;
     width: 210px;
     height: 150px;
     float: none;
