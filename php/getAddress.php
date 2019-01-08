@@ -12,7 +12,8 @@ $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 $searchBy = $_GET["searchBy"];
 $sql= /** @lang text */
-    "select NAME, COUNTRY from companiesNIC where ";
+    "select name, street, city, state, country, wiki_name, wiki_img, wiki_first, Products, Type, TradedAs, Industry, Founded, Revenue,
+     NumberOfEmployees from company_prod where ";
 
 if($searchBy == 'Name'){
     $name = $_GET["name"];
@@ -28,13 +29,13 @@ if($searchBy == 'Name'){
     }
 
     if ($name){
-        $sql = $sql."NAME ".$operator." '".$char.$name.$char."' ";
+        $sql = $sql."name ".$operator." '".$char.$name.$char."' ";
     }
     if ($cik){
         if($name){
             $sql = $sql."AND ";
         }
-        $sql = $sql."SEC_CIK ".$operator." '".$char.$cik.$char."' ";
+        //$sql = $sql."SEC_CIK ".$operator." '".$char.$cik.$char."' ";
     }
     if ($id){
         if($name or $cik){
@@ -50,25 +51,25 @@ else{
     $street = $_GET["street"];
 
     if ($country){
-        $sql = $sql."COUNTRY = '".$country."' ";
+        $sql = $sql."country = '".$country."' ";
     }
     if ($state){
         if($country){
             $sql = $sql."AND ";
         }
-        $sql = $sql."StateLong = '".$state."' ";
+        $sql = $sql."state = '".$state."' ";
     }
     if ($city){
         if($country or $state){
             $sql = $sql."AND ";
         }
-        $sql = $sql."CITY = '".$city."' ";
+        $sql = $sql."city = '".$city."' ";
     }
     if ($street){
         if($city or $country or $state){
             $sql = $sql."AND ";
         }
-        $sql = $sql."STREET = '".$street."' ";
+        $sql = $sql."street = '".$street."' ";
     }
 }
 
@@ -78,9 +79,21 @@ if ($getResults == FALSE)
 $array = array();
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     $array[] = array(
-        'name'=>$row['NAME'],
-        'country'=>$row['COUNTRY'],
-        'state'=>"l"//$row['StateLong']
+        'name'=>$row['name'],
+        'street'=>$row['street'],
+        'city'=>$row['city'],
+        'state'=>$row['state'],
+        'country'=>$row['country'],
+        'wiki_name'=>$row['wiki_name'],
+        'logo'=>$row['wiki_img'],
+        'summary'=>$row['wiki_first'],
+        'products'=>$row['Products'],
+        'type'=>$row['Type'],
+        'TradedAs'=>$row['TradedAs'],
+        'industry'=>$row['Industry'],
+        'founded'=>$row['Founded'],
+        'revenue'=>$row['Revenue'],
+        'numOfEmployee'=>$row['NumberOfEmployees']
     );
 }
 sqlsrv_free_stmt($getResults);

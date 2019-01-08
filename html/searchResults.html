@@ -6,7 +6,7 @@
                 <table class="table">
                     <tr ng-repeat="result in resultsOfSearch">
                         <td>
-                            <div class="card" ng-click="showMoreAboutResult(result.name); createNewStockGraph(result.name);" >
+                            <div class="card" id ="{{result.name}}" ng-click="showMoreAboutResult(result.name); createNewStockGraph(result.name);" >
                                 <div class="card-header">
                                     <h4 class="card-title" style="font-size: 15px;font-weight: bold">{{result.name}}</h4>
                                 </div>
@@ -24,7 +24,7 @@
 
 
 
-            <div class="rightSideResults border rounded col-sm-8">
+            <div class="border rounded col-sm-8" id = "rightSideResults" >
                 <div id="askToSelectResult">
                     Select Search Result to show more..
                 </div>
@@ -32,72 +32,61 @@
 
                     <ul class="nav nav-tabs border rounded" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" id="tab_GeneralInfo" href="#GeneralInfo" role="tab" data-toggle="tab">General Information</a>
+                            <a class="nav-link active" id="tab_GeneralInfo" href="#GeneralInfo" role="tab" data-toggle="tab" ng-click="setCurrentTabSearch(true)">General Information</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link"  id="tab_Competitors" href="#Competitors" role="tab" data-toggle="tab" ng-click="get_python()">Competitors</a>
+                            <a class="nav-link"  id="tab_Competitors" href="#Connections" role="tab" data-toggle="tab" ng-click="get_python();setCurrentTabSearch(false)">Connections</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link"  id="tab_Stock" href="#Stock" role="tab" data-toggle="tab">Stock</a>
+                            <a class="nav-link"  id="tab_Stock" href="#Stock" role="tab" data-toggle="tab" ng-click="setCurrentTabSearch(false)">Stock</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link"  id="tab_Articles" href="#Articles" role="tab" data-toggle="tab">Articles</a>
+                            <a class="nav-link"  id="tab_Articles" href="#Articles" role="tab" data-toggle="tab" ng-click="setCurrentTabSearch(false)">Articles</a>
                         </li>
                     </ul>
 
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane container active" id="GeneralInfo">
+                        <div role="tabpanel" class="tab-pane container active" id="GeneralInfo" style="height: fit-content">
                             <div class="container-fluid titleOfGeneralResult">
                                 <div class="row">
                                     <div class="col-sm-8">
                                         <br>
-                                        <h2> Ally Financial </h2>
-                                        <h4>Public company of Financial services</h4>
+                                        <h3 id="selectedCompanyName" style="margin-bottom: 2px"></h3>
+                                        <p id="wikiNameOfResult" style="font-size: medium; color: #1f497d; margin-bottom: 2px"></p>
+                                        <h4 id="secondTitleResult"></h4>
                                     </div>
                                     <div class="col-sm-4" style="margin-top: 20px">
-                                        <img class ="logoImg" src="//upload.wikimedia.org/wikipedia/commons/thumb/0/00/Ally_Financial.svg/360px-Ally_Financial.svg.png"
-                                             alt="logo" height="100" width="100">
+                                        <img class ="logoImg" id="companyLogo" src="" alt="logo" height="100" width="150">
                                     </div>
                                 </div>
                             </div>
 
                             <div class="products" style="margin-top: 20px">
-                                <span class="badge badge-pill badge-info">Car finance</span>
-                                <span class="badge badge-pill badge-info">Online banking</span>
-                                <span class="badge badge-pill badge-info">Mortgages</span>
-                                <span class="badge badge-pill badge-info">Credit cards</span>
-                                <span class="badge badge-pill badge-info">Brokerage firm</span>
+                                <span class="badge badge-pill badge-info" style="margin-left: 5px; margin-right: 5px; margin-bottom: 5px" ng-repeat="product in resultProducts">{{product}}</span>
                             </div>
 
                             <div class="container-fluid titleOfGeneralResult" style="margin-top: 20px">
                                 <div class="row">
-                                    <div class="col-sm-8">
-                                        <p>
-                                            Ally Financial Inc. is a bank holding company organized in Delaware and headquartered in Detroit, Michigan. The company provides financial services including online banking, car finance, corporate lending, vehicle insurance, mortgages, credit cards, and brokerage firm services.
-                                            Ally is ranked 19th on the list of largest banks in the United States by assets. It is the largest car finance company in the U.S. by volume[4] and serves approximately 18,500 automotive dealerships and 4.3 million retail consumers.[3] Via its SmartAuction online marketplace for auto auctions, launched in 2000, the company has sold more than 5 million vehicles including 356,000 vehicles sold in 2017.
-                                        </p>
+                                    <div class="col-sm-7">
+                                        <p id="summaryOfResult"></p>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-5">
                                         <table class="table tableOfGeneralInfo">
                                             <tr>
                                                 <td>Address</td>
-                                                <td>USA</td>
+                                                <td id="addressOfResult"></td>
                                             </tr>
                                             <tr>
                                                 <td>Founded</td>
-                                                <td>1919</td>
+                                                <td id="foundedOfResult"></td>
                                             </tr>
                                             <tr>
                                                 <td>Revenue</td>
-                                                <td>US$ 9.866 billion </td>
+                                                <td id="revenueOfResult"></td>
                                             </tr>
                                             <tr>
-                                                <td>Number of employees</td>
-                                                <td>7,678</td>
-                                            </tr>
-                                            <tr>
-                                                <td>Website</td>
-                                                <td><a href="https://www.ally.com">www.ally.com</a></td>
+                                                <td>Number Of Employees</td>
+                                                <td id="numOfEmployeesOfResult"></td>
                                             </tr>
                                         </table>
                                     </div>
@@ -107,13 +96,32 @@
 
                         </div>
 
-                        <div role="tabpanel" class="tab-pane container fade col-sm-12" id="Competitors">
+                        <div role="tabpanel" class="tab-pane container fade col-sm-12" id="Connections">
 
                             <div id="3d-graph" width="600px" ></div>
                             <div class="col-sm-12" id="graph_comp_name">
                                 Click on Node or Connection for Details
                             </div>
                             <div cla="container">
+                                <div class="row">
+                                    <div class="col-sm-3" style="padding-left: 0">
+                                        <span style="color: #31a9bc;font-size: 15px"><i class="fas fa-circle"></i>Selected Company</span>
+                                    </div>
+                                    <div class="col-sm-3" style="padding-left: 0">
+                                        <span style="color: #464f52;font-size: 15px"><i class="fas fa-circle"></i>Related Company</span>
+                                    </div>
+                                    <div class="col-sm-2" style="padding-left: 0">
+                                        <span style="color: red;font-size: 15px"><i class="fas fa-minus"></i>Competitors</span>
+                                    </div>
+                                    <div class="col-sm-2" style="padding-left: 0">
+                                        <span style="color: #31963e;font-size: 15px"><i class="fas fa-minus"></i>Sisters</span>
+                                    </div>
+                                    <div class="col-sm-2" style="padding-left: 0">
+                                        <span style="color: blue;font-size: 15px"><i class="fas fa-minus"></i>Subsidiaries</span>
+                                    </div>
+
+                                </div>
+
                                 <div class="row " id="graphDetails" style="display: none;">
                                     <div class="col-sm-2" >
                                         RSSD ID
@@ -134,15 +142,29 @@
                             </div>
                         </div>
 
+
                         <div role="tabpanel" class="tab-pane container fade" id="Stock">
-                            <div class="tradingview-widget-container">
-                                <div id="tradingview_a5966"></div>
-                                <div class="tradingview-widget-copyright">
-                                    <div id="fillHrefForStock">
+
+                            <div id="StockFound">
+                                <br>
+                                <h3 id="stockOf"></h3>
+                                <h5 id="tradedAsTitle"></h5>
+                                <div class="tradingview-widget-container">
+                                    <div id="tradingview_dd592"></div>
+                                    <div class="tradingview-widget-copyright">
+                                        <div id="fillHrefForStock">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
+                            <div id="StockNotFound">
+                                <br><br>
+                                <h3>No Data About Stock Found</h3>
+                            </div>
+
                         </div>
+
 
                         <div role="tabpanel" class="tab-pane container fade" id="Articles">
 
