@@ -1,15 +1,17 @@
 
 <div id="search_compByName" style="margin-top: 70px">
   <div class="tab-pane active" id="SearchByName">
-    <h1>Search a Company by Name</h1>
-    <p>Fill in the Search data.</p>
+    <h1>Search company</h1>
+      <br>
+    <p>Enter company name, CIK number or RSSD ID</p>
+      <br>
 
-        <div class="container">
-          <div class="row">
+        <div class="container justify-content-center">
+          <div class="row justify-content-center">
             <div class="col-xs-6 col-xs-offset-2">
               <div class="input-group">
                   <div class="dropdown show">
-                      <a class="btn btn-secondary dropdown-toggle" style="width: fit-content" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      <a class="btn btn-secondary dropdown-toggle mr-3" style="width: fit-content;background-color: #1F497D;" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                           Filter By:
                       </a>
                       <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
@@ -19,15 +21,15 @@
                       </div>
                   </div>
                 <input type="hidden" name="nameSearched" value="nameSearched">
-                <input type="text" class="form-control" name="x" id="nameSearched" placeholder="Search company...">
-                <span class="input-group-btn"></span>
+                <input type="text" class="form-control mr-3 text-center" name="x" id="nameSearched" placeholder="Search company...">
+                <span  class="input-group-btn"></span>
 
                 <input type="hidden" name="cikSearched" value="cikSearched">
-                <input type="text" class="form-control" name="x" id="cikSearched" placeholder="Fill CIK">
+                <input type="text" class="form-control mr-3 text-center" name="x" id="cikSearched" placeholder="Fill CIK">
                 <span class="input-group-btn"></span>
 
                 <input type="hidden" name="idSearched" value="idSearched">
-                <input type="text" class="form-control" name="x" id="idSearched" placeholder="Fill RSSD ID">
+                <input type="text" class="form-control mr-3 text-center" name="x" id="idSearched" placeholder="Fill RSSD ID">
                 <span class="input-group-btn"></span>
 
               </div>
@@ -36,7 +38,8 @@
         </div>
 
         <br>
-        <button class="btn btn-default" type="submit" ng-click="searchForResults('Name')">Search  <i class="fas fa-search"></i></button>
+        <br>
+        <button style="background-color: #1F497D; color: white;" class="btn btn-default" type="submit" ng-click="searchForResults('Name')">Search  <i class="fas fa-search"></i></button>
 
       <!--<iframe frameBorder='0' scrolling='no' width='800' height='420' src='https://api.stockdio.com/visualization/financial/charts/v1/HistoricalPrices?app-key=C0F5BBE2E9E14259A7A3973EF8B03625&symbol=AAPL&displayPrices=Area&dividends=true&splits=true&palette=Financial-Light'></iframe>
         -->

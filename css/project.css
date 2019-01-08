@@ -12,6 +12,10 @@ input[list] {
     background: #ffffff;
     width: 200px;
     border-style: ridge;
+    display: block;
+    text-align: center;
+    margin: 0 auto;
+    float: none;
 }
 
 .leftSideResults {
@@ -60,8 +64,8 @@ input[list] {
 
 .card {
     display: flex;
-    /*width: 480px;
-    height: 300px;*/
+    width: 210px;
+    height: 150px;
     float: none;
     border: 2px solid #3BA3BA;
     border-radius: 10px;
@@ -179,7 +183,7 @@ text-align: center;
 }
 
 .panel h2{ color:#444444; font-size:18px; margin:0 0 8px 0;}
-.panel p { color:#777777; font-size:14px; margin-bottom:30px; line-height:24px;}
+.panel p { color:#777777; font-size:14px; margin-bottom:15px; line-height:24px;}
 .login-form .form-control {
     background: #f7f7f7 none repeat scroll 0 0;
     border: 1px solid #d4d4d4;
@@ -648,19 +652,20 @@ left: 50%;
     height: 100%;
 }
 .carousel-caption {
-      text-align: center;
-      max-width: 900px;
-      padding:5px;
+    max-width: 900px;
   }
 
 .carousel-caption h1{
+    text-align:center;
      color: white;
      -webkit-text-fill-color: white; /* Will override color (regardless of order) */
      -webkit-text-stroke-width: 1px;
      -webkit-text-stroke-color: #062c33;
+    display: inherit;
  }
 
 .carousel-caption h3{
+    text-align:center;
     color: white;
     -webkit-text-fill-color: white; /* Will override color (regardless of order) */
     -webkit-text-stroke-width: 1px;
@@ -673,8 +678,5 @@ left: 50%;
 }
 
 .carousel-indicators li {
-    width: 30px;
-    height: 30px;
-    border: none;
-    border-radius: 100%;
+
 }

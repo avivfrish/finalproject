@@ -1,18 +1,17 @@
 <div id="searchResults" style="margin-bottom: 50px;" xmlns="http://www.w3.org/1999/html">
 
-    <div id="foundResults" class="container" >
-        <div class="row" data-spy="scroll" data-target=".leftSideResults" data-offset="50">
-            <div class="leftSideResults border rounded col-sm-4">
+    <div id="foundResults" class="container justify-content-center">
+        <div class="row justify-content-center" data-spy="scroll" data-target=".leftSideResults" data-offset="50">
+            <div class="leftSideResults border rounded justify-content-center" style="width: 250px;alignment: center">
                 <table class="table">
                     <tr ng-repeat="result in resultsOfSearch">
                         <td>
                             <div class="card" ng-click="showMoreAboutResult(result.name); createNewStockGraph(result.name);" >
                                 <div class="card-header">
-                                    <h4 class="card-title">{{result.name}}</h4>
-                                    <p class="card-text">financial company</p>
+                                    <h4 class="card-title" style="font-size: 15px;font-weight: bold">{{result.name}}</h4>
                                 </div>
                                 <div class="card-body">
-                                    <p>
+                                    <p style="font-size: 15px">
                                         Country: {{result.country}}<br>
                                         State: {{result.state}}
                                     </p>

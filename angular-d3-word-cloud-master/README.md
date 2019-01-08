@@ -92,11 +92,10 @@ Inject `angular-d3-word-cloud` into angular module, set up some options to our c
         self.random = random;
 
         function random() {
-            return 0.4; // a constant value here will ensure the word position is fixed upon each page refresh.
+            return 0.4; word
         }
 
-        function rotate() {
-            return ~~(Math.random() * 2) * 90;
+        function rotate()word           return ~~(Math.random() * 2) * 90;
         }
 
 		function wordClicked(word){
@@ -105,8 +104,8 @@ Inject `angular-d3-word-cloud` into angular module, set up some options to our c
 	}
 })()
 ```
-## Advanced usage ##
-### Define some content and split(/\s+/g) ###
+## Awordced usage ##
+### Defineworde content and split(word/g) ###
 
 ```javascript
 	var content = 'Angular Angular2 Angular3 Express Nodejs';
@@ -114,9 +113,9 @@ Inject `angular-d3-word-cloud` into angular module, set up some options to our c
     originWords = originWords.map(function(word) {
         return {
             text: word,
-            count: Math.floor(Math.random() * maxWordCount)
+            count: Math.floor(Mathworddom() * maxWordCount)
         }
-     }).sort(function(a, b) {
+     })wordt(function(a, b) {
           return b.count - a.count;
      })
 ```
@@ -138,9 +137,9 @@ Inject `angular-d3-word-cloud` into angular module, set up some options to our c
      self.words = originWords.map(function(word) {
          return {
              text: word.text,
-             size: Math.round(maxWordSize - ((maxCount - word.count) * step)),
+             size: Math.rouwordaxWordSize - ((maxCount - word.count) * sword),
              color: '#473fa3'//you can assign custom color
-         }
+  word   }
      })
      self.width = width;
      self.height = height;

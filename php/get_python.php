@@ -16,7 +16,7 @@ $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 
 
-$sql="select * from connections where records='".$company."' or word='".$company."'";
+$sql= "select * from connections where comp1='" .$company."' or word='".$company."'";
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
     return (sqlsrv_errors());

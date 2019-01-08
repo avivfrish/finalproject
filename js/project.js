@@ -223,7 +223,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
-    $scope.show_insert_new_comp = function () {
+    /*$scope.show_insert_new_comp = function () {
         console.log("SHOE INSERT NEW COMP");
         $scope.hidePages();
         $("#new_comp").show();
@@ -258,7 +258,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#no_id_typed").hide();
         $("#added_file_successfully").hide();
         $("#couldnt_add_new_file").hide();
-    }
+    }*/
 
     $scope.show_search = function (searchBy) {
         console.log("show search div");
