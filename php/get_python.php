@@ -13,38 +13,146 @@ $company=stripcslashes($_GET["company"]);
 $connectionInfo = array("UID" => "finalproject@avifinalproject", "pwd" => "1qaZ2wsX", "Database" => "finalProject", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0);
 $serverName = "tcp:avifinalproject.database.windows.net,1433";
 $conn = sqlsrv_connect($serverName, $connectionInfo);
+$nodes=array();
+$nodes_for_unique=array();
+$comp_conn= array();
+
+$checkIsMother="select isMother,mother_comp from company_test where name='".$company."'";
+$getResultsIsMother= sqlsrv_query($conn, $checkIsMother);
+$isMother = "";
+$mother_comp = "";
+if ($getResultsIsMother == FALSE)
+    return (sqlsrv_errors());
+else{
+    if (sqlsrv_has_rows($getResultsIsMother)) {
+
+        while ($row = sqlsrv_fetch_array($getResultsIsMother, SQLSRV_FETCH_ASSOC)) {
+            $isMother = $row['isMother'];
+            $mother_comp = $row['mother_comp'];
+        }
+    }
+}
+
+if ($isMother == 0)
+{
+
+    $getSisters="select name from company_test where mother_comp='".$mother_comp."' and name!='".$company."'";
+    $getResultsSister= sqlsrv_query($conn, $getSisters);
+    if ($getResultsSister == FALSE)
+        return (sqlsrv_errors());
+    else
+    {
+        if (sqlsrv_has_rows($getResultsSister)) {
+            $comp = trim(strtolower($company));
+            $nodes[] = array(
+                'id' => $comp,
+                'group' => "1",
+
+            );
+            $nodes_for_unique[] = strtolower($company);
+            while ($row = sqlsrv_fetch_array($getResultsSister, SQLSRV_FETCH_ASSOC)) {
+
+                if (!in_array(trim(strtolower($row['name'])), $nodes_for_unique)) {
+                    if ( trim(strtolower($row['name'])) !== trim(strtolower($mother_comp)))
+                    {
+                        $g1 = "0";
+                        $comp = trim(strtolower($company));
+                        if ($comp == trim(strtolower($row['name']))) {
+                            $g1 = "1";
+                        }
+
+                        $nodes[] = array(
+                            'id' => trim(strtolower($row['name'])),
+                            'group' => $g1,
+
+                        );
+                        $nodes_for_unique[] = trim(strtolower($row['name']));
+                        $comp_conn[] = array(
+                            'source'=>trim(strtolower($comp)),
+                            'target'=>trim(strtolower($row['name'])),
+                            'label'=>"Sisters",
+
+                        );
+
+
+                    }
 
 
 
-$sql="select * from connections where records='".$company."' or word='".$company."'";
+                }
+
+
+            }
+
+
+        }
+
+
+    }
+}
+
+
+$sisterCount=0;
+
+$sql="select * from connections where (comp1='".$company."' or comp2='".$company."') and conn_type!='Sisters'";
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
     return (sqlsrv_errors());
-$comp_conn= array();
-$nodes=array();
-$nodes_for_unique=array();
-while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
-    if (!in_array($row['records'],$nodes_for_unique))
+
+
+    while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC))
+{
+
+    $comp1=strtolower($row['comp1']);
+    $comp2=strtolower($row['comp2']);
+    $comp1=trim($comp1);
+    $comp2=trim($comp2);
+    //echo $comp1.";".$comp2.";";
+    if (!in_array(trim(strtolower($row['comp1'])),$nodes_for_unique))
     {
+
+        $g1="0";
+        $comp=trim(strtolower($company));
+
+        if ($comp==$comp1)
+        {
+            $g1="1";
+        }
+
         $nodes[] = array(
-            'id' => $row['records'],
+            'id' => $comp1,
+            'group' => $g1,
+
         );
-        $nodes_for_unique[]=$row['records'];
+        $nodes_for_unique[]=$comp1;
     }
-    if (!in_array($row['word'],$nodes_for_unique))
+    if (!in_array(trim(strtolower($row['comp2'])),$nodes_for_unique))
     {
+        $g2="0";
+        $comp=trim(strtolower($company));
+
+        if ($comp==$comp2)
+        {
+            $g2="1";
+        }
+
         $nodes[] = array(
-            'id' => $row['word'],
+            'id' => $comp2,
+            'group' => $g2,
+
         );
-        $nodes_for_unique[]=$row['word'];
+        $nodes_for_unique[]=$comp2;
     }
     $comp_conn[] = array(
-        'source'=>$row['records'],
-        'target'=>$row['word'],
-        'label'=>$row['relation'],
+        'source'=>$comp1,
+        'target'=>$comp2,
+        'label'=>$row['conn_type'],
+
     );
 
 }
+
+//echo json_encode($nodes_for_unique);
 $to_graph=array(
     'nodes' =>  $nodes,
     'links' => $comp_conn

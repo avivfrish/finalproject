@@ -60,6 +60,8 @@ if(!isset($_SESSION['user']))
         include "html/searchResults.html";
         include "html/searchModals.html";
         include "html/graph.html";
+
+
 		include "html/updateComp.html";
         include "html/insertNewComp.html";
         include "html/chooseHowToDelete.html";

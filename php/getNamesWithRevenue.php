@@ -12,7 +12,7 @@ $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 
 $sql= /** @lang text */
-    "select name,Revenue from company_prod where Revenue!='NA'";
+    "select top 50 name,Revenue from company_prod where Revenue!='NA' and Revenue not like '%|%' order by CONVERT(int, Revenue) desc";
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
     return (sqlsrv_errors());

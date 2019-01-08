@@ -30,8 +30,8 @@
                             <a class="nav-link dropdown-toggle"  id="navbarDropdownMenuLink3" data-toggle="dropdown" href="#"  aria-haspopup="true"
                                aria-expanded="false">Search</a>
                             <div class="dropdown-menu  dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink3">
-                                <a class="dropdown-item" href="#" ng-click="show_search('name');">Search By Name <i class="fas fa-address-book"></i></a>
-                                <a class="dropdown-item" href="#" ng-click="show_search('city');">Search By City <i class="fas fa-map-marker-alt"></i></a>
+                                <a class="dropdown-item" href="#" ng-click="show_search('name');"><i class="fas fa-address-book"></i>  Search By Name</a>
+                                <a class="dropdown-item" href="#" ng-click="show_search('city');"><i class="fas fa-map-marker-alt"></i>  Search By Location</a>
                             </div>
                         </li>
 					</li>
@@ -127,6 +127,115 @@
 				</div>
 				<div class="modal-footer">
                     <button type="button" class="btn btn-secondary" ng-click="admin_save_changes()">Save</button>
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="modal fade" id="admin_comment_modal" tabindex="-1" role="dialog" aria-labelledby="Admin comment Modal" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" >Comments</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<table  class="table table-striped table-bordered"  >
+						<tr>
+							<th>
+								name
+							</th>
+							<th>
+								email
+							</th>
+							<th>
+								comment
+							</th>
+
+						</tr>
+						<tr ng-repeat="user in allcomments">
+							<td>
+								{{user.name}}
+							</td>
+							<td>
+								{{user.email}}
+							</td>
+							<td>
+								{{user.comment}}
+							</td>
+
+
+
+						</tr>
+					</table>
+
+
+
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="modal fade" id="admin_file_modal" tabindex="-1" role="dialog" aria-labelledby="Admin file Modal" aria-hidden="true">
+		<div class="modal-dialog modal-lg" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" >Files Statuses</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<table  class="table table-striped table-bordered"  >
+						<tr>
+							<th>
+								User
+							</th>
+							<th>
+								Time
+							</th>
+							<th>
+								File
+							</th>
+							<th>
+								Status
+							</th>
+
+						</tr>
+						<tr ng-repeat="file in allFiles">
+							<td>
+								{{file.user}}
+							</td>
+							<td>
+								{{file.time}}
+							</td>
+							<td>
+								{{file.file_name}}
+							</td>
+							<td>
+								{{file.status}}
+							</td>
+
+
+						</tr>
+					</table>
+
+
+
+
+				</div>
+				<div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 				</div>
 			</div>

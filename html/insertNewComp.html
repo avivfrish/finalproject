@@ -1,56 +1,64 @@
 <div id="new_comp" style="margin-top: 70px">
-    <h1><b>Add New Company</b></h1>
+    <center>
+   <!-- <h1><b>Add New Company</b></h1>
     <center>
 
             <p>Please insert the following details<br>
-            of the company you wish to add</p>
+            of the company you wish to add</p>-->
 
+        <div class="row">
+            <div class="col-md-12">
+                <h1><b>Add New Company</b></h1>
+                <p>Please insert the following details<br>
+                    of the company you wish to add</p>
+            </div>
+            <div class="col-md-12">
+                <table border="0">
+                    <form method="Post">
+                        <tr><td>Company Name: </td><td><input class="form-control" type="text" name="companyName" id="compName" placeholder="type here.."></td></tr>
+                        <tr><td>Street: </td><td><input class="form-control" type="text" name="street" id="compStreet" placeholder="type here.."></td></tr>
+                        <tr><td>city: </td><td><input class="form-control" type="text" name="city" id="compCity" placeholder="type here.."></td></tr>
+                        <tr><td>country: </td><td><input class="form-control" type="text" name="country" id="compCountry" placeholder="type here.."></td></tr>
+                        <tr><td>state: </td><td><input class="form-control" type="text" name="state" id="compState" placeholder="type here.."></td></tr>
+                        <tr><td>RSSD_ID: </td><td><input class="form-control" type="text" name="companyID" id="compID" placeholder="type here.."></td></tr>
+                    </form>
+                    <tr><td></td><td><button type="submit" value="send" class="btn btn-outline-dark" ng-click="insertNewComp()"><i class="fas fa-plus"></i>    Add</button>
+                    <button type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearInsert()"><i class="fas fa-eraser"></i>    Clear</button></td></tr>
+                </table>
+            </div>
+        </div>
+     </center>
+ </div>
 
-            <table border="0">
-                <form method="Post">
-                    <tr><td>Company Name: </td><td><input class="form-control" type="text" name="companyName" id="compName" placeholder="type here.."></td></tr>
-                    <tr><td>Street: </td><td><input class="form-control" type="text" name="street" id="compStreet" placeholder="type here.."></td></tr>
-                    <tr><td>city: </td><td><input class="form-control" type="text" name="city" id="compCity" placeholder="type here.."></td></tr>
-                    <tr><td>country: </td><td><input class="form-control" type="text" name="country" id="compCountry" placeholder="type here.."></td></tr>
-                    <tr><td>state: </td><td><input class="form-control" type="text" name="state" id="compState" placeholder="type here.."></td></tr>
-                    <tr><td>RSSD_ID: </td><td><input class="form-control" type="text" name="companyID" id="compID" placeholder="type here.."></td></tr>
-                </form>
-                <tr><td></td><td><button type="submit" value="send" class="btn btn-outline-dark" ng-click="insertNewComp()"><i class="fas fa-plus"></i>    Add</button>
-                <button type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearInsert()"><i class="fas fa-eraser"></i>    Clear</button></td></tr>
-            </table>
+ <div class="alert alert-success alert-dismissible" id="added_comp_successfully">
+     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+     <strong>Success!</strong> Company added successfully.
+ </div>
 
-    </center>
-</div>
+ <div class="alert alert-danger alert-dismissible" id="couldnt_add_new_comp">
+     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+     <strong>Oops!</strong> Couldn't add company.
+ </div>
 
-<div class="alert alert-success alert-dismissible" id="added_comp_successfully">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Success!</strong> Company added successfully.
-</div>
+ <div class="alert alert-danger alert-dismissible" id="compName_already_exists_insert">
+     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+     <strong>Oops!</strong> Couldn't add company, company name already exists!
+ </div>
 
-<div class="alert alert-danger alert-dismissible" id="couldnt_add_new_comp">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Oops!</strong> Couldn't add company.
-</div>
+ <div class="alert alert-danger alert-dismissible" id="RSSD_ID_already_exists_insert">
+     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+     <strong>Oops!</strong> Couldn't add company, RSSD_ID already exists!
+ </div>
 
-<div class="alert alert-danger alert-dismissible" id="compName_already_exists_insert">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Oops!</strong> Couldn't add company, company name already exists!
-</div>
+ <div class="alert alert-danger alert-dismissible" id="no_compName_typed">
+     <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+     <strong>Oops!</strong> Couldn't add company, please insert company name!
+ </div>
 
-<div class="alert alert-danger alert-dismissible" id="RSSD_ID_already_exists_insert">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Oops!</strong> Couldn't add company, RSSD_ID already exists!
-</div>
+ <div id="loading_new_comp">
+     <h4>Adding...</h4>
+     <div class="loader"></div>
+ </div>
 
-<div class="alert alert-danger alert-dismissible" id="no_compName_typed">
-    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-    <strong>Oops!</strong> Couldn't add company, please insert company name!
-</div>
-
-<div id="loading_new_comp">
-    <h4>Adding...</h4>
-    <div class="loader"></div>
-</div>
-
-<!--Arial Black, Gadget, sans-serif-->
+ <!--Arial Black, Gadget, sans-serif-->
 
