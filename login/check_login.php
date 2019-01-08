@@ -9,7 +9,7 @@
 session_start();
 if(isset($_SESSION['login_user']))
 {
-    header('Location: /pnina');
+    header('Location: /coral');
 }
 
 
@@ -24,11 +24,11 @@ $pass=md5($_POST['inputPassword']);
 $sql = "SELECT * from users where [user]='$user' and [password] ='$pass'";
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
-    header('Location: /pnina/login');
+    header('Location: /coral/login');
 $usr=array();
 if (sqlsrv_has_rows($getResults)===false)
 {
-    header('Location: /pnina/login/?code=2');
+    header('Location: /coral/login/?code=2');
 }
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     $usr[]=array(
@@ -47,7 +47,7 @@ $_SESSION['time'] = time();
 $_SESSION['isAdmin'] = $usr[0]['isAdmin'];
 if(isset($_SESSION['user']))
 {
-    header('Location: /pnina');
+    header('Location: /coral');
 }
 else{
     echo $row['uid'];

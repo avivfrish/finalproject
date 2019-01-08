@@ -27,6 +27,11 @@
                 <input type="text" class="form-control mr-3 text-center" name="x" id="idSearched" placeholder="Fill RSSD ID">
                 <span class="input-group-btn"></span>
 
+                <input type="text" list="selectedProduct" placeholder=" Select Product..." ng-change="getIframeSrc()" ng-model="selectedProductValue">
+                <datalist id="selectedProduct">
+                    <option ng-repeat="product in products" value="{{product}}">{{product}}</option>
+                </datalist>
+
 
               </div>
             </div>

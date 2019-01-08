@@ -65,6 +65,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.selectedStateValue = "";
         $scope.selectedCityValue = "";
         $scope.selectedStreetValue = "";
+        $scope.selectedProductValue = "";
 
         $scope.arrayOfCountries = [];
         //autocomplete(document.getElementById("myInput"), $scope.arrayOfCountries22);
@@ -78,6 +79,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.getDistinctConnections();
         $scope.industriesStatistic = [];
         $scope.getIndustry();
+        $scope.products = [];
         $scope.productsStatistic = [];
         $scope.getProducts();
         $scope.words = [];
@@ -2105,6 +2107,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 filterBy : $scope.filterBySearchByName,
                 name : name,
                 id : id,
+                product : $scope.selectedProductValue,
                 country : $scope.selectedCountryValue,
                 state : $scope.selectedStateValue,
                 city : $scope.selectedCityValue,
@@ -2125,7 +2128,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 while(j<lenOfResultsOfSearch){
                     let address = "";
                     const street = $scope.resultsOfSearch[j]['street'];
-                    if(street!==null){
+                    if(street!==null && street!=='NA'){
                         address = address + street;
                     }
                     const city = $scope.resultsOfSearch[j]['city'];
@@ -2138,7 +2141,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     }
                     const state = $scope.resultsOfSearch[j]['state'];
                     if(state!==null){
-                        if(city===null){
+                        if(city===null && city==='NA'){
                             address = address + state;
                         }else {
                             address = address + ", " + state;
@@ -2146,7 +2149,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     }
                     const country = $scope.resultsOfSearch[j]['country'];
                     if(country!==null){
-                        if(state===null){
+                        if(state===null && state==='NA'){
                             address = address + country;
                         }else {
                             address = address + ", " + country;
@@ -2226,7 +2229,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         const wiki_name = compInfo['wiki_name'];
         console.log("wiki_name");
         console.log(wiki_name);
-        if(wiki_name!=='NA'){
+        if(wiki_name!=='NA' && wiki_name.toUpperCase()!==name.toUpperCase()){
             document.getElementById("wikiNameOfResult").innerHTML = "Redirected from " + wiki_name;
         }
 
@@ -2329,46 +2332,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         document.getElementById("summaryOfResult").innerHTML = compInfo['summary'];
 
         //Get Address
-        /*let address = "";
-        const street = compInfo['street'];
-        if(street!==null){
-            address = address + street;
-        }
-
-        const city = compInfo['city'];
-        if(city!==null){
-            if(address===""){
-                address = address + city;
-            }else {
-                address = address + ", " + city;
-            }
-        }
-        const state = compInfo['state'];
-        if(state!==null){
-            if(city!==null){
-                address = address + state;
-            }else {
-                address = address + ", " + state;
-            }
-        }
-        const country = compInfo['country'];
-        if(country!==null){
-            if(state!==null){
-                address = address + country;
-            }else {
-                address = address + ", " + country;
-            }
-        }
-        if (address===""){
-            address="No Data Found";
-        }else {
-            const addressSplit = address.split(" ");
-            address = "";
-            for (const item in addressSplit){
-                address = address + addressSplit[item].charAt(0).toUpperCase() +
-                    addressSplit[item].slice(1).toLowerCase() + " ";
-            }
-        }*/
         document.getElementById("addressOfResult").innerHTML = compInfo['address'];
 
         //Get Founded
@@ -2446,7 +2409,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
         }
         //console.log("INNER HEIGHT", document.getElementById("GeneralInfo").offsetHeight);
-
+        $scope.showNews(name);
     };
 
     $scope.createNewStockGraph = function (companyName) {
@@ -2490,6 +2453,54 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             $("#StockFound").hide();
             $("#StockNotFound").show();
         }
+    };
+
+
+    $scope.showNews = function(name){
+        $http({
+            method: 'POST',
+            url: 'php/getNewsForCompany.php',
+            data: $.param({
+                name : name,
+            }),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded;text/html;charset=utf-8'
+            }
+        }).then(function (data) {
+            console.log("showNews");
+            console.log(data.data);
+            if(data.data.length > 0){
+                const firstAddress = data.data[0]['address1'];
+                if(firstAddress !== 'NA'){
+                    const firstTitle = data.data[0]['title1'];
+                    const firstDescription = data.data[0]['description1'];
+
+                    let newsForHtml = '<div class="carousel-item active"><h3>' + firstTitle + '</h3><br>' +
+                        '<p>' + firstDescription + '</p>' + '<br><h5 style="text-align: right">Read More...</h5></div>';
+
+
+                    /*'                                    <div class="carousel-item">\n' +
+                    '                                        <h2>222</h2>\n' +
+                    '                                    </div>\n' +
+                    '                                    <div class="carousel-item">\n' +
+                    '                                        <h2>333</h2>\n' +
+                    '                                    </div>';*/
+
+                    document.getElementById("resultNews").innerHTML = newsForHtml;
+
+                }else {
+                    console.log("No News for the company");
+                }
+
+                const secondAddress = data.data[0]['address2'];
+                const secondTitle = data.data[0]['title2'];
+                const secondDescription = data.data[0]['description2'];
+            }
+            else {
+                console.log("Get news for company Failed");
+            }
+        });
+
     };
 
 

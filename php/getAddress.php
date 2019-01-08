@@ -18,6 +18,7 @@ $sql= /** @lang text */
 if($searchBy == 'Name'){
     $name = $_POST["name"];
     $id = $_POST["id"];
+    $product = $_POST["product"];
     $filterBy = $_POST["filterBy"];
 
     $operator = '=';
@@ -35,6 +36,12 @@ if($searchBy == 'Name'){
             $sql = $sql."AND ";
         }
         $sql = $sql."RSSD_ID ".$operator." '".$char.$id.$char."' ";
+    }
+    if ($product){
+        if($name or $id){
+            $sql = $sql."AND ";
+        }
+        $sql = $sql."Products ".$operator." '".$char.$product.$char."' ";
     }
 }
 else if ($searchBy=="graph")

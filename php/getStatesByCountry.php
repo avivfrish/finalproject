@@ -14,7 +14,7 @@ $selectedCountry = $_GET["selectedCountry"];
 //echo($_GET["selectedCountry"]);
 
 $sql= /** @lang text */
-    "select distinct state from company_prod where state is not null and country = "."'".$selectedCountry."'";
+    "select distinct state from company_prod where state is not null and state!='NA' and country = "."'".$selectedCountry."' order by state";
 //echo ($sql);
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
