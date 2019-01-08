@@ -1903,7 +1903,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             new TradingView.widget(
                 {
                     "width": 500,
-                    "height": 450,
+                    "height": 400,
                     "symbol": forSymbols,
                     "interval": "D",
                     "timezone": "Etc/UTC",
