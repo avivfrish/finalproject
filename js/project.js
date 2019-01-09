@@ -755,12 +755,22 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             }
         }).then(function (data) {
             if (data.data == 'false'){
+                console.log("re show false");
                 $("#couldnt_delete_comp_by_search").show();
             }
+            else if (data.data == 'no_rows'){
+                console.log("no results");
+                $scope.clearAlerts();
+                $("#show_delete_results").hide();
+                $("#deleted_comp_successfully_by_search").show();
+            }
             else {
+                console.log("re show true");
                 $scope.clearAlerts();
                 console.log(data.data);
                 $scope.resultsOfDeleteSearch = data.data;
+                console.log("results of delete search:");
+                console.log($scope.resultsOfDeleteSearch);
                 $("#show_delete_results").show();
                 $("#deleted_comp_successfully_by_search").show();
             }

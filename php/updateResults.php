@@ -69,28 +69,3 @@ else if ($getResults == TRUE) {
         echo("no_rows");
     }
 }
-
-
-
-/*$getResults= sqlsrv_query($conn, $sql);
-
-if ($getResults == FALSE){
-    echo ("false");
-    //return (sqlsrv_errors());
-}
-else if ($getResults == TRUE) {
-    $array = array();
-    while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
-        $array[] = array(
-            'id'=>$row['ID'],
-            'name'=>$row['name'],
-            'street'=>$row['street'],
-            'city'=>$row['city'],
-            'country'=>$row['country'],
-            'state'=>$row['state'],
-            'RSSD_ID'=>$row['RSSD_ID']
-        );
-    }
-    sqlsrv_free_stmt($getResults);
-    echo json_encode($array);
-}*/
