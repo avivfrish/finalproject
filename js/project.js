@@ -2457,6 +2457,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
 
     $scope.showNews = function(name){
+        document.getElementById("articlesTitle").innerHTML = "ARTICLES ABOUT " + name;
         $http({
             method: 'POST',
             url: 'php/getNewsForCompany.php',
@@ -2475,26 +2476,41 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     const firstTitle = data.data[0]['title1'];
                     const firstDescription = data.data[0]['description1'];
 
-                    let newsForHtml = '<div class="carousel-item active"><h3>' + firstTitle + '</h3><br>' +
-                        '<p>' + firstDescription + '</p>' + '<br><h5 style="text-align: right">Read More...</h5></div>';
+                    let newsForHtml = '<div class="carousel-item active"><h4>' + firstTitle + '</h4><br>' +
+                        '<p>' + firstDescription + '</p>' + '<br><div style="text-align: right; font-size: large">' +
+                        '<a href=' + firstAddress + 'class="btn btn-link" role="button">Read More...</a></div></div>';
 
+                    let moreAddress = data.data[0]['address2'];
+                    if(moreAddress !== 'NA') {
+                        let moreTitle = data.data[0]['title2'];
+                        let moreDescription = data.data[0]['description2'];
 
-                    /*'                                    <div class="carousel-item">\n' +
-                    '                                        <h2>222</h2>\n' +
-                    '                                    </div>\n' +
-                    '                                    <div class="carousel-item">\n' +
-                    '                                        <h2>333</h2>\n' +
-                    '                                    </div>';*/
+                        newsForHtml = newsForHtml + '<div class="carousel-item"><h4>' + moreTitle + '</h4><br>' +
+                            '<p>' + moreDescription + '</p>' + '<br><div style="text-align: right; font-size: large">' +
+                            '<a href=' + moreAddress + 'class="btn btn-link" role="button">Read More...</a></div></div>';
+                    }
+
+                    moreAddress = data.data[0]['address3'];
+                    if(moreAddress !== 'NA') {
+                        let moreTitle = data.data[0]['title3'];
+                        let moreDescription = data.data[0]['description3'];
+
+                        newsForHtml = newsForHtml + '<div class="carousel-item"><h4>' + moreTitle + '</h4><br>' +
+                            '<p>' + moreDescription + '</p>' + '<br><div style="text-align: right; font-size: large">' +
+                            '<a href=' + moreAddress + 'class="btn btn-link" role="button">Read More...</a></div></div>';
+                    }
 
                     document.getElementById("resultNews").innerHTML = newsForHtml;
+                    $("#notFoundNews").hide();
+                    $("#articlesCarousel").show();
 
-                }else {
+                }
+                else {
                     console.log("No News for the company");
+                    $("#articlesCarousel").hide();
+                    $("#notFoundNews").show();
                 }
 
-                const secondAddress = data.data[0]['address2'];
-                const secondTitle = data.data[0]['title2'];
-                const secondDescription = data.data[0]['description2'];
             }
             else {
                 console.log("Get news for company Failed");
