@@ -303,43 +303,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
-    /*$scope.show_insert_new_comp = function () {
-        console.log("SHOE INSERT NEW COMP");
-        $scope.hidePages();
-        $("#new_comp").show();
-    };
-
-    $scope.show_update_comp = function () {
-        $scope.hidePages();
-        $("#update_comp").show();
-    };
-
-    $scope.show_delete_comp = function () {
-        $scope.hidePages();
-        $("#delete_comp").show();
-    };
-
-    $scope.show_insert_new_file = function () {
-        $("#new_file").show();
-        $("#home").hide();
-        $("#search_comp").hide();
-        $("#delete_comp").hide();
-        $("#update_comp").hide();
-        $("#new_comp").hide();
-        $("#couldnt_add_new_comp").hide();
-        $("#added_comp_successfully").hide();
-        $("#deleted_comp_successfully").hide();
-        $("#couldnt_delete_comp").hide();
-        $("#updated_comp_successfully").hide();
-        $("#couldnt_update_comp").hide();
-        $("#id_already_exists_insert").hide();
-        $("#id_doesnt_exists_delete").hide();
-        $("#id_doesnt_exists_update").hide();
-        $("#no_id_typed").hide();
-        $("#added_file_successfully").hide();
-        $("#couldnt_add_new_file").hide();
-    }*/
-
     $scope.show_search = function (searchBy) {
         $scope.hidePages();
         if (searchBy == 'name') {
@@ -648,8 +611,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     {
         $scope.getCompNames();
         $scope.getCompIDs();
-        console.log($scope.arrayOfCompIDs);
-        console.log(document.getElementById("compID").value);
+        //console.log($scope.arrayOfCompIDs);
+        //console.log(document.getElementById("compID").value);
         /*console.log(document.getElementById("compName").value);
         console.log($scope.arrayOfCompNames);
         console.log($scope.arrayOfCompNames.indexOf(document.getElementById("compName").value));*/
@@ -721,16 +684,16 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             }).then(function (data) {
                 $scope.clearAlerts();
                 if (data.data == 'no_rows'){
-                    console.log("no results");
+                    //console.log("no results");
                     $("#couldnt_find_delete_results").show();
                     //$("#deleted_comp_successfully_by_search").show();
                 }
                 else if (data.data == 'false'){
-                    console.log("false");
+                    //console.log("false");
                     $("#couldnt_delete_comp_by_search").show();
                 }
                 else {
-                    console.log("yes");
+                    //console.log("yes");
                     console.log(data.data);
                     $scope.resultsOfDeleteSearch = data.data;
                     $("#show_delete_results").show();
@@ -741,7 +704,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     };
 
     $scope.reShowDeleteResults = function () {
-        console.log("re show");
+        //console.log("re show");
         $scope.clearAlerts();
         $("#deleting").show();
         let compName, compID;
@@ -757,12 +720,22 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             }
         }).then(function (data) {
             if (data.data == 'false'){
+                //console.log("re show false");
                 $("#couldnt_delete_comp_by_search").show();
             }
-            else {
+            else if (data.data == 'no_rows'){
+                //console.log("no results");
                 $scope.clearAlerts();
-                console.log(data.data);
+                $("#show_delete_results").hide();
+                $("#deleted_comp_successfully_by_search").show();
+            }
+            else {
+                //console.log("re show true");
+                $scope.clearAlerts();
+               //console.log(data.data);
                 $scope.resultsOfDeleteSearch = data.data;
+                //console.log("results of delete search:");
+                //console.log($scope.resultsOfDeleteSearch);
                 $("#show_delete_results").show();
                 $("#deleted_comp_successfully_by_search").show();
             }
@@ -799,7 +772,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     $scope.getCompConnections = function(comp)
     {
-        console.log("get connections");
+        //console.log("get connections");
         $scope.compToDeleteFromConnections = comp;
         $http({
             method: 'POST',
@@ -812,7 +785,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             $scope.arrayOfCompConnections = data.data;
             for (const item in $scope.arrayOfCompConnections) {
                 $scope.deleteFromConnections($scope.arrayOfCompConnections[item]['id']);
-                console.log($scope.arrayOfCompConnections[item]['id']);
+                //console.log($scope.arrayOfCompConnections[item]['id']);
             }
 
         });
@@ -839,8 +812,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.clearAlerts();
         let compName = document.getElementById("nameInsertedDelete").value;
         let compID = document.getElementById("rssd_idInsertedDelete").value;
-        console.log(compName);
-        console.log(compID);
+        //console.log(compName);
+        //console.log(compID);
 
         if (compName != '' && compID == ''){
             $scope.deleteCompByName();
@@ -985,7 +958,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.clearAlerts();
         $scope.getCompIDs();
         if ($scope.arrayOfCompIDs.includes(parseInt($scope.selectedIdValue))){
-            console.log("id in array");
+            //console.log("id in array");
             $http({
                 method: 'POST',
                 url: 'php/updateComp.php',
@@ -1008,7 +981,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             });
         }
         else {
-            console.log("identifier not in array");
+            //console.log("identifier not in array");
             $scope.clearAlerts();
             $("#id_doesnt_exists_update").show();
         }
@@ -1037,17 +1010,17 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             }).then(function (data) {
                 $scope.clearAlerts();
                 if (data.data == 'no_rows'){
-                    console.log("no results");
+                    //console.log("no results");
                     $("#couldnt_find_update_results").show();
                     //$("#deleted_comp_successfully_by_search").show();
                 }
                 else if (data.data == 'false'){
-                    console.log("false");
+                    //console.log("false");
                     $("#couldnt_delete_comp_by_search").show();
                 }
                 else {
-                    console.log("yes");
-                    console.log(data.data);
+                    //console.log("yes");
+                    //console.log(data.data);
                     $scope.resultsOfUpdateSearch = data.data;
                     $("#show_update_results").show();
                 }
@@ -1078,7 +1051,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             }
             else {
                 $scope.clearAlerts();
-                console.log(data.data);
+                //console.log(data.data);
                 $scope.resultsOfUpdateSearch = data.data;
                 $("#updated_comp_successfully").show();
             }
@@ -1091,7 +1064,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     $scope.updateSearchResults = function(id)
     {
         $scope.companyToUpdate = id;
-        console.log($scope.companyToUpdate);
+        //console.log($scope.companyToUpdate);
         $("#show_update_results").show();
         $http({
             method: 'POST',
@@ -1165,12 +1138,12 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     }).then(function (data) {
                         console.log(data.data);
                         if (data.data == 'true'){
-                            console.log("yes");
+                            //console.log("yes");
                             $scope.clearAlerts();
                             $("#updated_comp_by_name_successfully").show();
                         }
                         else {
-                            console.log("no");
+                            //console.log("no");
                             $scope.clearAlerts();
                             $("#couldnt_update_comp_by_name").show();
                         }
