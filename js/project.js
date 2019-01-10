@@ -1370,6 +1370,95 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         //$scope.showMoreAboutResult($scope.graph_selected);
     };
 
+    $scope.update_search_by_product = function(product)
+    {
+        $scope.selectedCompany="";
+
+        const resultsElement = document.getElementById("searchResults");
+
+        $("#foundResults").hide();
+        $("#noResults").hide();
+        $("#loadingResults").show();
+
+        resultsElement.scrollIntoView({ behavior: 'smooth'});
+
+        $http({
+            method: 'POST',
+            url: 'php/getAddress.php',
+            data: $.param({
+                searchBy:"product",
+                product: product
+            }),
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            }
+        }).then(function (data) {
+            if(data.data.length > 0){
+                console.log("GET Address");
+                $scope.resultsOfSearch = data.data;
+                console.log($scope.resultsOfSearch);
+                const lenOfResultsOfSearch = Object.keys($scope.resultsOfSearch).length;
+                let j = 0 ;
+                while(j<lenOfResultsOfSearch){
+                    let address = "";
+                    const street = $scope.resultsOfSearch[j]['street'];
+                    if(street!==null && street!=='NA'){
+                        address = address + street;
+                    }
+                    const city = $scope.resultsOfSearch[j]['city'];
+                    if(city!==null && city!=='NA'){
+                        if(address===""){
+                            address = address + city;
+                        }else {
+                            address = address + ", " + city;
+                        }
+                    }
+                    const state = $scope.resultsOfSearch[j]['state'];
+                    if(state!==null && state!=='NA'){
+                        if(city===null && city==='NA'){
+                            address = address + state;
+                        }else {
+                            address = address + ", " + state;
+                        }
+                    }
+                    const country = $scope.resultsOfSearch[j]['country'];
+                    if(country!==null && country!=='NA'){
+                        if(state===null && state==='NA'){
+                            address = address + country;
+                        }else {
+                            address = address + ", " + country;
+                        }
+                    }
+                    if (address===""){
+                        address="No Data Found";
+                    }else {
+                        const addressSplit = address.split(" ");
+                        address = "";
+                        for (const item in addressSplit){
+                            address = address + addressSplit[item].charAt(0).toUpperCase() +
+                                addressSplit[item].slice(1).toLowerCase() + " ";
+                        }
+                    }
+                    $scope.resultsOfSearch[j]['address'] = address;
+                    $scope.resultsOfSearch[j]['name'] = $scope.resultsOfSearch[j]['name'].toUpperCase();
+                    j++;
+                }
+
+
+                $("#loadingResults").hide();
+                $("#foundResults").show();
+                $("#askToSelectResult").show();
+                $("#selectedResult").hide();
+            }
+            else {
+                $("#loadingResults").hide();
+                $("#noResults").show();
+                console.log("NO RESULTS");
+            }
+            resultsElement.scrollIntoView({ behavior: 'smooth', block:'nearest'});
+        });
+    };
+
     $scope.get_python = function () {
 
         document.getElementById("graph_btn").innerHTML="";
@@ -1648,9 +1737,9 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                                 ticks: {
                                     fontColor: "black",
                                     fontSize: 10,
-                                    stepSize: 1,
+                                    stepSize: 5,
                                     beginAtZero: true,
-                                    autoSkip: false
+                                    autoSkip: true
                                 }
                             }],
                             yAxes: [{
@@ -2105,7 +2194,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                         address = address + street;
                     }
                     const city = $scope.resultsOfSearch[j]['city'];
-                    if(city!==null){
+                    if(city!==null && city!=='NA'){
                         if(address===""){
                             address = address + city;
                         }else {
@@ -2113,7 +2202,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                         }
                     }
                     const state = $scope.resultsOfSearch[j]['state'];
-                    if(state!==null){
+                    if(state!==null && state!=='NA'){
                         if(city===null && city==='NA'){
                             address = address + state;
                         }else {
@@ -2121,7 +2210,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                         }
                     }
                     const country = $scope.resultsOfSearch[j]['country'];
-                    if(country!==null){
+                    if(country!==null && country!=='NA'){
                         if(state===null && state==='NA'){
                             address = address + country;
                         }else {
@@ -2303,6 +2392,13 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
         //Get summary
         document.getElementById("summaryOfResult").innerHTML = compInfo['summary'];
+
+        //GET RSSD_ID
+        let rssd_id = compInfo['rssd_id'].toString();
+        if(rssd_id === '0'){
+            rssd_id = "No Data Found";
+        }
+        document.getElementById("rssdOfResult").innerHTML = rssd_id;
 
         //Get Address
         document.getElementById("addressOfResult").innerHTML = compInfo['address'];

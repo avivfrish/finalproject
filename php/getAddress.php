@@ -13,7 +13,7 @@ $conn = sqlsrv_connect($serverName, $connectionInfo);
 $searchBy = $_POST["searchBy"];
 $sql= /** @lang text */
     "select name, street, city, state, country, wiki_name, wiki_img, wiki_first, Products, Type, TradedAs, Industry, Founded, Revenue,
-     NumberOfEmployees from company_prod where ";
+     NumberOfEmployees, RSSD_ID from company_prod where ";
 
 if($searchBy == 'Name'){
     $name = $_POST["name"];
@@ -48,6 +48,12 @@ else if ($searchBy=="graph")
 {
     $comp = $_POST['company_graph'];
     $sql="select * from company_prod where name='$comp'";
+}
+else if ($searchBy=="product")
+{
+    $product = $_POST['product'];
+    $sql=/** @lang text */
+        "select * from company_prod where Products LIKE '%".$product."%'";
 }
 else{
 
@@ -102,7 +108,8 @@ while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
         'industry'=>str_replace("'","",$row['Industry']),
         'founded'=>str_replace("'","",$row['Founded']),
         'revenue'=>str_replace("'","",$row['Revenue']),
-        'numOfEmployee'=>str_replace("'","",$row['NumberOfEmployees'])
+        'numOfEmployee'=>str_replace("'","",$row['NumberOfEmployees']),
+        'rssd_id'=>str_replace("'","",$row['RSSD_ID'])
     );
     $count=$count+1;
 
