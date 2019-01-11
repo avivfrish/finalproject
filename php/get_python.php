@@ -71,6 +71,8 @@ if ($isMother == 0)
                             'source'=>trim(strtolower($comp)),
                             'target'=>trim(strtolower($row['name'])),
                             'label'=>"Sisters",
+                            'curvature' => 0.8,
+                            'rotation' => 0.2
 
                         );
 
@@ -94,7 +96,7 @@ if ($isMother == 0)
 
 $sisterCount=0;
 
-$sql="select * from connections where (comp1='".$company."' or comp2='".$company."') and conn_type!='Sisters'";
+$sql="select * from connections_prod where (comp1='".$company."' or comp2='".$company."') and conn_type!='Sisters'";
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
     return (sqlsrv_errors());
@@ -107,7 +109,7 @@ if ($getResults == FALSE)
     $comp2=strtolower($row['comp2']);
     $comp1=trim($comp1);
     $comp2=trim($comp2);
-    //echo $comp1.";".$comp2.";";
+    //echo $comp1.";".$comp2.";".$row['conn_type'];
     if (!in_array(trim(strtolower($row['comp1'])),$nodes_for_unique))
     {
 
@@ -147,6 +149,8 @@ if ($getResults == FALSE)
         'source'=>$comp1,
         'target'=>$comp2,
         'label'=>$row['conn_type'],
+        'curvature' => 0.8,
+        'rotation' => 0.2
 
     );
 

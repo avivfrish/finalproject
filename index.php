@@ -4,7 +4,7 @@ $now = time();
 if(!isset($_SESSION['user']))
 {
     session_destroy();
-    header('Location: /coral/login');
+    header('Location: /aviv/login');
 }
 /*if ($now > $_SESSION['time']) {
     session_destroy();
@@ -34,6 +34,7 @@ if(!isset($_SESSION['user']))
     <script src="js/angular-chart.js"></script>
     <script src="js/project.js" ></script>
     <script src="js/3d-force/src/3d-force-graph.min.js"></script>
+
 
     <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
     <link rel="stylesheet" href="css/project.css">

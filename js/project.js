@@ -1332,10 +1332,17 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             }
             else
             {
+
+
+
+
+
+
                 $scope.graph_selected=[{'name':node['id'],'country':data.data[0]['state']}];
                 document.getElementById("graphDetails").style.display="";
-                document.getElementById("graph_rssd").innerText=data.data[0]['street'];
-                document.getElementById("graph_country").innerText=data.data[0]['state'];
+                document.getElementById("graph_rssd").innerText=data.data[0]['rssd'];
+                document.getElementById("graph_country").innerText=data.data[0]['street']+", "+
+                    +", "+ data.data[0]['city'] + ", " +data.data[0]['country']+", "+ data.data[0]['state'];
                 //console.log(data.data);
                 document.getElementById("graph_btn").innerHTML="";
                 angular.element(document.getElementById("graph_btn")).append($compile(
@@ -1395,6 +1402,21 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         //$scope.showMoreAboutResult($scope.graph_selected);
     };
 
+    $scope.graph_link_curve =function(link)
+    {
+        //console.log(link['label']);
+        if (link['label']==="Co-maneging")
+        {
+            //console.log("GOOD!");
+            return 0.6;
+
+        }
+        else
+        {
+            return 0;
+        }
+    };
+
     $scope.get_python = function () {
 
         document.getElementById("graph_btn").innerHTML="";
@@ -1424,24 +1446,42 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             const Graph = ForceGraph3D()
             (document.getElementById('3d-graph'))
                 //.jsonUrl(data.data)
+                .linkOpacity(1)
+                .linkCurvature(link => $scope.graph_link_curve(link))
+                .linkCurveRotation('rotation')
                 .graphData(data.data)
+
                 .backgroundColor('#e5e5e5')
                 .nodeAutoColorBy('group')
-                //.linkAutoColorBy(d => gData.nodes[d.source].group)
-                .linkOpacity(0.7)
-                .linkWidth(1)
-                //.nodeLabel('id')
+                .height(300)
+                .width(600)
                 .onNodeClick(node =>  $scope.graph_on_click(node))
                 .nodeColor(node=> $scope.graph_node_color(node))
                 .linkLabel(d => `<span style="color: #403d3e">${d.label}</span>`)
                 .linkColor(link => $scope.graph_link_color(link))
-                .height(300)
-                .width(600)
+                .nodeLabel(d => `<span style="color: #403d3e">${d.id}</span>`)
+                .nodeLabel('id')
                 .showNavInfo(0)
-                .nodeLabel(d => `<span style="color: #403d3e">${d.id}</span>`);
+                ;
+
             const linkForce = Graph
                 .d3Force('link')
                 .distance(link => $scope.graph_link_dist(link));
+
+
+                //.linkAutoColorBy(d => gData.nodes[d.source].group)
+                /*.
+.linkWidth(0.5)
+                //
+
+
+
+
+
+                ;
+
+            */
+
 
 
         });

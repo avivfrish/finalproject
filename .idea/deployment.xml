@@ -5,7 +5,7 @@
       <paths name="finalproject">
         <serverdata>
           <mappings>
-            <mapping deploy="/site/wwwroot/coral" local="$PROJECT_DIR$" web="/" />
+            <mapping deploy="/site/wwwroot/aviv" local="$PROJECT_DIR$" web="/" />
           </mappings>
         </serverdata>
       </paths>

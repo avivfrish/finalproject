@@ -31,7 +31,9 @@ while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
         'name' =>$row['NAME'],
         'street' => $row['street'],
         'state' => $row['COUNTRY'],
-        'city' => $row['CITY']
+        'city' => $row['CITY'],
+        'country' => $row['country'],
+        'rssd' => $row['RSSD_ID']
     );
 }
 sqlsrv_free_stmt($getResults);
