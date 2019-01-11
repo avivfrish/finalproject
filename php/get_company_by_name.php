@@ -28,10 +28,10 @@ if (!sqlsrv_has_rows($getResults))
 $array = array();
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     $array[] = array(
-        'name' =>$row['NAME'],
+        'name' =>$row['name'],
         'street' => $row['street'],
-        'state' => $row['COUNTRY'],
-        'city' => $row['CITY'],
+        'state' => $row['state'],
+        'city' => $row['city'],
         'country' => $row['country'],
         'rssd' => $row['RSSD_ID']
     );

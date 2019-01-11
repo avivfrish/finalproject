@@ -45,65 +45,66 @@
                     </ul>
 
                     <div class="tab-content">
-                        <div role="tabpanel" class="tab-pane container active" id="GeneralInfo" style="height: fit-content">
-                            <div class="container-fluid titleOfGeneralResult">
-                                <div class="row">
-                                    <div class="col-sm-8">
-                                        <br>
-                                        <h3 id="selectedCompanyName" style="margin-bottom: 2px"></h3>
-                                        <p id="wikiNameOfResult" style="font-size: medium; color: #1f497d; margin-bottom: 2px"></p>
-                                        <h4 id="secondTitleResult"></h4>
-                                    </div>
-                                    <div class="col-sm-4" style="margin-top: 20px">
-                                        <img class ="logoImg" id="companyLogo" src="" alt="logo" height="100" width="150">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="products" style="margin-top: 20px">
-
-                                <div class="container justify-content-center">
-                                    <div class="row justify-content-center">
-                                        <div class="badge badge-pill badge-info" style="margin-left: 5px; margin-right: 5px; margin-bottom: 5px;
-                                            cursor: hand;" ng-repeat="product in resultProducts" ng-click="update_search_by_product(product)">{{product}}</div>
+                        <div role="tabpanel" class="tab-pane container active" id="GeneralInfo">
+                            <div id="GeneralDiv" style="height: fit-content">
+                                <div class="container-fluid titleOfGeneralResult">
+                                    <div class="row">
+                                        <div class="col-sm-8">
+                                            <br>
+                                            <h3 id="selectedCompanyName" style="margin-bottom: 2px"></h3>
+                                            <p id="wikiNameOfResult" style="font-size: medium; color: #1f497d; margin-bottom: 2px"></p>
+                                            <h4 id="secondTitleResult"></h4>
+                                        </div>
+                                        <div class="col-sm-4" style="margin-top: 20px">
+                                            <img class ="logoImg" id="companyLogo" src="" alt="logo" height="100" width="150">
+                                        </div>
                                     </div>
                                 </div>
 
-                            </div>
+                                <div class="products" style="margin-top: 20px">
 
-                            <div class="container-fluid titleOfGeneralResult" style="margin-top: 20px">
-                                <div class="row">
-                                    <div class="col-sm-7">
-                                        <p id="summaryOfResult"></p>
+                                    <div class="container justify-content-center">
+                                        <div class="row justify-content-center">
+                                            <div class="badge badge-pill badge-info" style="margin-left: 5px; margin-right: 5px; margin-bottom: 5px;
+                                                cursor: hand;" ng-repeat="product in resultProducts" ng-click="update_search_by_product(product)">{{product}}</div>
+                                        </div>
                                     </div>
-                                    <div class="col-sm-5">
-                                        <table class="table tableOfGeneralInfo">
-                                            <tr>
-                                                <td>RSSD ID</td>
-                                                <td id="rssdOfResult"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Address</td>
-                                                <td id="addressOfResult"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Founded</td>
-                                                <td id="foundedOfResult"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Revenue</td>
-                                                <td id="revenueOfResult"></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Number Of Employees</td>
-                                                <td id="numOfEmployeesOfResult"></td>
-                                            </tr>
-                                        </table>
+
+                                </div>
+
+                                <div class="container-fluid titleOfGeneralResult" style="margin-top: 20px">
+                                    <div class="row">
+                                        <div class="col-sm-7">
+                                            <p id="summaryOfResult"></p>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <table class="table tableOfGeneralInfo">
+                                                <tr>
+                                                    <td>RSSD ID</td>
+                                                    <td id="rssdOfResult"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Address</td>
+                                                    <td id="addressOfResult"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Founded</td>
+                                                    <td id="foundedOfResult"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Revenue</td>
+                                                    <td id="revenueOfResult"></td>
+                                                </tr>
+                                                <tr>
+                                                    <td>Number Of Employees</td>
+                                                    <td id="numOfEmployeesOfResult"></td>
+                                                </tr>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
+
                             </div>
-
-
                         </div>
 
                         <div role="tabpanel" class="tab-pane container fade col-sm-12" id="Connections">
@@ -135,7 +136,33 @@
                                 </div>
 
                                 <div class="row " id="graphDetails" style="display: none;">
-                                    <div class="col-sm-2" >
+                                    <div class="col-sm-8">
+                                        <table class="table tableOfGeneralInfo" style="font-size:15px">
+                                            <tr>
+                                                <th colspan="2" id="graph_name" class="justify-content-center"></th>
+                                            </tr>
+                                            <tr>
+                                                <td width="100">RSSD ID</td>
+                                                <td id="graph_rssd"></td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Address
+                                                </td>
+                                                <td  id="graph_country">
+
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                    <div class="col-sm-4" id="graph_btn">
+
+                                    </div>
+
+
+
+
+                                    <!--<div class="col-sm-2" >
                                         RSSD ID
                                     </div>
                                     <div class="col-sm-2" id="graph_rssd">
@@ -146,11 +173,11 @@
                                     </div>
                                     <div class="col-sm-6" id="graph_country" >
                                         country
-                                    </div>
+                                    </div>-->
                                 </div>
-                                <div class="row" id="graph_btn">
+                                <!--<div class="row" id="graph_btn">
 
-                                </div>
+                                </div>-->
                             </div>
                         </div>
 

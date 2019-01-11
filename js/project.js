@@ -1288,7 +1288,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     $scope.graph_on_click = function (node)
     {
         $("#comp_info").css("display","block");
-        document.getElementById("graph_comp_name").innerText=node['id'];
+
 
         console.log("group",node['group']);
         $http({
@@ -1303,19 +1303,30 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }).then(function (data) {
             if (data.data==0)
             {
+                document.getElementById("graph_comp_name").innerText=node['id'];
                 document.getElementById("graph_comp_name").innerText=node['id'] +" - Not Found in DB";
+                $("graphDetails").hide();
+                $("graph_comp_name").show();
             }
             else
             {
+                $("graph_comp_name").hide();
+                $("graphDetails").show();
+                document.getElementById("graph_comp_name").innerText="";
+                document.getElementById("graph_name").innerText=node['id'];
+                let selected=data.data;
+                console.log(selected);
+                $scope.addAddressToSearchResults(selected);
+                console.log("bla");
+                console.log(selected);
                 $scope.graph_selected=[{'name':node['id'],'country':data.data[0]['state']}];
                 document.getElementById("graphDetails").style.display="";
                 document.getElementById("graph_rssd").innerText=data.data[0]['rssd'];
-                document.getElementById("graph_country").innerText=data.data[0]['street']+", "+
-                    +", "+ data.data[0]['city'] + ", " +data.data[0]['country']+", "+ data.data[0]['state'];
+                document.getElementById("graph_country").innerText=selected[0]['address'];
                 //console.log(data.data);
                 document.getElementById("graph_btn").innerHTML="";
                 angular.element(document.getElementById("graph_btn")).append($compile(
-                   "<button type=\"button\" class=\"btn btn-light\" ng-click=\"update_search()\">Find Company</button>")($scope));
+                   "<button type=\"button\" style=\"margin-top:20px\" class=\"btn btn-light\" ng-click=\"update_search()\">Find Company</button>")($scope));
 
             }
 
@@ -1345,16 +1356,18 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
-    $scope.addAddressToSearchResults = function(){
-        const lenOfResultsOfSearch = Object.keys($scope.resultsOfSearch).length;
+    $scope.addAddressToSearchResults = function(comp_arr){
+        console.log("func");
+        console.log(comp_arr);
+        const lenOfResultsOfSearch = Object.keys(comp_arr).length;
         let j = 0 ;
         while(j<lenOfResultsOfSearch){
             let address = "";
-            const street = $scope.resultsOfSearch[j]['street'];
+            const street = comp_arr[j]['street'];
             if(street!==null && street!=='NA' && street!==''){
                 address = address + street;
             }
-            const city = $scope.resultsOfSearch[j]['city'];
+            const city = comp_arr[j]['city'];
             if(city!==null && city!=='NA' && city!==''){
                 if(address===""){
                     address = address + city;
@@ -1362,7 +1375,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     address = address + ", " + city;
                 }
             }
-            const state = $scope.resultsOfSearch[j]['state'];
+            const state = comp_arr[j]['state'];
             if(state!==null && state!=='NA' && state!==''){
                 if(city===null && city==='NA' && city===''){
                     address = address + state;
@@ -1370,7 +1383,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     address = address + ", " + state;
                 }
             }
-            const country = $scope.resultsOfSearch[j]['country'];
+            const country = comp_arr[j]['country'];
             if(country!==null && country!=='NA' && country!==''){
                 if(state===null && state==='NA' && state===''){
                     address = address + country;
@@ -1388,8 +1401,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                         addressSplit[item].slice(1).toLowerCase() + " ";
                 }
             }
-            $scope.resultsOfSearch[j]['address'] = address;
-            $scope.resultsOfSearch[j]['name'] = $scope.resultsOfSearch[j]['name'].toUpperCase();
+            comp_arr[j]['address'] = address;
+            comp_arr[j]['name'] = comp_arr[j]['name'].toUpperCase();
             j++;
         }
     };
@@ -1409,14 +1422,14 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }).then(function (data) {
             console.log(data.data);
             $scope.resultsOfSearch=data.data;
-            $scope.addAddressToSearchResults();
+            $scope.addAddressToSearchResults($scope.resultsOfSearch);
 
         });
 
 
             //console.log("before "+ $scope.resultsOfSearch);
 
-        $scope.selectedCompany=$scope.graph_selected[0]['name'];
+        $scope.selectedCompany=($scope.graph_selected[0]['name']).toUpperCase();
         //console.log("after ", $scope.resultsOfSearch);
         //$scope.showMoreAboutResult($scope.graph_selected);
     };
@@ -1448,10 +1461,10 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }).then(function (data) {
             if(data.data.length > 0){
                 $scope.resultsOfSearch = data.data;
-                $scope.addAddressToSearchResults();
+                $scope.addAddressToSearchResults($scope.resultsOfSearch);
 
-                document.getElementById("rightSideResults").style.height = "500px";
-                document.getElementById("leftSideResults").style.height = "500px";
+                document.getElementById("rightSideResults").style.height = "600px";
+                document.getElementById("leftSideResults").style.height = "600px";
 
                 $("#loadingResults").hide();
                 $("#foundResults").show();
@@ -1524,8 +1537,9 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 .nodeColor(node=> $scope.graph_node_color(node))
                 .linkLabel(d => `<span style="color: #403d3e">${d.label}</span>`)
                 .linkColor(link => $scope.graph_link_color(link))
-                .nodeLabel(d => `<span style="color: #403d3e">${d.id}</span>`)
                 .nodeLabel('id')
+                .nodeLabel(d => `<span style="color: #403d3e">${d.id}</span>`)
+
                 .showNavInfo(0)
                 ;
 
@@ -2233,7 +2247,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             if(data.data.length > 0){
                 console.log("GET Address");
                 $scope.resultsOfSearch = data.data;
-                $scope.addAddressToSearchResults();
+                $scope.addAddressToSearchResults($scope.resultsOfSearch);
 
                 $("#loadingResults").hide();
                 $("#foundResults").show();
@@ -2259,10 +2273,10 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     };
 
     $scope.showMoreAboutResult = function (name) {
-
+        console.log("name",$scope.selectedCompany);
         $("#askToSelectResult").hide();
 
-        $("#tab_GeneralInfo").tab("show");
+
         document.getElementById(name).style.boxShadow = "rgb(141, 195, 207) 0px 4px 8px 0px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px";
         //document.getElementById("tab_Stock").className=("nav-link");
         //document.getElementById("tab_Competitors").className=("nav-link");
@@ -2483,22 +2497,38 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 j++;
             }
         }
-        console.log("stocks");
+        //console.log("stocks");
         console.log($scope.stocksOfResult);
 
         $("#selectedResult").show();
+        $scope.setCurrentTabSearch(true);
 
         //console.log("INNER HEIGHT", document.getElementById("GeneralInfo").offsetHeight);
         //document.getElementById("selectedResult").innerText = name;
+        $scope.setTabGeneral(function (isTrue) {
+            if ($scope.tabSearchGeneral === true)
+            {
+                //console.log("WTF????",document.getElementById("GeneralDiv").offsetHeight);
+                document.getElementById("rightSideResults").style.height = (70 + document.getElementById("GeneralDiv").offsetHeight).toString();
+                document.getElementById("leftSideResults").style.height = (70 + document.getElementById("GeneralDiv").offsetHeight).toString();
 
-        if ($scope.tabSearchGeneral === true)
-        {
-            document.getElementById("rightSideResults").style.height = (70 + document.getElementById("GeneralInfo").offsetHeight).toString();
-            document.getElementById("leftSideResults").style.height = (70 + document.getElementById("GeneralInfo").offsetHeight).toString();
+            }
 
-        }
+        });
+
+
+
         //console.log("INNER HEIGHT", document.getElementById("GeneralInfo").offsetHeight);
         $scope.showNews(name);
+    };
+
+    $scope.setTabGeneral=function(callback)
+    {
+
+        $("#tab_GeneralInfo").tab("show");
+        $timeout(function() { callback(true);},500);
+
+
     };
 
     $scope.createNewStockGraph = function (companyName) {
