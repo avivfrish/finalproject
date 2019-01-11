@@ -2469,7 +2469,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 j++;
             }
         }
-        console.log("stocks");
+        //console.log("stocks");
         console.log($scope.stocksOfResult);
 
         $("#selectedResult").show();
@@ -2480,15 +2480,12 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.setTabGeneral(function (isTrue) {
             if ($scope.tabSearchGeneral === true)
             {
-                console.log("WTF????",document.getElementById("GeneralDiv").offsetHeight);
+                //console.log("WTF????",document.getElementById("GeneralDiv").offsetHeight);
                 document.getElementById("rightSideResults").style.height = (70 + document.getElementById("GeneralDiv").offsetHeight).toString();
                 document.getElementById("leftSideResults").style.height = (70 + document.getElementById("GeneralDiv").offsetHeight).toString();
 
             }
-            else
-            {
-                console.log("WTF");
-            }
+
         });
 
 
@@ -2501,8 +2498,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     {
 
         $("#tab_GeneralInfo").tab("show");
-        $timeout(function() { callback(true);},700);
-        console.log("when");
+        $timeout(function() { callback(true);},500);
+
 
     };
 
