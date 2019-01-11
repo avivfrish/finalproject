@@ -578,7 +578,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
             }
         }).then(function (data) {
-            console.log(data.data);
+            //console.log(data.data);
             let compNames = [];
             for (const item in data.data) {
                 compNames.push(data.data[item]['name'])
@@ -597,7 +597,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
             }
         }).then(function (data) {
-            console.log(data.data);
+            //console.log(data.data);
             let compIDs = [];
             for (const item in data.data) {
                 compIDs.push(data.data[item]['RSSD_ID'])
@@ -794,7 +794,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     $scope.deleteFromConnections = function(id)
     {
         $scope.rowToDeleteFromConnections = id;
-        console.log($scope.rowToDeleteFromConnections);
+        //console.log($scope.rowToDeleteFromConnections);
         $http({
             method: 'POST',
             url: 'php/deleteFromConnections.php',
@@ -802,7 +802,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 row : $scope.rowToDeleteFromConnections
             }
         }).then(function (data) {
-            console.log(data.data);
+            //console.log(data.data);
         });
     };
 
@@ -871,7 +871,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.getCompIDs();
         if ($scope.arrayOfCompIDs.includes(parseInt(document.getElementById("rssd_idInsertedDelete").value))){
             $("#loading_delete").show();
-            console.log($scope.selectedIDValue);
+            //console.log($scope.selectedIDValue);
             $http({
                 method: 'POST',
                 url: 'php/deleteCompByID.php',
@@ -879,7 +879,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     rssd_idInsertedDelete : $scope.selectedIDValue
                 }
             }).then(function (data) {
-                console.log(data.data);
+                //console.log(data.data);
                 if (data.data == 'true'){
                     $scope.clearAlerts();
                     $("#deleted_comp_successfully").show();
@@ -914,7 +914,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     rssd_idInserted : $scope.selectedIDValue
                 }
             }).then(function (data) {
-                console.log(data.data);
+                //console.log(data.data);
                 if (data.data == 'true'){
                     $scope.deleteCompByName();
                 }
@@ -968,7 +968,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     newInfo: $scope.selectedNewInfo
                 }
             }).then(function (data) {
-                console.log(data.data);
+                //console.log(data.data);
                 if (data.data == 'true') {
                     $scope.clearAlerts();
                     $("#updated_comp_successfully").show();
@@ -1125,7 +1125,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     newInfoUpdateByName: $scope.selectedNewInfo
                 }
             }).then(function (data) {
-                console.log(data.data);
+                //console.log(data.data);
                 if (data.data == 'true') {
                     $http({
                         method: 'POST',
@@ -1344,6 +1344,55 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
+    $scope.addAddressToSearchResults = function(){
+        const lenOfResultsOfSearch = Object.keys($scope.resultsOfSearch).length;
+        let j = 0 ;
+        while(j<lenOfResultsOfSearch){
+            let address = "";
+            const street = $scope.resultsOfSearch[j]['street'];
+            if(street!==null && street!=='NA' && street!==''){
+                address = address + street;
+            }
+            const city = $scope.resultsOfSearch[j]['city'];
+            if(city!==null && city!=='NA' && city!==''){
+                if(address===""){
+                    address = address + city;
+                }else {
+                    address = address + ", " + city;
+                }
+            }
+            const state = $scope.resultsOfSearch[j]['state'];
+            if(state!==null && state!=='NA' && state!==''){
+                if(city===null && city==='NA' && city===''){
+                    address = address + state;
+                }else {
+                    address = address + ", " + state;
+                }
+            }
+            const country = $scope.resultsOfSearch[j]['country'];
+            if(country!==null && country!=='NA' && country!==''){
+                if(state===null && state==='NA' && state===''){
+                    address = address + country;
+                }else {
+                    address = address + ", " + country;
+                }
+            }
+            if (address===""){
+                address="No Data Found";
+            }else {
+                const addressSplit = address.split(" ");
+                address = "";
+                for (const item in addressSplit){
+                    address = address + addressSplit[item].charAt(0).toUpperCase() +
+                        addressSplit[item].slice(1).toLowerCase() + " ";
+                }
+            }
+            $scope.resultsOfSearch[j]['address'] = address;
+            $scope.resultsOfSearch[j]['name'] = $scope.resultsOfSearch[j]['name'].toUpperCase();
+            j++;
+        }
+    };
+
     $scope.update_search = function()
     {
         $http({
@@ -1359,6 +1408,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }).then(function (data) {
             console.log(data.data);
             $scope.resultsOfSearch=data.data;
+            $scope.addAddressToSearchResults();
 
         });
 
@@ -1372,13 +1422,15 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     $scope.update_search_by_product = function(product)
     {
-        $scope.selectedCompany="";
-
-        const resultsElement = document.getElementById("searchResults");
 
         $("#foundResults").hide();
         $("#noResults").hide();
         $("#loadingResults").show();
+
+        $scope.selectedCompany="";
+        $scope.resultsOfSearch = {};
+
+        const resultsElement = document.getElementById("searchResults");
 
         resultsElement.scrollIntoView({ behavior: 'smooth'});
 
@@ -1386,7 +1438,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             method: 'POST',
             url: 'php/getAddress.php',
             data: $.param({
-                searchBy:"product",
+                searchBy: "product",
                 product: product
             }),
             headers: {
@@ -1394,56 +1446,11 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             }
         }).then(function (data) {
             if(data.data.length > 0){
-                console.log("GET Address");
                 $scope.resultsOfSearch = data.data;
-                console.log($scope.resultsOfSearch);
-                const lenOfResultsOfSearch = Object.keys($scope.resultsOfSearch).length;
-                let j = 0 ;
-                while(j<lenOfResultsOfSearch){
-                    let address = "";
-                    const street = $scope.resultsOfSearch[j]['street'];
-                    if(street!==null && street!=='NA'){
-                        address = address + street;
-                    }
-                    const city = $scope.resultsOfSearch[j]['city'];
-                    if(city!==null && city!=='NA'){
-                        if(address===""){
-                            address = address + city;
-                        }else {
-                            address = address + ", " + city;
-                        }
-                    }
-                    const state = $scope.resultsOfSearch[j]['state'];
-                    if(state!==null && state!=='NA'){
-                        if(city===null && city==='NA'){
-                            address = address + state;
-                        }else {
-                            address = address + ", " + state;
-                        }
-                    }
-                    const country = $scope.resultsOfSearch[j]['country'];
-                    if(country!==null && country!=='NA'){
-                        if(state===null && state==='NA'){
-                            address = address + country;
-                        }else {
-                            address = address + ", " + country;
-                        }
-                    }
-                    if (address===""){
-                        address="No Data Found";
-                    }else {
-                        const addressSplit = address.split(" ");
-                        address = "";
-                        for (const item in addressSplit){
-                            address = address + addressSplit[item].charAt(0).toUpperCase() +
-                                addressSplit[item].slice(1).toLowerCase() + " ";
-                        }
-                    }
-                    $scope.resultsOfSearch[j]['address'] = address;
-                    $scope.resultsOfSearch[j]['name'] = $scope.resultsOfSearch[j]['name'].toUpperCase();
-                    j++;
-                }
+                $scope.addAddressToSearchResults();
 
+                document.getElementById("rightSideResults").style.height = "500px";
+                document.getElementById("leftSideResults").style.height = "500px";
 
                 $("#loadingResults").hide();
                 $("#foundResults").show();
@@ -1453,8 +1460,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             else {
                 $("#loadingResults").hide();
                 $("#noResults").show();
-                console.log("NO RESULTS");
             }
+
             resultsElement.scrollIntoView({ behavior: 'smooth', block:'nearest'});
         });
     };
@@ -1902,17 +1909,16 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                         for (const moreProductsItem in product){
                             let moreProduct = product[moreProductsItem];
                             moreProduct = moreProduct.replace("LIST...","");
-                            moreProduct = moreProduct.replace("FOR","");
                             moreProduct = moreProduct.replace("(","");
                             moreProduct = moreProduct.replace(")","");
                             moreProduct = moreProduct.replace("&","");
                             moreProduct = moreProduct.replace(";","");
-                            moreProduct = moreProduct.replace("AND","");
-                            moreProduct = moreProduct.replace("IN","");
+                            //moreProduct = moreProduct.replace("AND","");
                             moreProduct = moreProduct.replace("  "," ");
                             moreProduct = moreProduct.trim();
-                            if (moreProduct !== "" && ($scope.products).indexOf(moreProduct) === -1 ) {
-                                $scope.products.push(moreProduct);
+                            if (moreProduct !== "" && moreProduct !== "IN" && moreProduct !== "FOR"
+                                && ($scope.products).indexOf(moreProduct) === -1 ) {
+                                $scope.products.push(moreProduct.trim());
                             }
                         }
                     }
@@ -2184,54 +2190,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             if(data.data.length > 0){
                 console.log("GET Address");
                 $scope.resultsOfSearch = data.data;
-                console.log($scope.resultsOfSearch);
-                const lenOfResultsOfSearch = Object.keys($scope.resultsOfSearch).length;
-                let j = 0 ;
-                while(j<lenOfResultsOfSearch){
-                    let address = "";
-                    const street = $scope.resultsOfSearch[j]['street'];
-                    if(street!==null && street!=='NA'){
-                        address = address + street;
-                    }
-                    const city = $scope.resultsOfSearch[j]['city'];
-                    if(city!==null && city!=='NA'){
-                        if(address===""){
-                            address = address + city;
-                        }else {
-                            address = address + ", " + city;
-                        }
-                    }
-                    const state = $scope.resultsOfSearch[j]['state'];
-                    if(state!==null && state!=='NA'){
-                        if(city===null && city==='NA'){
-                            address = address + state;
-                        }else {
-                            address = address + ", " + state;
-                        }
-                    }
-                    const country = $scope.resultsOfSearch[j]['country'];
-                    if(country!==null && country!=='NA'){
-                        if(state===null && state==='NA'){
-                            address = address + country;
-                        }else {
-                            address = address + ", " + country;
-                        }
-                    }
-                    if (address===""){
-                        address="No Data Found";
-                    }else {
-                        const addressSplit = address.split(" ");
-                        address = "";
-                        for (const item in addressSplit){
-                            address = address + addressSplit[item].charAt(0).toUpperCase() +
-                                addressSplit[item].slice(1).toLowerCase() + " ";
-                        }
-                    }
-                    $scope.resultsOfSearch[j]['address'] = address;
-                    $scope.resultsOfSearch[j]['name'] = $scope.resultsOfSearch[j]['name'].toUpperCase();
-                    j++;
-                }
-
+                $scope.addAddressToSearchResults();
 
                 $("#loadingResults").hide();
                 $("#foundResults").show();
@@ -2364,23 +2323,22 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 for (const moreProductsItem in product){
                     let moreProduct = product[moreProductsItem];
                     moreProduct = moreProduct.replace("LIST...","");
-                    moreProduct = moreProduct.replace("FOR","");
                     moreProduct = moreProduct.replace("(","");
                     moreProduct = moreProduct.replace(")","");
                     moreProduct = moreProduct.replace("&","");
                     moreProduct = moreProduct.replace(";","");
-                    moreProduct = moreProduct.replace("AND","");
-                    moreProduct = moreProduct.replace("IN","");
+                    //moreProduct = moreProduct.replace("AND","");
                     moreProduct = moreProduct.replace("  "," ");
                     moreProduct = moreProduct.trim();
-                    if (moreProduct !== "" && ($scope.resultProducts).indexOf(moreProduct) === -1 ) {
+                    if (moreProduct !== "" && moreProduct !== "IN" && moreProduct !== "FOR" &&
+                        ($scope.resultProducts).indexOf(moreProduct) === -1 ) {
                         const moreProductSplit = moreProduct.split(" ");
                         moreProduct = "";
                         for (const item in moreProductSplit){
                             moreProduct = moreProduct + moreProductSplit[item].charAt(0).toUpperCase() +
                                 moreProductSplit[item].slice(1).toLowerCase() + " ";
                         }
-                        $scope.resultProducts.push(moreProduct);
+                        $scope.resultProducts.push(moreProduct.trim());
                     }
                 }
             }
