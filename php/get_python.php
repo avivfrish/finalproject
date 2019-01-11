@@ -36,7 +36,7 @@ else{
 if ($isMother == 0)
 {
 
-    $getSisters="select name from company_test where mother_comp='".$mother_comp."' and name!='".$company."'";
+    $getSisters="select name from company_prod where mother_comp='".$mother_comp."' and name!='".$company."'";
     $getResultsSister= sqlsrv_query($conn, $getSisters);
     if ($getResultsSister == FALSE)
         return (sqlsrv_errors());
