@@ -15,7 +15,7 @@ $selectedState = $_GET["selectedState"];
 $selectedCity = $_GET["selectedCity"];
 
 $sql= /** @lang text */
-    "select distinct street from company_prod where street is not null and street!='NA' and country = "."'".$selectedCountry."' and city = "."'".$selectedCity."'";
+    "select distinct street from company_prod where street is not null and street!='NA' and street!='' and country = "."'".$selectedCountry."' and city = "."'".$selectedCity."'";
 
 if($selectedState){
     $sql = $sql." and state = '".$selectedState."'";

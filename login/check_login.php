@@ -28,7 +28,7 @@ if ($getResults == FALSE)
 $usr=array();
 if (sqlsrv_has_rows($getResults)===false)
 {
-    header('Location: /aviv/login/?code=2');
+    header('Location: /coral/login/?code=2');
 }
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     $usr[]=array(
@@ -47,7 +47,7 @@ $_SESSION['time'] = time();
 $_SESSION['isAdmin'] = $usr[0]['isAdmin'];
 if(isset($_SESSION['user']))
 {
-    header('Location: /aviv');
+    header('Location: /coral');
 }
 else{
     echo $row['uid'];

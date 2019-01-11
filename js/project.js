@@ -1379,7 +1379,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 }
             }
             if (address===""){
-                address="No Data Found";
+                address="No Data";
             }else {
                 const addressSplit = address.split(" ");
                 address = "";
@@ -1815,11 +1815,11 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         //document.getElementById("wordsCloud").innerHTML = '<word-cloud words="words" width="width" height="height" padding="padding" random="random" use-tooltip="true"></word-cloud>';
 
         function rotate(){
-            return ~~(Math.random() * 2) * 90;
+            return ~~(Math.random() * 2) * 1;
         }
 
         function random(){
-            return 1; //a constant value here will ensure the word position is fixed upon each page refresh.
+            return 0.4; //a constant value here will ensure the word position is fixed upon each page refresh.
         }
     };
 
@@ -1877,17 +1877,15 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         }).then(function (data) {
-            //console.log("GET Type of industry");
-            //console.log(data.data);
             $scope.industries = [];
             if (data.data.length !== 0){
                 for (const item in data.data){
                     let industries = data.data[item]['industry'];
+                    industries = industries.replace(";","|");
+                    industries = industries.replace(",","|");
                     industries = industries.split('|');
-                    //console.log("industry ", industries);
                     for (const industryItem in industries){
                         const industry = (industries[industryItem].trim()).toUpperCase();
-                        //console.log("industry ",industry);
                         if (industry !== "" && industry !== "," && ($scope.industries).indexOf(industry) === -1 ){
                             $scope.industries.push(industry);
                         }
@@ -1937,28 +1935,42 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             if (data.data.length !== 0){
                 for (const item in data.data){
                     let Products = data.data[item]['Products'];
+                    if(Products.length >247){
+                        Products = Products.slice(0,Products.lastIndexOf("|")+1);
+                    }
                     Products = Products.split('|');
                     for (const productItem in Products){
                         let product = ((Products[productItem].trim()).toUpperCase()).split(",");
                         for (const moreProductsItem in product){
                             let moreProduct = product[moreProductsItem];
                             moreProduct = moreProduct.replace("LIST...","");
+                            moreProduct = moreProduct.replace("LIST","");
                             moreProduct = moreProduct.replace("(","");
                             moreProduct = moreProduct.replace(")","");
                             moreProduct = moreProduct.replace("&","");
                             moreProduct = moreProduct.replace(";","");
-                            //moreProduct = moreProduct.replace("AND","");
+                            moreProduct = moreProduct.replace(" OF","");
+                            moreProduct = moreProduct.replace(" IN","");
                             moreProduct = moreProduct.replace("  "," ");
+                            moreProduct = moreProduct.replace("OTHER"," ");
                             moreProduct = moreProduct.trim();
-                            if (moreProduct !== "" && moreProduct !== "IN" && moreProduct !== "FOR"
+                            if (moreProduct !== "" && moreProduct !== "FOR" && moreProduct !== "ETC" && moreProduct !== "/" && moreProduct !== "AND"
                                 && ($scope.products).indexOf(moreProduct) === -1 ) {
+                                moreProduct = moreProduct.trim();
+                                if(moreProduct.slice(0,4) === 'AND '){
+                                    moreProduct = moreProduct.slice(4,moreProduct.length);
+                                }
+                                if(moreProduct.slice(moreProduct.length-4,moreProduct.length) === ' AND'){
+                                    moreProduct = moreProduct.slice(0,moreProduct.length-4);
+                                }
+                                if(moreProduct.slice(moreProduct.length-1,moreProduct.length) === ':'){
+                                    moreProduct = moreProduct.slice(0,moreProduct.length-1);
+                                }
                                 $scope.products.push(moreProduct.trim());
                             }
                         }
                     }
                 }
-                //console.log("$scope.products");
-               // console.log($scope.products);
 
                 $http({
                     method: 'POST',
@@ -2066,8 +2078,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 selectedCountry : $scope.selectedCountryValue
             }
         }).then(function (data) {
-            //onsole.log("GET states");
-            //console.log(data.data);
             let statesByCountry = [];
             for (const item in data.data){
                 statesByCountry.push(data.data[item]['state']);
@@ -2167,15 +2177,14 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.arrayOfCities = [];
         $scope.arrayOfStreets = [];
 
+        document.getElementById("streetOptions").style.display="none";
+
         $scope.getStatesByCountry(function(len) {
             if (len > 0){
-                console.log("SHOW STATE");
                 document.getElementById("stateOptions").style.display="block";
             }
             else {
-                console.log("HIDE STATE");
                 document.getElementById("stateOptions").style.display="none";
-                console.log("STATES IS EMPTY");
                 $scope.changeCity('False');
             }
         });
@@ -2313,6 +2322,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         let industries = compInfo['industry'];
         let stringOfIndustry = "";
         if (industries!=='NA'){
+            industries = industries.replace(";","|");
+            industries = industries.replace(",","|");
             industries = industries.split('|');
             for (const industryItem in industries){
                 const industry = industries[industryItem].trim();
@@ -2349,6 +2360,9 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
         //Get Products
         let Products = compInfo['products'];
+        if(Products.length >247){
+            Products = Products.slice(0,Products.lastIndexOf("|")+1);
+        }
         $scope.resultProducts = [];
         if(Products !== 'NA'){
             Products = Products.split('|');
@@ -2357,15 +2371,29 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 for (const moreProductsItem in product){
                     let moreProduct = product[moreProductsItem];
                     moreProduct = moreProduct.replace("LIST...","");
+                    moreProduct = moreProduct.replace("LIST","");
                     moreProduct = moreProduct.replace("(","");
                     moreProduct = moreProduct.replace(")","");
                     moreProduct = moreProduct.replace("&","");
                     moreProduct = moreProduct.replace(";","");
-                    //moreProduct = moreProduct.replace("AND","");
+                    moreProduct = moreProduct.replace(" OF","");
+                    moreProduct = moreProduct.replace(" IN","");
                     moreProduct = moreProduct.replace("  "," ");
+                    moreProduct = moreProduct.replace("OTHER"," ");
                     moreProduct = moreProduct.trim();
-                    if (moreProduct !== "" && moreProduct !== "IN" && moreProduct !== "FOR" &&
-                        ($scope.resultProducts).indexOf(moreProduct) === -1 ) {
+                    if (moreProduct !== "" && moreProduct !== "FOR" && moreProduct !== "ETC" &&
+                        moreProduct !== "/" && moreProduct !== "AND" && ($scope.resultProducts).indexOf(moreProduct) === -1 )
+                    {
+                        moreProduct = moreProduct.trim();
+                        if(moreProduct.slice(0,4) === 'AND '){
+                            moreProduct = moreProduct.slice(4,moreProduct.length);
+                        }
+                        if(moreProduct.slice(moreProduct.length-4,moreProduct.length) === ' AND'){
+                            moreProduct = moreProduct.slice(0,moreProduct.length-4);
+                        }
+                        if(moreProduct.slice(moreProduct.length-1,moreProduct.length) === ':'){
+                            moreProduct = moreProduct.slice(0,moreProduct.length-1);
+                        }
                         const moreProductSplit = moreProduct.split(" ");
                         moreProduct = "";
                         for (const item in moreProductSplit){
@@ -2388,7 +2416,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         //GET RSSD_ID
         let rssd_id = compInfo['rssd_id'].toString();
         if(rssd_id === '0'){
-            rssd_id = "No Data Found";
+            rssd_id = "No Data";
         }
         document.getElementById("rssdOfResult").innerHTML = rssd_id;
 
@@ -2398,7 +2426,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         //Get Founded
         let founded = compInfo['founded'];
         if (founded==="NA"){
-            founded="No Data Found";
+            founded="No Data";
         }else {
             if (founded.charAt(1) === '|'){
                 founded = founded.slice(1);
@@ -2410,7 +2438,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         //Get Revenue
         let revenue = compInfo['revenue'];
         if (revenue==="NA"){
-            revenue="No Data Found";
+            revenue="No Data";
         }else {
             revenue = revenue + " $";
         }
@@ -2419,7 +2447,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         //Get NumOfEmployees
         let numOfEmployees = compInfo['numOfEmployee'];
         if (numOfEmployees==="NA"){
-            numOfEmployees="No Data Found";
+            numOfEmployees="No Data";
         }else {
             const numOfEmployeesSplit = numOfEmployees.split("|");
             numOfEmployees = "";

@@ -14,7 +14,7 @@ $conn = sqlsrv_connect($serverName, $connectionInfo);
 
 
 $sql= /** @lang text */
-    "select distinct country from company_prod where country is not null and country!='NA' order by country";
+    "select distinct country from company_prod where country is not null and country!='NA' and country!='' order by country";
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
     return (sqlsrv_errors());
