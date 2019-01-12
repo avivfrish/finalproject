@@ -1530,46 +1530,53 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 company:  $scope.selectedCompany
             }
         }).then(function (data) {
+            if (data.data=="")
+            {
+                document.getElementById("3d-graph").innerHTML="";
+                document.getElementById("graph_comp_name").innerText="No Connections Found";
+                document.getElementById("graphDetails").style.display="none";
+                $("graph_comp_name").show();
+            }
+            else {
+                console.log(data.data);
 
-            console.log(data.data);
+                /*var graph_data=data.data;
+                graph_data=graph_data.replace("\'nodes\'","\"nodes\"");
+                graph_data=graph_data.replace(/'directed': False, 'multigraph': False, 'graph': {},/g,"");
+                graph_data=graph_data.replace(/'id'/g,"\"id\"");
+                graph_data=graph_data.replace(/'links'/g,"\"links\"");
+                graph_data=graph_data.replace(/'label'/g,"\"label\"");
+                graph_data=graph_data.replace(/'source'/g,"\"source\"");
+                graph_data=graph_data.replace(/'target'/g,"\"target\"");
+                graph_data=graph_data.replace(/'/g,"\"");
+                //console.log("\n"+graph_data);
+                const graph_data_json=JSON.parse(graph_data);*/
+                const Graph = ForceGraph3D()
+                    (document.getElementById('3d-graph'))
+                    //.jsonUrl(data.data)
+                        .linkOpacity(1)
+                        .nodeOpacity(1)
+                        .linkCurvature(link => $scope.graph_link_curve(link))
+                        .linkCurveRotation('rotation')
+                        .graphData(data.data)
 
-            /*var graph_data=data.data;
-            graph_data=graph_data.replace("\'nodes\'","\"nodes\"");
-            graph_data=graph_data.replace(/'directed': False, 'multigraph': False, 'graph': {},/g,"");
-            graph_data=graph_data.replace(/'id'/g,"\"id\"");
-            graph_data=graph_data.replace(/'links'/g,"\"links\"");
-            graph_data=graph_data.replace(/'label'/g,"\"label\"");
-            graph_data=graph_data.replace(/'source'/g,"\"source\"");
-            graph_data=graph_data.replace(/'target'/g,"\"target\"");
-            graph_data=graph_data.replace(/'/g,"\"");
-            //console.log("\n"+graph_data);
-            const graph_data_json=JSON.parse(graph_data);*/
-            const Graph = ForceGraph3D()
-            (document.getElementById('3d-graph'))
-                //.jsonUrl(data.data)
-                .linkOpacity(1)
-                .nodeOpacity(1)
-                .linkCurvature(link => $scope.graph_link_curve(link))
-                .linkCurveRotation('rotation')
-                .graphData(data.data)
+                        .backgroundColor('#e5e5e5')
+                        .nodeAutoColorBy('group')
+                        .height(300)
+                        .width(600)
+                        .onNodeClick(node => $scope.graph_on_click(node))
+                        .nodeColor(node => $scope.graph_node_color(node))
+                        .linkLabel(d => `<span style="color: #403d3e">${d.label}</span>`)
+                        .linkColor(link => $scope.graph_link_color(link))
+                        .nodeLabel('id')
+                        .nodeLabel(d => `<span style="color: #403d3e">${d.id}</span>`)
 
-                .backgroundColor('#e5e5e5')
-                .nodeAutoColorBy('group')
-                .height(300)
-                .width(600)
-                .onNodeClick(node =>  $scope.graph_on_click(node))
-                .nodeColor(node=> $scope.graph_node_color(node))
-                .linkLabel(d => `<span style="color: #403d3e">${d.label}</span>`)
-                .linkColor(link => $scope.graph_link_color(link))
-                .nodeLabel('id')
-                .nodeLabel(d => `<span style="color: #403d3e">${d.id}</span>`)
-
-                .showNavInfo(0)
+                        .showNavInfo(0)
                 ;
 
-            const linkForce = Graph
-                .d3Force('link')
-                .distance(link => $scope.graph_link_dist(link));
+                const linkForce = Graph
+                    .d3Force('link')
+                    .distance(link => $scope.graph_link_dist(link));
 
 
                 //.linkAutoColorBy(d => gData.nodes[d.source].group)
@@ -1585,9 +1592,10 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
             */
 
+            }
 
+            });
 
-        });
 
 
     };

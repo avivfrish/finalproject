@@ -109,6 +109,7 @@ if ($getResults == FALSE)
     return (sqlsrv_errors());
 
 $count_sub=0;
+$count_comptition=0;
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC))
 {
 
@@ -121,7 +122,13 @@ while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC))
     {
         continue;
     }
+    if ($row['conn_type']==="Competition" and $count_comptition>30)
+    {
+
+        continue;
+    }
     $count_sub=$count_sub+1;
+    $count_comptition= $count_comptition+1;
     if (!in_array(trim(strtolower($row['comp1'])),$nodes_for_unique))
     {
 
