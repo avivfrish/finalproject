@@ -410,7 +410,21 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         }).then(function (data) {
+            if (data.data!=="0")
+            {
+                document.getElementById("save_admin_log").innerHTML="Changes Saved!";
+                $timeout(function() {
+                    document.getElementById("save_admin_log").innerHTML="";
+                },3000);
+            }
+            else {
+                document.getElementById("save_admin_log").innerHTML="Error!";
+                $timeout(function() {
+                    document.getElementById("save_admin_log").innerHTML="";
+                },3000);
+            }
             console.log(data.data);
+            $scope.nav_bar_admin();
 
 
         });
