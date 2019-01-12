@@ -1532,6 +1532,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }).then(function (data) {
             if (data.data=="")
             {
+                console.log(data.data);
                 document.getElementById("3d-graph").innerHTML="";
                 document.getElementById("graph_comp_name").innerText="No Connections Found";
                 document.getElementById("graphDetails").style.display="none";
