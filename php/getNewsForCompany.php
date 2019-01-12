@@ -8,7 +8,7 @@
 
 $companyName = $_POST['name'];
 
-$connectionInfo = array("UID" => "finalproject@avifinalproject", "pwd" => "1qaZ2wsX", "Database" => "finalProject", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0);
+$connectionInfo = array("UID" => "finalproject@avifinalproject", "pwd" => "1qaZ2wsX", "Database" => "finalProject", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0, "CharacterSet" => "UTF-8");
 $serverName = "tcp:avifinalproject.database.windows.net,1433";
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 
@@ -16,7 +16,11 @@ $sql= /** @lang text */
     "select * from companyNews where name = '".$companyName."'";
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
+{
+    echo "when?";
     return (sqlsrv_errors());
+}
+
 $arrayOfNews = array();
 while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     $arrayOfNews[] = array(
@@ -33,4 +37,4 @@ while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC)) {
     );
 }
 sqlsrv_free_stmt($getResults);
-echo json_encode(array_values($arrayOfNews));
+echo json_encode($arrayOfNews);
