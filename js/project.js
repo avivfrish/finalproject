@@ -1463,8 +1463,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 $scope.resultsOfSearch = data.data;
                 $scope.addAddressToSearchResults($scope.resultsOfSearch);
 
-                document.getElementById("rightSideResults").style.height = "600px";
-                document.getElementById("leftSideResults").style.height = "600px";
+                document.getElementById("rightSideResults").style.height = "630px";
+                document.getElementById("leftSideResults").style.height = "630px";
 
                 $("#loadingResults").hide();
                 $("#foundResults").show();
@@ -2663,37 +2663,42 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 document.getElementById("errorComment").innerHTML="";
             },3000);
         }
+        else {
 
 
-        $http({
-            method: 'POST',
-            url: 'php/insert_comment.php',
-            data: $.param({
-                name: $("#contactName").val(),
-                email: $("#contactEmail").val(),
-                comment: $("#comments").val(),
-            }),
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        }).then(function (data) {
-            if (data.data==="1")
-            {
-                document.getElementById("errorComment").innerHTML="thank you for your comment!";
-                $timeout(function() {
-                    document.getElementById("errorComment").innerHTML="";
-                },3000);
-            }
-            if (data.data==="0")
-            {
-                document.getElementById("errorComment").innerHTML="ops! try again";
-                $timeout(function() {
-                    document.getElementById("errorComment").innerHTML="";
-                },3000);
-            }
+            $http({
+                method: 'POST',
+                url: 'php/insert_comment.php',
+                data: $.param({
+                    name: $("#contactName").val(),
+                    email: $("#contactEmail").val(),
+                    comment: $("#comments").val(),
+                }),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }).then(function (data) {
+                if (data.data === "1") {
+                    document.getElementById("errorComment").innerHTML = "thank you for your comment!";
+                    $timeout(function () {
+                        document.getElementById("errorComment").innerHTML = "";
+                    }, 3000);
+                    document.getElementById("contactName").value="";
+                    document.getElementById("comments").value="";
+                    document.getElementById("contactEmail").value="";
 
 
-        });
+                }
+                if (data.data === "0") {
+                    document.getElementById("errorComment").innerHTML = "ops! try again";
+                    $timeout(function () {
+                        document.getElementById("errorComment").innerHTML = "";
+                    }, 3000);
+                }
+
+
+            });
+        }
 
 
     };

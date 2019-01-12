@@ -50,11 +50,18 @@ if ($isMother == 0)
 
             );
             $nodes_for_unique[] = strtolower($company);
+            $count_sis=0;
             while ($row = sqlsrv_fetch_array($getResultsSister, SQLSRV_FETCH_ASSOC)) {
 
                 if (!in_array(trim(strtolower($row['name'])), $nodes_for_unique)) {
                     if ( trim(strtolower($row['name'])) !== trim(strtolower($mother_comp)))
                     {
+                        if ($count_sis>30)
+                        {
+
+                            continue;
+                        }
+                        $count_sis=$count_sis+1;
                         $g1 = "0";
                         $comp = trim(strtolower($company));
                         if ($comp == trim(strtolower($row['name']))) {
