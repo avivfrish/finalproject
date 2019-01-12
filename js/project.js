@@ -1270,6 +1270,9 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         else if (link['label'] === "Subsidiaries") {
             return "blue";
         }
+        else if (link['label'] === "Cooperative-Services") {
+            return "#fdff00";
+        }
         else
         {
             return "black";
@@ -1282,12 +1285,12 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         {
             return "#31a9bc";
         }
-        return "#464f52";
+        return "#6c7578";
     };
 
     $scope.graph_on_click = function (node)
     {
-        $("#comp_info").css("display","block");
+        //$("#comp_info").css("display","block");
 
 
         console.log("group",node['group']);
@@ -1304,8 +1307,9 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             if (data.data==0)
             {
                 document.getElementById("graph_comp_name").innerText=node['id'];
-                document.getElementById("graph_comp_name").innerText=node['id'] +" - Not Found in DB";
-                $("graphDetails").hide();
+                document.getElementById("graph_comp_name").innerText=node['id'] +" - Not Found in DB \n Please, Contact us if you " +
+                    "wish to add this company.";
+                document.getElementById("graphDetails").style.display="none";
                 $("graph_comp_name").show();
             }
             else
@@ -1341,18 +1345,21 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     $scope.graph_link_dist = function(link) {
 
          if (link['label'] === "Competition") {
-            return 50;
-        }
-        else if (link['label'] === "Sisters") {
-            return 20;
-        }
+            return 55;
+         }
+         else if (link['label'] === "Sisters") {
+             return 25;
+         }
          else if (link['label'] === "Subsidiaries") {
              return 20;
          }
-        else
-        {
-            return 5;
-        }
+         else if (link['label'] === "Cooperative-Services") {
+             return 20;
+         }
+         else
+         {
+             return 20;
+         }
 
     };
 
@@ -1483,7 +1490,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     $scope.graph_link_curve =function(link)
     {
         //console.log(link['label']);
-        if (link['label']==="Co-maneging")
+        if (link['label']==="Cooperative-Services")
         {
             //console.log("GOOD!");
             return 0.6;
@@ -1500,6 +1507,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         document.getElementById("graph_btn").innerHTML="";
         document.getElementById("graph_comp_name").innerText="Click on Node or Connection for Details";
         document.getElementById("graphDetails").style.display="none";
+        document.getElementById("rightSideResults").style.height = "650px";
+        document.getElementById("leftSideResults").style.height = "650px";
         $http({
             method: 'POST',
             url: 'php/get_python.php',
@@ -1525,6 +1534,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             (document.getElementById('3d-graph'))
                 //.jsonUrl(data.data)
                 .linkOpacity(1)
+                .nodeOpacity(1)
                 .linkCurvature(link => $scope.graph_link_curve(link))
                 .linkCurveRotation('rotation')
                 .graphData(data.data)

@@ -17,7 +17,7 @@ $nodes=array();
 $nodes_for_unique=array();
 $comp_conn= array();
 
-$checkIsMother="select isMother,mother_comp from company_test where name='".$company."'";
+$checkIsMother="select isMother,mother_comp from company_prod where name='".$company."'";
 $getResultsIsMother= sqlsrv_query($conn, $checkIsMother);
 $isMother = "";
 $mother_comp = "";
@@ -32,7 +32,6 @@ else{
         }
     }
 }
-
 if ($isMother == 0)
 {
 
@@ -104,19 +103,25 @@ if ($isMother == 0)
 $sisterCount=0;
 
 $sql="select * from connections_prod where (comp1='".$company."' or comp2='".$company."') and conn_type!='Sisters'";
+//echo $sql;
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
     return (sqlsrv_errors());
 
-
-    while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC))
+$count_sub=0;
+while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC))
 {
 
     $comp1=strtolower($row['comp1']);
     $comp2=strtolower($row['comp2']);
     $comp1=trim($comp1);
     $comp2=trim($comp2);
-    //echo $comp1.";".$comp2.";".$row['conn_type'];
+    //echo $comp1.";".$comp2.";".$row['conn_type']."^";
+    if ($row['conn_type']==="Subsidiaries" and $count_sub>30)
+    {
+        continue;
+    }
+    $count_sub=$count_sub+1;
     if (!in_array(trim(strtolower($row['comp1'])),$nodes_for_unique))
     {
 
@@ -163,7 +168,6 @@ if ($getResults == FALSE)
 
 }
 
-//echo json_encode($nodes_for_unique);
 $to_graph=array(
     'nodes' =>  $nodes,
     'links' => $comp_conn
