@@ -10,14 +10,14 @@
 $company=stripcslashes($_GET["company"]);
 
 
-$connectionInfo = array("UID" => "finalproject@avifinalproject", "pwd" => "1qaZ2wsX", "Database" => "finalProject", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0);
+$connectionInfo = array("UID" => "finalproject@avifinalproject", "pwd" => "1qaZ2wsX", "Database" => "finalProject", "LoginTimeout" => 30, "Encrypt" => 1, "TrustServerCertificate" => 0,"CharacterSet" => "UTF-8");
 $serverName = "tcp:avifinalproject.database.windows.net,1433";
 $conn = sqlsrv_connect($serverName, $connectionInfo);
 $nodes=array();
 $nodes_for_unique=array();
 $comp_conn= array();
 
-$checkIsMother="select isMother,mother_comp from company_test where name='".$company."'";
+$checkIsMother="select isMother,mother_comp from company_prod where name='".$company."'";
 $getResultsIsMother= sqlsrv_query($conn, $checkIsMother);
 $isMother = "";
 $mother_comp = "";
@@ -32,7 +32,6 @@ else{
         }
     }
 }
-
 if ($isMother == 0)
 {
 
@@ -50,11 +49,18 @@ if ($isMother == 0)
 
             );
             $nodes_for_unique[] = strtolower($company);
+            $count_sis=0;
             while ($row = sqlsrv_fetch_array($getResultsSister, SQLSRV_FETCH_ASSOC)) {
 
                 if (!in_array(trim(strtolower($row['name'])), $nodes_for_unique)) {
                     if ( trim(strtolower($row['name'])) !== trim(strtolower($mother_comp)))
                     {
+                        if ($count_sis>30)
+                        {
+
+                            continue;
+                        }
+                        $count_sis=$count_sis+1;
                         $g1 = "0";
                         $comp = trim(strtolower($company));
                         if ($comp == trim(strtolower($row['name']))) {
@@ -97,19 +103,32 @@ if ($isMother == 0)
 $sisterCount=0;
 
 $sql="select * from connections_prod where (comp1='".$company."' or comp2='".$company."') and conn_type!='Sisters'";
+//echo $sql;
 $getResults= sqlsrv_query($conn, $sql);
 if ($getResults == FALSE)
     return (sqlsrv_errors());
 
-
-    while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC))
+$count_sub=0;
+$count_comptition=0;
+while ($row = sqlsrv_fetch_array($getResults, SQLSRV_FETCH_ASSOC))
 {
 
     $comp1=strtolower($row['comp1']);
     $comp2=strtolower($row['comp2']);
     $comp1=trim($comp1);
     $comp2=trim($comp2);
-    //echo $comp1.";".$comp2.";".$row['conn_type'];
+    //echo $comp1.";".$comp2.";".$row['conn_type']."^";
+    if ($row['conn_type']==="Subsidiaries" and $count_sub>30)
+    {
+        continue;
+    }
+    if ($row['conn_type']==="Competition" and $count_comptition>30)
+    {
+
+        continue;
+    }
+    $count_sub=$count_sub+1;
+    $count_comptition= $count_comptition+1;
     if (!in_array(trim(strtolower($row['comp1'])),$nodes_for_unique))
     {
 
@@ -156,7 +175,6 @@ if ($getResults == FALSE)
 
 }
 
-//echo json_encode($nodes_for_unique);
 $to_graph=array(
     'nodes' =>  $nodes,
     'links' => $comp_conn

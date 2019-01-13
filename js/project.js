@@ -410,7 +410,21 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 'Content-Type': 'application/x-www-form-urlencoded'
             }
         }).then(function (data) {
+            if (data.data!=="0")
+            {
+                document.getElementById("save_admin_log").innerHTML="Changes Saved!";
+                $timeout(function() {
+                    document.getElementById("save_admin_log").innerHTML="";
+                },3000);
+            }
+            else {
+                document.getElementById("save_admin_log").innerHTML="Error!";
+                $timeout(function() {
+                    document.getElementById("save_admin_log").innerHTML="";
+                },3000);
+            }
             console.log(data.data);
+            $scope.nav_bar_admin();
 
 
         });
@@ -1270,6 +1284,9 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         else if (link['label'] === "Subsidiaries") {
             return "blue";
         }
+        else if (link['label'] === "Cooperative-Services") {
+            return "#fdff00";
+        }
         else
         {
             return "black";
@@ -1282,12 +1299,12 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         {
             return "#31a9bc";
         }
-        return "#464f52";
+        return "#6c7578";
     };
 
     $scope.graph_on_click = function (node)
     {
-        $("#comp_info").css("display","block");
+        //$("#comp_info").css("display","block");
 
 
         console.log("group",node['group']);
@@ -1304,8 +1321,9 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             if (data.data==0)
             {
                 document.getElementById("graph_comp_name").innerText=node['id'];
-                document.getElementById("graph_comp_name").innerText=node['id'] +" - Not Found in DB";
-                $("graphDetails").hide();
+                document.getElementById("graph_comp_name").innerText=node['id'] +" - Not Found in DB \n Please, Contact us if you " +
+                    "wish to add this company.";
+                document.getElementById("graphDetails").style.display="none";
                 $("graph_comp_name").show();
             }
             else
@@ -1341,18 +1359,21 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     $scope.graph_link_dist = function(link) {
 
          if (link['label'] === "Competition") {
-            return 50;
-        }
-        else if (link['label'] === "Sisters") {
-            return 20;
-        }
+            return 55;
+         }
+         else if (link['label'] === "Sisters") {
+             return 25;
+         }
          else if (link['label'] === "Subsidiaries") {
              return 20;
          }
-        else
-        {
-            return 5;
-        }
+         else if (link['label'] === "Cooperative-Services") {
+             return 20;
+         }
+         else
+         {
+             return 20;
+         }
 
     };
 
@@ -1463,8 +1484,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 $scope.resultsOfSearch = data.data;
                 $scope.addAddressToSearchResults($scope.resultsOfSearch);
 
-                document.getElementById("rightSideResults").style.height = "600px";
-                document.getElementById("leftSideResults").style.height = "600px";
+                document.getElementById("rightSideResults").style.height = "630px";
+                document.getElementById("leftSideResults").style.height = "630px";
 
                 $("#loadingResults").hide();
                 $("#foundResults").show();
@@ -1483,7 +1504,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
     $scope.graph_link_curve =function(link)
     {
         //console.log(link['label']);
-        if (link['label']==="Co-maneging")
+        if (link['label']==="Cooperative-Services")
         {
             //console.log("GOOD!");
             return 0.6;
@@ -1500,6 +1521,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         document.getElementById("graph_btn").innerHTML="";
         document.getElementById("graph_comp_name").innerText="Click on Node or Connection for Details";
         document.getElementById("graphDetails").style.display="none";
+        document.getElementById("rightSideResults").style.height = "650px";
+        document.getElementById("leftSideResults").style.height = "650px";
         $http({
             method: 'POST',
             url: 'php/get_python.php',
@@ -1507,45 +1530,54 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 company:  $scope.selectedCompany
             }
         }).then(function (data) {
+            if (data.data=="")
+            {
+                console.log(data.data);
+                document.getElementById("3d-graph").innerHTML="";
+                document.getElementById("graph_comp_name").innerText="No Connections Found";
+                document.getElementById("graphDetails").style.display="none";
+                $("graph_comp_name").show();
+            }
+            else {
+                console.log(data.data);
 
-            console.log(data.data);
+                /*var graph_data=data.data;
+                graph_data=graph_data.replace("\'nodes\'","\"nodes\"");
+                graph_data=graph_data.replace(/'directed': False, 'multigraph': False, 'graph': {},/g,"");
+                graph_data=graph_data.replace(/'id'/g,"\"id\"");
+                graph_data=graph_data.replace(/'links'/g,"\"links\"");
+                graph_data=graph_data.replace(/'label'/g,"\"label\"");
+                graph_data=graph_data.replace(/'source'/g,"\"source\"");
+                graph_data=graph_data.replace(/'target'/g,"\"target\"");
+                graph_data=graph_data.replace(/'/g,"\"");
+                //console.log("\n"+graph_data);
+                const graph_data_json=JSON.parse(graph_data);*/
+                const Graph = ForceGraph3D()
+                    (document.getElementById('3d-graph'))
+                    //.jsonUrl(data.data)
+                        .linkOpacity(1)
+                        .nodeOpacity(1)
+                        .linkCurvature(link => $scope.graph_link_curve(link))
+                        .linkCurveRotation('rotation')
+                        .graphData(data.data)
 
-            /*var graph_data=data.data;
-            graph_data=graph_data.replace("\'nodes\'","\"nodes\"");
-            graph_data=graph_data.replace(/'directed': False, 'multigraph': False, 'graph': {},/g,"");
-            graph_data=graph_data.replace(/'id'/g,"\"id\"");
-            graph_data=graph_data.replace(/'links'/g,"\"links\"");
-            graph_data=graph_data.replace(/'label'/g,"\"label\"");
-            graph_data=graph_data.replace(/'source'/g,"\"source\"");
-            graph_data=graph_data.replace(/'target'/g,"\"target\"");
-            graph_data=graph_data.replace(/'/g,"\"");
-            //console.log("\n"+graph_data);
-            const graph_data_json=JSON.parse(graph_data);*/
-            const Graph = ForceGraph3D()
-            (document.getElementById('3d-graph'))
-                //.jsonUrl(data.data)
-                .linkOpacity(1)
-                .linkCurvature(link => $scope.graph_link_curve(link))
-                .linkCurveRotation('rotation')
-                .graphData(data.data)
+                        .backgroundColor('#e5e5e5')
+                        .nodeAutoColorBy('group')
+                        .height(300)
+                        .width(600)
+                        .onNodeClick(node => $scope.graph_on_click(node))
+                        .nodeColor(node => $scope.graph_node_color(node))
+                        .linkLabel(d => `<span style="color: #403d3e">${d.label}</span>`)
+                        .linkColor(link => $scope.graph_link_color(link))
+                        .nodeLabel('id')
+                        .nodeLabel(d => `<span style="color: #403d3e">${d.id}</span>`)
 
-                .backgroundColor('#e5e5e5')
-                .nodeAutoColorBy('group')
-                .height(300)
-                .width(600)
-                .onNodeClick(node =>  $scope.graph_on_click(node))
-                .nodeColor(node=> $scope.graph_node_color(node))
-                .linkLabel(d => `<span style="color: #403d3e">${d.label}</span>`)
-                .linkColor(link => $scope.graph_link_color(link))
-                .nodeLabel('id')
-                .nodeLabel(d => `<span style="color: #403d3e">${d.id}</span>`)
-
-                .showNavInfo(0)
+                        .showNavInfo(0)
                 ;
 
-            const linkForce = Graph
-                .d3Force('link')
-                .distance(link => $scope.graph_link_dist(link));
+                const linkForce = Graph
+                    .d3Force('link')
+                    .distance(link => $scope.graph_link_dist(link));
 
 
                 //.linkAutoColorBy(d => gData.nodes[d.source].group)
@@ -1561,9 +1593,10 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
             */
 
+            }
 
+            });
 
-        });
 
 
     };
@@ -2671,37 +2704,42 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 document.getElementById("errorComment").innerHTML="";
             },3000);
         }
+        else {
 
 
-        $http({
-            method: 'POST',
-            url: 'php/insert_comment.php',
-            data: $.param({
-                name: $("#contactName").val(),
-                email: $("#contactEmail").val(),
-                comment: $("#comments").val(),
-            }),
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            }
-        }).then(function (data) {
-            if (data.data==="1")
-            {
-                document.getElementById("errorComment").innerHTML="thank you for your comment!";
-                $timeout(function() {
-                    document.getElementById("errorComment").innerHTML="";
-                },3000);
-            }
-            if (data.data==="0")
-            {
-                document.getElementById("errorComment").innerHTML="ops! try again";
-                $timeout(function() {
-                    document.getElementById("errorComment").innerHTML="";
-                },3000);
-            }
+            $http({
+                method: 'POST',
+                url: 'php/insert_comment.php',
+                data: $.param({
+                    name: $("#contactName").val(),
+                    email: $("#contactEmail").val(),
+                    comment: $("#comments").val(),
+                }),
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                }
+            }).then(function (data) {
+                if (data.data === "1") {
+                    document.getElementById("errorComment").innerHTML = "thank you for your comment!";
+                    $timeout(function () {
+                        document.getElementById("errorComment").innerHTML = "";
+                    }, 3000);
+                    document.getElementById("contactName").value="";
+                    document.getElementById("comments").value="";
+                    document.getElementById("contactEmail").value="";
 
 
-        });
+                }
+                if (data.data === "0") {
+                    document.getElementById("errorComment").innerHTML = "ops! try again";
+                    $timeout(function () {
+                        document.getElementById("errorComment").innerHTML = "";
+                    }, 3000);
+                }
+
+
+            });
+        }
 
 
     };
