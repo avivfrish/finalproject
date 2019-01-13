@@ -659,6 +659,7 @@ left: 50%;
 }
 .carousel-caption {
     max-width: 900px;
+    right: 100px;
   }
 
 .carousel-caption h1{
@@ -668,6 +669,8 @@ left: 50%;
      -webkit-text-stroke-width: 1px;
      -webkit-text-stroke-color: #062c33;
     display: inherit;
+    right: 100px;
+
  }
 
 .carousel-caption h3{
