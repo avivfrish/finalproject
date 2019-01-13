@@ -2400,7 +2400,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
         //Get LOGO
         const logo = compInfo['logo'];
-        if(logo.includes(".png") === true || logo.includes(".jpeg") === true ){
+        if(logo.includes(".png") === true || logo.includes(".jpeg") === true || logo.includes(".svg") === true){
             document.getElementById("companyLogo").src = logo.toString();
         }
         else {
