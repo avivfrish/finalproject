@@ -11,10 +11,10 @@
                 <tr><td>RSSD_ID: </td><td><input list="selectedCompID" class="form-control" type="text" name="rssd_idInserted" id="rssd_idInsertedDelete" ng-change="changeID()" ng-model="selectedIDValue" placeholder="select RSSD_ID..">
                     <datalist id="selectedCompID">
                         <option ng-repeat="RSSD_ID in arrayOfCompIDs" value="{{RSSD_ID}}">{{RSSD_ID}}</option>
-                    </datalist></td></tr>
+                    </datalist><br></td></tr>
             </form>
-            <tr><td></td><td><button type="submit" value="Send" class="btn btn-outline-dark" ng-click="deleteComp()"><i class="fa fa-trash"></i>   Delete</button>
-                <button type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearDelete()"><i class="fas fa-eraser"></i>    Clear</button></td></tr>
+            <tr><td></td><td><button style="background-color: #1F497D; color: white;" type="submit" value="Send" class="btn btn-outline-dark" ng-click="deleteComp()"><i class="fa fa-trash"></i>   Delete</button>
+                <button style="background-color: #1F497D; color: white;" type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearDelete()"><i class="fas fa-eraser"></i>    Clear</button></td></tr>
         </table>
     </center>
 </div>

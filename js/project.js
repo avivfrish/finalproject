@@ -2196,7 +2196,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#askToSelectResult").hide();
 
         $("#tab_GeneralInfo").tab("show");
-        document.getElementById(name).style.boxShadow = "rgb(141, 195, 207) 0px 4px 8px 0px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px";
+        document.getElementById(name).style.boxShadow = "#1F497D 4px 4px 4px 4px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px";
         //document.getElementById("tab_Stock").className=("nav-link");
         //document.getElementById("tab_Competitors").className=("nav-link");
         //document.getElementById("tab_Articles").className=("nav-link");
