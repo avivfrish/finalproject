@@ -2597,18 +2597,22 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     const firstTitle = data.data[0]['title1'];
                     const firstDescription = data.data[0]['description1'];
 
-                    let newsForHtml = '<div class="carousel-item active"><h4>' + firstTitle + '</h4><br>' +
-                        '<p>' + firstDescription + '</p>' + '<br><div style="text-align: right; font-size: large">' +
-                        '<a href="' + firstAddress + '" target="_blank" class="btn btn-link" role="button">Read More...</a></div></div>';
+                    let newsForHtml = '<div class="carousel-item active"><div class="d-block"><h4>'
+                        + firstTitle + '</h4><br>' + '<p>' + firstDescription + '</p>' +
+                        '<br><div style="text-align: right; font-size: large">' +
+                        '<a href="' + firstAddress + '" target="_blank" class="btn btn-link" role="button">' +
+                        'Read More...</a></div></div></div>';
 
                     let moreAddress = data.data[0]['address2'];
                     if(moreAddress !== 'NA') {
                         let moreTitle = data.data[0]['title2'];
                         let moreDescription = data.data[0]['description2'];
 
-                        newsForHtml = newsForHtml + '<div class="carousel-item"><h4>' + moreTitle + '</h4><br>' +
-                            '<p>' + moreDescription + '</p>' + '<br><div style="text-align: right; font-size: large">' +
-                            '<a href="' + moreAddress + '" target="_blank" class="btn btn-link" role="button">Read More...</a></div></div>';
+                        newsForHtml = newsForHtml + '<div class="carousel-item"><div class="d-block"><h4>'
+                            + moreTitle + '</h4><br>' + '<p>' + moreDescription + '</p>' +
+                            '<br><div style="text-align: right; font-size: large">' +
+                            '<a href="' + moreAddress + '" target="_blank" class="btn btn-link" role="button">' +
+                            'Read More...</a></div></div></div>';
                     }
 
                     moreAddress = data.data[0]['address3'];
@@ -2616,9 +2620,10 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                         let moreTitle = data.data[0]['title3'];
                         let moreDescription = data.data[0]['description3'];
 
-                        newsForHtml = newsForHtml + '<div class="carousel-item"><h4>' + moreTitle + '</h4><br>' +
+                        newsForHtml = newsForHtml + '<div class="carousel-item"><div class="d-block"><h4>' + moreTitle + '</h4><br>' +
                             '<p>' + moreDescription + '</p>' + '<br><div style="text-align: right; font-size: large">' +
-                            '<a href="' + moreAddress + '" target="_blank" class="btn btn-link" role="button">Read More...</a></div></div>';
+                            '<a href="' + moreAddress + '" target="_blank" class="btn btn-link" role="button">' +
+                            'Read More...</a></div></div></div>';
                     }
 
                     document.getElementById("resultNews").innerHTML = newsForHtml;
