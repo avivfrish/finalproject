@@ -25,7 +25,8 @@
 
             <div class="border rounded col-sm-8" id = "rightSideResults" >
                 <div id="askToSelectResult">
-                    Select Search Result to show more..
+                    <br><br>
+                    <h3>Select Search Result to show more</h3>
                 </div>
                 <div id="selectedResult">
 
@@ -247,8 +248,13 @@
         </div>
     </div>
 
-    <div id="noResults">
+    <!--<div id="noResults">
         <h4>No results found !</h4>
+    </div>-->
+
+    <div class="alert alert-danger alert-dismissible" id="noResults" style="display: none">
+        <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+        <strong>Oops!</strong> Couldn't find results.
     </div>
 
     <div id="loadingResults">

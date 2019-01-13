@@ -13,7 +13,7 @@
                     <option>state</option>
                 </select></td><td></td></tr>
                 <tr><td>New Information: </td><td><input type="text" name="ToUpdateBySearch" id="newInfoToUpdateBySearch" class="form-control" ng-model="selectedNewInfoToUpdateBySearch" placeholder="type here.."></td>
-                <td><button type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearInfoUpdateBySearch()"><i class="fas fa-eraser"></i>    Clear</button></td></tr>
+                <div><td><button style="background-color: #1F497D; color: white;" type="reset" value="Reset form" class="btn btn-outline-dark" ng-click="clearInfoUpdateBySearch()"><i class="fas fa-eraser"></i>    Clear</button></td></div></tr>
             </form>
         </table>
         <br>
@@ -34,7 +34,7 @@
                 <td>{{result.country}}</td>
                 <td>{{result.state}}</td>
                 <td>{{result.RSSD_ID}}</td>
-                <td><button type="submit" value="Send" class="btn btn-outline-dark" id="{{result.id}}" ng-click="updateSearchResults(result.id)"><i class="fas fa-user-edit"></i>   Update</button></td>
+                <td><button style="background-color: #1F497D; color: white;" type="submit" value="Send" class="btn btn-outline-dark" id="{{result.id}}" ng-click="updateSearchResults(result.id)"><i class="fas fa-user-edit"></i>   Update</button></td>
             </tr>
         </table>
     </center>

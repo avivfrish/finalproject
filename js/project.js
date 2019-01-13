@@ -152,7 +152,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     "\t\t\t\t\t\t\t<a class=\"dropdown-item\"  href=\"#\" ng-click=\"nav_bar_comment();\" data-toggle=\"modal\" data-target=\"#admin_comment_modal\">Comments</a>\n" +
                     "\t\t\t\t\t\t\t<a class=\"dropdown-item\"  href=\"#\" ng-click=\"nav_bar_files();\" data-toggle=\"modal\" data-target=\"#admin_file_modal\">Uploaded Files</a>\n" +
                     "\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">\n" +
-                    "\t\t\t\t\t\t\t\t<form action=\"/aviv/php/logout.php\">\n" +
+                    "\t\t\t\t\t\t\t\t<form action=\"/php/logout.php\">\n" +
                     "\t\t\t\t\t\t\t\t\t<button style=\"padding: 0;bottom: 0;\" type=\"submit\"  class=\"btn btn-link\">logout</button>\n" +
                     "\t\t\t\t\t\t\t\t</form> \n" +
                     "\t\t\t\t\t\t\t</a>")($scope));
@@ -162,7 +162,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                 document.getElementById("navbar_admin").innerText = "";
                 angular.element(document.getElementById("navbar_admin")).append($compile(
                     "\t\t\t\t\t\t\t<a class=\"dropdown-item\" href=\"#\">\n" +
-                    "\t\t\t\t\t\t\t\t<form action=\"/aviv/php/logout.php\">\n" +
+                    "\t\t\t\t\t\t\t\t<form action=\"/php/logout.php\">\n" +
                     "\t\t\t\t\t\t\t\t\t<button style=\"padding: 0;bottom: 0;\" type=\"submit\"  class=\"btn btn-link\">logout</button>\n" +
                     "\t\t\t\t\t\t\t\t</form> \n" +
                     "\t\t\t\t\t\t\t</a>")($scope));
@@ -2310,8 +2310,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#askToSelectResult").hide();
 
 
-        document.getElementById(name).style.boxShadow = "rgb(141, 195, 207) 0px 4px 8px 0px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px";
-        //document.getElementById("tab_Stock").className=("nav-link");
+        document.getElementById(name).style.boxShadow = "#1F497D 4px 4px 4px 4px, rgba(0, 0, 0, 0.19) 0px 6px 20px 0px";        //document.getElementById("tab_Stock").className=("nav-link");
         //document.getElementById("tab_Competitors").className=("nav-link");
         //document.getElementById("tab_Articles").className=("nav-link");
         //document.getElementById("tab_GeneralInfo").className=("nav-link active show");
@@ -2342,6 +2341,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         console.log(wiki_name);
         if(wiki_name!=='NA' && wiki_name.toUpperCase()!==name.toUpperCase()){
             document.getElementById("wikiNameOfResult").innerHTML = "Redirected from " + wiki_name;
+        } else {
+            document.getElementById("wikiNameOfResult").innerHTML = "";
         }
 
         //GET Type
@@ -2398,7 +2399,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
         //Get LOGO
         const logo = compInfo['logo'];
-        if(logo.includes(".png") === true || logo.includes(".jpeg") === true ){
+        if(logo.includes(".png") === true || logo.includes(".jpeg") === true || logo.includes(".svg") === true){
             document.getElementById("companyLogo").src = logo.toString();
         }
         else {
@@ -2628,18 +2629,22 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                     const firstTitle = data.data[0]['title1'];
                     const firstDescription = data.data[0]['description1'];
 
-                    let newsForHtml = '<div class="carousel-item active"><h4>' + firstTitle + '</h4><br>' +
-                        '<p>' + firstDescription + '</p>' + '<br><div style="text-align: right; font-size: large">' +
-                        '<a href=' + firstAddress + 'class="btn btn-link" role="button">Read More...</a></div></div>';
+                    let newsForHtml = '<div class="carousel-item active"><div class="d-block"><h4>'
+                        + firstTitle + '</h4><br>' + '<p>' + firstDescription + '</p>' +
+                        '<br><div style="text-align: right; font-size: large">' +
+                        '<a href="' + firstAddress + '" target="_blank" class="btn btn-link" role="button">' +
+                        'Read More...</a></div></div></div>';
 
                     let moreAddress = data.data[0]['address2'];
                     if(moreAddress !== 'NA') {
                         let moreTitle = data.data[0]['title2'];
                         let moreDescription = data.data[0]['description2'];
 
-                        newsForHtml = newsForHtml + '<div class="carousel-item"><h4>' + moreTitle + '</h4><br>' +
-                            '<p>' + moreDescription + '</p>' + '<br><div style="text-align: right; font-size: large">' +
-                            '<a href=' + moreAddress + 'class="btn btn-link" role="button">Read More...</a></div></div>';
+                        newsForHtml = newsForHtml + '<div class="carousel-item"><div class="d-block"><h4>'
+                            + moreTitle + '</h4><br>' + '<p>' + moreDescription + '</p>' +
+                            '<br><div style="text-align: right; font-size: large">' +
+                            '<a href="' + moreAddress + '" target="_blank" class="btn btn-link" role="button">' +
+                            'Read More...</a></div></div></div>';
                     }
 
                     moreAddress = data.data[0]['address3'];
@@ -2647,9 +2652,10 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
                         let moreTitle = data.data[0]['title3'];
                         let moreDescription = data.data[0]['description3'];
 
-                        newsForHtml = newsForHtml + '<div class="carousel-item"><h4>' + moreTitle + '</h4><br>' +
+                        newsForHtml = newsForHtml + '<div class="carousel-item"><div class="d-block"><h4>' + moreTitle + '</h4><br>' +
                             '<p>' + moreDescription + '</p>' + '<br><div style="text-align: right; font-size: large">' +
-                            '<a href=' + moreAddress + 'class="btn btn-link" role="button">Read More...</a></div></div>';
+                            '<a href="' + moreAddress + '" target="_blank" class="btn btn-link" role="button">' +
+                            'Read More...</a></div></div></div>';
                     }
 
                     document.getElementById("resultNews").innerHTML = newsForHtml;
@@ -2665,8 +2671,9 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
             }
             else {
-                console.log("Get news for company Failed");
-            }
+                console.log("No News for the company");
+                $("#articlesCarousel").hide();
+                $("#notFoundNews").show();            }
         });
 
     };

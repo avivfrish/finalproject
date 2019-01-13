@@ -1,6 +1,6 @@
 <div id="new_file" style="margin-top: 70px">
-    <center>
-    <h1>Insert New File</h1>
+
+    <h1 style="text-align: center;">Insert New File</h1>
 
             <p>Please select the file you wish to upload</p>
 
@@ -11,14 +11,14 @@
                         <td>
                             <input type="file" ng-model="myFileName" file-reader="fileContent" file-model="myFile"/>
                     <!--<tr><td><input type="file" name="file" onchange="angular.element(this).scope().service(this.files)"/>-->
-                            <input type="submit" name="submit" value="Upload" class="btn btn-outline-dark" ng-click="uploadFile()"/>
+                            <input style="background-color: #1F497D; color: white;" type="submit" name="submit" value="Upload" class="btn btn-outline-dark" ng-click="uploadFile()"/>
                         </td>
                     </tr>
                     <!--<tr>
                         <td>
                             <div class="form-check">
                                 <label>
-                                    <input type="radio" name="radio"  id="replaceData" checked>
+                                    <input  type="radio" name="radio"  id="replaceData" checked>
 
                                         Replace data for existing companies
                                 </label>
@@ -38,8 +38,7 @@
                     </tr>-->
                 </table>
             </form>
-    </center>
-</div>
+        </div>
 
     <div class="alert alert-success alert-dismissible" id="added_file_successfully" style="display: none">
         <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
