@@ -51,11 +51,10 @@ app.directive('fileModel', ['$parse', function ($parse) {
 		}]);
 
 
-//		 myApp.controller('myCtrl', ['$scope', 'fileUpload', function($scope, fileUpload){
-
 app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUpload, $window, $element, $timeout) {
 
-	$scope.init_case = function () {
+    // This function initializes variables and calls to functions that are necessary from the beginning
+    $scope.init_case = function () {
 		//$("#nav").show();
         $scope.hidePages();
         $("#home").show();
@@ -118,6 +117,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.allFiles=[];
     }; //the function
 
+    // This function ...
     $scope.get_user_session = function () {
         $http({
             method: 'POST',
@@ -177,6 +177,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
+    // This function hides all the html pages.
     $scope.hidePages = function () {
         $("#home").hide();
         $("#aboutUs").hide();
@@ -237,22 +238,26 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#couldnt_find_update_results").hide();
     };
 
+    // This function shows the page of insert new company.
     $scope.show_insert_new_comp = function () {
         $scope.hidePages();
         $("#new_comp").show();
         $scope.clearInsert();
     };
 
+    // This function shows the page of update existing company.
     $scope.show_update_comp = function () {
         $scope.hidePages();
         $("#update_comp").show();
     };
 
+    // This function shows the page of delete existing company.
     $scope.show_delete_comp = function () {
         $scope.hidePages();
         $("#delete_by").show();
     };
 
+    // This function shows the page of update existing company by name.
     $scope.show_update_comp_by_name = function () {
         $scope.clearAlerts();
         $("#update_comp_by_name").show();
@@ -260,6 +265,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.clearUpdateByName();
     };
 
+    // This function shows the page of update existing company by ID.
     $scope.show_update_comp_by_ID = function () {
         $scope.clearAlerts();
         $("#update_comp_by_ID").show();
@@ -267,6 +273,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.clearUpdateByID();
     };
 
+    // This function shows the page of update existing company manually.
     $scope.show_manual_update = function () {
         $scope.clearAlerts();
         $("#manual_update").show();
@@ -274,6 +281,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#show_update_results").hide();
     };
 
+    // This function shows the page of update existing company by searching for the company.
     $scope.show_update_by_searching = function () {
         $scope.clearAlerts();
         $("#update_by_search").show();
@@ -283,6 +291,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#show_update_results").hide();
     };
 
+    // This function shows the page of delete existing company by filling manual data.
     $scope.show_delete_by_filling = function()
     {
         $("#delete_by_filling").show();
@@ -290,6 +299,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.clearDelete();
     };
 
+    // This function shows the page of delete existing company by searching for the company.
     $scope.show_delete_by_searching = function()
     {
         $("#delete_by_searching").show();
@@ -297,12 +307,14 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.clearDeleteBySearch();
     };
 
+    // This function shows the page of insert a file of companies.
     $scope.show_insert_new_file = function () {
         $scope.hidePages();
         $("#new_file").show();
 
     };
 
+    // This function shows the page of search for company - search by name (general) or by location.
     $scope.show_search = function (searchBy) {
         $scope.hidePages();
         if (searchBy == 'name') {
@@ -318,40 +330,22 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             $("#loadingMap").hide();
         }
 
-        //document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
-
-        //$("#open_caseOrIntell").text("Add Case");
-        //$("#open_caseOrIntell").target("#add_case_modal");
-        //$("#open_caseOrIntell").href("#add_case_modal")
-        //$("#topRow").empty();
-        //$("#topRow").prepend("<embed src='http://SERVERNAME:8000/en-US/app/cymng/TopRowTimeline?earliest=0&latest=' seamless frameborder='no' scrolling='no' width='470px' height='103px' style='margin-top:10px' target='_top'></embed>");
     };
 
+    // This function shows the main page of the site - the home page.
     $scope.show_home = function () {
-        //show_cases_div - show cases div
-
-        ////console.log("show_cases_div - show cases div");
         $scope.hidePages();
         $("#home").show();
-
-        //document.getElementById("open_caseOrIntell").innerHTML="<a href='#add_case_modal' id='open_caseOrIntell1' data-toggle='modal' data-target='#add_case_modal' ng-click='add_case_check_user_login();'><span class='glyphicon glyphicon-plus' aria-hidden='true'></span>&nbsp; Add Case</a>"
-
-        //$("#open_caseOrIntell").text("Add Case");
-        //$("#open_caseOrIntell").target("#add_case_modal");
-        //$("#open_caseOrIntell").href("#add_case_modal")
-        //$("#topRow").empty();
-        //$("#topRow").prepend("<embed src='http://SERVERNAME:8000/en-US/app/cymng/TopRowTimeline?earliest=0&latest=' seamless frameborder='no' scrolling='no' width='470px' height='103px' style='margin-top:10px' target='_top'></embed>");
     };
 
+    // This function shows the page of about us.
     $scope.show_about_us = function () {
-        //show_cases_div - show cases div
-
-        ////console.log("show_cases_div - show cases div");
         $scope.hidePages();
         $("#aboutUs").show();
         console.log("about us")
     };
 
+    // This function shows the page of statistic.
     $scope.show_stats = function () {
         $scope.hidePages();
         $("#stats").show();
@@ -361,6 +355,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.getIndustry();
     };
 
+    // This function initializes a variable that include all the existing users in the system.
     $scope.nav_bar_admin = function () {
         console.log("nav bar");
         $http({
@@ -372,6 +367,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         });
     };
 
+    // This function initializes a variable that include all the comments that users write for the admin.
     $scope.nav_bar_comment = function () {
         console.log("nav comment bar");
         $http({
@@ -384,7 +380,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         });
     };
 
-    $scope.nav_bar_files= function () {
+    // This function initializes a variable that include the status of the uploaded files.
+    $scope.nav_bar_files = function () {
         console.log("nav comment bar");
         $http({
             method: 'POST',
@@ -396,6 +393,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         });
     };
 
+    // This function saves the changes for admin permissions to the users.
     $scope.admin_save_changes = function () {
         //var obi = $scope.allUsers;
         //console.log(obi);
@@ -432,14 +430,14 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
+    // This function shows the connection graph between companies.
     $scope.show_graph = function () {
         $scope.hidePages();
         $("#3ds").show();
         $scope.graph();
-
-
     };
 
+    // This function ...
     $scope.nav_bar_log_out = function () {
         var request = $http({
             method: "POST",
@@ -449,6 +447,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }); //request
     };
 
+    // This function ....
     $scope.show_group = function (item) {
         console.log("obi");
         $("#groups").css("display", "block");
@@ -473,6 +472,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     }; //the funtion
 
+    // This function ....
     $scope.azure = function () {
         $http({
             method: 'POST',
@@ -485,6 +485,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
+    // This function clears the alerts belong to update company pages.
     $scope.clearAlerts = function()
     {
         $("#added_comp_successfully").hide();
@@ -525,17 +526,19 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#couldnt_find_update_results").hide();
     };
 
+    // This function clears the fields of insert new company page.
     $scope.clearInsert = function()
     {
-        document.getElementById('compName').value = '',
-            document.getElementById('compStreet').value = '',
-            document.getElementById('compCity').value = '',
-            document.getElementById('compCountry').value = '',
-            document.getElementById('compState').value = '',
-            document.getElementById('compID').value = ''
+        document.getElementById('compName').value = '';
+        document.getElementById('compStreet').value = '';
+        document.getElementById('compCity').value = '';
+        document.getElementById('compCountry').value = '';
+        document.getElementById('compState').value = '';
+        document.getElementById('compID').value = '';
         $scope.clearAlerts();
     };
 
+    // This function clears the fields of update existing company by name page.
     $scope.clearUpdateByName = function()
     {
         document.getElementById("selectedCompName").value = '';
@@ -544,6 +547,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.clearAlerts();
     };
 
+    // This function clears the fields of update existing company by ID page.
     $scope.clearUpdateByID = function()
     {
         document.getElementById("selectedCompID").value = '';
@@ -552,6 +556,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.clearAlerts();
     };
 
+    // This function clears the fields of delete existing company page.
     $scope.clearDelete = function()
     {
         document.getElementById("nameInsertedDelete").value = '';
@@ -559,6 +564,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.clearAlerts();
     };
 
+    // This function clears the fields of delete existing company by searching page.
     $scope.clearDeleteBySearch = function()
     {
         document.getElementById("companyNameSearched").value = '';
@@ -567,6 +573,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#show_delete_results").hide();
     };
 
+    // This function clears the fields of update existing company by searching page.
     $scope.clearUpdateBySearch = function()
     {
         document.getElementById("companyNameSearchedToUpdate").value = '';
@@ -576,6 +583,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.clearInfoUpdateBySearch();
     };
 
+    // This function clears the fields of update existing company.
     $scope.clearInfoUpdateBySearch = function()
     {
         document.getElementById("compDetailsToUpdateBySearch").value = '';
@@ -583,6 +591,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.clearAlerts();
     };
 
+    // This function initializes a variable that include all of the companies names.
     $scope.getCompNames = function()
     {
         $http({
@@ -602,6 +611,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
+    // This function initializes a variable that include all of the companies IDs.
     $scope.getCompIDs = function()
     {
         $http({
@@ -621,6 +631,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
+    // This function inserts a new company into the DB and shows to the user indication whether the company inserted.
     $scope.insertNewComp = function()
     {
         $scope.getCompNames();
@@ -676,6 +687,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
+    // This function show the results of search in the delete company page.
     $scope.showDeleteResults = function () {
         $scope.clearAlerts();
         $("#searching_for_results").show();
@@ -717,6 +729,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
+    // This function re-show the results of search in the delete company page.
     $scope.reShowDeleteResults = function () {
         //console.log("re show");
         $scope.clearAlerts();
@@ -757,6 +770,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         });
     };
 
+    // This function deletes a company that was selected from the search results in the delete page.
     $scope.deleteSearchResults = function(id, name)
     {
         $scope.companyToDelete = id;
@@ -784,6 +798,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
+    // This function get a company name and finds all the connections that are related to this company.
     $scope.getCompConnections = function(comp)
     {
         //console.log("get connections");
@@ -805,6 +820,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         });
     };
 
+    // This function get an id of connection between two companies and delete this connection from DB.
     $scope.deleteFromConnections = function(id)
     {
         $scope.rowToDeleteFromConnections = id;
@@ -820,6 +836,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         });
     };
 
+    // This function maps to a delete company function according to the delete filled fields.
     $scope.deleteComp = function()
     {
         $("#show_delete_results");
@@ -843,6 +860,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }
     };
 
+    // This function deletes a company by the name of the company and shows to the user indication whether the company deleted.
     $scope.deleteCompByName = function()
     {
         $scope.clearAlerts();
@@ -879,6 +897,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.getCompIDs();
     };
 
+    // This function deletes a company by the ID of the company and shows to the user indication whether the company deleted.
     $scope.deleteCompByID = function()
     {
         $scope.clearAlerts();
@@ -914,6 +933,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.getCompIDs();
     };
 
+    // This function checks if the id and the name that was inserted in the delete fields matches.
     $scope.checkIfNameAndIdMatch = function()
     {
         $scope.getCompNames();
@@ -954,6 +974,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }
     };
 
+    // This function ...
     $scope.changeName = function()
     {
         $scope.getCompNames();
@@ -961,6 +982,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.clearAlerts();
     };
 
+    // This function ...
     $scope.changeID = function()
     {
         $scope.getCompIDs();
@@ -968,6 +990,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.clearAlerts();
     };
 
+    // This function updates a company details and shows to the user indication whether the details updated.
     $scope.updateComp = function() {
         $scope.clearAlerts();
         $scope.getCompIDs();
@@ -1002,6 +1025,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.getCompIDs();
     };
 
+    // This function shows updates results after ....
     $scope.showUpdateResults = function () {
         $scope.clearAlerts();
         let compName, compID;
@@ -1043,6 +1067,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
+    // This function re-shows updates results after ....
     $scope.reShowUpdateResults = function () {
         $scope.clearAlerts();
         let compName, compID;
@@ -1075,6 +1100,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
+    // This function ....
     $scope.updateSearchResults = function(id)
     {
         $scope.companyToUpdate = id;
@@ -1100,6 +1126,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
+    // This function ...
     $scope.addIsNewAfterUpdate = function()
     {
         $http({
@@ -1124,6 +1151,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
+    // This function updates a company details by the name of the company and shows to the user indication whether the details updated.
     $scope.updateCompByName = function()
     {
         $scope.clearAlerts();
@@ -1178,6 +1206,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.getCompNames();
     };
 
+    // This function updates a company details by the ID of the company and shows to the user indication whether the details updated.
     $scope.updateCompByID = function()
     {
         $scope.clearAlerts();
@@ -1230,7 +1259,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.getCompIDs();
     };
 
-
+    // This function ...
     $scope.uploadFile = function ()
     {
 
@@ -1245,7 +1274,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
-	$scope.graph = function(){
+    // This function ...
+    $scope.graph = function(){
 		//const gData = {nodes: [{id: 64, group: 1}, {id: 192, group: 1}, {id: 2, group: 2}, {id: 419, group: 1}, {id: 260, group: 1}, {id: 165, group: 1}, {id: 39, group: 1}, {id: 200, group: 1}, {id: 103, group: 1}, {id: 265, group: 1}, {id: 11, group: 1}, {id: 432, group: 1}, {id: 336, group: 1}, {id: 308, group: 1}, {id: 21, group: 1}, {id: 278, group: 1}, {id: 407, group: 1}, {id: 412, group: 1}, {id: 125, group: 1}, {id: 31, group:1}],
 		//	links: [{source: 64, target: 2}, {source: 192, target: 39}, {source: 192, target: 2}, {source: 2, target: 31}, {source: 2, target: 165}, {source: 2, target: 260}, {source: 2, target: 39}, {source: 2, target: 125}, {source: 2, target: 200}, {source: 2, target: 419}, {source: 2, target: 308}, {source: 2, target: 432}, {source: 2, target: 407}, {source: 2, target: 11}, {source: 2, target: 21}, {source: 2, target: 412}, {source: 2, target: 103}, {source: 2, target: 265}, {source: 2, target: 336}, {source: 2, target: 278}, {source: 260, target: 165}, {source: 260, target: 31}, {source: 260, target: 11}, {source: 260, target: 103}, {source: 260, target: 278}, {source: 200, target: 125}, {source: 103, target: 278}, {source: 265, target: 407}, {source: 265, target: 11}, {source: 265, target: 278}, {source: 11, target: 407}, {source: 11, target: 278}, {source: 308, target: 412}, {source: 21, target: 407}, {source: 21, target: 278}, {source: 278, target: 407}, {source: 125, target: 31}]};
         //const newData={ nodes: [{id: 'M&T BANK CORPORATION'}, {id: 'M&T BANK CORP'}, {id: 'JPMORGAN CHASE & CO.'}, {id: 'JPMORGAN CHASE & CO'}, {id: 'HUNTINGTON BANCSHARES INCORPORATED'}, {id: 'HUNTINGTON BANCSHARES INC'}, {id: 'BANK OF AMERICA CORPORATION'}, {id: 'BANK OF AMERICA CORP'}, {id: 'BB&T CORPORATION'}, {id: 'BB&T CORP'}, {id: 'STATE STREET CORPORATION'}, {id: 'STATE STREET CORP'}, {id: 'U.S. BANCORP'}, {id: 'US_BANCORP'}, {id: 'NORTHERN TRUST CORPORATION'}, {id: 'NORTHERN TRUST CORP'}, {id: 'COMERICA INCORPORATED'}, {id: 'COMERICA INC'}, {id: 'GENERAL ELECTRIC COMPANY'}, {id: 'GENERAL ELECTRIC CO'}, {id: 'AMERICAN EXPRESS COMPANY'}, {id: 'AMERICAN EXPRESS CO'}, {id: 'ALLY FINANCIAL INC.'}, {id: 'Ally Financial Inc'}, {id: 'CITIGROUP INC.'}, {id: 'CITIGROUP INC'}, {id: 'CAPITAL ONE FINANCIAL CORPORATION'}, {id: 'CAPITAL ONE FINANCIAL CORP'}, {id: 'BANK OF NEW YORK MELLON CORPORATION, THE'}, {id: 'Bank of New York Mellon Corp'}, {id: 'SCHWAB HOLDINGS, INC.'}, {id: 'SCHWAB_CHARLES_CORP '}, {id: 'SCHWAB RETIREMENT PLAN SERVICES, INC.'}, {id: 'SCHWAB RETIREMENT TECHNOLOGIES, INC.'}, {id: 'PERFORMANCE TECHNOLOGIES, INC.'}, {id: 'CHARLES SCHWAB BANK'}, {id: 'SCHWAB CAPITAL TRUST I'}, {id: 'CHARLES SCHWAB FOUNDATION'}, {id: 'CHARLES SCHWAB TRUST COMPANY'}, {id: 'VBC CAPITAL I'}, {id: 'ZIONS BANCORPORATION'}, {id: 'ZIONS FINANCIAL CORP.'}, {id: 'ZIONS CAPITAL TRUST B'}, {id: 'J.P. MORGAN CHASE COMMUNITY DEVELOPMENT CORPORATION'}, {id: 'J.P. MORGAN SERVICES INC.'}, {id: 'J.P. MORGAN FUTURES INC.'}, {id: 'J.P. MORGAN INVESTMENT MANAGEMENT INC.'}, {id: 'JPMORGAN SECURITIES HOLDINGS LLC'}, {id: 'CLINTSTONE PROPERTIES INC.'}, {id: 'CHASE LINCOLN FIRST COMMERCIAL CORPORATION'}, {id: 'CMRCC, INC.'}, {id: 'CHASE MANHATTAN REALTY LEASING CORPORATION'}, {id: 'J.P. MORGAN CHASE NATIONAL CORPORATE SERVICES, INC.'}, {id: 'CCC HOLDING INC.'}, {id: 'BANC ONE BUILDING MANAGEMENT CORPORATION'}, {id: 'BANC ONE FINANCIAL LLC'}, {id: 'BANC ONE KENTUCKY INSURANCE COMPANY'}, {id: 'J.P. MORGAN INTERNATIONAL HOLDINGS LLC'}, {id: 'CHATHAM VENTURES, INC.'}, {id: 'JPMP CAPITAL CORP.'}, {id: 'BANC ONE NEIGHBORHOOD DEVELOPMENT CORPORATION'}, {id: 'OFFSHORE EQUITIES, INC.'}, {id: 'NBD COMMUNITY DEVELOPMENT CORPORATION'}, {id: 'CHASE INVESTMENT SERVICES CORP.'}, {id: 'CHEMICAL INVESTMENTS, INC.'}, {id: 'J.P. MORGAN CAPITAL FINANCING LIMITED'}, {id: 'J.P. MORGAN PRIVATE INVESTMENTS INC.'}, {id: 'JPMP CAPITAL, LLC'}, {id: 'J.P. MORGAN GT CORPORATION'}, {id: 'J.P. MORGAN FUNDING CORP.'}, {id: 'MORSERV, INC.'}, {id: 'J.P. MORGAN VENTURES ENERGY CORPORATION'}, {id: 'BOI LEASING CORPORATION'}, {id: 'HATHERLEY INSURANCE LTD.'}, {id: 'BANC ONE DEFERRED BENEFITS CORPORATION'}, {id: 'JPMORGAN DISTRIBUTION SERVICES, INC.'}, {id: 'HAMBRECHT & QUIST CALIFORNIA'}, {id: 'J.P. MORGAN SERVICES ASIA HOLDINGS LIMITED'}, {id: 'ROBERT FLEMING HOLDINGS LIMITED'}, {id: 'JPMORGAN ASSET MANAGEMENT HOLDINGS INC.'}, {id: 'J.P. MORGAN CORPORATE SERVICES LIMITED'}, {id: 'PARK ASSURANCE COMPANY'}, {id: 'HOMESALES, INC.'}, {id: 'JPMORGAN SPECIAL SITUATIONS ASIA CORPORATION'}, {id: 'SPECIAL SITUATIONS INVESTING INC.'}, {id: 'BANC ONE CAPITAL HOLDINGS LLC'}, {id: 'J.P. MORGAN INSURANCE HOLDINGS, L.L.C.'}, {id: 'JPM INTERNATIONAL CONSUMER HOLDING INC.'}, {id: 'CHASE CAPITAL HOLDING CORPORATION'}, {id: 'JPMREP HOLDING CORPORATION'}, {id: 'JPMORGAN CHASE HOME MORTGAGE OF THE SOUTHEAST LLC'}, {id: 'J.P. MORGAN SERVICES ASIA HOLDINGS, INC.'}, {id: 'JPMORGAN CHASE BANK, DEARBORN'}, {id: 'JPMORGAN CHASE BANK, NATIONAL ASSOCIATION'}, {id: 'KEYCORP FINANCE INC.'}, {id: 'KEYCORP'}, {id: 'KEYCORP INSURANCE COMPANY, LTD.'}, {id: 'KEYCORP INSTITUTIONAL CAPITAL A'}, {id: 'KEYCORP INSTITUTIONAL CAPITAL B'}, {id: 'KEYCORP CAPITAL I'}, {id: 'KEYCORP CAPITAL II'}, {id: 'KEYCORP CAPITAL III'}, {id: 'KEYCORP CAPITAL V'}, {id: 'KEYCORP CAPITAL VI'}, {id: 'KEYCORP CAPITAL VII'}, {id: 'KEYCORP CAPITAL VIII'}, {id: 'KEYCORP CAPITAL IX'}, {id: 'KEYCORP CAPITAL X'}, {id: 'KEYCORP INSURANCE COMPANY, LLC'}, {id: 'KEYCORP OFFSHORE INVESTMENTS COMPANY, LTD.'}, {id: 'HUNTINGTON BANCSHARES FINANCIAL CORPORATION'}, {id: 'HUNTINGTON PREFERRED CAPITAL, INC.'}, {id: 'HUNTINGTON CAPITAL I'}, {id: 'HUNTINGTON CAPITAL II'}, {id: 'HUNTINGTON CAPITAL III'}, {id: 'HUNTINGTON CAPITAL IV'}, {id: 'HBI TITLE SERVICES, INC'}, {id: 'BFOH CAPITAL TRUST I'}, {id: 'SKY FINANCIAL CAPITAL TRUST I'}, {id: 'SYNORAN LLC'}, {id: 'HUNTINGTON INSURANCE, INC.'}, {id: 'PROSPECT TRUST I'}, {id: 'SKY FINANCIAL CAPITAL TRUST II'}, {id: 'SKY FINANCIAL CAPITAL TRUST III'}, {id: 'HUNTINGTON WEALTH PLANNING ADVISORS, INC.'}, {id: 'HUNTINGTON FINANCE LLC'}, {id: 'RIGGS CAPITAL'}, {id: 'PNC FINANCIAL SERVICES GROUP INC'}, {id: 'PNC CAPITAL TRUST C'}, {id: 'YARDVILLE CAPITAL TRUST II'}, {id: 'YARDVILLE CAPITAL TRUST III'}, {id: 'JAMES MONROE STATUTORY TRUST I'}, {id: 'STERLING FINANCIAL STATUTORY TRUST II'}, {id: 'JAMES MONROE STATUTORY TRUST II'}, {id: 'YARDVILLE CAPITAL TRUST V'}, {id: 'PNC CAPITAL TRUST D'}, {id: 'YARDVILLE CAPITAL TRUST VI'}, {id: 'STERLING FINANCIAL STATUTORY TRUST III'}, {id: 'STERLING FINANCIAL STATUTORY TRUST IV'}, {id: 'JAMES MONROE STATUTORY TRUST III'}, {id: 'FIDELITY CAPITAL TRUST II'}, {id: 'FIDELITY CAPITAL TRUST III'}, {id: 'STERLING FINANCIAL STATUTORY TRUST V'}, {id: 'MAF BANCORP CAPITAL TRUST I'}, {id: 'MAF BANCORP CAPITAL TRUST II'}, {id: 'NATIONAL CITY CAPITAL TRUST II'}, {id: 'NATIONAL CITY CAPITAL TRUST III'}, {id: 'NATIONAL CITY CAPITAL TRUST IV'}, {id: 'PNC CAPITAL TRUST E'}, {id: 'NATIONAL CITY CREDIT CORPORATION'}, {id: 'FIFTH THIRD FINANCIAL CORPORATION'}, {id: 'FIFTH THIRD BANCORP'}, {id: 'FIFTH THIRD CAPITAL TRUST IV'}, {id: 'FIFTH THIRD CAPITAL TRUST V'}, {id: 'FIFTH THIRD CAPITAL TRUST VI'}, {id: 'FIFTH THIRD CAPITAL TRUST VII'}, {id: 'BANK OF AMERICA MERRILL LYNCH INTERNATIONAL LIMITED'}, {id: 'RBI CAPITAL TRUST I'}, {id: 'MAINSTREET CAPITAL TRUST I'}, {id: 'PREMIER CAPITAL TRUST I'}, {id: 'FCNB CAPITAL TRUST'}, {id: 'BOSTON SERVICE COMPANY, INC.'}, {id: 'BB&T ASSET MANAGEMENT LLC'}, {id: 'MAIN STREET BANKS STATUTORY TRUST I'}, {id: 'MAIN STREET BANKS STATUTORY TRUST II'}, {id: 'BB&T CHARITABLE FOUNDATION'}, {id: 'FIRST CITIZENS BANCORP (TN) STATUTORY TRUST I'}, {id: 'NPB CAPITAL TRUST III'}, {id: 'NPB CAPITAL TRUST V'}, {id: 'FIRST CITIZENS BANCORP (TN) STATUTORY TRUST II'}, {id: 'BB&T CAPITAL TRUST I'}, {id: 'CMTY CAPITAL STATUTORY TRUST III'}, {id: 'CMTY CAPITAL STATUTORY TRUST IV'}, {id: 'BB&T SECURITIES, LLC'}, {id: 'BB&T CAPITAL PARTNERS FUND OF FUNDS I, LLC'}, {id: 'COASTAL FINANCIAL CAPITAL TRUST I'}, {id: 'AMCO HOLDING COMPANY'}, {id: 'NPB CAPITAL TRUST VI'}, {id: 'STATE STREET GLOBAL EXCHANGE (US) LLC'}, {id: 'STATE STREET CAPITAL TRUST I'}, {id: 'ADVANCED AUCTIONS LLC'}, {id: 'STATE STREET GLOBAL MARKETS (JAPAN)'}, {id: 'STATE STREET CORPORATION, INTERNATIONAL MANAGEMENT GROUP (IMG) LLC'}, {id: 'MANAGED PENSION FUNDS'}, {id: 'STATE STREET CAPITAL TRUST IV'}, {id: 'U.S. BANCORP INSURANCE SERVICES, LLC'}, {id: 'U.S. BANCORP INVESTMENTS, INC.'}, {id: 'U.S. BANK TRUST COMPANY, NATIONAL ASSOCIATION'}, {id: 'U.S. BANK NATIONAL ASSOCIATION ND'}, {id: 'VAIL BANKS STATUTORY TRUST I'}, {id: 'VAIL BANKS STATUTORY TRUST II'}, {id: 'U.S. BANCORP COMMUNITY INVESTMENT CORPORATION'}, {id: 'USB CAPITAL IX'}, {id: 'USB CAPITAL X'}, {id: 'USB CAPITAL XI'}, {id: 'USB CAPITAL XII'}, {id: 'USB CAPITAL XIII'}, {id: 'FIXED INCOME CLIENT SOLUTIONS LLC'}, {id: 'U.S. BANK NATIONAL ASSOCIATION'}, {id: 'FNL INSURANCE COMPANY, LTD'}, {id: 'WELLS FARGO & COMPANY'}, {id: 'WELLS FARGO WEALTH BROKERAGE INSURANCE AGENCY, LLC'}, {id: 'TRYON MANAGEMENT, INC.'}, {id: 'CENTRAL FIDELITY PROPERTIES, INC.'}, {id: 'WELLS FARGO PROPERTIES, INC.'}, {id: 'NORWEST VENTURE CAPITAL MANAGEMENT, INC.'}, {id: 'WELLS FARGO ASIA LIMITED'}, {id: 'PEREGRINE CAPITAL MANAGEMENT, INC.'}, {id: 'WELLS FARGO INSURANCE, INC.'}, {id: 'WACHOVIA PRIVATE CAPITAL, INC.'}, {id: 'CORESTATES HOLDINGS, INC.'}, {id: 'WACHOVIA DEVELOPMENT CORPORATION'}, {id: 'FIRST UNION COMMUNITY DEVELOPMENT CORPORATION'}, {id: 'WELLS FARGO CAPITAL FINANCE, INC.'}, {id: 'SUPERIOR GUARANTY INSURANCE COMPANY'}, {id: 'WELLS FARGO REGIONAL COMMUNITY DEVELOPMENT CORPORATION'}, {id: 'TRSTE, INC.'}, {id: 'HOME SERVICES TITLE REINSURANCE COMPANY'}, {id: 'WELLS FARGO INSURANCE SERVICES USA, INC.'}, {id: 'CHESTNUT ASSET MANAGEMENT, INC.'}, {id: 'RESIDENTIAL HOME MORTGAGE INVESTMENT, L.L.C.'}, {id: 'WACHOVIA INVESTORS, INC.'}, {id: 'WACHOVIA CAPITAL INVESTMENTS, INC.'}, {id: 'NORWEST EQUITY CAPITAL, L.L.C.'}, {id: 'WELLS FARGO ENERGY CAPITAL, INC.'}, {id: 'TRSTE II, INC.'}, {id: 'FIRST UNION CAPITAL I'}, {id: 'FIRST UNION CAPITAL II'}, {id: 'WACHOVIA CAPITAL TRUST I'}, {id: 'WACHOVIA CAPITAL TRUST II'}, {id: 'CENTRAL FIDELITY CAPITAL TRUST I'}, {id: 'WACHOVIA COMMUNITY DEVELOPMENT CORPORATION'}, {id: 'WACHOVIA CAPITAL TRUST V'}, {id: 'SAGUARO ASSET MANAGEMENT, INC.'}, {id: 'PRIMROSE ASSET MANAGEMENT, INC.'}, {id: 'GOLDENROD ASSET MANAGEMENT, INC.'}, {id: 'WELLS FARGO INTERNATIONAL INC.'}, {id: 'EVEREN CAPITAL CORPORATION'}, {id: 'WACHOVIA PREFERRED FUNDING HOLDING CORP.'}, {id: 'WFC HOLDINGS CORPORATION'}, {id: 'FIRST INTERNATIONAL ADVISORS, LLC'}, {id: 'FPFC MANAGEMENT LLC'}, {id: 'WELLS FARGO TRADE CAPITAL SERVICES, INC.'}, {id: 'NORWEST LIMITED LP, LLLP'}, {id: 'WELLS FARGO EXCHANGE SERVICES, INC.'}, {id: 'TIBERIUS VENTURES, L.L.C.'}, {id: 'AUGUSTUS VENTURES, L.L.C.'}, {id: 'BRYAN, PENDLETON, SWATS & MCALLISTER, LLC'}, {id: 'WELLS FARGO INVESTMENT GROUP, INC.'}, {id: 'FUNC HOLDINGS, INC.'}, {id: 'ACO BROKERAGE HOLDINGS CORPORATION'}, {id: 'FIRST COMMUNITY CAPITAL TRUST I'}, {id: 'STRUCTURED CREDIT PARTNERS, LLC'}, {id: 'WELLS FARGO CAPITAL IV'}, {id: 'WF DEFERRED COMPENSATION HOLDINGS, INC.'}, {id: 'WELLS FARGO CAPITAL V'}, {id: 'WELLS FARGO GAMING CAPITAL, LLC'}, {id: 'UNION HAMILTON REINSURANCE, LTD.'}, {id: 'WELLS FARGO COMMUNITY DEVELOPMENT CORPORATION'}, {id: 'WELLS FARGO CAPITAL VI'}, {id: 'SYNTHETIC FIXED-INCOME SECURITIES, INC.'}, {id: 'WACHOVIA PREFERRED FUNDING CORP.'}, {id: 'WELLS FARGO CAPITAL VII'}, {id: 'UNITED BANCORPORATION OF WYOMING CAPITAL TRUST I'}, {id: 'WELLS FARGO CAPITAL VIII'}, {id: 'CENTURY CAPITAL TRUST'}, {id: 'FIRST COMMUNITY CAPITAL TRUST III'}, {id: 'WELLS FARGO CAPITAL IX'}, {id: 'STRUCTURED ASSET INVESTORS, LLC'}, {id: 'BLUEPOINT HOLDINGS LIMITED'}, {id: 'PLACER STATUTORY TRUST III'}, {id: 'UNITED BANCORPORATION OF WYOMING CAPITAL TRUST II'}, {id: 'MACRO*WORLD RESEARCH CORPORATION'}, {id: 'WACHOVIA CAPITAL TRUST III'}, {id: 'EVERGREEN ALTERNATIVE CAPITAL, INC.'}, {id: 'WELLS FARGO CAPITAL X'}, {id: 'UNITED BANCORPORATION OF WYOMING CAPITAL TRUST III'}, {id: 'PLACER STATUTORY TRUST IV'}, {id: 'DANUBE HOLDINGS III C.V.'}, {id: 'WACHOVIA CAPITAL TRUST IV'}, {id: 'WACHOVIA CAPITAL INVESTORS, INC.'}, {id: 'WACHOVIA CAPITAL TRUST IX'}, {id: 'A.G. EDWARDS HEDGING SERVICES, INC.'}, {id: 'A.G. EDWARDS CAPITAL, INC.'}, {id: 'AGE CAPITAL HOLDING, INC.'}, {id: 'WDS HOLDINGS, INC.'}, {id: 'WACHOVIA CAPITAL TRUST X'}, {id: 'WELLS FARGO CAPITAL XI'}, {id: 'WELLS FARGO CAPITAL XII'}, {id: '2007 VENTO II, LLC'}, {id: 'FCB/SC CAPITAL TRUST II'}, {id: 'DFG HOLDINGS, LLC'}, {id: 'WELLS FARGO RELATIVE VALUE PORTFOLIO'}, {id: 'OVERLAND RELATIVE VALUE FUND LLC'}, {id: 'OVERLAND ADVISORS, LLC'}, {id: 'WELLS FARGO SOPORTE GLOBAL LIMITADA'}, {id: 'WELLS FARGO BANK, NATIONAL ASSOCIATION'}, {id: 'CAPITOL FINANCE GROUP, INC.'}, {id: 'RIDGEWORTH CAPITAL MANAGEMENT, INC.'}, {id: 'SUNTRUST BANKS INC'}, {id: 'NATIONAL COMMERCE CAPITAL TRUST I'}, {id: 'SUNTRUST CAPITAL I'}, {id: 'SUNTRUST CAPITAL III'}, {id: 'SUNTRUST DELAWARE TRUST COMPANY'}, {id: 'SUNTRUST CAPITAL IV'}, {id: 'SUNTRUST CAPITAL V'}, {id: 'GB&T BANCSHARES STATUTORY TRUST I'}, {id: 'SOUTHERN HERITAGE STATUTORY TRUST I'}, {id: 'NATIONAL COMMERCE CAPITAL TRUST II'}, {id: 'SUNTRUST PREFERRED CAPITAL I'}, {id: 'SUNTRUST INSTITUTIONAL INVESTMENT ADVISORS LLC'}, {id: 'SUNTRUST NLIP, INC.'}, {id: 'NTC CAPITAL I'}, {id: 'NTC CAPITAL II'}, {id: 'NORTHERN TRUST OF COLORADO CORPORATION'}, {id: 'NORTHERN TRUST GLOBAL INVESTMENTS JAPAN, K.K.'}, {id: 'NORTHERN TRUST EUROPEAN HOLDINGS LIMITED'}, {id: '50 SOUTH CAPITAL ADVISORS, LLC'}, {id: 'COMERICA CAPITAL TRUST I'}, {id: 'COMERICA CAPITAL TRUST II'}, {id: 'AMERICAN EXPRESS SERVICES EUROPE LIMITED'}, {id: 'AMERICAN EXPRESS FOUNDATION'}, {id: 'ALLY SECURITIES LLC'}, {id: 'BASIC CREDIT HOLDING COMPANY, L.L.C.'}, {id: 'ALLY INVESTMENT MANAGEMENT LLC'}, {id: 'ALLY US LLC'}, {id: 'GMACI HOLDINGS LLC'}, {id: 'VARIABLE ASSET RECEIVABLES LLC'}, {id: 'GAMMA AUTO RECEIVABLES LLC'}, {id: 'WHOLESALE AUTO RECEIVABLES LLC'}, {id: 'RESMOR CAPITAL CORPORATION'}, {id: 'CENTRAL ORIGINATING LEASE LLC'}, {id: 'RFC INVESTMENTS LIMITED'}, {id: 'AN CAPITAL CORPORATION'}, {id: 'MORGAN STANLEY & CO. LLC'}, {id: 'MORGAN STANLEY'}, {id: 'MORGAN STANLEY PRIVATE BANK, NATIONAL ASSOCIATION'}, {id: 'MORGAN STANLEY SENIOR FUNDING, INC.'}, {id: 'MORGAN STANLEY EMERGING MARKETS INC.'}, {id: 'MORGAN STANLEY TRUST NATIONAL ASSOCIATION'}, {id: 'MORGAN STANLEY SPECIAL SITUATIONS GROUP INC.'}, {id: 'MORGAN STANLEY ASSET FUNDING INC.'}, {id: 'MORGAN STANLEY INVESTMENT MANAGEMENT INC.'}, {id: 'MORGAN STANLEY COLLATERALIZED FINANCING LLC'}, {id: 'MORGAN STANLEY CAPITAL MANAGEMENT, LLC'}, {id: 'MORGAN STANLEY CREDIT PRODUCTS LTD.'}, {id: 'MORGAN STANLEY DESHKA LLC'}, {id: 'MORGAN STANLEY EUROPA LLC'}, {id: 'MORGAN STANLEY ASTI INVESTMENTS LLC'}, {id: 'MORGAN STANLEY BISCAY LLC'}, {id: 'MORGAN STANLEY PORTFOLIO MANAGEMENT LLC'}, {id: 'MORGAN STANLEY DURHAM INVESTMENTS LIMITED'}, {id: 'MORGAN STANLEY DURANGO LLC'}, {id: 'MORGAN STANLEY ELAN LLC'}, {id: 'MORGAN STANLEY GASTORO INVESTMENTS LIMITED'}, {id: 'MORGAN STANLEY DOVER INVESTMENTS LIMITED'}, {id: 'MORGAN STANLEY AMANU LLC'}, {id: 'MORGAN STANLEY GLOBAL FUNDING TRUST'}, {id: 'MS DAINFERN LLC'}, {id: 'MORGAN STANLEY BARBERA ONE LIMITED'}, {id: 'MORGAN STANLEY GRENACHE THREE LIMITED'}, {id: 'MORGAN STANLEY UK CAPITAL LIMITED'}, {id: 'MORGAN STANLEY OVERSEAS FINANCE LTD.'}, {id: 'MORGAN STANLEY PRINCIPAL FUNDING, INC.'}, {id: 'MORGAN STANLEY SECAP FUNDING, LLC'}, {id: 'MORGAN STANLEY INTERNATIONAL INCORPORATED'}, {id: 'MORGAN STANLEY CAPITAL GROUP INC.'}, {id: 'MORGAN STANLEY CAPITAL SERVICES LLC'}, {id: 'MS REVEL EFS LLC'}, {id: 'SHUKSAN LLC'}, {id: 'MS MELVILLE LLC'}, {id: 'SHAVANO COOPERATIEVE U.A.'}, {id: 'MORGAN STANLEY LOWMAN LIMITED'}, {id: 'MORGAN STANLEY GRENACHE TWO LIMITED'}, {id: 'BONAIRE COOPERATIEVE U.A.'}, {id: 'MORGAN STANLEY (JERSEY) LIMITED'}, {id: 'MORGAN STANLEY HEDGING CO. LTD.'}, {id: 'MORGAN STANLEY GRENACHE ONE LIMITED'}, {id: 'MORGAN STANLEY HOXNE'}, {id: 'MORGAN STANLEY CUMBRIA INVESTMENTS'}, {id: 'MORGAN STANLEY SYRAH ONE LIMITED'}, {id: 'MORGAN STANLEY REALTY INCORPORATED'}, {id: 'MORGAN STANLEY SHOREDITCH LIMITED'}, {id: 'MS ROSEBANK LLC'}, {id: 'MSDW OFFSHORE EQUITY SERVICES INC.'}, {id: 'MS 10020, INC.'}, {id: 'MS LION LLC'}, {id: 'MS PEGAU LLC'}, {id: 'MORGAN STANLEY WIND LLC'}, {id: 'MSRESS III, INC.'}, {id: 'SYCAMORE II, INC.'}, {id: 'MORGAN STANLEY INTERNATIONAL HOLDINGS INC.'}, {id: 'MAKATEA JV INC.'}, {id: 'MORGAN STANLEY DERIVATIVE PRODUCTS INC.'}, {id: 'MORGAN STANLEY SECURITIES INC.'}, {id: 'MORGAN STANLEY TINDUR LLC'}, {id: 'MORGAN STANLEY OCK'}, {id: 'SAENREDAM COOPERATIEVE U.A.'}, {id: 'MORGAN STANLEY MORTGAGE CAPITAL HOLDINGS LLC'}, {id: 'MORGAN STANLEY CAPITAL REIT INC.'}, {id: 'MORGAN STANLEY PREFERRED STRATEGIES INC.'}, {id: 'MS HOLDINGS INCORPORATED'}, {id: 'MSPEA HOLDINGS, INC.'}, {id: 'MSREF V, INC.'}, {id: 'MS LOW INCOME HOUSING CORPORATION'}, {id: 'STRATEGIC INVESTMENTS I, INC.'}, {id: 'COURNOT HOLDINGS INC.'}, {id: 'MSDW INTERNATIONAL EMPLOYEE SERVICES LLC'}, {id: 'MORGAN STANLEY INVESTMENT ADVISORS INC.'}, {id: 'MORGAN STANLEY FIXED INCOME VENTURES INC.'}, {id: 'MSREF IV, INC.'}, {id: 'MSDW PE/VC HOLDINGS, INC.'}, {id: 'MSDW CPIV HOLDINGS, INC.'}, {id: 'MORGAN STANLEY MUNICIPAL FUNDING INC.'}, {id: 'MSAM HOLDINGS II, INC.'}, {id: 'MORGAN STANLEY REAL ESTATE F FUNDING, INC.'}, {id: 'MORGAN STANLEY COMMERCIAL FINANCIAL SERVICES LLC'}, {id: 'FV-I, INC.'}, {id: 'MS LOW INCOME HOUSING II CORPORATION'}, {id: 'CAUCA LLC'}, {id: 'BELMONDO LLC'}, {id: 'MSIT HOLDINGS, INC.'}, {id: 'MSDW REAL ESTATE SPECIAL SITUATIONS II, INC.'}, {id: 'MORGAN STANLEY EQUITY SERVICES INC.'}, {id: 'MORGAN STANLEY AI GP LLC'}, {id: 'MORGAN STANLEY STRATEGIES LLC'}, {id: 'MORGAN STANLEY DARICA FUNDING, LLC'}, {id: 'MORGAN STANLEY DEAN WITTER EQUITY FUNDING, INC.'}, {id: 'MORGAN STANLEY STINGRAY LLC'}, {id: 'BAYVIEW HOLDING LTD.'}, {id: 'MORGAN STANLEY SHANKLIN LIMITED'}, {id: 'FUEGOS LLC'}, {id: 'MORGAN STANLEY RENEWABLES INC.'}, {id: 'MORGAN STANLEY ALTABRIDGE LTD.'}, {id: 'MORGAN STANLEY SMITH BARNEY HOLDINGS LLC'}, {id: 'MORGAN STANLEY FINANCE LLC'}, {id: 'MORGAN STANLEY CAPITAL TRUST VIII'}, {id: 'MORGAN STANLEY CAPITAL TRUST VII'}, {id: 'MORGAN STANLEY CAPITAL TRUST VI'}, {id: 'MORGAN STANLEY CAPITAL TRUST - C'}, {id: 'MORGAN STANLEY CAPITAL TRUST - B'}, {id: 'MORGAN STANLEY CAPITAL TRUST - A'}, {id: 'MORGAN STANLEY CAPITAL TRUST V'}, {id: 'MORGAN STANLEY CAPITAL TRUST IV'}, {id: 'MORGAN STANLEY CAPITAL TRUST III'}, {id: 'MSUH HOLDINGS I, INC.'}, {id: 'MORGAN STANLEY ABS CAPITAL I INC.'}, {id: 'MORGAN STANLEY ATLAS, INC.'}, {id: 'VENTURA HOLDINGS, INC.'}, {id: 'MORGAN STANLEY DISTRIBUTORS INC.'}, {id: 'MSDW VP IV HOLDINGS, INC.'}, {id: 'MSVP 2002, INC.'}, {id: 'MORGAN STANLEY CAPITAL I INC.'}, {id: 'MSDW CAPITAL PARTNERS IV, INC.'}, {id: 'MORGAN STANLEY VENTURE CAPITAL III, INC.'}, {id: 'MORGAN STANLEY PRIVATE EQUITY ASIA, INC.'}, {id: 'MORGAN STANLEY GLOBAL EMERGING MARKETS, INC.'}, {id: 'MORGAN STANLEY LEVERAGED EQUITY FUND II, INC.'}, {id: 'MORGAN STANLEY DEAN WITTER INTERNATIONAL INCORPORATED'}, {id: 'MORGAN STANLEY CAPITAL PARTNERS III, INC.'}, {id: 'MSREF V FUNDING, INC.'}, {id: 'MSDW VENTURE PARTNERS IV, INC.'}, {id: 'MSDW EFS HOLDINGS INC.'}, {id: 'MORGAN STANLEY COMMERCIAL MORTGAGE CAPITAL, INC.'}, {id: 'MSCP III HOLDINGS, INC.'}, {id: 'MORGAN STANLEY REAL ESTATE ADVISOR, INC.'}, {id: 'MORGAN STANLEY OVERSEAS SERVICES (JERSEY) LIMITED'}, {id: 'MS VENTURE CAPITAL HOLDING INC.'}, {id: 'PETTINGELL LLC'}, {id: 'MORGAN STANLEY REAL ESTATE INVESTMENT MANAGEMENT II, INC.'}, {id: 'MORGAN STANLEY DEVON INVESTMENTS LIMITED'}, {id: 'MORGAN STANLEY REAL ESTATE INVESTMENT MANAGEMENT INC.'}, {id: 'JAPAN CORE FUNDING, INC.'}, {id: 'MR VENTURES INC.'}, {id: 'PG INVESTORS II, INC.'}, {id: 'MORGAN STANLEY LEVERAGED EQUITY HOLDINGS INC.'}, {id: 'MSREF REAL ESTATE ADVISOR, INC.'}, {id: 'MSRE MEZZANINE, INC.'}, {id: 'MORGAN STANLEY REAL ESTATE FUNDING II, INC.'}, {id: 'MUSUM II LLC'}, {id: 'MORGAN STANLEY PRINCIPAL STRATEGIES, INC.'}, {id: 'MORGAN STANLEY FUND SERVICES INC.'}, {id: 'MS LOW INCOME HOUSING III CORPORATION'}, {id: 'MSDW EMERGING EQUITY, INC.'}, {id: 'MSREF III, INC.'}, {id: 'MSREF II, INC.'}, {id: 'MSDW STRATEGIC VENTURES INC.'}, {id: 'MORGAN STANLEY DOMESTIC LEASING INC.'}, {id: 'MSDW OIP INVESTORS, INC.'}, {id: 'MS HAWK I LLC'}, {id: 'MORGAN STANLEY SECURITIZATION FUNDING, INC.'}, {id: 'MORGAN STANLEY REINSURANCE ALPHA LTD.'}, {id: 'MORGAN STANLEY LIFE HOLDING INCORPORATED'}, {id: 'MORGAN STANLEY SERVICES CANADA HOLDING CORP.'}, {id: 'MORGAN STANLEY CONTENT CORPORATION'}, {id: 'EARLY ADOPTER FUND MANAGER INC.'}, {id: 'MORGAN STANLEY MAYAK LIMITED'}, {id: 'CORPORATE EQUIPMENT SUPPLIES, INC.'}, {id: 'MORGAN STANLEY GALWAY LLC'}, {id: 'MORGAN STANLEY BOSCASTLE HOLDING LIMITED'}, {id: 'PG HOLDINGS, INC.'}, {id: 'MORGAN STANLEY MALBEC LLC'}, {id: 'MORGAN STANLEY WHITE HORSE UK'}, {id: 'MORGAN STANLEY CAPITAL REIT IV INC.'}, {id: 'MS STRUCTURED ASSET CORP.'}, {id: 'MSEOF, INC.'}, {id: 'MSVP 2002 HOLDINGS, INC.'}, {id: 'MORGAN STANLEY GLOBAL STRATEGIES MANAGEMENT HOLDINGS, INC.'}, {id: 'MORGAN STANLEY BARENTS LLC'}, {id: 'TOOELE POWER, INC.'}, {id: 'WIWILI V LLC'}, {id: 'MORGAN STANLEY CAPITAL PRODUCTS LLC'}, {id: 'MORGAN STANLEY SECURED FINANCING LLC'}, {id: 'MSREI HOLDING, INC.'}, {id: 'MORGAN STANLEY NLE, LLC'}, {id: 'MORGAN STANLEY REINSURANCE LTD.'}, {id: 'MORGAN STANLEY STRUCTURED PRODUCTS (CAYMAN) LIMITED'}, {id: 'JOLTER INVESTMENTS INC.'}, {id: 'MS TECHNOLOGY HOLDINGS, INC.'}, {id: 'MORGAN STANLEY RISK SERVICES LLC'}, {id: 'MORGAN STANLEY SERVICES INC.'}, {id: 'MORGAN STANLEY COMMUNITY INVESTMENTS LLC'}, {id: 'CAPITAL ONE, NATIONAL ASSOCIATION'}, {id: 'NORTH FORK CAPITAL TRUST I'}, {id: 'NORTH FORK CAPITAL TRUST II'}, {id: 'CAPITAL ONE SECURITIES, INC.'}, {id: 'ING BANK, FSB'}, {id: 'RELIANCE CAPITAL TRUST I'}, {id: 'CAPITAL ONE SERVICES (CANADA) INC.'}, {id: 'COASTAL CAPITAL TRUST I'}, {id: 'COASTAL CAPITAL TRUST II'}, {id: 'CAPITAL ONE CAPITAL II'}, {id: 'CAPITAL ONE CAPITAL III'}, {id: 'CAPITAL ONE CAPITAL IV'}, {id: 'CAPITAL ONE CAPITAL V'}, {id: 'CAPITAL ONE CAPITAL VI'}, {id: 'CAPITAL ONE DIRECT SECURITIES, INC.'}, {id: 'GOLDMAN, SACHS & CO.'}, {id: 'GOLDMAN SACHS GROUP INC'}, {id: 'GOLDMAN SACHS BANK USA'}, {id: 'GOLDMAN, SACHS & CO. WERTPAPIER GMBH'}, {id: 'MTGLQ INVESTORS, L.P.'}, {id: 'GOLDMAN SACHS HEDGE FUND STRATEGIES LLC'}, {id: 'COMMONWEALTH ANNUITY AND LIFE INSURANCE COMPANY'}, {id: 'GOLDMAN SACHS CAPITAL II'}, {id: 'GS FINANCE CORP.'}, {id: 'OOO GOLDMAN SACHS BANK'}, {id: 'SPECIAL SITUATIONS INVESTING GROUP, INC.'}, {id: 'GS MORTGAGE SECURITIES CORP.'}, {id: 'GOLDMAN SACHS CAPITAL I'}, {id: 'EQUILEND HOLDINGS LLC'}, {id: 'BROAD STREET PRINCIPAL INVESTMENTS, L.L.C.'}, {id: 'DAESUNG INDUSTRIAL GASES CO., LTD.'}, {id: 'GSAM HOLDINGS LLC'}, {id: 'MELLON CAPITAL I'}, {id: 'MELLON CAPITAL II'}, {id: 'BNY CAPITAL I'}, {id: 'BNY INSTITUTIONAL CAPITAL TRUST A'}, {id: 'MIPA, LLC'}, {id: 'BNY MELLON DISTRIBUTORS HOLDINGS INC.'}, {id: 'BNY CAPITAL IV'}, {id: 'MCDI (HOLDINGS) LLC'}, {id: 'MELLON HOLDINGS LLC'}, {id: 'MAM (MA) HOLDING TRUST'}, {id: 'BNY CAPITAL V'}, {id: 'PERSHING GROUP LLC'}, {id: 'MELLON CAPITAL III'}, {id: 'MELLON CAPITAL IV'}, {id: 'BNY MELLON CLEARING, LLC'}, {id: 'BNY MELLON CSD'}, {id: 'BANK OF NEW CASTLE'}, {id: 'Discover Financial Services'}, {id: 'DISCOVER BANK'}, {id: 'DISCOVER FINANCIAL SERVICES (CANADA), INC.'}, {id: 'DFS SERVICES LLC'}, {id: 'DISCOVER FINANCIAL SERVICES (HONG KONG) LIMITED'}, {id: 'DISCOVER FINANCIAL SERVICES INSURANCE AGENCY, INC.'}, {id: 'CHARLES SCHWAB CORPORATION. THE'}, {id: 'GREAT WESTERN FINANCIAL CORPORATION'}, {id: 'GENERAL ELECTRIC CAPITAL CORPORATION'}, {id: 'HK RAV V PARTNERSHIP. THE'}, {id: 'YARDVILLE BRANCH'}, {id: 'BBANDT CORPORATION'}, {id: 'CUSTODIAL TRUST COMPANY'}, {id: 'JPMORGAN CHASE AND CO.'}, {id: 'NORTH AKARD STREET BRANCH'}, {id: 'WAUKEGAN OFFICE'}, {id: 'BRACEBRIDGE CORPORATION'}, {id: 'BANKBOSTON CAPITAL TRUST I'}, {id: 'ARCTURUS TRUSTEE LIMITED'}, {id: 'AVON 56 LIMITED'}, {id: 'FANDM TRUST COMPANY'}, {id: 'F AND H REALTY CORPORATION'}, {id: 'JPM CAPITAL TRUST I'}, {id: 'FREEDOM FINANCIAL LIFE INSURANCE COMPANY'}, {id: 'GALESBURG BRANCH'}, {id: 'BRINKLEY PLAZA BRANCH'}, {id: 'IBI AND ASSOCIATES'}, {id: 'GE CAPITAL DE MEXICO. S. DE R. L. DE C. V.'}, {id: 'BAY STATE CORPORATION LIMITED'}, {id: 'CREDIT AND ASSET REPACKAGING VEHICLE CORPORATION'}, {id: 'CITIBANK USA. NATIONAL ASSOCIATION'}, {id: 'MASON-DIXON CAPITAL TRUST'}, {id: 'NEW CENTURY FINANCIAL CORPORATION'}, {id: 'DALTON MAIN BRANCH'}, {id: 'CONESTOGA MANAGEMENT COMPANY'}, {id: 'CHIBA BANK. LTD.. THE'}, {id: 'GLOBAL ATLANTIC FINANCIAL GROUP LIMITED'}, {id: 'WILMINGTON TRUST CORPORATION'}, {id: 'CHASE MORTGAGE FINANCE CORPORATION'}, {id: 'WHITEHALL STREET GLOBAL REAL ESTATE LIMITED PARTNERSHIP 2001'}, {id: 'BRISTOL EXIT 7 BRANCH'}, {id: 'STERLING ASSURANCE COMPANY'}, {id: 'KENNEDY PLAZA'}, {id: 'CAPITAL ONE. NATIONAL ASSOCIATION'}, {id: 'SUMMIT COMMERCIAL LEASING CORPORATION'}, {id: '60 WALL STREET BRANCH'}, {id: 'BANC ONE ARIZONA INVESTMENT CORPORATION'}, {id: 'BNY MELLON COMMUNITY DEVELOPMENT CORPORATION'}, {id: 'MFI HOLDING CORPORATION'}, {id: 'FIRST SECURITY LEASING COMPANY'}, {id: '601 WEST 5TH STREET OFFICE'}, {id: 'LINCOLN FIRST REAL ESTATE CREDIT CORPORATION'}, {id: 'NEW YORK EQUITY FUND 1993 LIMITED PARTNERSHIP'}, {id: 'RICHMOND RIVERFRONT BRANCH'}, {id: 'CNB CAPITAL TRUST I'}, {id: 'SEATTLE BRANCH'}, {id: 'KATY BRANCH'}, {id: 'NATIONAL EQUITY FUND 2000'}, {id: 'VANCOUVER MAIN OFFICE'}, {id: 'SUMMIT CAPITAL TRUST I'}, {id: 'MBC FINANCIAL CORPORATION'}, {id: 'CAPITAL ONE BANK (USA). NATIONAL ASSOCIATION'}, {id: 'ONYX ACCEPTANCE CORPORATION'}, {id: 'COASTAL PLANNERS HOLDING CORPORATION'}, {id: 'COMMUNITY HISTORIC CREDIT FUND V LIMITED PARTNERSHIP'}, {id: 'PNC FINANCIAL SERVICES GROUP. INC.. THE'}, {id: 'BROAD STREET DOWNTOWN'}, {id: 'ADAM CAPITAL TRUST I'}, {id: 'SPARTANBURG MAIN BRANCH'}, {id: 'B OF A ISSUANCE B.V.'}, {id: 'RECEIVABLES-ONLINE CORPORATION'}, {id: 'FIRST SECURITY CORPORATION'}, {id: 'CHASE INTERNATIONAL CAPITAL FINANCE LIMITED'}, {id: 'BANK OF TOKYO-MITSUBISHI UFJ. LTD.. THE'}, {id: 'DREYFUS CORPORATION. THE'}, {id: 'LOUISVILLE MAIN OFFICE'}, {id: 'GENERAL ELECTRIC CREDIT CORPORATION OF TENNESSEE'}, {id: 'SKY BANK'}, {id: 'SECURITY-FIRST COMPANY'}, {id: 'HYATT HOTELS CORPORATION'}, {id: 'NEW YORK EQUITY FUND 1994 LIMITED PARTNERSHIP'}, {id: 'BOSTON BRANCH'}, {id: 'BANKAMERICA CORPORATION'}, {id: 'CHASE CAPITAL VII'}, {id: 'WEST SUBSIDIARY CORPORATION'}, {id: 'BAC CAPITAL TRUST XI'}, {id: 'MAM (DE) TRUST'}, {id: 'BLC BANK NATIONAL ASSOCIATION'}, {id: 'GENERAL ELECTRIC CREDIT AND LEASING CORPORATION'}, {id: 'REAL ESTATE COLLATERAL MANAGEMENT COMPANY'}, {id: 'BELMONT FINANCIAL NETWORK'}, {id: 'RIVERTON STATE BANK HOLDING COMPANY'}, {id: 'MUSTANG FINANCIAL CORPORATION'}, {id: 'GE CAPITAL TRADE SERVICES. LIMITED'}, {id: 'PINEDALE BRANCH'}, {id: 'ALCYONE CORPORATION'}, {id: 'MCKNIGHT BRANCH'}, {id: 'GE CAPITAL ASSIGNMENT CORPORATION'}, {id: 'EQUITY ASSET INVESTMENT TRUST'}, {id: 'GE CAPITAL COMMERCIAL MORTGAGE CORPORATION'}, {id: 'NOBILITY HILL REALTY TRUST'}, {id: 'NORTHERN TRUST COMPANY OF DELAWARE. THE'}, {id: 'ISM'}, {id: 'ONE PERCENT HOLDING CORPORATION'}, {id: 'BA CONTINUUM MANAGEMENT LIMITED'}, {id: 'CHESTERTOWN BRANCH'}, {id: 'HAMBRECHT AND QUIST GROUP'}, {id: 'ARIEL CAPITAL REINSURANCE COMPANY. LIMITED'}, {id: 'STATE STREET SOUTHERN AFRICA PROPRIETARY LIMITED'}, {id: 'FARMINGTON NM BRANCH'}, {id: 'SALT LAKE CITY BRANCH'}, {id: 'MICHIGAN FINANCIAL CORPORATION'}, {id: 'FALCON AUTO DEALERSHIP LOAN TRUST 2001-1'}, {id: 'MILLSBORO BRANCH'}, {id: 'HELLER LDA.'}, {id: 'PIONEER CREDIT CORPORATION'}, {id: 'SENIOR HOUSING CRIME PREVENTION FOUNDATION INVESTMENT CORPORATION'}, {id: 'SPRINGFIELD GA BRANCH'}],
@@ -1269,6 +1299,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
 	}; //the function
 
+    // This function returns a color for a link in the graph according to the type of the link.
     $scope.graph_link_color =function(link)
     {
         if (link['label'] === 'Affiliate')
@@ -1293,6 +1324,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }
     };
 
+    // This function returns a color for a node in the graph according to the group of the node.
     $scope.graph_node_color =function(node)
     {
         if (node['group'] === "1")
@@ -1302,6 +1334,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         return "#6c7578";
     };
 
+    // This function ...
     $scope.graph_on_click = function (node)
     {
         //$("#comp_info").css("display","block");
@@ -1356,6 +1389,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
 
     };
+
+    // This function returns the length for a link in the graph according to the type of the link.
     $scope.graph_link_dist = function(link) {
 
          if (link['label'] === "Competition") {
@@ -1377,6 +1412,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
+    // This function unites all the components of the address to one united address.
     $scope.addAddressToSearchResults = function(comp_arr){
         console.log("func");
         console.log(comp_arr);
@@ -1428,6 +1464,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }
     };
 
+    // This function updates search results after clicking on node (company) in the connection graph.
     $scope.update_search = function()
     {
         $http({
@@ -1455,6 +1492,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         //$scope.showMoreAboutResult($scope.graph_selected);
     };
 
+    // This function updates search results after clicking on product in the general tab of a company.
     $scope.update_search_by_product = function(product)
     {
 
@@ -1501,6 +1539,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         });
     };
 
+    // This function returns a curve for a link in the graph according to the type of the link.
     $scope.graph_link_curve =function(link)
     {
         //console.log(link['label']);
@@ -1516,6 +1555,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }
     };
 
+    // This function ...
     $scope.get_python = function () {
 
         document.getElementById("graph_btn").innerHTML="";
@@ -1601,7 +1641,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
-	$scope.showDoughnut = function ()
+    // This function creates and shows a statistic doughnuts for connection types, industries and products.
+    $scope.showDoughnut = function ()
 	{
         document.getElementById("ConnectionDoughnutChart").innerHTML = "";
         document.getElementById("IndustryDoughnutChart").innerHTML = "";
@@ -1718,6 +1759,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 		});
 	};
 
+    // This function initialize a variable that include the unique type of connections and if it checked for the bar gaph.
     $scope.getDistinctConnections = function (){
         $http({
             method: 'POST',
@@ -1737,6 +1779,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
+    // This function gets number of colors and return array of random colors.
     $scope.getColors = function(numOfColors) {
         let letters = '0123456789ABCDEF';
         let color = '#';
@@ -1752,7 +1795,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         return colors;
     };
 
-	$scope.showBarChart = function () {
+    // This function creates and shows a bar for 5 top companies with the biggest number of selected connections.
+    $scope.showBarChart = function () {
         document.getElementById("stackedBar").innerHTML = "";
 
         $http({
@@ -1849,7 +1893,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         });
     };
 
-	$scope.showWordCloud = function(){
+    // This function defines and shows a word cloud for top revenue companies.
+    $scope.showWordCloud = function(){
 	    //document.getElementById("wordsCloud").innerHTML = "";
         var self = this;
         self.height = $window.innerHeight * 0.5;
@@ -1870,6 +1915,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }
     };
 
+    // This function creates the data for the word cloud of the top revenue companies.
     $scope.getWordsToWordCloud = function(){
         $http({
             method: 'POST',
@@ -1914,6 +1960,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
+    // This function initialize a variable of the unique industries and find statistic for top 5.
     $scope.getIndustry = function () {
         $http({
             method: 'POST',
@@ -1968,6 +2015,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         });
     };
 
+    // This function initialize a variable of the unique products and find statistic for top 5.
     $scope.getProducts = function () {
         $http({
             method: 'POST',
@@ -2049,21 +2097,25 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         });
     };
 
+    // This function updates the value of filter by in the search by general information page.
     $scope.filterBy = function(filter){
 	    $scope.filterBySearchByName = filter;
         document.getElementById("dropdownMenuLink").innerHTML = "Filter By: " + filter;
     };
 
+    // This function updates the value of filter by in the delete company page by searching for company.
     $scope.deleteFilterBy = function(filter){
         $scope.deleteResultsFilterBy = filter;
         document.getElementById("dropdownMenuLinkDelete").innerHTML = "Filter By: " + filter;
     };
 
+    // This function updates the value of filter by in the update company page by searching for company.
     $scope.updateFilterBy = function(filter){
         $scope.updateResultsFilterBy = filter;
         document.getElementById("dropdownMenuLinkUpdate").innerHTML = "Filter By: " + filter;
     };
 
+    // This function initialize a variable of all the unique countries for all the companies.
     $scope.get_countries = function()
     {
         $http({
@@ -2082,6 +2134,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
+    // This function update the iframe of the map connected to search by location.
     $scope.getIframeSrc = function ()
     {
         $("#googleMap").hide();
@@ -2116,6 +2169,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $("#googleMap").show();
     };
 
+    // This function returns the number of states existing according to the country field and initializes a variable that include the relevant states.
     $scope.getStatesByCountry = function (callback)
     {
         $http({
@@ -2134,6 +2188,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         });
     };
 
+    // This function returns the number of cities existing according to the previous fields and initializes a variable that include the relevant cities.
     $scope.getCities = function (callback)
     {
         $http({
@@ -2154,6 +2209,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         });
     };
 
+    // This function shows \ hides city field in search by location page according to existing cities for the previous fields.
     $scope.changeCity = function (fromState)
     {
         $scope.selectedCityValue="";
@@ -2176,6 +2232,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }
     };
 
+    // This function returns the number of streets existing according to the previous fields and initializes a variable that include the relevant streets.
     $scope.getStreetByData = function (callback)
     {
         console.log("GET streets");
@@ -2198,6 +2255,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         });
     };
 
+    // This function shows \ hides street field in search by location page according to existing streets for the previous fields.
     $scope.changeStreet = function ()
     {
         $scope.selectedStreetValue="";
@@ -2215,6 +2273,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         });
     };
 
+    // This function shows \ hides state field in search by location page according to existing states for the country field.
     $scope.updateDataCountryChange = function (){
         $scope.selectedStateValue="";
         $scope.selectedCityValue="";
@@ -2237,6 +2296,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         });
     };
 
+    // This function initializes a variable with the details of search results for search fields that was filled.
     $scope.searchForResults = function (searchBy)
     {
         $scope.selectedCompany="";
@@ -2296,15 +2356,13 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         });
     };
 
-
+    // This function ...
     $scope.setCurrentTabSearch = function(isGeneral)
     {
-
         $scope.tabSearchGeneral=isGeneral;
-
-
     };
 
+    // This function shows all the general details about company as appear in the general tab.
     $scope.showMoreAboutResult = function (name) {
         console.log("name",$scope.selectedCompany);
         $("#askToSelectResult").hide();
@@ -2556,6 +2614,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.showNews(name);
     };
 
+    // This function sets the general tab in search results as the active tab.
     $scope.setTabGeneral=function(callback)
     {
 
@@ -2565,6 +2624,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
+    // This function gets a company name and creates and show the stock graph for this company.
     $scope.createNewStockGraph = function (companyName) {
         if(Object.keys($scope.stocksOfResult).length!==0){
             console.log("CREATE STOCK GRAPH");
@@ -2608,7 +2668,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }
     };
 
-
+    // This function gets a company name and creates and show the articles for this company.
     $scope.showNews = function(name){
         document.getElementById("articlesTitle").innerHTML = "ARTICLES ABOUT " + name;
         $http({
@@ -2678,7 +2738,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
-
+    // This function inserts a comment into the DB and shows to the user indication whether the comment inserted.
     $scope.enter_comment = function ()
     {
         console.log("comments " + $("#contactName").val());
