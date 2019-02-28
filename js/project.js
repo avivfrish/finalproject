@@ -117,7 +117,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.allFiles=[];
     }; //the function
 
-    // This function ...
+    // This function get user type (admin or not admin), for admin add admin menus (update, delete , insert companies,
+    // show users and update permissions).
     $scope.get_user_session = function () {
         $http({
             method: 'POST',
@@ -126,7 +127,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }).then(function (data) {
             console.log(data.data);
 
-            //let ind=(data.data).indexOf("@");
             let user = (data.data)['user'];
             let full_name = (data.data)['full_name'];
             document.getElementById("loggin_user").innerHTML = "Hello " + full_name;
@@ -134,7 +134,6 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
             let isAdmin = (data.data)['isAdmin'];
             console.log("is?" + isAdmin);
             if (isAdmin === 1) {
-                //console.log("vvfvfvfvf");
                 document.getElementById("nav_update").innerText = "";
                 angular.element(document.getElementById("nav_update")).append($compile(
                     "<a class=\"nav-link dropdown-toggle\"  id=\"navbarDropdownMenuLink1\" data-toggle=\"dropdown\" href=\"#\"  aria-haspopup=\"true\"\n" +
@@ -437,7 +436,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.graph();
     };
 
-    // This function ...
+    // This function logging out the user from the system.
     $scope.nav_bar_log_out = function () {
         var request = $http({
             method: "POST",
@@ -447,8 +446,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }); //request
     };
 
-    // This function ....
-    $scope.show_group = function (item) {
+    // This function can be deleted
+    /*$scope.show_group = function (item) {
         console.log("obi");
         $("#groups").css("display", "block");
         var request = $http({
@@ -470,9 +469,10 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }); //success
 
 
-    }; //the funtion
+    }; //the funtion*/
 
-    // This function ....
+    // This function can be deleted
+    /*
     $scope.azure = function () {
         $http({
             method: 'POST',
@@ -483,7 +483,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
         });
 
-    };
+    };*/
 
     // This function clears the alerts belong to update company pages.
     $scope.clearAlerts = function()
@@ -974,7 +974,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }
     };
 
-    // This function ...
+    // This function initialized selected company name.
     $scope.changeName = function()
     {
         $scope.getCompNames();
@@ -982,7 +982,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.clearAlerts();
     };
 
-    // This function ...
+    // This function initialized selected company ID.
     $scope.changeID = function()
     {
         $scope.getCompIDs();
@@ -1025,7 +1025,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.getCompIDs();
     };
 
-    // This function shows updates results after ....
+    // This function shows updates results after filter company to update
     $scope.showUpdateResults = function () {
         $scope.clearAlerts();
         let compName, compID;
@@ -1067,7 +1067,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
-    // This function re-shows updates results after ....
+    // This function re-shows updates results after update
     $scope.reShowUpdateResults = function () {
         $scope.clearAlerts();
         let compName, compID;
@@ -1100,7 +1100,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
-    // This function ....
+    // This function updates search results to show company to update
     $scope.updateSearchResults = function(id)
     {
         $scope.companyToUpdate = id;
@@ -1126,7 +1126,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 
     };
 
-    // This function ...
+    // This function set indicator to night script to re-analyze connection to selected company
     $scope.addIsNewAfterUpdate = function()
     {
         $http({
@@ -1259,7 +1259,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         $scope.getCompIDs();
     };
 
-    // This function ...
+    // This function cen be deleted
+    /*
     $scope.uploadFile = function ()
     {
 
@@ -1272,9 +1273,10 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         let text = file.name;
         fileUpload.uploadFileToUrl(file, uploadUrl, text);
 
-    };
+    };*/
 
-    // This function ...
+    // This function can be deleted
+    /*
     $scope.graph = function(){
 		//const gData = {nodes: [{id: 64, group: 1}, {id: 192, group: 1}, {id: 2, group: 2}, {id: 419, group: 1}, {id: 260, group: 1}, {id: 165, group: 1}, {id: 39, group: 1}, {id: 200, group: 1}, {id: 103, group: 1}, {id: 265, group: 1}, {id: 11, group: 1}, {id: 432, group: 1}, {id: 336, group: 1}, {id: 308, group: 1}, {id: 21, group: 1}, {id: 278, group: 1}, {id: 407, group: 1}, {id: 412, group: 1}, {id: 125, group: 1}, {id: 31, group:1}],
 		//	links: [{source: 64, target: 2}, {source: 192, target: 39}, {source: 192, target: 2}, {source: 2, target: 31}, {source: 2, target: 165}, {source: 2, target: 260}, {source: 2, target: 39}, {source: 2, target: 125}, {source: 2, target: 200}, {source: 2, target: 419}, {source: 2, target: 308}, {source: 2, target: 432}, {source: 2, target: 407}, {source: 2, target: 11}, {source: 2, target: 21}, {source: 2, target: 412}, {source: 2, target: 103}, {source: 2, target: 265}, {source: 2, target: 336}, {source: 2, target: 278}, {source: 260, target: 165}, {source: 260, target: 31}, {source: 260, target: 11}, {source: 260, target: 103}, {source: 260, target: 278}, {source: 200, target: 125}, {source: 103, target: 278}, {source: 265, target: 407}, {source: 265, target: 11}, {source: 265, target: 278}, {source: 11, target: 407}, {source: 11, target: 278}, {source: 308, target: 412}, {source: 21, target: 407}, {source: 21, target: 278}, {source: 278, target: 407}, {source: 125, target: 31}]};
@@ -1293,11 +1295,11 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
 			//.graphData(newData)
             .linkColor(link => $scope.graph_node_color(link))
             .height(800)
-            .width(800);*/
+            .width(800);
 
 		console.log("graph");
 
-	}; //the function
+	}; //the function*/
 
     // This function returns a color for a link in the graph according to the type of the link.
     $scope.graph_link_color =function(link)
@@ -1334,7 +1336,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         return "#6c7578";
     };
 
-    // This function ...
+    // This function get graph's selected node information.
     $scope.graph_on_click = function (node)
     {
         //$("#comp_info").css("display","block");
@@ -1555,7 +1557,8 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         }
     };
 
-    // This function ...
+    // This function initialize the graph showing the connection between companies.
+
     $scope.get_python = function () {
 
         document.getElementById("graph_btn").innerHTML="";
@@ -2356,7 +2359,7 @@ app.controller('ng-cases', function ($scope, $http,$compile, $interval, fileUplo
         });
     };
 
-    // This function ...
+    // This function indicate user current showing tab.
     $scope.setCurrentTabSearch = function(isGeneral)
     {
         $scope.tabSearchGeneral=isGeneral;
